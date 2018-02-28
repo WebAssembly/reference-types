@@ -56,22 +56,24 @@ Typing extensions:
   - `elemtype ::= <reftype>`
 
 * Introduce a simple subtype relation between reference types.
-  - `nullref < t` for all reftypes `t`
-  - `t < anyref` for all reftypes `t`
+  - reflexive transitive closure of the following rules
+  - `n < anyref` for all reftypes `t`
   - `anyfunc < anyref`
+  - Note: No rule `nullref < t` for all reftypes `t` -- while that is derivable from the above given the current set of types it might not hold for future reference types which don't allow null.
 
 
 New/extended instructions:
 
 * The new instruction `ref.null` evaluates to the null reference constant.
   - `ref.null : [] -> [nullref]`
+  - allowed in constant expressions
 
 * The new instructions `table.get` and `table.set` access tables.
   - `table.get $x : [i32] -> [t]` iff `t` is the element type of table `$x`
   - `table.set $x : [i32 t] -> []` iff `t` is the element type of table `$x`
   - `table.fill $x : [i32 i32 t] -> []` iff `t` is the element type of table `$x`
 
-* The `call_indirect` instruction takes an additional table index as immediate that identifies the table it calls through.
+* The `call_indirect` instruction takes a table index as immediate that identifies the table it calls through.
   - `call_indirect (type $t) $x : [t1* i32] -> [t2*]` iff `$t` denotes the function type `[t1*] -> [t2*]` and the element type of table `$x` is a subtype of `anyfunc`.
   - In the binary format, space for the index is already reserved.
   - For backwards compatibility, the index may be omitted in the text format, in which case it defaults to 0.
@@ -95,6 +97,8 @@ API extensions:
 * Any JS function object or `null` can be passed as `anyfunc` to a Wasm function, stored in a global, or in a table.
 
 * Only `null` can be passed as a `nullref` to a Wasm function, stored in a global, or in a table.
+
+TODO: Perhaps allow other JS values (especially strings) as well, provided we don't support equality on `anyref`.
 
 
 ## Possible Future Extensions
