@@ -239,7 +239,7 @@ let print_module x_opt m =
   flush_all ()
 
 let print_result vs =
-  let ts = List.map Values.type_of vs in
+  let ts = List.map Values.type_of_value vs in
   Printf.printf "%s : %s\n"
     (Values.string_of_values vs) (Types.string_of_value_types ts);
   flush_all ()
@@ -299,7 +299,7 @@ let run_action act =
     let inst = lookup_instance x_opt act.at in
     (match Instance.export inst name with
     | Some (Instance.ExternFunc f) ->
-      Eval.invoke f (List.map (fun v -> v.it) vs)
+      Eval.invoke f (List.map (fun v -> Values.Num v.it) vs)
     | Some _ -> Assert.error act.at "export is not a function"
     | None -> Assert.error act.at "undefined export"
     )
@@ -380,16 +380,17 @@ let run_assertion ass =
   | AssertReturn (act, vs) ->
     trace ("Asserting return...");
     let got_vs = run_action act in
-    let expect_vs = List.map (fun v -> v.it) vs in
+    let expect_vs = List.map (fun v -> Values.Num v.it) vs in
     assert_result ass.at (got_vs = expect_vs) got_vs print_result expect_vs
 
   | AssertReturnCanonicalNaN act ->
     trace ("Asserting return...");
     let got_vs = run_action act in
     let is_canonical_nan =
+      let open Values in
       match got_vs with
-      | [Values.F32 got_f32] -> got_f32 = F32.pos_nan || got_f32 = F32.neg_nan
-      | [Values.F64 got_f64] -> got_f64 = F64.pos_nan || got_f64 = F64.neg_nan
+      | [Num (F32 got_f32)] -> got_f32 = F32.pos_nan || got_f32 = F32.neg_nan
+      | [Num (F64 got_f64)] -> got_f64 = F64.pos_nan || got_f64 = F64.neg_nan
       | _ -> false
     in assert_result ass.at is_canonical_nan got_vs print_endline "nan"
 
@@ -397,11 +398,12 @@ let run_assertion ass =
     trace ("Asserting return...");
     let got_vs = run_action act in
     let is_arithmetic_nan =
+      let open Values in
       match got_vs with
-      | [Values.F32 got_f32] ->
+      | [Num (F32 got_f32)] ->
         let pos_nan = F32.to_bits F32.pos_nan in
         Int32.logand (F32.to_bits got_f32) pos_nan = pos_nan
-      | [Values.F64 got_f64] ->
+      | [Num (F64 got_f64)] ->
         let pos_nan = F64.to_bits F64.pos_nan in
         Int64.logand (F64.to_bits got_f64) pos_nan = pos_nan
       | _ -> false

@@ -221,7 +221,7 @@ let run ts at =
 
 let assert_return lits ts at =
   let test lit =
-    let t', reinterpret = reinterpret_of (Values.type_of lit.it) in
+    let t', reinterpret = reinterpret_of (Values.type_of_num lit.it) in
     [ reinterpret @@ at;
       Const lit @@ at;
       reinterpret @@ at;
@@ -231,24 +231,21 @@ let assert_return lits ts at =
   in [], List.flatten (List.rev_map test lits)
 
 let assert_return_nan_bitpattern nan_bitmask_of ts at =
-  let test t =
-    let t', reinterpret = reinterpret_of t in
-    [ reinterpret @@ at;
-      Const (nan_bitmask_of t' @@ at) @@ at;
-      Binary (and_of t') @@ at;
-      Const (canonical_nan_of t' @@ at) @@ at;
-      Compare (eq_of t') @@ at;
-      Test (Values.I32 I32Op.Eqz) @@ at;
-      BrIf (0l @@ at) @@ at ]
+  let test = function
+    | NumType t ->
+      let t', reinterpret = reinterpret_of t in
+      [ reinterpret @@ at;
+        Const (nan_bitmask_of t' @@ at) @@ at;
+        Binary (and_of t') @@ at;
+        Const (canonical_nan_of t' @@ at) @@ at;
+        Compare (eq_of t') @@ at;
+        Test (Values.I32 I32Op.Eqz) @@ at;
+        BrIf (0l @@ at) @@ at ]
+    | RefType _ -> [Br (0l @@ at) @@ at]
   in [], List.flatten (List.rev_map test ts)
 
-let assert_return_canonical_nan =
-  (* The result may only differ from the canonical NaN in its sign bit *)
-  assert_return_nan_bitpattern abs_mask_of
-
-let assert_return_arithmetic_nan =
-  (* The result can be any NaN that's one everywhere the canonical NaN is one *)
-  assert_return_nan_bitpattern canonical_nan_of
+let assert_return_canonical_nan = assert_return_nan_bitpattern abs_mask_of
+let assert_return_arithmetic_nan = assert_return_nan_bitpattern canonical_nan_of
 
 let wrap module_name item_name wrap_action wrap_assertion at =
   let itypes, idesc, action = wrap_action at in
@@ -267,9 +264,13 @@ let wrap module_name item_name wrap_action wrap_assertion at =
   Encode.encode m
 
 
-let is_js_value_type = function
+let is_js_num_type = function
   | I32Type -> true
   | I64Type | F32Type | F64Type -> false
+
+let is_js_value_type = function
+  | NumType t -> is_js_num_type t
+  | RefType t -> true
 
 let is_js_global_type = function
   | GlobalType (t, mut) -> is_js_value_type t && mut = Immutable
@@ -380,9 +381,11 @@ let of_assertion mods ass =
     of_assertion' mods act "assert_return" (List.map of_literal lits)
       (Some (assert_return lits))
   | AssertReturnCanonicalNaN act ->
-    of_assertion' mods act "assert_return_canonical_nan" [] (Some assert_return_canonical_nan)
+    of_assertion' mods act "assert_return_canonical_nan" []
+      (Some assert_return_canonical_nan)
   | AssertReturnArithmeticNaN act ->
-    of_assertion' mods act "assert_return_arithmetic_nan" [] (Some assert_return_arithmetic_nan)
+    of_assertion' mods act "assert_return_arithmetic_nan" []
+      (Some assert_return_arithmetic_nan)
   | AssertTrap (act, _) ->
     of_assertion' mods act "assert_trap" [] None
   | AssertExhaustion (act, _) ->

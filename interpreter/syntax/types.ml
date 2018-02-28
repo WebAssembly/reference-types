@@ -1,13 +1,14 @@
 (* Types *)
 
-type value_type = I32Type | I64Type | F32Type | F64Type
-type elem_type = AnyFuncType
+type num_type = I32Type | I64Type | F32Type | F64Type
+type ref_type = NullRefType | AnyRefType | AnyFuncType
+type value_type = NumType of num_type | RefType of ref_type
 type stack_type = value_type list
 type func_type = FuncType of stack_type * stack_type
 
 type 'a limits = {min : 'a; max : 'a option}
 type mutability = Immutable | Mutable
-type table_type = TableType of Int32.t limits * elem_type
+type table_type = TableType of Int32.t limits * ref_type
 type memory_type = MemoryType of Int32.t limits
 type global_type = GlobalType of value_type * mutability
 type extern_type =
@@ -25,6 +26,21 @@ let size = function
 
 
 (* Subtyping *)
+
+let match_num_type t1 t2 =
+  t1 = t2
+
+let match_ref_type t1 t2 =
+  match t1, t2 with
+  | _, AnyRefType -> true
+  | NullRefType, _ -> true
+  | _, _ -> t1 = t2
+
+let match_value_type t1 t2 =
+  match t1, t2 with
+  | NumType t1', NumType t2' -> match_num_type t1' t2'
+  | RefType t1', RefType t2' -> match_ref_type t1' t2'
+  | _, _ -> false
 
 let match_limits lim1 lim2 =
   I32.ge_u lim1.min lim2.min &&
@@ -68,18 +84,24 @@ let globals =
 
 (* String conversion *)
 
-let string_of_value_type = function
+let string_of_num_type = function
   | I32Type -> "i32"
   | I64Type -> "i64"
   | F32Type -> "f32"
   | F64Type -> "f64"
 
+let string_of_ref_type = function
+  | NullRefType -> "nullref"
+  | AnyRefType -> "anyref"
+  | AnyFuncType -> "anyfunc"
+
+let string_of_value_type = function
+  | NumType t -> string_of_num_type t
+  | RefType t -> string_of_ref_type t
+
 let string_of_value_types = function
   | [t] -> string_of_value_type t
   | ts -> "[" ^ String.concat " " (List.map string_of_value_type ts) ^ "]"
-
-let string_of_elem_type = function
-  | AnyFuncType -> "anyfunc"
 
 let string_of_limits {min; max} =
   I32.to_string_u min ^
@@ -89,7 +111,7 @@ let string_of_memory_type = function
   | MemoryType lim -> string_of_limits lim
 
 let string_of_table_type = function
-  | TableType (lim, t) -> string_of_limits lim ^ " " ^ string_of_elem_type t
+  | TableType (lim, t) -> string_of_limits lim ^ " " ^ string_of_ref_type t
 
 let string_of_global_type = function
   | GlobalType (t, Immutable) -> string_of_value_type t

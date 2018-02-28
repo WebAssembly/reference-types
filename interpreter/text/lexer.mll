@@ -45,7 +45,7 @@ let string s =
   done;
   Buffer.contents b
 
-let value_type = function
+let num_type = function
   | "i32" -> Types.I32Type
   | "i64" -> Types.I64Type
   | "f32" -> Types.F32Type
@@ -160,7 +160,13 @@ rule token = parse
   | '"'character*'\\'_
     { error_nest (Lexing.lexeme_end_p lexbuf) lexbuf "illegal escape" }
 
-  | (nxx as t) { VALUE_TYPE (value_type t) }
+  | "nullref" { NULLREF }
+  | "anyref" { ANYREF }
+  | "anyfunc" { ANYFUNC }
+  | (nxx as t) { NUM_TYPE (num_type t) }
+  | "mut" { MUT }
+
+  | "ref.null" { REF_NULL }
   | (nxx as t)".const"
     { let open Source in
       CONST (numop t
@@ -173,8 +179,6 @@ rule token = parse
         (fun s -> let n = F64.of_string s.it in
           f64_const (n @@ s.at), Values.F64 n))
     }
-  | "anyfunc" { ANYFUNC }
-  | "mut" { MUT }
 
   | "nop" { NOP }
   | "unreachable" { UNREACHABLE }
@@ -198,6 +202,8 @@ rule token = parse
   | "tee_local" { TEE_LOCAL }
   | "get_global" { GET_GLOBAL }
   | "set_global" { SET_GLOBAL }
+  | "get_table" { GET_TABLE }
+  | "set_table" { SET_TABLE }
 
   | (nxx as t)".load"
     { LOAD (fun a o ->

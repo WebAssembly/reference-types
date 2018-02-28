@@ -298,19 +298,6 @@
 (assert_trap (invoke "call" (i32.const 100)) "undefined element")
 
 
-(assert_invalid
-  (module (import "" "" (table 10 anyfunc)) (import "" "" (table 10 anyfunc)))
-  "multiple tables"
-)
-(assert_invalid
-  (module (import "" "" (table 10 anyfunc)) (table 10 anyfunc))
-  "multiple tables"
-)
-(assert_invalid
-  (module (table 10 anyfunc) (table 10 anyfunc))
-  "multiple tables"
-)
-
 (module (import "test" "table-10-inf" (table 10 anyfunc)))
 (module (import "test" "table-10-inf" (table 5 anyfunc)))
 (module (import "test" "table-10-inf" (table 0 anyfunc)))

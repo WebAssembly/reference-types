@@ -55,9 +55,9 @@ let break_string s =
 
 (* Types *)
 
+let num_type t = string_of_num_type t
+let ref_type t = string_of_ref_type t
 let value_type t = string_of_value_type t
-
-let elem_type t = string_of_elem_type t
 
 let decls kind ts = tab kind (atom value_type) ts
 
@@ -173,7 +173,7 @@ struct
 end
 
 let oper (intop, floatop) op =
-  value_type (type_of op) ^ "." ^
+  num_type (type_of_num op) ^ "." ^
   (match op with
   | I32 o -> intop "32" o
   | I64 o -> intop "64" o
@@ -197,7 +197,7 @@ let extension = function
   | Memory.ZX -> "_u"
 
 let memop name {ty; align; offset; _} =
-  value_type ty ^ "." ^ name ^
+  num_type ty ^ "." ^ name ^
   (if offset = 0l then "" else " offset=" ^ nat32 offset) ^
   (if 1 lsl align = size ty then "" else " align=" ^ nat (1 lsl align))
 
@@ -215,8 +215,8 @@ let storeop op =
 (* Expressions *)
 
 let var x = nat32 x.it
-let value v = string_of_value v.it
-let constop v = value_type (type_of v.it) ^ ".const"
+let num v = string_of_num v.it
+let constop v = num_type (type_of_num v.it) ^ ".const"
 
 let rec instr e =
   let head, inner =
@@ -234,7 +234,8 @@ let rec instr e =
       "br_table " ^ String.concat " " (list var (xs @ [x])), []
     | Return -> "return", []
     | Call x -> "call " ^ var x, []
-    | CallIndirect x -> "call_indirect", [Node ("type " ^ var x, [])]
+    | CallIndirect (x, y) ->
+      "call_indirect " ^ var x, [Node ("type " ^ var y, [])]
     | Drop -> "drop", []
     | Select -> "select", []
     | GetLocal x -> "get_local " ^ var x, []
@@ -242,11 +243,14 @@ let rec instr e =
     | TeeLocal x -> "tee_local " ^ var x, []
     | GetGlobal x -> "get_global " ^ var x, []
     | SetGlobal x -> "set_global " ^ var x, []
+    | GetTable x -> "get_table " ^ var x, []
+    | SetTable x -> "set_table " ^ var x, []
     | Load op -> loadop op, []
     | Store op -> storeop op, []
     | CurrentMemory -> "current_memory", []
     | GrowMemory -> "grow_memory", []
-    | Const lit -> constop lit ^ " " ^ value lit, []
+    | Null -> "ref.null", []
+    | Const lit -> constop lit ^ " " ^ num lit, []
     | Test op -> testop op, []
     | Compare op -> relop op, []
     | Unary op -> unop op, []
@@ -282,7 +286,7 @@ let start x = Node ("start " ^ var x, [])
 let table off i tab =
   let {ttype = TableType (lim, t)} = tab.it in
   Node ("table $" ^ nat (off + i) ^ " " ^ limits nat32 lim,
-    [atom elem_type t]
+    [atom ref_type t]
   )
 
 let memory off i mem =
