@@ -125,6 +125,12 @@ Additions:
 
 * Typed function references cannot be null!
 
+* The `table.grow` instruction (see bulk operation proposal) needs to take an initialisation argument.
+
+* Likewise `WebAssembly.Table#grow` takes an additional initialisation argument.
+  - optional for backwards compatibility, defaults to `null`
+
+
 Question:
 
 * General function have no reasonable default, do we need scoped variables like `let`?
