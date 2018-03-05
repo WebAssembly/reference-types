@@ -250,6 +250,8 @@ let rec instr e =
     | CurrentMemory -> "current_memory", []
     | GrowMemory -> "grow_memory", []
     | Null -> "ref.null", []
+    | IsNull -> "ref.isnull", []
+    | Same -> "ref.eq", []
     | Const lit -> constop lit ^ " " ^ num lit, []
     | Test op -> testop op, []
     | Compare op -> relop op, []
@@ -386,12 +388,15 @@ let module_ = module_with_var_opt None
 
 (* Scripts *)
 
-let literal lit =
-  match lit.it with
-  | Values.I32 i -> Node ("i32.const " ^ I32.to_string_s i, [])
-  | Values.I64 i -> Node ("i64.const " ^ I64.to_string_s i, [])
-  | Values.F32 z -> Node ("f32.const " ^ F32.to_string z, [])
-  | Values.F64 z -> Node ("f64.const " ^ F64.to_string z, [])
+let value v =
+  match v.it with
+  | Num (Values.I32 i) -> Node ("i32.const " ^ I32.to_string_s i, [])
+  | Num (Values.I64 i) -> Node ("i64.const " ^ I64.to_string_s i, [])
+  | Num (Values.F32 z) -> Node ("f32.const " ^ F32.to_string z, [])
+  | Num (Values.F64 z) -> Node ("f64.const " ^ F64.to_string z, [])
+  | Ref NullRef -> Node ("ref.null", [])
+  | Ref (HostRef n) -> Node ("ref " ^ Int32.to_string n, [])
+  | _ -> assert false
 
 let definition mode x_opt def =
   try
@@ -420,8 +425,8 @@ let access x_opt n =
 
 let action act =
   match act.it with
-  | Invoke (x_opt, name, lits) ->
-    Node ("invoke" ^ access x_opt name, List.map literal lits)
+  | Invoke (x_opt, name, vs) ->
+    Node ("invoke" ^ access x_opt name, List.map value vs)
   | Get (x_opt, name) ->
     Node ("get" ^ access x_opt name, [])
 
@@ -435,8 +440,8 @@ let assertion mode ass =
     Node ("assert_unlinkable", [definition mode None def; Atom (string re)])
   | AssertUninstantiable (def, re) ->
     Node ("assert_trap", [definition mode None def; Atom (string re)])
-  | AssertReturn (act, lits) ->
-    Node ("assert_return", action act :: List.map literal lits)
+  | AssertReturn (act, vs) ->
+    Node ("assert_return", action act :: List.map value vs)
   | AssertReturnCanonicalNaN act ->
     Node ("assert_return_canonical_nan", [action act])
   | AssertReturnArithmeticNaN act ->

@@ -94,6 +94,8 @@ and instr' =
   | CurrentMemory                     (* size of linear memory *)
   | GrowMemory                        (* grow linear memory *)
   | Null                              (* null reference *)
+  | IsNull                            (* null test *)
+  | Same                              (* reference equality *)
   | Const of literal                  (* constant *)
   | Test of testop                    (* numeric test *)
   | Compare of relop                  (* numeric comparison *)

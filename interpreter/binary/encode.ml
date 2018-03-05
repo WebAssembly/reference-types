@@ -99,7 +99,8 @@ let encode m =
     let ref_type = function
       | AnyFuncType -> vs7 (-0x10)
       | AnyRefType -> vs7 (-0x11)
-      | NullRefType -> vs7 (-0x12)
+      | EqRefType -> vs7 (-0x12)
+      | NullRefType -> assert false
 
     let value_type = function
       | NumType t -> num_type t
@@ -113,7 +114,8 @@ let encode m =
           "cannot encode stack type with arity > 1 (yet)"
 
     let func_type = function
-      | FuncType (ins, out) -> vs7 (-0x20); vec value_type ins; vec value_type out
+      | FuncType (ins, out) ->
+        vs7 (-0x20); vec value_type ins; vec value_type out
 
     let limits vu {min; max} =
       bool (max <> None); vu min; opt vu max
@@ -174,8 +176,6 @@ let encode m =
       | SetGlobal x -> op 0x24; var x
       | GetTable x -> op 0x25; var x
       | SetTable x -> op 0x26; var x
-
-      | Null -> op 0x27
 
       | Load ({ty = I32Type; sz = None; _} as mo) -> op 0x28; memop mo
       | Load ({ty = I64Type; sz = None; _} as mo) -> op 0x29; memop mo
@@ -372,6 +372,11 @@ let encode m =
       | Convert (F64 F64Op.PromoteF32) -> op 0xbb
       | Convert (F64 F64Op.DemoteF64) -> assert false
       | Convert (F64 F64Op.ReinterpretInt) -> op 0xbf
+
+      (* TODO: Allocate more adequate opcodes *)
+      | Null -> op 0xd0
+      | IsNull -> op 0xd1
+      | Same -> op 0xd2
 
     let const c =
       list instr c.it; end_ ()

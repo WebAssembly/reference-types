@@ -299,7 +299,7 @@ let run_action act =
     let inst = lookup_instance x_opt act.at in
     (match Instance.export inst name with
     | Some (Instance.ExternFunc f) ->
-      Eval.invoke f (List.map (fun v -> Values.Num v.it) vs)
+      Eval.invoke f (List.map (fun v -> v.it) vs)
     | Some _ -> Assert.error act.at "export is not a function"
     | None -> Assert.error act.at "undefined export"
     )
@@ -380,7 +380,7 @@ let run_assertion ass =
   | AssertReturn (act, vs) ->
     trace ("Asserting return...");
     let got_vs = run_action act in
-    let expect_vs = List.map (fun v -> Values.Num v.it) vs in
+    let expect_vs = List.map (fun v -> v.it) vs in
     assert_result ass.at (got_vs = expect_vs) got_vs print_result expect_vs
 
   | AssertReturnCanonicalNaN act ->

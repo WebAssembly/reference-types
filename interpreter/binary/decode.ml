@@ -143,7 +143,7 @@ let ref_type s =
   match vs7 s with
   | -0x10 -> AnyFuncType
   | -0x11 -> AnyRefType
-  | -0x12 -> NullRefType
+  | -0x12 -> EqRefType
   | _ -> error s (pos s - 1) "invalid reference type"
 
 let value_type s =
@@ -269,7 +269,7 @@ let rec instr s =
   | 0x25 -> get_table (at var s)
   | 0x26 -> set_table (at var s)
 
-  | 0x27 -> ref_null
+  | 0x27 as b -> illegal s pos b
 
   | 0x28 -> let a, o = memop s in i32_load a o
   | 0x29 -> let a, o = memop s in i64_load a o
@@ -440,6 +440,14 @@ let rec instr s =
   | 0xbd -> i64_reinterpret_f64
   | 0xbe -> f32_reinterpret_i32
   | 0xbf -> f64_reinterpret_i64
+
+  | 0xc0 | 0xc1 | 0xc2 | 0xc3 | 0xc4 | 0xc5 | 0xc6 | 0xc7
+  | 0xc8 | 0xc9 | 0xca | 0xcb | 0xcc | 0xcd | 0xce | 0xcf as b -> illegal s pos b
+
+  (* TODO: Allocate more adequate opcodes *)
+  | 0xd0 -> ref_null
+  | 0xd1 -> ref_isnull
+  | 0xd2 -> ref_eq
 
   | b -> illegal s pos b
 

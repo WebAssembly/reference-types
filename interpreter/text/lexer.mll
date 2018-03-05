@@ -160,13 +160,13 @@ rule token = parse
   | '"'character*'\\'_
     { error_nest (Lexing.lexeme_end_p lexbuf) lexbuf "illegal escape" }
 
-  | "nullref" { NULLREF }
+  | "ref" { REF }
+  | "eqref" { EQREF }
   | "anyref" { ANYREF }
   | "anyfunc" { ANYFUNC }
   | (nxx as t) { NUM_TYPE (num_type t) }
   | "mut" { MUT }
 
-  | "ref.null" { REF_NULL }
   | (nxx as t)".const"
     { let open Source in
       CONST (numop t
@@ -179,6 +179,9 @@ rule token = parse
         (fun s -> let n = F64.of_string s.it in
           f64_const (n @@ s.at), Values.F64 n))
     }
+  | "ref.null" { REF_NULL }
+  | "ref.isnull" { REF_ISNULL }
+  | "ref.eq" { REF_EQ }
 
   | "nop" { NOP }
   | "unreachable" { UNREACHABLE }
