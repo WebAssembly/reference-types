@@ -215,14 +215,14 @@ Motivation:
 
 Addition:
 
-* Add a `cast` instruction
-  - `cast <reftype1> <reftype2 : [<reftypet1>] -> [<reftype2>]` iff `<reftype2> < <reftype1>`
+* Add a `cast` instruction that checks whether its operand can be cast to a lower type and converts its type accordingly if so; otherwise, goes to an else branch.
+  - `cast <resulttype> <reftype1> <reftype2> <instr1>* else <instr2>* end: [<reftypet1>] -> <resulttype>` iff `<reftype2> < <reftype1>` and `<instr1>* : [<reftype2>] -> <resulttype>` and `<instr2>* : [<reftype1>] -> <resulttype>`
   - could later be generalised to non-reference types?
 
 Note:
 
-* Can decompose `call_indirect`
-  - `(call_indirect $t $x)` reduces to `(table.get $x) (cast anyref (ref $t)) (call_ref (ref $t))`
+* Can decompose `call_indirect` (assuming multi-value proposal):
+  - `(call_indirect $t $x)` reduces to `(table.get $x) (cast $t anyref (ref $t) (then (call_ref (ref $t))) (else (unreachable)))`
 
 
 ### GC Types
