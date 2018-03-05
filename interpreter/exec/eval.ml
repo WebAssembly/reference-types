@@ -17,6 +17,13 @@ exception Trap = Trap.Error
 exception Crash = Crash.Error (* failure that cannot happen in valid code *)
 exception Exhaustion = Exhaustion.Error
 
+let table_error at = function
+  | Table.Bounds -> "out of bounds table access"
+  | Table.SizeOverflow -> "table size overflow"
+  | Table.SizeLimit -> "table size limit reached"
+  | Table.Type -> Crash.error at "type mismatch at table access"
+  | exn -> raise exn
+
 let memory_error at = function
   | Memory.Bounds -> "out of bounds memory access"
   | Memory.SizeOverflow -> "memory size overflow"
@@ -190,12 +197,13 @@ let rec step (c : config) : config =
         with Global.NotMutable -> Crash.error e.at "write to immutable global"
            | Global.Type -> Crash.error e.at "type mismatch at global write")
 
-      | GetTable x, Num (I32 i) :: vs ->
-        Ref (Table.load (table frame.inst x) i) :: vs, []
+      | GetTable x, Num (I32 i) :: vs' ->
+        (try Ref (Table.load (table frame.inst x) i) :: vs', []
+        with exn -> vs', [Trapping (table_error e.at exn) @@ e.at])
 
       | SetTable x, Ref r :: Num (I32 i) :: vs' ->
         (try Table.store (table frame.inst x) i r; vs', []
-        with Table.Type -> Crash.error e.at "type mismatch at table write")
+        with exn -> vs', [Trapping (table_error e.at exn) @@ e.at])
 
       | Load {offset; ty; sz; _}, Num (I32 i) :: vs' ->
         let mem = memory frame.inst (0l @@ e.at) in
@@ -231,20 +239,20 @@ let rec step (c : config) : config =
           with Memory.SizeOverflow | Memory.SizeLimit | Memory.OutOfMemory -> -1l
         in Num (I32 result) :: vs', []
 
-      | Null, vs ->
-        Ref NullRef :: vs, []
+      | Null, vs' ->
+        Ref NullRef :: vs', []
 
-      | IsNull, Ref NullRef :: vs ->
-        Num (I32 1l) :: vs, []
+      | IsNull, Ref NullRef :: vs' ->
+        Num (I32 1l) :: vs', []
 
-      | IsNull, v :: vs ->
-        Num (I32 0l) :: vs, []
+      | IsNull, v :: vs' ->
+        Num (I32 0l) :: vs', []
 
-      | Same, Ref r2 :: Ref r1 :: vs when r1 = r2 ->
-        Num (I32 1l) :: vs, []
+      | Same, Ref r2 :: Ref r1 :: vs' when r1 = r2 ->
+        Num (I32 1l) :: vs', []
 
-      | Same, Ref r2 :: Ref r1 :: vs ->
-        Num (I32 0l) :: vs, []
+      | Same, Ref r2 :: Ref r1 :: vs' ->
+        Num (I32 0l) :: vs', []
 
       | Const n, vs ->
         Num n.it :: vs, []
