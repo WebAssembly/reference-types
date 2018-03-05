@@ -46,6 +46,8 @@ Typing extensions:
 
 * Introduce `anyref`, `anyfunc`, and `nullref` as a new class of *reference types*.
   - `reftype ::= anyref | anyfunc | nullref`
+  - `nullref` is merely an internal type and is neither expressible in the binary format, nor the text format, nor the JS API.
+  - Question: should it be?
 
 * Value types (of locals, globals, function parameters and results) can now be either numeric types or reference types.
   - `numtype ::= i32 | i64 | f32 | f64`
@@ -67,6 +69,9 @@ New/extended instructions:
 * The new instruction `ref.null` evaluates to the null reference constant.
   - `ref.null : [] -> [nullref]`
   - allowed in constant expressions
+
+* The new instruction `ref.is_null` checks for null.
+  - `ref.is_null : [anyref] -> [i32]`
 
 * The new instructions `table.get` and `table.set` access tables.
   - `table.get $x : [i32] -> [t]` iff `t` is the element type of table `$x`
@@ -98,10 +103,34 @@ API extensions:
 
 * Only `null` can be passed as a `nullref` to a Wasm function, stored in a global, or in a table.
 
-TODO: Perhaps allow other JS values (especially strings) as well, provided we don't support equality on `anyref`.
-
 
 ## Possible Future Extensions
+
+
+### Equality on references
+
+Motivation:
+
+* Allow references to be compared by identity.
+* However, not all reference types should be comparable, since that may make implementation details observable in a non-deterministic fashion (consider e.g. host JavaScript strings).
+
+
+Additions:
+
+* Add `eqref` as the type of comparable references
+  - `reftype ::= ... | eqref`
+* It is a subtype of `anyref`
+  - `eqref < anyref`
+  - `nullref < eqref`
+* Add `ref.eq` instruction.
+  - `ref.eq : [eqref eqref] -> [i32]`
+
+
+Questions:
+
+* Interaction with type imports/exports: do they need to distinguish equality types from non-equality now?
+
+* Similarly, the JS API for `WebAssembly.Type` below would need to enable the distinction.
 
 
 ### Typed function references
@@ -122,6 +151,7 @@ Additions:
 * Subtying between concrete and universal reference types
   - `ref $t < anyref`
   - `ref <functype> < anyfunc`
+  - Note: reference types are not necessarily subtypes of `eqref`, including functions
 
 * Typed function references cannot be null!
 
@@ -161,19 +191,20 @@ Additions:
 
 * Subtyping `ref <abstype>` < `anyref`
 
+
 Questions:
 
-* Do we need to impose constraints on the order of imports, to stratify section dependencies?
+* Do we need to impose constraints on the order of imports, to stratify section dependencies? Should type import and export be separate sections instead?
 
-* Do we need a nullable `(ref opt $t)` type to allow use with locals etc.?
+* Do we need a nullable `(ref opt $t)` type to allow use with locals etc.? Could a `(nullable T)` type constructor work instead?
+  - Unclear how `nullable` constructor would integrate exactly. Would it only allow (non-nullable) reference types as argument? Does this require a kind system? Should `anyref` be different from `(nullable anyref)`, or the latter disallowed? What about `anyfunc`?
+  - Semantically, thinking of `(nullable T)` as `T | nullref` could answer these questions, but we cannot support arbitrary unions in Wasm.
 
 * Should we add `(new)` definitional type to enable Wasm modules to define new types, too?
 
-* Should we add a `(cast $t)` instruction for down casts?
+* Do `new` definition types and the `WebAssembly.Type` constructor need to take a "comparable" flag controlling whether references to a type can be compared?
 
 * Should JS API allow specifying subtyping between new types?
-
-* Should type import and export be separate sections instead?
 
 
 ### Down Casts
