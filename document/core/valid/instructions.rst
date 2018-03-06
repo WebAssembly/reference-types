@@ -154,6 +154,57 @@ Numeric Instructions
    }
 
 
+.. index:: reference instructions, reference type
+   pair: validation; instruction
+   single: abstract syntax; instruction
+.. _valid-instr-ref:
+
+Reference Instructions
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. _valid-ref_null:
+
+:math:`\REFNULL`
+................
+
+* The instruction is valid with type :math:`[] \to [\NULLREF]`.
+
+.. math::
+   \frac{
+   }{
+     C \vdashinstr \REFNULL : [] \to [\NULLREF]
+   }
+
+
+.. _valid-ref_isnull:
+
+:math:`\REFISNULL`
+..................
+
+* The instruction is valid with type :math:`[\ANYREF] \to [\I32]`.
+
+.. math::
+   \frac{
+   }{
+     C \vdashinstr \REFISNULL : [\ANYREF] \to [\I32]
+   }
+
+
+.. _valid-ref_eq:
+
+:math:`\REFEQ`
+..............
+
+* The instruction is valid with type :math:`[\EQREF~\EQREF] \to [\I32]`.
+
+.. math::
+   \frac{
+   }{
+     C \vdashinstr \REFEQ : [\EQREF~\EQREF] \to [\I32]
+   }
+
+
+
 .. index:: parametric instructions, value type, polymorphism
    pair: validation; instruction
    single: abstract syntax; instruction
@@ -295,6 +346,54 @@ Variable Instructions
      C.\CGLOBALS[x] = \MVAR~t
    }{
      C \vdashinstr \SETGLOBAL~x : [t] \to []
+   }
+
+
+
+
+.. index:: table instructions, table index, context
+   pair: validation; instruction
+   single: abstract syntax; instruction
+.. _valid-instr-table:
+
+Table Instructions
+~~~~~~~~~~~~~~~~~~
+
+.. _valid-get_table:
+
+:math:`\GETTABLE~x`
+...................
+
+* The table :math:`C.\CTABLES[x]` must be defined in the context.
+
+* Let :math:`\limits~t` be the :ref:`table type <syntax-tabletype>` :math:`C.\CTABLES[x]`.
+
+* Then the instruction is valid with type :math:`[] \to [t]`.
+
+.. math::
+   \frac{
+     C.\CTABLES[x] = \limits~t
+   }{
+     C \vdashinstr \GETTABLE~x : [\I32] \to [t]
+   }
+
+
+.. _valid-set_table:
+
+:math:`\SETTABLE~x`
+...................
+
+* The local :math:`C.\CTABLES[x]` must be defined in the context.
+
+* Let :math:`\limits~t` be the :ref:`table type <syntax-tabletype>` :math:`C.\CTABLES[x]`.
+
+* Then the instruction is valid with type :math:`[t] \to []`.
+
+.. math::
+   \frac{
+     C.\CTABLES[x] = t
+   }{
+     C \vdashinstr \SETTABLE~x : [\I32~t] \to []
    }
 
 
@@ -656,28 +755,30 @@ Control Instructions
 
 .. _valid-call_indirect:
 
-:math:`\CALLINDIRECT~x`
-.......................
+:math:`\CALLINDIRECT~x~y`
+.........................
 
-* The table :math:`C.\CTABLES[0]` must be defined in the context.
+* The table :math:`C.\CTABLES[x]` must be defined in the context.
 
-* Let :math:`\limits~\elemtype` be the :ref:`table type <syntax-tabletype>` :math:`C.\CTABLES[0]`.
+* Let :math:`\limits~t` be the :ref:`table type <syntax-tabletype>` :math:`C.\CTABLES[x]`.
 
-* The :ref:`element type <syntax-elemtype>` :math:`\elemtype` must be |ANYFUNC|.
+* The :ref:`reference type <syntax-reftype>` :math:`t` must :ref:`match <match-reftype>` type |ANYFUNC|.
 
-* The type :math:`C.\CTYPES[x]` must be defined in the context.
+* The type :math:`C.\CTYPES[y]` must be defined in the context.
 
-* Let :math:`[t_1^\ast] \to [t_2^\ast]` be the :ref:`function type <syntax-functype>` :math:`C.\CTYPES[x]`.
+* Let :math:`[t_1^\ast] \to [t_2^\ast]` be the :ref:`function type <syntax-functype>` :math:`C.\CTYPES[y]`.
 
 * Then the instruction is valid with type :math:`[t_1^\ast~\I32] \to [t_2^\ast]`.
 
 .. math::
    \frac{
-     C.\CTABLES[0] = \limits~\ANYFUNC
+     C.\CTABLES[x] = \limits~t
      \qquad
-     C.\CTYPES[x] = [t_1^\ast] \to [t_2^\ast]
+     \vdashvaltypematch t \leq \ANYFUNC
+     \qquad
+     C.\CTYPES[y] = [t_1^\ast] \to [t_2^\ast]
    }{
-     C \vdashinstr \CALLINDIRECT~x : [t_1^\ast~\I32] \to [t_2^\ast]
+     C \vdashinstr \CALLINDIRECT~x~y : [t_1^\ast~\I32] \to [t_2^\ast]
    }
 
 
@@ -713,13 +814,17 @@ Non-empty Instruction Sequence: :math:`\instr^\ast~\instr_N`
   for some sequences of :ref:`value types <syntax-valtype>` :math:`t^\ast` and :math:`t_3^\ast`.
 
 * There must be a sequence of :ref:`value types <syntax-valtype>` :math:`t_0^\ast`,
-  such that :math:`t_2^\ast = t_0^\ast~t^\ast`.
+  such that :math:`t_2^\ast = t_0^\ast~{t'}^\ast` where the type sequence :math:`{t'}^\ast` is as long as :math:`t^\ast`.
+
+* For each :ref:`value type <syntax-valtype>` :math:`t'_i` in :math:`{t'}^\ast` and corresponding type :math:`t_i` in :math:`t^\ast`, the type :math:`t'_i` must :ref:`match <match-valtype>` :math:`t_i`.
 
 * Then the combined instruction sequence is valid with type :math:`[t_1^\ast] \to [t_0^\ast~t_3^\ast]`.
 
 .. math::
    \frac{
-     C \vdashinstrseq \instr^\ast : [t_1^\ast] \to [t_0^\ast~t^\ast]
+     C \vdashinstrseq \instr^\ast : [t_1^\ast] \to [t_0^\ast~{t'}^\ast]
+     \qquad
+     (\vdashvaltypematch t' \leq t)^\ast
      \qquad
      C \vdashinstr \instr_N : [t^\ast] \to [t_3^\ast]
    }{
@@ -780,6 +885,11 @@ Constant Expressions
    \frac{
    }{
      C \vdashinstrconst t.\CONST~c \const
+   }
+   \qquad
+   \frac{
+   }{
+     C \vdashinstrconst \REFNULL \const
    }
    \qquad
    \frac{

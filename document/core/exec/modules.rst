@@ -164,17 +164,17 @@ An :ref:`external type <syntax-externtype>` :math:`\ETFUNC~\functype_1` matches 
 Tables
 ......
 
-An :ref:`external type <syntax-externtype>` :math:`\ETTABLE~(\limits_1~\elemtype_1)` matches :math:`\ETTABLE~(\limits_2~\elemtype_2)` if and only if:
+An :ref:`external type <syntax-externtype>` :math:`\ETTABLE~(\limits_1~\reftype_1)` matches :math:`\ETTABLE~(\limits_2~\reftype_2)` if and only if:
 
 * Limits :math:`\limits_1` :ref:`match <match-limits>` :math:`\limits_2`.
 
-* Both :math:`\elemtype_1` and :math:`\elemtype_2` are the same.
+* Both :math:`\reftype_1` and :math:`\reftype_2` are the same.
 
 .. math::
    \frac{
      \vdashlimitsmatch \limits_1 \matches \limits_2
    }{
-     \vdashexterntypematch \ETTABLE~(\limits_1~\elemtype) \matches \ETTABLE~(\limits_2~\elemtype)
+     \vdashexterntypematch \ETTABLE~(\limits_1~\reftype) \matches \ETTABLE~(\limits_2~\reftype)
    }
 
 
@@ -292,11 +292,11 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
 
 1. Let :math:`\tabletype` be the :ref:`table type <syntax-tabletype>` to allocate.
 
-2. Let :math:`(\{\LMIN~n, \LMAX~m^?\}~\elemtype)` be the structure of :ref:`table type <syntax-tabletype>` :math:`\tabletype`.
+2. Let :math:`(\{\LMIN~n, \LMAX~m^?\}~\reftype)` be the structure of :ref:`table type <syntax-tabletype>` :math:`\tabletype`.
 
 3. Let :math:`a` be the first free :ref:`table address <syntax-tableaddr>` in :math:`S`.
 
-4. Let :math:`\tableinst` be the :ref:`table instance <syntax-tableinst>` :math:`\{ \TIELEM~(\epsilon)^n, \TIMAX~m^? \}` with :math:`n` empty elements.
+4. Let :math:`\tableinst` be the :ref:`table instance <syntax-tableinst>` :math:`\{ \TIELEM~\REFNULL^n, \TIMAX~m^? \}` with :math:`n` empty elements.
 
 5. Append :math:`\tableinst` to the |STABLES| of :math:`S`.
 
@@ -306,9 +306,9 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
    \begin{array}{rlll}
    \alloctable(S, \tabletype) &=& S', \tableaddr \\[1ex]
    \mbox{where:} \hfill \\
-   \tabletype &=& \{\LMIN~n, \LMAX~m^?\}~\elemtype \\
+   \tabletype &=& \{\LMIN~n, \LMAX~m^?\}~\reftype \\
    \tableaddr &=& |S.\STABLES| \\
-   \tableinst &=& \{ \TIELEM~(\epsilon)^n, \TIMAX~m^? \} \\
+   \tableinst &=& \{ \TIELEM~\REFNULL^n, \TIMAX~m^? \} \\
    S' &=& S \compose \{\STABLES~\tableinst\} \\
    \end{array}
 
@@ -381,11 +381,11 @@ Growing :ref:`tables <syntax-tableinst>`
 
 2. If :math:`\tableinst.\TIMAX` is not empty and smaller than :math:`n` added to the length of :math:`\tableinst.\TIELEM`, then fail.
 
-3. Append :math:`n` empty elements to :math:`\tableinst.\TIELEM`.
+3. Append :math:`\REFNULL^n` to :math:`\tableinst.\TIELEM`.
 
 .. math::
    \begin{array}{rllll}
-   \growtable(\tableinst, n) &=& \tableinst \with \TIELEM = \tableinst.\TIELEM~(\epsilon)^n \\
+   \growtable(\tableinst, n) &=& \tableinst \with \TIELEM = \tableinst.\TIELEM~\REFNULL^n \\
      && (\iff \tableinst.\TIMAX = \epsilon \vee |\tableinst.\TIELEM| + n \leq \tableinst.\TIMAX) \\
    \end{array}
 

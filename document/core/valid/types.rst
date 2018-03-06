@@ -4,6 +4,8 @@ Types
 Most :ref:`types <syntax-type>` are universally valid.
 However, restrictions apply to :ref:`function types <syntax-functype>` as well as the :ref:`limits <syntax-limits>` of :ref:`table types <syntax-tabletype>` and :ref:`memory types <syntax-memtype>`, which must be checked during validation.
 
+On :ref:`value types <syntax-valtype>`, a simple notion of subtyping is defined.
+
 
 .. index:: limits
    pair: validation; limits
@@ -57,7 +59,7 @@ Function Types
    This restriction may be removed in future versions of WebAssembly.
 
 
-.. index:: table type, element type, limits
+.. index:: table type, reference type, limits
    pair: validation; table type
    single: abstract syntax; table type
 .. _valid-tabletype:
@@ -65,8 +67,8 @@ Function Types
 Table Types
 ~~~~~~~~~~~
 
-:math:`\limits~\elemtype`
-.........................
+:math:`\limits~\reftype`
+........................
 
 * The limits :math:`\limits` must be :ref:`valid <valid-limits>`.
 
@@ -76,7 +78,7 @@ Table Types
    \frac{
      \vdashlimits \limits \ok
    }{
-     \vdashtabletype \limits~\elemtype \ok
+     \vdashtabletype \limits~\reftype \ok
    }
 
 
@@ -121,3 +123,74 @@ Global Types
    }{
      \vdashglobaltype \mut~\valtype \ok
    }
+
+
+.. index:: subtyping
+
+Value Subtyping
+~~~~~~~~~~~~~~~
+
+.. index:: number type
+
+.. _match-numtype:
+
+Number Types
+............
+
+A :ref:`number type <syntax-numtype>` :math:`\numtype_1` matches a :ref:`number type <syntax-numtype>` :math:`\numtype_2` if and only if:
+
+* Both :math:`\numtype_1` and :math:`\numtype_2` are the same.
+
+.. math::
+   ~\\[-1ex]
+   \frac{
+   }{
+     \vdashnumtypematch \numtype \matches \numtype
+   }
+
+
+.. index:: reference type
+
+.. _match-reftype:
+
+Reference Types
+...............
+
+A :ref:`reference type <syntax-reftype>` :math:`\reftype_1` matches a :ref:`number type <syntax-reftype>` :math:`\reftype_2` if and only if:
+
+* Either both :math:`\reftype_1` and :math:`\reftype_2` are the same.
+
+* Or :math:`\reftype_1` is |NULLREF|.
+
+* Or :math:`\reftype_2` is |ANYREF|.
+
+.. math::
+   ~\\[-1ex]
+   \frac{
+   }{
+     \vdashreftypematch \reftype \matches \reftype
+   }
+   \qquad
+   \frac{
+   }{
+     \vdashreftypematch \NULLREF \matches \reftype
+   }
+   \qquad
+   \frac{
+   }{
+     \vdashreftypematch \reftype \matches \ANYREF
+   }
+
+
+.. index:: value type, number type, reference type
+
+.. _match-valtype:
+
+Value Types
+...........
+
+A :ref:`value type <syntax-valtype>` :math:`\valtype_1` matches a :ref:`number type <syntax-valtype>` :math:`\valtype_2` if and only if:
+
+* Either both :math:`\valtype_1` and :math:`\valtype_2` are :ref:`number types <syntax-numtype>` and :math:`\valtype_1` :ref:`matches <match-numtype>` :math:`\valtype_2`.
+
+* Or both :math:`\valtype_1` and :math:`\valtype_2` are :ref:`reference types <syntax-reftype>` and :math:`\valtype_1` :ref:`matches <match-reftype>` :math:`\valtype_2`.

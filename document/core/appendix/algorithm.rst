@@ -21,13 +21,24 @@ The algorithm is expressed in typed pseudo code whose semantics is intended to b
 Data Structures
 ~~~~~~~~~~~~~~~
 
+Types are representable as an enumeration.
+A simple subtyping check can be defined on them.
+
+.. code-block:: pseudo
+
+   type val_type = I32 | I64 | F32 | F64 | Anyref | Anyfunc | Eqref | Nullref
+
+   func is_ref(t : valtype) : bool =
+     return t = Anyref || t = Anyfunc || t = Eqref
+
+   func matches(t1 : val_type, t2 : val_type) : bool =
+     return t1 = t2 || (t1 = Nullref && is_ref(t2)) || (is_ref(t1) && t2 = Anyref)
+
 The algorithm uses two separate stacks: the *operand stack* and the *control stack*.
 The former tracks the :ref:`types <syntax-valtype>` of operand values on the :ref:`stack <stack>`,
 the latter surrounding :ref:`structured control instructions <syntax-instr-control>` and their associated :ref:`blocks <syntax-instr-control>`.
 
 .. code-block:: pseudo
-
-   type val_type = I32 | I64 | F32 | F64
 
    type opd_stack = stack(val_type | Unknown)
 
@@ -70,7 +81,7 @@ However, these variables are not manipulated directly by the main checking funct
      let actual = pop_opd()
      if (actual = Unknown) return expect
      if (expect = Unknown) return actual
-     error_if(actual =/= expect)
+     error_if(not matches(actual, expect))
      return actual
 
    func push_opds(types : list(val_type)) = foreach (t in types) push_opd(t)
@@ -84,7 +95,7 @@ That can occur after an unconditional branch, when the stack is typed :ref:`poly
 In that case, an unknown type is returned.
 
 A second function for popping an operand takes an expected type, which the actual operand type is checked against.
-The types may differ in case one of them is Unknown.
+The types may differ by subtyping or in case one of them is Unknown.
 The more specific type is returned.
 
 Finally, there are accumulative functions for pushing or popping multiple operand types.

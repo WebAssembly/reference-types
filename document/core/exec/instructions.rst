@@ -43,7 +43,7 @@ Where the underlying operators are non-deterministic, because they may return on
 1. Push the value :math:`t.\CONST~c` to the stack.
 
 .. note::
-   No formal reduction rule is required for this instruction, since |CONST| instructions coincide with :ref:`values <syntax-val>`.
+   No formal reduction rule is required for this instruction, since |CONST| instructions already are :ref:`values <syntax-val>`.
 
 
 .. _exec-unop:
@@ -171,6 +171,79 @@ Where the underlying operators are non-deterministic, because they may return on
      & (\iff c_2 \in \cvtop_{t_1,t_2}(c_1)) \\
    (t\K{.}\CONST~c_1)~t_2\K{.}\cvtop\K{/}t_1 &\stepto& \TRAP
      & (\iff \cvtop_{t_1,t_2}(c_1) = \{\})
+   \end{array}
+
+
+.. index:: reference instructions, reference
+   pair: execution; instruction
+   single: abstract syntax; instruction
+.. _exec-instr-ref:
+
+Reference Instructions
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. _exec-ref_null:
+
+:math:`\REFNULL`
+................
+
+1. Push the value :math:`\REFNULL` to the stack.
+
+.. note::
+   No formal reduction rule is required for this instruction, since the |REFNULL| instruction is already a :ref:`value <syntax-val>`.
+
+
+.. _exec-ref_isnull:
+
+:math:`\REFISNULL`
+..................
+
+1. Assert: due to :ref:`validation <valid-ref_isnull>`, a :ref:`reference value <syntax-ref>` is on the top of the stack.
+
+2. Pop the value :math:`\val` from the stack.
+
+3. If :math:`\val` is |REFNULL|, then:
+
+   a. Push the value :math:`\I32.\CONST~1` to the stack.
+
+4. Else:
+
+   a. Push the value :math:`\I32.\CONST~0` to the stack.
+
+.. math::
+   \begin{array}{lcl@{\qquad}l}
+   \val~\REFISNULL &\stepto& \I32.\CONST~1
+     & (\iff \val = \REFNULL) \\
+   \val~\REFISNULL &\stepto& \I32.\CONST~0
+     & (\iff \val \neq \REFNULL) \\
+   \end{array}
+
+
+.. _exec-ref_eq:
+
+:math:`\REFEQ`
+..............
+
+1. Assert: due to :ref:`validation <valid-ref_eq>`, two :ref:`reference values <syntax-ref>` are on the top of the stack.
+
+2. Pop the value :math:`\val_2` from the stack.
+
+3. Pop the value :math:`\val_1` from the stack.
+
+3. If :math:`\val_1` is the same as :math:`\val_2`, then:
+
+   a. Push the value :math:`\I32.\CONST~1` to the stack.
+
+4. Else:
+
+   a. Push the value :math:`\I32.\CONST~0` to the stack.
+
+.. math::
+   \begin{array}{lcl@{\qquad}l}
+   \val_1~\val_2~\REFEQ &\stepto& \I32.\CONST~1
+     & (\iff \val_1 = \val_2) \\
+   \val_1~\val_2~\REFEQ &\stepto& \I32.\CONST~0
+     & (\iff \val_1 \neq \val_2) \\
    \end{array}
 
 
@@ -363,7 +436,101 @@ Variable Instructions
    :ref:`Validation <valid-set_global>` ensures that the global is, in fact, marked as mutable.
 
 
-.. index:: memory instruction, memory index, store, frame, address, memory address, memory instance, store, frame, value, integer, limits, value type, bit width
+.. index:: table instruction, table index, store, frame, address, table address, table instance, value, integer, limits, reference, reference type
+   pair: execution; instruction
+   single: abstract syntax; instruction
+.. _exec-instr-table:
+
+Table Instructions
+~~~~~~~~~~~~~~~~~~
+
+.. _exec-get_table:
+
+:math:`\GETTABLE~x`
+...................
+
+1. Let :math:`F` be the :ref:`current <exec-notation-textual>` :ref:`frame <syntax-frame>`.
+
+2. Assert: due to :ref:`validation <valid-get_table>`, :math:`F.\AMODULE.\MITABLES[x]` exists.
+
+3. Let :math:`a` be the :ref:`table address <syntax-tableaddr>` :math:`F.\AMODULE.\MITABLES[x]`.
+
+4. Assert: due to :ref:`validation <valid-get_table>`, :math:`S.\STABLES[a]` exists.
+
+5. Let :math:`\X{tab}` be the :ref:`table instance <syntax-tableinst>` :math:`S.\STABLES[a]`.
+
+6. Assert: due to :ref:`validation <valid-get_table>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
+
+7. Pop the value :math:`\I32.\CONST~i` from the stack.
+
+8. If :math:`i` is larger than the length of :math:`\X{tab}.\TIELEM`, then:
+
+   a. Trap.
+
+6. Let :math:`\val` be the value :math:`\X{tab}.\TIELEM[i]`.
+
+7. Push the value :math:`\val` to the stack.
+
+.. math::
+   \begin{array}{l}
+   \begin{array}{lcl@{\qquad}l}
+   S; F; (\I32.\CONST~i)~(\GETTABLE~x) &\stepto& S; F; \val
+   \end{array}
+   \\ \qquad
+     (\iff S.\STABLES[F.\AMODULE.\MITABLES[x]][i] = \val) \\
+   \begin{array}{lcl@{\qquad}l}
+   S; F; (\I32.\CONST~i)~(\GETTABLE~x) &\stepto& S; F; \TRAP
+   \end{array}
+   \\ \qquad
+     (\otherwise) \\
+   \end{array}
+
+
+.. _exec-set_table:
+
+:math:`\SETTABLE~x`
+...................
+
+1. Let :math:`F` be the :ref:`current <exec-notation-textual>` :ref:`frame <syntax-frame>`.
+
+2. Assert: due to :ref:`validation <valid-set_table>`, :math:`F.\AMODULE.\MITABLES[x]` exists.
+
+3. Let :math:`a` be the :ref:`table address <syntax-tableaddr>` :math:`F.\AMODULE.\MITABLES[x]`.
+
+4. Assert: due to :ref:`validation <valid-set_table>`, :math:`S.\STABLES[a]` exists.
+
+5. Let :math:`\X{tab}` be the :ref:`table instance <syntax-tableinst>` :math:`S.\STABLES[a]`.
+
+6. Assert: due to :ref:`validation <valid-set_table>`, a :ref:`reference value <syntax-ref>` is on the top of the stack.
+
+7. Pop the value :math:`\val` from the stack.
+
+8. Assert: due to :ref:`validation <valid-set_table>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
+
+9. Pop the value :math:`\I32.\CONST~i` from the stack.
+
+10. If :math:`i` is larger than the length of :math:`\X{tab}.\TIELEM`, then:
+
+    a. Trap.
+
+11. Replace the element :math:`\X{tab}.\TIELEM[i]` with :math:`\val`.
+
+.. math::
+   \begin{array}{l}
+   \begin{array}{lcl@{\qquad}l}
+   S; F; (\I32.\CONST~i)~\val~(\SETTABLE~x) &\stepto& S'; F; \epsilon
+   \end{array}
+   \\ \qquad
+     (\iff S' = S \with \STABLES[F.\AMODULE.\MITABLES[x]][i] = \val) \\
+   \begin{array}{lcl@{\qquad}l}
+   S; F; (\I32.\CONST~i)~\val~(\SETTABLE~x) &\stepto& S; F; \TRAP
+   \end{array}
+   \\ \qquad
+     (\otherwise) \\
+   \end{array}
+
+
+.. index:: memory instruction, memory index, store, frame, address, memory address, memory instance, value, integer, limits, value type, bit width
    pair: execution; instruction
    single: abstract syntax; instruction
 .. _exec-memarg:
@@ -512,7 +679,7 @@ Memory Instructions
      \begin{array}[t]{@{}r@{~}l@{}}
      (\iff & \X{ea} = i + \memarg.\OFFSET \\
      \wedge & \X{ea} + |t|/8 \leq |S.\SMEMS[F.\AMODULE.\MIMEMS[0]].\MIDATA| \\
-     \wedge & S' = S \with \SMEMS[F.\AMODULE.\MIMEMS[0]].\MIDATA[\X{ea} \slice |t|/8] = \bytes_t(c)
+     \wedge & S' = S \with \SMEMS[F.\AMODULE.\MIMEMS[0]].\MIDATA[\X{ea} \slice |t|/8] = \bytes_t(c))
      \end{array}
    \\[1ex]
    \begin{array}{lcl@{\qquad}l}
@@ -870,22 +1037,22 @@ Control Instructions
 
 .. _exec-call_indirect:
 
-:math:`\CALLINDIRECT~x`
-.......................
+:math:`\CALLINDIRECT~x~y`
+.........................
 
 1. Let :math:`F` be the :ref:`current <exec-notation-textual>` :ref:`frame <syntax-frame>`.
 
-2. Assert: due to :ref:`validation <valid-call_indirect>`, :math:`F.\AMODULE.\MITABLES[0]` exists.
+2. Assert: due to :ref:`validation <valid-call_indirect>`, :math:`F.\AMODULE.\MITABLES[x]` exists.
 
-3. Let :math:`\X{ta}` be the :ref:`table address <syntax-tableaddr>` :math:`F.\AMODULE.\MITABLES[0]`.
+3. Let :math:`\X{ta}` be the :ref:`table address <syntax-tableaddr>` :math:`F.\AMODULE.\MITABLES[x]`.
 
 4. Assert: due to :ref:`validation <valid-call_indirect>`, :math:`S.\STABLES[\X{ta}]` exists.
 
 5. Let :math:`\X{tab}` be the :ref:`table instance <syntax-tableinst>` :math:`S.\STABLES[\X{ta}]`.
 
-6. Assert: due to :ref:`validation <valid-call_indirect>`, :math:`F.\AMODULE.\MITYPES[x]` exists.
+6. Assert: due to :ref:`validation <valid-call_indirect>`, :math:`F.\AMODULE.\MITYPES[y]` exists.
 
-7. Let :math:`\X{ft}_{\F{expect}}` be the :ref:`function type <syntax-functype>` :math:`F.\AMODULE.\MITYPES[x]`.
+7. Let :math:`\X{ft}_{\F{expect}}` be the :ref:`function type <syntax-functype>` :math:`F.\AMODULE.\MITYPES[y]`.
 
 8. Assert: due to :ref:`validation <valid-call_indirect>`, a value with :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
 
@@ -917,17 +1084,17 @@ Control Instructions
    ~\\[-1ex]
    \begin{array}{l}
    \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~i)~(\CALLINDIRECT~x) &\stepto& S; F; (\INVOKE~a)
+   S; F; (\I32.\CONST~i)~(\CALLINDIRECT~x~y) &\stepto& S; F; (\INVOKE~a)
    \end{array}
    \\ \qquad
      \begin{array}[t]{@{}r@{~}l@{}}
-     (\iff & S.\STABLES[F.\AMODULE.\MITABLES[0]].\TIELEM[i] = a \\
+     (\iff & S.\STABLES[F.\AMODULE.\MITABLES[x]].\TIELEM[i] = a \\
      \wedge & S.\SFUNCS[a] = f \\
-     \wedge & F.\AMODULE.\MITYPES[x] = f.\FITYPE)
+     \wedge & F.\AMODULE.\MITYPES[y] = f.\FITYPE)
      \end{array}
    \\[1ex]
    \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~i)~(\CALLINDIRECT~x) &\stepto& S; F; \TRAP
+   S; F; (\I32.\CONST~i)~(\CALLINDIRECT~x~y) &\stepto& S; F; \TRAP
    \end{array}
    \\ \qquad
      (\otherwise)
