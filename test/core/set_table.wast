@@ -33,14 +33,14 @@
 )
 
 (assert_return (invoke "get-eqref" (i32.const 0)) (ref.null))
-(assert_return (invoke "set-eqref" (i32.const 0) (ref 1)))
-(assert_return (invoke "get-eqref" (i32.const 0)) (ref 1))
+(assert_return (invoke "set-eqref" (i32.const 0) (ref.host 1)))
+(assert_return (invoke "get-eqref" (i32.const 0)) (ref.host 1))
 (assert_return (invoke "set-eqref" (i32.const 0) (ref.null)))
 (assert_return (invoke "get-eqref" (i32.const 0)) (ref.null))
 
 (assert_return (invoke "get-anyref" (i32.const 0)) (ref.null))
-(assert_return (invoke "set-anyref" (i32.const 0) (ref 1)))
-(assert_return (invoke "get-anyref" (i32.const 0)) (ref 1))
+(assert_return (invoke "set-anyref" (i32.const 0) (ref.host 1)))
+(assert_return (invoke "get-anyref" (i32.const 0)) (ref.host 1))
 (assert_return (invoke "set-anyref" (i32.const 0) (ref.null)))
 (assert_return (invoke "get-anyref" (i32.const 0)) (ref.null))
 
@@ -57,9 +57,9 @@
 (assert_trap (invoke "set-anyref" (i32.const -1) (ref.null)) "out of bounds")
 (assert_trap (invoke "set-anyfunc" (i32.const -1) (ref.null)) "out of bounds")
 
-(assert_trap (invoke "set-eqref" (i32.const 2) (ref 0)) "out of bounds")
-(assert_trap (invoke "set-anyref" (i32.const 2) (ref 0)) "out of bounds")
+(assert_trap (invoke "set-eqref" (i32.const 2) (ref.host 0)) "out of bounds")
+(assert_trap (invoke "set-anyref" (i32.const 2) (ref.host 0)) "out of bounds")
 (assert_trap (invoke "set-anyfunc-from" (i32.const 3) (i32.const 1)) "out of bounds")
-(assert_trap (invoke "set-eqref" (i32.const -1) (ref 0)) "out of bounds")
-(assert_trap (invoke "set-anyref" (i32.const -1) (ref 0)) "out of bounds")
+(assert_trap (invoke "set-eqref" (i32.const -1) (ref.host 0)) "out of bounds")
+(assert_trap (invoke "set-anyref" (i32.const -1) (ref.host 0)) "out of bounds")
 (assert_trap (invoke "set-anyfunc-from" (i32.const -1) (i32.const 1)) "out of bounds")

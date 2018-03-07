@@ -160,7 +160,6 @@ rule token = parse
   | '"'character*'\\'_
     { error_nest (Lexing.lexeme_end_p lexbuf) lexbuf "illegal escape" }
 
-  | "ref" { REF }
   | "eqref" { EQREF }
   | "anyref" { ANYREF }
   | "anyfunc" { ANYFUNC }
@@ -180,6 +179,7 @@ rule token = parse
           f64_const (n @@ s.at), Values.F64 n))
     }
   | "ref.null" { REF_NULL }
+  | "ref.host" { REF_HOST }
   | "ref.isnull" { REF_ISNULL }
   | "ref.eq" { REF_EQ }
 

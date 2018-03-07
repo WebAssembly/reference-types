@@ -147,12 +147,12 @@ let inline_type_explicit (c : context) x ft at =
 
 %token LPAR RPAR
 %token NAT INT FLOAT STRING VAR
-%token REF EQREF ANYREF ANYFUNC NUM_TYPE MUT
+%token EQREF ANYREF ANYFUNC NUM_TYPE MUT
 %token NOP DROP BLOCK END IF THEN ELSE SELECT LOOP BR BR_IF BR_TABLE
 %token CALL CALL_INDIRECT RETURN
 %token GET_LOCAL SET_LOCAL TEE_LOCAL GET_GLOBAL SET_GLOBAL GET_TABLE SET_TABLE
 %token LOAD STORE OFFSET_EQ_NAT ALIGN_EQ_NAT
-%token REF_NULL REF_ISNULL REF_EQ
+%token REF_NULL REF_HOST REF_ISNULL REF_EQ
 %token CONST UNARY BINARY TEST COMPARE CONVERT
 %token UNREACHABLE CURRENT_MEMORY GROW_MEMORY
 %token FUNC START TYPE PARAM RESULT LOCAL GLOBAL
@@ -811,7 +811,7 @@ meta :
 const :
   | LPAR CONST literal RPAR { Values.Num (snd (literal $2 $3)) @@ at () }
   | LPAR REF_NULL RPAR { Values.Ref Values.NullRef @@ at () }
-  | LPAR REF NAT RPAR { Values.Ref (HostRef (nat32 $3 (ati 3))) @@ at () }
+  | LPAR REF_HOST NAT RPAR { Values.Ref (HostRef (nat32 $3 (ati 3))) @@ at () }
 
 const_list :
   | /* empty */ { [] }

@@ -395,7 +395,7 @@ let value v =
   | Num (Values.F32 z) -> Node ("f32.const " ^ F32.to_string z, [])
   | Num (Values.F64 z) -> Node ("f64.const " ^ F64.to_string z, [])
   | Ref NullRef -> Node ("ref.null", [])
-  | Ref (HostRef n) -> Node ("ref " ^ Int32.to_string n, [])
+  | Ref (HostRef n) -> Node ("ref.host " ^ Int32.to_string n, [])
   | _ -> assert false
 
 let definition mode x_opt def =

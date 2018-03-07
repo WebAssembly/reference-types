@@ -39,11 +39,11 @@
 (assert_return (invoke "anyref" (ref.null)) (i32.const 1))
 (assert_return (invoke "anyfunc" (ref.null)) (i32.const 1))
 
-(assert_return (invoke "eqref" (ref 1)) (i32.const 0))
-(assert_return (invoke "anyref" (ref 1)) (i32.const 0))
-(assert_return (invoke "anyfunc" (ref 1)) (i32.const 0))
+(assert_return (invoke "eqref" (ref.host 1)) (i32.const 0))
+(assert_return (invoke "anyref" (ref.host 1)) (i32.const 0))
+(assert_return (invoke "anyfunc" (ref.host 1)) (i32.const 0))
 
-(invoke "init" (ref 0))
+(invoke "init" (ref.host 0))
 
 (assert_return (invoke "eqref-elem" (i32.const 0)) (i32.const 1))
 (assert_return (invoke "anyref-elem" (i32.const 0)) (i32.const 1))

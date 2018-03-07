@@ -25,13 +25,13 @@
   )
 )
 
-(invoke "init" (ref 1))
+(invoke "init" (ref.host 1))
 
 (assert_return (invoke "get-eqref" (i32.const 0)) (ref.null))
-(assert_return (invoke "get-eqref" (i32.const 1)) (ref 1))
+(assert_return (invoke "get-eqref" (i32.const 1)) (ref.host 1))
 
 (assert_return (invoke "get-anyref" (i32.const 0)) (ref.null))
-(assert_return (invoke "get-anyref" (i32.const 1)) (ref 1))
+(assert_return (invoke "get-anyref" (i32.const 1)) (ref.host 1))
 
 (assert_return (invoke "get-anyfunc" (i32.const 0)) (ref.null))
 (assert_return (invoke "isnull-anyfunc" (i32.const 1)) (i32.const 0))

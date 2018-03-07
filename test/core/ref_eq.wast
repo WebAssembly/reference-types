@@ -15,20 +15,20 @@
 )
 
 (assert_return (invoke "eq" (ref.null) (ref.null)) (i32.const 1))
-(assert_return (invoke "eq" (ref 1) (ref 1)) (i32.const 1))
+(assert_return (invoke "eq" (ref.host 1) (ref.host 1)) (i32.const 1))
 
-(assert_return (invoke "eq" (ref.null) (ref 0)) (i32.const 0))
-(assert_return (invoke "eq" (ref 0) (ref.null)) (i32.const 0))
-(assert_return (invoke "eq" (ref 1) (ref 2)) (i32.const 0))
+(assert_return (invoke "eq" (ref.null) (ref.host 0)) (i32.const 0))
+(assert_return (invoke "eq" (ref.host 0) (ref.null)) (i32.const 0))
+(assert_return (invoke "eq" (ref.host 1) (ref.host 2)) (i32.const 0))
 
-(invoke "init" (ref 0))
+(invoke "init" (ref.host 0))
 
 (assert_return (invoke "eq-elem" (i32.const 0) (ref.null)) (i32.const 1))
-(assert_return (invoke "eq-elem" (i32.const 1) (ref 0)) (i32.const 1))
+(assert_return (invoke "eq-elem" (i32.const 1) (ref.host 0)) (i32.const 1))
 
-(assert_return (invoke "eq-elem" (i32.const 0) (ref 0)) (i32.const 0))
+(assert_return (invoke "eq-elem" (i32.const 0) (ref.host 0)) (i32.const 0))
 (assert_return (invoke "eq-elem" (i32.const 1) (ref.null)) (i32.const 0))
-(assert_return (invoke "eq-elem" (i32.const 1) (ref 1)) (i32.const 0))
+(assert_return (invoke "eq-elem" (i32.const 1) (ref.host 1)) (i32.const 0))
 
 
 (assert_invalid

@@ -172,8 +172,8 @@ float:  <num>.<num>?(e|E <num>)? | 0x<hexnum>.<hexnum>?(p|P <num>)?
 name:   $(<letter> | <digit> | _ | . | + | - | * | / | \ | ^ | ~ | = | < | > | ! | ? | @ | # | $ | % | & | | | : | ' | `)+
 string: "(<char> | \n | \t | \\ | \' | \" | \<hex><hex> | \u{<hex>+})*"
 
-value:  <int> | <float>
-var:    <nat> | <name>
+num: <int> | <float>
+var: <nat> | <name>
 
 unop:  ctz | clz | popcnt | ...
 binop: add | sub | mul | ...
@@ -233,7 +233,7 @@ op:
   ref.null
   ref.isnull
   ref.eq
-  <num_type>.const <value>
+  <num_type>.const <num>
   <num_type>.<unop>
   <num_type>.<binop>
   <num_type>.<testop>
@@ -326,11 +326,16 @@ module:
   ( module <name>? quote <string>* )         ;; module quoted in text (may be malformed)
 
 action:
-  ( invoke <name>? <string> <expr>* )        ;; invoke function export
+  ( invoke <name>? <string> <const>* )       ;; invoke function export
   ( get <name>? <string> )                   ;; get global export
 
+const:
+  ( <num_type>.const <num> )                 ;; number value
+  ( ref.null )                               ;; null reference
+  ( ref.host <nat> )                         ;; host reference
+
 assertion:
-  ( assert_return <action> <expr>* )         ;; assert action has expected results
+  ( assert_return <action> <const>* )        ;; assert action has expected results
   ( assert_return_canonical_nan <action> )   ;; assert action results in NaN in a canonical form
   ( assert_return_arithmetic_nan <action> )  ;; assert action results in NaN with 1 in MSB of fraction field
   ( assert_trap <action> <failure> )         ;; assert action traps with given failure string
