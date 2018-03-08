@@ -108,7 +108,7 @@
 <span id="syntax-runtime"></span><span id="index-0"></span><h1>Runtime Structure<a class="headerlink" href="#runtime-structure" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference internal" href="#store"><span class="std std-ref">Store</span></a>, <a class="reference internal" href="#stack"><span class="std std-ref">stack</span></a>, and other <em>runtime structure</em> forming the WebAssembly abstract machine, such as <a class="reference internal" href="#syntax-val"><span class="std std-ref">values</span></a> or <a class="reference internal" href="#syntax-moduleinst"><span class="std std-ref">module instances</span></a>, are made precise in terms of additional auxiliary syntax.</p>
 <div class="section" id="values">
-<span id="syntax-val"></span><span id="syntax-ref-host"></span><span id="syntax-ref-func"></span><span id="syntax-ref"></span><span id="syntax-num"></span><span id="index-1"></span><h2>Values<a class="headerlink" href="#values" title="Permalink to this headline">¶</a></h2>
+<span id="syntax-val"></span><span id="syntax-ref-host"></span><span id="syntax-ref-func"></span><span id="syntax-ref"></span><span id="syntax-num"></span><span id="default-val"></span><span id="index-1"></span><h2>Values<a class="headerlink" href="#values" title="Permalink to this headline">¶</a></h2>
 <p>WebAssembly computations manipulate <em>values</em> of either the four basic <a class="reference internal" href="../syntax/types.html#syntax-numtype"><span class="std std-ref">number types</span></a>, i.e., <a class="reference internal" href="../syntax/values.html#syntax-int"><span class="std std-ref">integers</span></a> and <a class="reference internal" href="../syntax/values.html#syntax-float"><span class="std std-ref">floating-point data</span></a> of 32 or 64 bit width each, or of <a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">reference type</span></a>.</p>
 <p>In most places of the semantics, values of different types can occur.
 In order to avoid ambiguities, values are therefore represented with an abstract syntax that makes their type explicit.
@@ -134,6 +134,13 @@ or <em>host references</em> pointing to an uninterpreted form of <a class="refer
 <p class="first admonition-title">Note</p>
 <p class="last">Future versions of WebAssembly may add additional forms of reference.</p>
 </div>
+<p>Each <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> has an associated <em>default value</em>;
+it is the respective value <span class="math">\(0\)</span> for <a class="reference internal" href="../syntax/types.html#syntax-numtype"><span class="std std-ref">number types</span></a> and null for <a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">reference types</span></a>.</p>
+<div class="math">
+\[\begin{split}\begin{array}{lcl&#64;{\qquad}l}
+\href{../exec/runtime.html#default-val}{\mathrm{default}}_t &amp;=&amp; t{.}\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~0 &amp; (\mathrel{\mbox{if}} t = \href{../syntax/types.html#syntax-numtype}{\mathit{numtype}}) \\
+\href{../exec/runtime.html#default-val}{\mathrm{default}}_t &amp;=&amp; \href{../syntax/instructions.html#syntax-instr-ref}{\mathsf{ref{.}null}} &amp; (\mathrel{\mbox{if}} t = \href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}) \\
+\end{array}\end{split}\]</div>
 <div class="section" id="convention">
 <h3>Convention<a class="headerlink" href="#convention" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
