@@ -463,7 +463,7 @@ Table Instructions
 
 7. Pop the value :math:`\I32.\CONST~i` from the stack.
 
-8. If :math:`i` is larger than the length of :math:`\X{tab}.\TIELEM`, then:
+8. If :math:`i` is not smaller than the length of :math:`\X{tab}.\TIELEM`, then:
 
    a. Trap.
 
@@ -509,7 +509,7 @@ Table Instructions
 
 9. Pop the value :math:`\I32.\CONST~i` from the stack.
 
-10. If :math:`i` is larger than the length of :math:`\X{tab}.\TIELEM`, then:
+10. If :math:`i` is not smaller than the length of :math:`\X{tab}.\TIELEM`, then:
 
     a. Trap.
 
@@ -1062,23 +1062,27 @@ Control Instructions
 
     a. Trap.
 
-11. If :math:`\X{tab}.\TIELEM[i]` is uninitialized, then:
+11. Let :math:`r` be the :ref:`reference <syntax-ref>` :math:`\X{tab}.\TIELEM[i]`.
+
+12. If :math:`r` is |REFNULL|, then:
 
     a. Trap.
 
-12. Let :math:`a` be the :ref:`function address <syntax-funcaddr>` :math:`\X{tab}.\TIELEM[i]`.
+13. Assert: due to :ref:`validation of table mutation <valid-set_table>`, :math:`r` is a :ref:`function reference <syntax-ref_func>`.
 
-13. Assert: due to :ref:`validation <valid-call_indirect>`, :math:`S.\SFUNCS[a]` exists.
+14. Let :math:`\REFFUNC~a` be the :ref:`function reference <syntax-ref_func>` :math:`r`.
 
-14. Let :math:`\X{f}` be the :ref:`function instance <syntax-funcinst>` :math:`S.\SFUNCS[a]`.
+15. Assert: due to :ref:`validation of table mutation <valid-set_table>`, :math:`S.\SFUNCS[a]` exists.
 
-15. Let :math:`\X{ft}_{\F{actual}}` be the :ref:`function type <syntax-functype>` :math:`\X{f}.\FITYPE`.
+16. Let :math:`\X{f}` be the :ref:`function instance <syntax-funcinst>` :math:`S.\SFUNCS[a]`.
 
-16. If :math:`\X{ft}_{\F{actual}}` and :math:`\X{ft}_{\F{expect}}` differ, then:
+17. Let :math:`\X{ft}_{\F{actual}}` be the :ref:`function type <syntax-functype>` :math:`\X{f}.\FITYPE`.
+
+18. If :math:`\X{ft}_{\F{actual}}` and :math:`\X{ft}_{\F{expect}}` differ, then:
 
     a. Trap.
 
-17. :ref:`Invoke <exec-invoke>` the function instance at address :math:`a`.
+19. :ref:`Invoke <exec-invoke>` the function instance at address :math:`a`.
 
 .. math::
    ~\\[-1ex]
@@ -1088,7 +1092,7 @@ Control Instructions
    \end{array}
    \\ \qquad
      \begin{array}[t]{@{}r@{~}l@{}}
-     (\iff & S.\STABLES[F.\AMODULE.\MITABLES[x]].\TIELEM[i] = a \\
+     (\iff & S.\STABLES[F.\AMODULE.\MITABLES[x]].\TIELEM[i] = \REFFUNC~a \\
      \wedge & S.\SFUNCS[a] = f \\
      \wedge & F.\AMODULE.\MITYPES[y] = f.\FITYPE)
      \end{array}

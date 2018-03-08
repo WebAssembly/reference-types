@@ -368,7 +368,7 @@ Table Instructions
 
 * Let :math:`\limits~t` be the :ref:`table type <syntax-tabletype>` :math:`C.\CTABLES[x]`.
 
-* Then the instruction is valid with type :math:`[] \to [t]`.
+* Then the instruction is valid with type :math:`[\I32] \to [t]`.
 
 .. math::
    \frac{
@@ -387,7 +387,7 @@ Table Instructions
 
 * Let :math:`\limits~t` be the :ref:`table type <syntax-tabletype>` :math:`C.\CTABLES[x]`.
 
-* Then the instruction is valid with type :math:`[t] \to []`.
+* Then the instruction is valid with type :math:`[\I32~t] \to []`.
 
 .. math::
    \frac{
@@ -824,7 +824,7 @@ Non-empty Instruction Sequence: :math:`\instr^\ast~\instr_N`
    \frac{
      C \vdashinstrseq \instr^\ast : [t_1^\ast] \to [t_0^\ast~{t'}^\ast]
      \qquad
-     (\vdashvaltypematch t' \leq t)^\ast
+     (\vdashvaltypematch t' \matchesvaltype t)^\ast
      \qquad
      C \vdashinstr \instr_N : [t^\ast] \to [t_3^\ast]
    }{

@@ -126,7 +126,7 @@ Limits
    \frac{
      n_1 \geq n_2
    }{
-     \vdashlimitsmatch \{ \LMIN~n_1, \LMAX~m_1^? \} \matches \{ \LMIN~n_2, \LMAX~\epsilon \}
+     \vdashlimitsmatch \{ \LMIN~n_1, \LMAX~m_1^? \} \matcheslimits \{ \LMIN~n_2, \LMAX~\epsilon \}
    }
    \quad
    \frac{
@@ -134,7 +134,7 @@ Limits
      \qquad
      m_1 \leq m_2
    }{
-     \vdashlimitsmatch \{ \LMIN~n_1, \LMAX~m_1 \} \matches \{ \LMIN~n_2, \LMAX~m_2 \}
+     \vdashlimitsmatch \{ \LMIN~n_1, \LMAX~m_1 \} \matcheslimits \{ \LMIN~n_2, \LMAX~m_2 \}
    }
 
 
@@ -154,7 +154,7 @@ An :ref:`external type <syntax-externtype>` :math:`\ETFUNC~\functype_1` matches 
    ~\\[-1ex]
    \frac{
    }{
-     \vdashexterntypematch \ETFUNC~\functype \matches \ETFUNC~\functype
+     \vdashexterntypematch \ETFUNC~\functype \matchesexterntype \ETFUNC~\functype
    }
 
 
@@ -172,9 +172,9 @@ An :ref:`external type <syntax-externtype>` :math:`\ETTABLE~(\limits_1~\reftype_
 
 .. math::
    \frac{
-     \vdashlimitsmatch \limits_1 \matches \limits_2
+     \vdashlimitsmatch \limits_1 \matcheslimits \limits_2
    }{
-     \vdashexterntypematch \ETTABLE~(\limits_1~\reftype) \matches \ETTABLE~(\limits_2~\reftype)
+     \vdashexterntypematch \ETTABLE~(\limits_1~\reftype) \matchesexterntype \ETTABLE~(\limits_2~\reftype)
    }
 
 
@@ -190,9 +190,9 @@ An :ref:`external type <syntax-externtype>` :math:`\ETMEM~\limits_1` matches :ma
 
 .. math::
    \frac{
-     \vdashlimitsmatch \limits_1 \matches \limits_2
+     \vdashlimitsmatch \limits_1 \matcheslimits \limits_2
    }{
-     \vdashexterntypematch \ETMEM~\limits_1 \matches \ETMEM~\limits_2
+     \vdashexterntypematch \ETMEM~\limits_1 \matchesexterntype \ETMEM~\limits_2
    }
 
 
@@ -210,7 +210,7 @@ An :ref:`external type <syntax-externtype>` :math:`\ETGLOBAL~\globaltype_1` matc
    ~\\[-1ex]
    \frac{
    }{
-     \vdashexterntypematch \ETGLOBAL~\globaltype \matches \ETGLOBAL~\globaltype
+     \vdashexterntypematch \ETGLOBAL~\globaltype \matchesexterntype \ETGLOBAL~\globaltype
    }
 
 
@@ -651,7 +651,7 @@ It is up to the :ref:`embedder <embedder>` to define how such conditions are rep
 
        ii. Let :math:`\funcaddr_{ij}` be the :ref:`function address <syntax-funcaddr>` :math:`\moduleinst.\MIFUNCS[\funcidx_{ij}]`.
 
-       iii. Replace :math:`\tableinst_i.\TIELEM[\X{eo}_i + j]` with :math:`\funcaddr_{ij}`.
+       iii. Replace :math:`\tableinst_i.\TIELEM[\X{eo}_i + j]` with :math:`\REFFUNC~\funcaddr_{ij}`.
 
 14. For each :ref:`data segment <syntax-data>` :math:`\data_i` in :math:`\module.\MDATA`, do:
 
@@ -680,7 +680,7 @@ It is up to the :ref:`embedder <embedder>` to define how such conditions are rep
    &(\iff
      & \vdashmodule \module : \externtype_{\F{im}}^n \to \externtype_{\F{ex}}^\ast \\
      &\wedge& (S \vdashexternval \externval : \externtype)^n \\
-     &\wedge& (\vdashexterntypematch \externtype \matches \externtype_{\F{im}})^n \\[1ex]
+     &\wedge& (\vdashexterntypematch \externtype \matchesexterntype \externtype_{\F{im}})^n \\[1ex]
      &\wedge& \module.\MGLOBALS = \global^\ast \\
      &\wedge& \module.\MELEM = \elem^\ast \\
      &\wedge& \module.\MDATA = \data^\ast \\
@@ -701,7 +701,7 @@ It is up to the :ref:`embedder <embedder>` to define how such conditions are rep
      S; F; \epsilon \\
    S; F; \INITELEM~a~i~(x_0~x^\ast) &\stepto&
      S'; F; \INITELEM~a~(i+1)~x^\ast \\ &&
-     (\iff S' = S \with \STABLES[a].\TIELEM[i] = F.\AMODULE.\MIFUNCS[x_0])
+     (\iff S' = S \with \STABLES[a].\TIELEM[i] = \REFFUNC~F.\AMODULE.\MIFUNCS[x_0])
    \\[1ex]
    S; F; \INITDATA~a~i~\epsilon &\stepto&
      S; F; \epsilon \\

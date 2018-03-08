@@ -49,9 +49,7 @@ Conventions
 Reference Types
 ~~~~~~~~~~~~~~~
 
-*Reference types* classify 
-
-the individual values that WebAssembly code can compute with and the values that a variable accepts.
+*Reference types* classify first-class references to objects in the runtime :ref:`store <store>`.
 
 .. math::
    \begin{array}{llll}
@@ -64,7 +62,7 @@ The type |ANYREF| denotes the infinite union of all references, and thereby a :r
 The type |ANYFUNC| denotes the infinite union of all references to :ref:`functions <syntax-func>`, regardless of their :ref:`function types <syntax-functype>`.
 
 The type |EQREF| denotes the infinite union of all references that can be compared for equality;
-in order to avoid exposing implementation details, some reference types, such as |ANYFUNC|, do not admit equality, and therefor are not :ref:`subtypes <match-reftype>` of |EQREF|.
+in order to avoid exposing implementation details, some reference types, such as |ANYFUNC|, do not admit equality, and therefore are not :ref:`subtypes <match-reftype>` of |EQREF|.
 
 The type |NULLREF| only contains a single value: the :ref:`null <syntax-ref_null>` reference.
 It is a :ref:`subtype <match-reftype>` of all other reference types.

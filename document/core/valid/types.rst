@@ -145,7 +145,7 @@ A :ref:`number type <syntax-numtype>` :math:`\numtype_1` matches a :ref:`number 
    ~\\[-1ex]
    \frac{
    }{
-     \vdashnumtypematch \numtype \matches \numtype
+     \vdashnumtypematch \numtype \matchesvaltype \numtype
    }
 
 
@@ -168,17 +168,17 @@ A :ref:`reference type <syntax-reftype>` :math:`\reftype_1` matches a :ref:`numb
    ~\\[-1ex]
    \frac{
    }{
-     \vdashreftypematch \reftype \matches \reftype
+     \vdashreftypematch \reftype \matchesvaltype \reftype
    }
    \qquad
    \frac{
    }{
-     \vdashreftypematch \NULLREF \matches \reftype
+     \vdashreftypematch \NULLREF \matchesvaltype \reftype
    }
    \qquad
    \frac{
    }{
-     \vdashreftypematch \reftype \matches \ANYREF
+     \vdashreftypematch \reftype \matchesvaltype \ANYREF
    }
 
 

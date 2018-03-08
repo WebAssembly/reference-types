@@ -717,6 +717,7 @@
 
 .. |ok| mathdef:: \mathrel{\mbox{ok}}
 .. |const| mathdef:: \xref{valid/instructions}{valid-constant}{\mathrel{\mbox{const}}}
+.. |matchesvaltype| mathdef:: \xref{valid/types}{match-valtype}{\leq}
 
 
 .. Contexts
@@ -770,7 +771,8 @@
 
 .. |stepto| mathdef:: \xref{exec/conventions}{formal-notation}{\hookrightarrow}
 .. |extendsto| mathdef:: \xref{appendix/properties}{extend}{\preceq}
-.. |matches| mathdef:: \xref{exec/modules}{match}{\leq}
+.. |matchesexterntype| mathdef:: \xref{exec/modules}{match-externtype}{\leq}
+.. |matcheslimits| mathdef:: \xref{exec/modules}{match-limits}{\leq}
 
 
 .. Allocation
