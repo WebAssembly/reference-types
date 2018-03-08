@@ -1190,13 +1190,11 @@ Invocation of :ref:`function address <syntax-funcaddr>` :math:`a`
 
 8. Pop the values :math:`\val^n` from the stack.
 
-9. Let :math:`\val_0^\ast` be the list of zero values of types :math:`t^\ast`.
+9. Let :math:`F` be the :ref:`frame <syntax-frame>` :math:`\{ \AMODULE~f.\FIMODULE, \ALOCALS~\val^n~(\default_t)^\ast \}`.
 
-10. Let :math:`F` be the :ref:`frame <syntax-frame>` :math:`\{ \AMODULE~f.\FIMODULE, \ALOCALS~\val^n~\val_0^\ast \}`.
+10. Push the activation of :math:`F` with arity :math:`m` to the stack.
 
-11. Push the activation of :math:`F` with arity :math:`m` to the stack.
-
-12. :ref:`Execute <exec-block>` the instruction :math:`\BLOCK~[t_2^m]~\instr^\ast~\END`.
+11. :ref:`Execute <exec-block>` the instruction :math:`\BLOCK~[t_2^m]~\instr^\ast~\END`.
 
 .. math::
    ~\\[-1ex]
@@ -1210,7 +1208,7 @@ Invocation of :ref:`function address <syntax-funcaddr>` :math:`a`
      \wedge & f.\FITYPE = [t_1^n] \to [t_2^m] \\
      \wedge & m \leq 1 \\
      \wedge & f.\FICODE = \{ \FTYPE~x, \FLOCALS~t^k, \FBODY~\instr^\ast~\END \} \\
-     \wedge & F = \{ \AMODULE~f.\FIMODULE, ~\ALOCALS~\val^n~(t.\CONST~0)^k \})
+     \wedge & F = \{ \AMODULE~f.\FIMODULE, ~\ALOCALS~\val^n~(\default_t)^k \})
      \end{array} \\
    \end{array}
 

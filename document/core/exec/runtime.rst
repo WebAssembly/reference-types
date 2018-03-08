@@ -7,7 +7,7 @@ Runtime Structure
 :ref:`Store <store>`, :ref:`stack <stack>`, and other *runtime structure* forming the WebAssembly abstract machine, such as :ref:`values <syntax-val>` or :ref:`module instances <syntax-moduleinst>`, are made precise in terms of additional auxiliary syntax.
 
 
-.. index:: ! value, number, reference, constant, number type, reference type, ! host address, value type, integer, floating-point
+.. index:: ! value, number, reference, constant, number type, reference type, ! host address, value type, integer, floating-point, ! default value
    pair: abstract syntax; value
 .. _syntax-num:
 .. _syntax-ref:
@@ -45,6 +45,17 @@ or *host references* pointing to an uninterpreted form of :ref:`host address <sy
 
 .. note::
    Future versions of WebAssembly may add additional forms of reference.
+
+.. _default-val:
+
+Each :ref:`value type <syntax-valtype>` has an associated *default value*;
+it is the respective value :math:`0` for :ref:`number types <syntax-numtype>` and null for :ref:`reference types <syntax-reftype>`.
+
+.. math::
+   \begin{array}{lcl@{\qquad}l}
+   \default_t &=& t{.}\CONST~0 & (\iff t = \numtype) \\
+   \default_t &=& \REFNULL & (\iff t = \reftype) \\
+   \end{array}
 
 
 Convention

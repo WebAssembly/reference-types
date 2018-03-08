@@ -899,6 +899,11 @@
 .. |result| mathdef:: \xref{exec/runtime}{syntax-result}{\X{result}}
 
 
+.. Values, meta-functions
+
+.. |default| mathdef:: \xref{exec/runtime}{default-val}{\F{default}}
+
+
 .. Administrative Instructions, non-terminals
 
 .. |XB| mathdef:: \xref{exec/runtime}{syntax-ctxt-block}{B}
