@@ -28,7 +28,7 @@ A simple subtyping check can be defined on them.
 
    type val_type = I32 | I64 | F32 | F64 | Anyref | Anyfunc | Eqref | Nullref
 
-   func is_ref(t : valtype) : bool =
+   func is_ref(t : val_type) : bool =
      return t = Anyref || t = Anyfunc || t = Eqref
 
    func matches(t1 : val_type, t2 : val_type) : bool =
