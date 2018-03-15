@@ -66,7 +66,8 @@ in order to avoid exposing implementation details, some reference types, such as
 
 The type |NULLREF| only contains a single value: the :ref:`null <syntax-ref_null>` reference.
 It is a :ref:`subtype <match-reftype>` of all other reference types.
-The |NULLREF| type cannot be used in a program, it only occurs during :ref:`validation <valid>`.
+By virtue of not being representable in either the :ref:`binary format <binary-reftype>` nor the :ref:`text format <text-reftype>`, the |NULLREF| type cannot be used in a program;
+it only occurs during :ref:`validation <valid>`.
 
 .. note::
    Future versions of WebAssembly may include reference types that do not include null and hence are not supertypes of |NULLREF|.

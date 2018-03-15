@@ -685,25 +685,25 @@ Control Instructions
 :math:`\BRTABLE~l^\ast~l_N`
 ...........................
 
+* The label :math:`C.\CLABELS[l_N]` must be defined in the context.
+
+* For all :math:`l_i` in :math:`l^\ast`,
+  the label :math:`C.\CLABELS[l_i]` must be defined in the context
+
 * There must be a :ref:`result type <syntax-resulttype>` :math:`[t^?]`, such that:
 
-  * The label :math:`C.\CLABELS[l_N]` must be defined in the context.
-
-  * :math:`C.\CLABELS[l_i]` must :ref:`match <match-resulttype>` :math:`t^?`.
+  * The result type :math:`t^?` :ref:`matches <match-resulttype>` :math:`C.\CLABELS[l_i]`.
 
   * For all :math:`l_i` in :math:`l^\ast`,
-    the label :math:`C.\CLABELS[l_i]` must be defined in the context
-
-  * For all :math:`l_i` in :math:`l^\ast`,
-    :math:`C.\CLABELS[l_i]` must :ref:`match <match-resulttype>` :math:`t^?`.
+    the result type :math:`t^?` :ref:`matches <match-resulttype>` :math:`C.\CLABELS[l_i]`.
 
 * Then the instruction is valid with type :math:`[t_1^\ast~t^?~\I32] \to [t_2^\ast]`, for any sequences of :ref:`value types <syntax-valtype>` :math:`t_1^\ast` and :math:`t_2^\ast`.
 
 .. math::
    \frac{
-     (\vdashresulttypematch C.\CLABELS[l] \matchesresulttype [t^?])^\ast
+     (\vdashresulttypematch [t^?] \matchesresulttype C.\CLABELS[l])^\ast
      \qquad
-     \vdashresulttypematch C.\CLABELS[l_N] \matchesresulttype [t^?]
+     \vdashresulttypematch [t^?] \matchesresulttype C.\CLABELS[l_N]
    }{
      C \vdashinstr \BRTABLE~l^\ast~l_N : [t_1^\ast~t^?~\I32] \to [t_2^\ast]
    }
@@ -712,7 +712,7 @@ Control Instructions
    The |BRTABLE| instruction is :ref:`stack-polymorphic <polymorphism>`.
 
    Furthermore, the :ref:`result type <syntax-resulttype>` :math:`[t^?]` is also chosen non-deterministically in this rule.
-   In a :ref:`type checking algorithm <algo-valid>`, the greatest lower bound of all involved label types can be picked as a principal type,
+   In a :ref:`type checking algorithm <algo-valid>`, the greatest lower bound of the involved label types can be picked as a principal type,
    and it is a type error if that bound does not exist.
 
 
