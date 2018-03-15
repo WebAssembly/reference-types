@@ -1,7 +1,7 @@
 (* Types *)
 
 type num_type = I32Type | I64Type | F32Type | F64Type
-type ref_type = NullRefType | EqRefType | AnyRefType | AnyFuncType
+type ref_type = NullRefType | AnyEqRefType | AnyRefType | AnyFuncType
 type value_type = NumType of num_type | RefType of ref_type
 type stack_type = value_type list
 type func_type = FuncType of stack_type * stack_type
@@ -70,6 +70,50 @@ let match_extern_type et1 et2 =
   | _, _ -> false
 
 
+(* Meet and join *)
+
+let join_num_type t1 t2 =
+  if t1 = t2 then Some t1 else None
+
+let join_ref_type t1 t2 =
+  match t1, t2 with
+  | AnyRefType, _ | _, NullRefType -> Some t1
+  | _, AnyRefType | NullRefType, _ -> Some t2
+  | _, _ when t1 = t2 -> Some t1
+  | _, _ -> Some AnyRefType
+
+let join_value_type t1 t2 =
+  match t1, t2 with
+  | NumType t1', NumType t2' ->
+    Lib.Option.map (fun t' -> NumType t') (join_num_type t1' t2')
+  | RefType t1', RefType t2' ->
+    Lib.Option.map (fun t' -> RefType t') (join_ref_type t1' t2')
+  | _, _ -> None
+
+
+let meet_num_type t1 t2 =
+  if t1 = t2 then Some t1 else None
+
+let meet_ref_type t1 t2 =
+  match t1, t2 with
+  | _, AnyRefType | NullRefType, _ -> Some t1
+  | AnyRefType, _ | _, NullRefType -> Some t2
+  | _, _ when t1 = t2 -> Some t1
+  | _, _ -> Some NullRefType
+
+let meet_value_type t1 t2 =
+  match t1, t2 with
+  | NumType t1', NumType t2' ->
+    Lib.Option.map (fun t' -> NumType t') (meet_num_type t1' t2')
+  | RefType t1', RefType t2' ->
+    Lib.Option.map (fun t' -> RefType t') (meet_ref_type t1' t2')
+  | _, _ -> None
+
+let meet_stack_type ts1 ts2 =
+  try Some (List.map Lib.Option.force (List.map2 meet_value_type ts1 ts2))
+  with Invalid_argument _ -> None
+
+
 (* Filters *)
 
 let funcs =
@@ -92,7 +136,7 @@ let string_of_num_type = function
 
 let string_of_ref_type = function
   | NullRefType -> "nullref"
-  | EqRefType -> "eqref"
+  | AnyEqRefType -> "anyeqref"
   | AnyRefType -> "anyref"
   | AnyFuncType -> "anyfunc"
 

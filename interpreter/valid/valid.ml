@@ -69,22 +69,29 @@ let string_of_infer_type t =
 let string_of_infer_types ts =
   "[" ^ String.concat " " (List.map string_of_infer_type ts) ^ "]"
 
-let sub_ty t1 t2 =
+let match_type t1 t2 =
   match t1, t2 with
   | Some t1, Some t2 -> match_value_type t1 t2
   | _, _ -> true
 
+let join_type t1 t2 =
+  match t1, t2 with
+  | _, None -> t1
+  | None, _ -> t2
+  | Some t1, Some t2 -> join_value_type t1 t2
+
 let check_stack ts1 ts2 at =
-  require (List.length ts1 = List.length ts2 && List.for_all2 sub_ty ts2 ts1) at
-    ("type mismatch: operator requires " ^ string_of_infer_types ts1 ^
-     " but stack has " ^ string_of_infer_types ts2)
+  require
+    (List.length ts1 = List.length ts2 && List.for_all2 match_type ts1 ts2) at
+    ("type mismatch: operator requires " ^ string_of_infer_types ts2 ^
+     " but stack has " ^ string_of_infer_types ts1)
 
 let pop (ell1, ts1) (ell2, ts2) at =
   let n1 = List.length ts1 in
   let n2 = List.length ts2 in
   let n = min n1 n2 in
   let n3 = if ell2 = Ellipses then (n1 - n) else 0 in
-  check_stack ts1 (Lib.List.make n3 None @ Lib.List.drop (n2 - n) ts2) at;
+  check_stack (Lib.List.make n3 None @ Lib.List.drop (n2 - n) ts2) ts1 at;
   (ell2, if ell1 = Ellipses then [] else Lib.List.take (n2 - n) ts2)
 
 let push (ell1, ts1) (ell2, ts2) =
@@ -209,9 +216,13 @@ let rec check_instr (c : context) (e : instr) (s : infer_stack_type) : op_type =
     (label c x @ [NumType I32Type]) --> label c x
 
   | BrTable (xs, x) ->
-    let ts = label c x in
+    let ts =
+      List.fold_left (fun t1 t2 -> Lib.Option.get (meet_stack_type t1 t2) t1)
+        (label c x) (List.map (label c) xs)
+    in
+    check_stack (known ts) (known (label c x)) x.at;
     List.iter (fun x' -> check_stack (known ts) (known (label c x')) x'.at) xs;
-    (label c x @ [NumType I32Type]) -->... []
+    (ts @ [NumType I32Type]) -->... []
 
   | Return ->
     c.results -->... []
@@ -232,7 +243,9 @@ let rec check_instr (c : context) (e : instr) (s : infer_stack_type) : op_type =
     [peek 0 s] -~> []
 
   | Select ->
-    let t = peek 1 s in
+    let t1 = peek 1 s in
+    let t2 = peek 0 s in
+    let t = join_type t1 t2 in
     [t; t; Some (NumType I32Type)] -~> [t]
 
   | GetLocal x ->
@@ -284,7 +297,7 @@ let rec check_instr (c : context) (e : instr) (s : infer_stack_type) : op_type =
     [RefType AnyRefType] --> [NumType I32Type]
 
   | Same ->
-    [RefType EqRefType; RefType EqRefType] --> [NumType I32Type]
+    [RefType AnyEqRefType; RefType AnyEqRefType] --> [NumType I32Type]
 
   | Const v ->
     let t = NumType (type_num v.it) in

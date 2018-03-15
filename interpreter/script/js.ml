@@ -10,12 +10,22 @@ let harness =
   "'use strict';\n" ^
   "\n" ^
   "let hostrefs = {};\n" ^
+  "let hostsym = Symbol(\"hostref\");\n" ^
   "function hostref(s) {\n" ^
-  "  if (! (s in hostrefs)) hostrefs[s] = {name: s};\n" ^
+  "  if (! (s in hostrefs)) hostrefs[s] = {[hostsym]: s};\n" ^
   "  return hostrefs[s];\n" ^
+  "}\n" ^
+  "function is_hostref(x) {\n" ^
+  "  return (x !== null && hostsym in x) ? 1 : 0;\n" ^
+  "}\n" ^
+  "function is_funcref(x) {\n" ^
+  "  return typeof x === \"function\" ? 1 : 0;\n" ^
   "}\n" ^
   "\n" ^
   "let spectest = {\n" ^
+  "  hostref: hostref,\n" ^
+  "  is_hostref: is_hostref,\n" ^
+  "  is_funcref: is_funcref,\n" ^
   "  print: console.log.bind(console),\n" ^
   "  print_i32: console.log.bind(console),\n" ^
   "  print_i32_f32: console.log.bind(console),\n" ^
@@ -150,6 +160,20 @@ let harness =
   "    throw new Error(\"Wasm return value NaN expected, got \" + actual);\n" ^
   "  };\n" ^
   "}\n" ^
+  "\n" ^
+  "function assert_return_ref(action) {\n" ^
+  "  let actual = action();\n" ^
+  "  if (actual === null || typeof actual !== \"object\" && typeof actual !== \"function\") {\n" ^
+  "    throw new Error(\"Wasm reference return value expected, got \" + actual);\n" ^
+  "  };\n" ^
+  "}\n" ^
+  "\n" ^
+  "function assert_return_func(action) {\n" ^
+  "  let actual = action();\n" ^
+  "  if (typeof actual !== \"function\") {\n" ^
+  "    throw new Error(\"Wasm function return value expected, got \" + actual);\n" ^
+  "  };\n" ^
+  "}\n" ^
   "\n"
 
 
@@ -192,6 +216,12 @@ let lookup (mods : modules) x_opt name at =
 
 (* Wrappers *)
 
+let subject_idx = 0l
+let hostref_idx = 1l
+let _is_hostref_idx = 2l
+let is_funcref_idx = 3l
+let subject_type_idx = 4l
+
 let eq_of = function
   | I32Type -> Values.I32 I32Op.Eq
   | I64Type -> Values.I64 I64Op.Eq
@@ -221,15 +251,15 @@ let value v =
   | Values.Num num -> [Const (num @@ v.at) @@ v.at]
   | Values.Ref Values.NullRef -> [Null @@ v.at]
   | Values.Ref (HostRef n) ->
-    [Const (Values.I32 n @@ v.at) @@ v.at; Call (1l @@ v.at) @@ v.at]
+    [Const (Values.I32 n @@ v.at) @@ v.at; Call (hostref_idx @@ v.at) @@ v.at]
   | Values.Ref _ -> assert false
 
 let invoke ft vs at =
-  [ft @@ at], FuncImport (2l @@ at) @@ at,
-  List.concat (List.map value vs) @ [Call (0l @@ at) @@ at]
+  [ft @@ at], FuncImport (subject_type_idx @@ at) @@ at,
+  List.concat (List.map value vs) @ [Call (subject_idx @@ at) @@ at]
 
 let get t at =
-  [], GlobalImport t @@ at, [GetGlobal (0l @@ at) @@ at]
+  [], GlobalImport t @@ at, [GetGlobal (subject_idx @@ at) @@ at]
 
 let run ts at =
   [], []
@@ -251,7 +281,7 @@ let assert_return vs ts at =
         BrIf (0l @@ at) @@ at ]
     | Values.Ref (HostRef n) ->
       [ Const (Values.I32 n @@ at) @@ at;
-        Call (1l @@ at) @@ at;
+        Call (hostref_idx @@ at) @@ at;
         Same @@ at;
         Test (Values.I32 I32Op.Eqz) @@ at;
         BrIf (0l @@ at) @@ at ]
@@ -275,19 +305,43 @@ let assert_return_nan_bitpattern nan_bitmask_of ts at =
 let assert_return_canonical_nan = assert_return_nan_bitpattern abs_mask_of
 let assert_return_arithmetic_nan = assert_return_nan_bitpattern canonical_nan_of
 
+let assert_return_ref ts at =
+  let test = function
+    | NumType _ -> [Br (0l @@ at) @@ at]
+    | RefType _ ->
+      [ Null @@ at;
+        Same @@ at;
+        BrIf (0l @@ at) @@ at ]
+  in [], List.flatten (List.rev_map test ts)
+
+let assert_return_func ts at =
+  let test = function
+    | NumType _ -> [Br (0l @@ at) @@ at]
+    | RefType _ ->
+      [ Call (is_funcref_idx @@ at) @@ at;
+        Test (Values.I32 I32Op.Eqz) @@ at;
+        BrIf (0l @@ at) @@ at ]
+  in [], List.flatten (List.rev_map test ts)
+
 let wrap item_name wrap_action wrap_assertion at =
   let itypes, idesc, action = wrap_action at in
   let locals, assertion = wrap_assertion at in
   let item = Lib.List32.length itypes @@ at in
   let types =
     (FuncType ([], []) @@ at) ::
-    (FuncType ([NumType I32Type], [RefType EqRefType]) @@ at) ::
+    (FuncType ([NumType I32Type], [RefType AnyEqRefType]) @@ at) ::
+    (FuncType ([RefType AnyEqRefType], [NumType I32Type]) @@ at) ::
+    (FuncType ([RefType AnyEqRefType], [NumType I32Type]) @@ at) ::
     itypes
   in
   let imports =
     [ {module_name = Utf8.decode "module"; item_name; idesc} @@ at;
-      {module_name = Utf8.decode "host"; item_name = Utf8.decode "ref";
-       idesc = FuncImport (1l @@ at) @@ at} @@ at ]
+      {module_name = Utf8.decode "spectest"; item_name = Utf8.decode "hostref";
+       idesc = FuncImport (1l @@ at) @@ at} @@ at;
+      {module_name = Utf8.decode "spectest"; item_name = Utf8.decode "is_hostref";
+       idesc = FuncImport (2l @@ at) @@ at} @@ at;
+      {module_name = Utf8.decode "spectest"; item_name = Utf8.decode "is_funcref";
+       idesc = FuncImport (3l @@ at) @@ at} @@ at ]
   in
   let edesc = FuncExport item @@ at in
   let exports = [{name = Utf8.decode "run"; edesc} @@ at] in
@@ -425,6 +479,10 @@ let of_assertion mods ass =
   | AssertReturnArithmeticNaN act ->
     of_assertion' mods act "assert_return_arithmetic_nan" []
       (Some assert_return_arithmetic_nan)
+  | AssertReturnRef act ->
+    of_assertion' mods act "assert_return_ref" [] (Some assert_return_ref)
+  | AssertReturnFunc act ->
+    of_assertion' mods act "assert_return_func" [] (Some assert_return_func)
   | AssertTrap (act, _) ->
     of_assertion' mods act "assert_trap" [] None
   | AssertExhaustion (act, _) ->

@@ -23,6 +23,8 @@ and assertion' =
   | AssertReturn of action * value list
   | AssertReturnCanonicalNaN of action
   | AssertReturnArithmeticNaN of action
+  | AssertReturnRef of action
+  | AssertReturnFunc of action
   | AssertTrap of action * string
   | AssertExhaustion of action * string
 
@@ -48,7 +50,7 @@ exception Syntax of Source.region * string
 let () =
   let type_of_ref' = !Values.type_of_ref' in
   Values.type_of_ref' := function
-    | HostRef _ -> Types.EqRefType
+    | HostRef _ -> Types.AnyEqRefType
     | r -> type_of_ref' r
 
 let () =

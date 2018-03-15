@@ -160,8 +160,8 @@ rule token = parse
   | '"'character*'\\'_
     { error_nest (Lexing.lexeme_end_p lexbuf) lexbuf "illegal escape" }
 
-  | "eqref" { EQREF }
   | "anyref" { ANYREF }
+  | "anyeqref" { ANYEQREF }
   | "anyfunc" { ANYFUNC }
   | (nxx as t) { NUM_TYPE (num_type t) }
   | "mut" { MUT }
@@ -355,6 +355,8 @@ rule token = parse
   | "assert_return" { ASSERT_RETURN }
   | "assert_return_canonical_nan" { ASSERT_RETURN_CANONICAL_NAN }
   | "assert_return_arithmetic_nan" { ASSERT_RETURN_ARITHMETIC_NAN }
+  | "assert_return_ref" { ASSERT_RETURN_REF }
+  | "assert_return_func" { ASSERT_RETURN_FUNC }
   | "assert_trap" { ASSERT_TRAP }
   | "assert_exhaustion" { ASSERT_EXHAUSTION }
   | "input" { INPUT }

@@ -409,6 +409,26 @@ let run_assertion ass =
       | _ -> false
     in assert_result ass.at is_arithmetic_nan got_vs print_endline "nan"
 
+  | AssertReturnRef act ->
+    trace ("Asserting return...");
+    let got_vs = run_action act in
+    let is_ref =
+      let open Values in
+      match got_vs with
+      | [Ref r] -> r <> NullRef
+      | _ -> false
+    in assert_result ass.at is_ref got_vs print_endline "ref"
+
+  | AssertReturnFunc act ->
+    trace ("Asserting return...");
+    let got_vs = run_action act in
+    let is_func =
+      let open Values in
+      match got_vs with
+      | [Ref r] -> r <> NullRef
+      | _ -> false
+    in assert_result ass.at is_func got_vs print_endline "func"
+
   | AssertTrap (act, re) ->
     trace ("Asserting trap...");
     (match run_action act with

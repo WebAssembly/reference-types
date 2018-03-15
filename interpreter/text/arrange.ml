@@ -446,6 +446,10 @@ let assertion mode ass =
     Node ("assert_return_canonical_nan", [action act])
   | AssertReturnArithmeticNaN act ->
     Node ("assert_return_arithmetic_nan", [action act])
+  | AssertReturnRef act ->
+    Node ("assert_return_ref", [action act])
+  | AssertReturnFunc act ->
+    Node ("assert_return_func", [action act])
   | AssertTrap (act, re) ->
     Node ("assert_trap", [action act; Atom (string re)])
   | AssertExhaustion (act, re) ->
