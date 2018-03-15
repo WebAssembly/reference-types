@@ -189,8 +189,29 @@ A :ref:`reference type <syntax-reftype>` :math:`\reftype_1` matches a :ref:`numb
 Value Types
 ...........
 
-A :ref:`value type <syntax-valtype>` :math:`\valtype_1` matches a :ref:`number type <syntax-valtype>` :math:`\valtype_2` if and only if:
+A :ref:`value type <syntax-valtype>` :math:`\valtype_1` matches a :ref:`value type <syntax-valtype>` :math:`\valtype_2` if and only if:
 
 * Either both :math:`\valtype_1` and :math:`\valtype_2` are :ref:`number types <syntax-numtype>` and :math:`\valtype_1` :ref:`matches <match-numtype>` :math:`\valtype_2`.
 
 * Or both :math:`\valtype_1` and :math:`\valtype_2` are :ref:`reference types <syntax-reftype>` and :math:`\valtype_1` :ref:`matches <match-reftype>` :math:`\valtype_2`.
+
+
+.. _match-resulttype:
+
+Result Types
+............
+
+Subtyping is lifted to :ref:`result types <syntax-resulttype>` in a pointwise manner.
+That is, a :ref:`result type <syntax-resulttype>` :math:`[t_1^?]` matches a :ref:`result type <syntax-resulttype>` :math:`[t_2^?]` if and only if:
+
+* Either both :math:`t_1^?` and :math:`t_2^?` are empty.
+
+* Or :ref:`value type <syntax-valtype>` :math:`t_1` :ref:`matches <match-valtype>` :ref:`value type <syntax-valtype>` :math:`t_2`.
+
+.. math::
+   ~\\[-1ex]
+   \frac{
+     (\vdashvaltypematch t_1 \matchesvaltype t_2)^?
+   }{
+     \vdashresulttypematch [t_1^?] \matchesresulttype [t_2^?]
+   }

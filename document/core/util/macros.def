@@ -173,7 +173,7 @@
 
 .. |ANYREF| mathdef:: \xref{syntax/types}{syntax-reftype}{\K{anyref}}
 .. |ANYFUNC| mathdef:: \xref{syntax/types}{syntax-reftype}{\K{anyfunc}}
-.. |EQREF| mathdef:: \xref{syntax/types}{syntax-reftype}{\K{eqref}}
+.. |ANYEQREF| mathdef:: \xref{syntax/types}{syntax-reftype}{\K{anyeqref}}
 .. |NULLREF| mathdef:: \xref{syntax/types}{syntax-reftype}{\K{nullref}}
 
 .. |MVAR| mathdef:: \xref{syntax/types}{syntax-mut}{\K{var}}
@@ -718,6 +718,7 @@
 .. |ok| mathdef:: \mathrel{\mbox{ok}}
 .. |const| mathdef:: \xref{valid/instructions}{valid-constant}{\mathrel{\mbox{const}}}
 .. |matchesvaltype| mathdef:: \xref{valid/types}{match-valtype}{\leq}
+.. |matchesresulttype| mathdef:: \xref{valid/types}{match-resulttype}{\leq}
 
 
 .. Contexts
@@ -743,6 +744,7 @@
 .. |vdashnumtypematch| mathdef:: \xref{valid/types}{match-numtype}{\vdash}
 .. |vdashreftypematch| mathdef:: \xref{valid/types}{match-reftype}{\vdash}
 .. |vdashvaltypematch| mathdef:: \xref{valid/types}{match-valtype}{\vdash}
+.. |vdashresulttypematch| mathdef:: \xref{valid/types}{match-resulttype}{\vdash}
 
 .. |vdashinstr| mathdef:: \xref{valid/instructions}{valid-instr}{\vdash}
 .. |vdashinstrseq| mathdef:: \xref{valid/instructions}{valid-instr-seq}{\vdash}

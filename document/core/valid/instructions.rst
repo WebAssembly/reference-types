@@ -195,12 +195,12 @@ Reference Instructions
 :math:`\REFEQ`
 ..............
 
-* The instruction is valid with type :math:`[\EQREF~\EQREF] \to [\I32]`.
+* The instruction is valid with type :math:`[\ANYEQREF~\ANYEQREF] \to [\I32]`.
 
 .. math::
    \frac{
    }{
-     C \vdashinstr \REFEQ : [\EQREF~\EQREF] \to [\I32]
+     C \vdashinstr \REFEQ : [\ANYEQREF~\ANYEQREF] \to [\I32]
    }
 
 
@@ -685,29 +685,35 @@ Control Instructions
 :math:`\BRTABLE~l^\ast~l_N`
 ...........................
 
-* The label :math:`C.\CLABELS[l_N]` must be defined in the context.
+* There must be a :ref:`result type <syntax-resulttype>` :math:`[t^?]`, such that:
 
-* Let :math:`[t^?]` be the :ref:`result type <syntax-resulttype>` :math:`C.\CLABELS[l_N]`.
+  * The label :math:`C.\CLABELS[l_N]` must be defined in the context.
 
-* For all :math:`l_i` in :math:`l^\ast`,
-  the label :math:`C.\CLABELS[l_i]` must be defined in the context.
+  * :math:`C.\CLABELS[l_i]` must :ref:`match <match-resulttype>` :math:`t^?`.
 
-* For all :math:`l_i` in :math:`l^\ast`,
-  :math:`C.\CLABELS[l_i]` must be :math:`t^?`.
+  * For all :math:`l_i` in :math:`l^\ast`,
+    the label :math:`C.\CLABELS[l_i]` must be defined in the context
+
+  * For all :math:`l_i` in :math:`l^\ast`,
+    :math:`C.\CLABELS[l_i]` must :ref:`match <match-resulttype>` :math:`t^?`.
 
 * Then the instruction is valid with type :math:`[t_1^\ast~t^?~\I32] \to [t_2^\ast]`, for any sequences of :ref:`value types <syntax-valtype>` :math:`t_1^\ast` and :math:`t_2^\ast`.
 
 .. math::
    \frac{
-     (C.\CLABELS[l] = [t^?])^\ast
+     (\vdashresulttypematch C.\CLABELS[l] \matchesresulttype [t^?])^\ast
      \qquad
-     C.\CLABELS[l_N] = [t^?]
+     \vdashresulttypematch C.\CLABELS[l_N] \matchesresulttype [t^?]
    }{
      C \vdashinstr \BRTABLE~l^\ast~l_N : [t_1^\ast~t^?~\I32] \to [t_2^\ast]
    }
 
 .. note::
    The |BRTABLE| instruction is :ref:`stack-polymorphic <polymorphism>`.
+
+   Furthermore, the :ref:`result type <syntax-resulttype>` :math:`[t^?]` is also chosen non-deterministically in this rule.
+   In a :ref:`type checking algorithm <algo-valid>`, the greatest lower bound of all involved label types can be picked as a principal type,
+   and it is a type error if that bound does not exist.
 
 
 .. _valid-return:
