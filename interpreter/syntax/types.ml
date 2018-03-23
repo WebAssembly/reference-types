@@ -58,8 +58,9 @@ let match_table_type (TableType (lim1, et1)) (TableType (lim2, et2)) =
 let match_memory_type (MemoryType lim1) (MemoryType lim2) =
   match_limits lim1 lim2
 
-let match_global_type gt1 gt2 =
-  gt1 = gt2
+let match_global_type (GlobalType (t1, mut1)) (GlobalType (t2, mut2)) =
+  mut1 = mut2 &&
+  (t1 = t2 || mut2 = Immutable && match_value_type t1 t2)
 
 let match_extern_type et1 et2 =
   match et1, et2 with
