@@ -202,15 +202,23 @@ An :ref:`external type <syntax-externtype>` :math:`\ETMEM~\limits_1` matches :ma
 Globals
 .......
 
-An :ref:`external type <syntax-externtype>` :math:`\ETGLOBAL~\globaltype_1` matches :math:`\ETGLOBAL~\globaltype_2` if and only if:
+An :ref:`external type <syntax-externtype>` :math:`\ETGLOBAL~(\mut_1~t_1)` matches :math:`\ETGLOBAL~(\mut_2~t_2)` if and only if:
 
-* Both :math:`\globaltype_1` and :math:`\globaltype_2` are the same.
+* Either both :math:`\mut_1` and :math:`\mut_2` are |MVAR| and :math:`t_1` and :math:`t_2` are the same.
+
+* Or both :math:`\mut_1` and :math:`\mut_2` are |MCONST| and :math:`t_1` :ref:`matches <match-valtype>` :math:`t_2`.
 
 .. math::
    ~\\[-1ex]
    \frac{
    }{
-     \vdashexterntypematch \ETGLOBAL~\globaltype \matchesexterntype \ETGLOBAL~\globaltype
+     \vdashexterntypematch \ETGLOBAL~(\MVAR~t) \matchesexterntype \ETGLOBAL~(\MVAR~t)
+   }
+   \qquad
+   \frac{
+     \vdashvaltypematch t_1 \matchesvaltype t_2
+   }{
+     \vdashexterntypematch \ETGLOBAL~(\MCONST~t_1) \matchesexterntype \ETGLOBAL~(\MCONST~t_2)
    }
 
 
