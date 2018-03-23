@@ -496,17 +496,17 @@ As an abbreviation, a single instruction may occur in place of the offset:
      \text{(}~\text{offset}~~\Tinstr~\text{)}
    \end{array}
 
-As another abbreviation, element segments may also be specified inline with :ref:`table <text-table>` definitions; see the respective section.
-
-Also, for backwards compatibility, the table index can be omitted, defaulting to :math:`0`.
+Also, the table index can be omitted, defaulting to :math:`0`.
 
 .. math::
    \begin{array}{llclll}
-   \production{plain instruction} &
+   \production{element segment} &
     \text{(}~\text{elem}~~\text{(}~\text{offset}~~\Texpr_I~\text{)}~~\dots~\text{)}
        &\equiv&
      \text{(}~\text{elem}~~0~~\text{(}~\text{offset}~~\Texpr_I~\text{)}~~\dots~\text{)}
    \end{array}
+
+As another abbreviation, element segments may also be specified inline with :ref:`table <text-table>` definitions; see the respective section.
 
 
 .. index:: data, memory, memory index, expression, byte
