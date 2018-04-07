@@ -836,6 +836,14 @@ Assert: |type| is not [=𝗂𝟨𝟦=].
 
 <div algorithm>
     For <dfn>allocating a host address</dfn> for a value |v|, perform the following steps:
+    1. If |v| is null,
+        1. Return [=ref.null=].
+    1. If |v| is callable,
+        1. If |v| has a \[[FunctionAddress]] internal slot, and therefore is an [=Exported Function=],
+            1. Let |funcaddr| be the value of |v|'s \[[FunctionAddress]] internal slot.
+        1. Otherwise,
+            1. [=Create a host function=] from |v| and let |funcaddr| be the result.
+        1. Return [=ref.func=] |funcaddr|.
     1. Let |map| be the [=surrounding agent=]'s associated [=host value cache=].
     1. If a [=host address=] |hostaddr| exists such that |map|[|hostaddr|] is the same as |v|,
         1. Return [=ref.host=] |hostaddr|.
