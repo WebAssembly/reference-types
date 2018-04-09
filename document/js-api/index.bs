@@ -809,7 +809,7 @@ Note: Implementations may optionally replace the NaN payload with any other NaN 
 </div>
 
 <div algorithm>
-The algorithm <dfn>ToWebAssemblyValue</dfn>(|v|, |type|, |error|) coerce a JavaScript value to a [=WebAssembly value=]  performs the following steps:
+The algorithm <dfn>ToWebAssemblyValue</dfn>(|v|, |type|, |error|) coerces a JavaScript value to a [=WebAssembly value=]  performs the following steps:
 
 
 Assert: |type| is not [=𝗂𝟨𝟦=].
@@ -829,7 +829,7 @@ Assert: |type| is not [=𝗂𝟨𝟦=].
     1. If |v| is a primitive value but not a symbol or null, throw |error|.
     1. Return the result of [=allocating a host address=] for |v|.
 1. If |type| is [=anyfunc=],
-    1. If |v| is not callable or null, throw |error|.
+    1. If |v| is not an [=Exported function=] or null, throw |error|.
     1. Return the result of [=allocating a host address=] for |v|.
 
 </div>
@@ -838,11 +838,8 @@ Assert: |type| is not [=𝗂𝟨𝟦=].
     For <dfn>allocating a host address</dfn> for a value |v|, perform the following steps:
     1. If |v| is null,
         1. Return [=ref.null=].
-    1. If |v| is callable,
-        1. If |v| has a \[[FunctionAddress]] internal slot, and therefore is an [=Exported Function=],
-            1. Let |funcaddr| be the value of |v|'s \[[FunctionAddress]] internal slot.
-        1. Otherwise,
-            1. [=Create a host function=] from |v| and let |funcaddr| be the result.
+    1. If |v| is an [=Exported Function=],
+        1. Let |funcaddr| be the value of |v|'s \[[FunctionAddress]] internal slot.
         1. Return [=ref.func=] |funcaddr|.
     1. Let |map| be the [=surrounding agent=]'s associated [=host value cache=].
     1. If a [=host address=] |hostaddr| exists such that |map|[|hostaddr|] is the same as |v|,
