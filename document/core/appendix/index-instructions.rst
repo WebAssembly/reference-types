@@ -44,8 +44,8 @@ Instruction                          Binary Opcode     Type                     
 :math:`\TEELOCAL~x`                  :math:`\hex{22}`  :math:`[t] \to [t]`                         :ref:`validation <valid-tee_local>`       :ref:`execution <exec-tee_local>`
 :math:`\GETGLOBAL~x`                 :math:`\hex{23}`  :math:`[] \to [t]`                          :ref:`validation <valid-get_global>`      :ref:`execution <exec-get_global>`
 :math:`\SETGLOBAL~x`                 :math:`\hex{24}`  :math:`[t] \to []`                          :ref:`validation <valid-set_global>`      :ref:`execution <exec-set_global>`
-:math:`\GETTABLE~x`                  :math:`\hex{25}`  :math:`[\I32] \to [t]`                      :ref:`validation <valid-get_table>`       :ref:`execution <exec-get_table>`
-:math:`\SETTABLE~x`                  :math:`\hex{26}`  :math:`[\I32~t] \to []`                     :ref:`validation <valid-set_table>`       :ref:`execution <exec-set_table>`
+:math:`\TABLEGET~x`                  :math:`\hex{25}`  :math:`[\I32] \to [t]`                      :ref:`validation <valid-table_get>`       :ref:`execution <exec-table_get>`
+:math:`\TABLESET~x`                  :math:`\hex{26}`  :math:`[\I32~t] \to []`                     :ref:`validation <valid-table_set>`       :ref:`execution <exec-table_set>`
 (reserved)                           :math:`\hex{27}`                                                  
 :math:`\I32.\LOAD~\memarg`           :math:`\hex{28}`  :math:`[\I32] \to [\I32]`                   :ref:`validation <valid-load>`            :ref:`execution <exec-load>`
 :math:`\I64.\LOAD~\memarg`           :math:`\hex{29}`  :math:`[\I32] \to [\I64]`                   :ref:`validation <valid-load>`            :ref:`execution <exec-load>`

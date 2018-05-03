@@ -278,11 +278,11 @@ let rec check_instr (c : context) (e : instr) (s : infer_stack_type) : op_type =
     require (mut = Mutable) x.at "global is immutable";
     [t] --> []
 
-  | GetTable x ->
+  | TableGet x ->
     let TableType (lim, t) = table c x in
     [NumType I32Type] --> [RefType t]
 
-  | SetTable x ->
+  | TableSet x ->
     let TableType (lim, t) = table c x in
     [NumType I32Type; RefType t] --> []
 

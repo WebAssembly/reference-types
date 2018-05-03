@@ -40,11 +40,11 @@
   )
 
   (func (export "join-anyfunc") (param i32) (result anyref)
-    (select (get_table $tab (i32.const 0)) (ref.null) (get_local 0))
+    (select (table.get $tab (i32.const 0)) (ref.null) (get_local 0))
   )
 
   (func (export "join-anyref") (param i32) (param eqref) (result anyref)
-    (select (get_table $tab (i32.const 0)) (get_local 1) (get_local 0))
+    (select (table.get $tab (i32.const 0)) (get_local 1) (get_local 0))
   )
 )
 

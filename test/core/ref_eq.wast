@@ -6,11 +6,11 @@
   (table $t 2 eqref)
 
   (func (export "init") (param $r eqref)
-    (set_table $t (i32.const 1) (get_local $r))
+    (table.set $t (i32.const 1) (get_local $r))
   )
 
   (func (export "eq-elem") (param $i i32) (param $x eqref) (result i32)
-    (call $eq (get_table $t (get_local $i)) (get_local $x))
+    (call $eq (table.get $t (get_local $i)) (get_local $x))
   )
 )
 

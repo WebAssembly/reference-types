@@ -198,14 +198,14 @@ Variable Instructions
 Table Instructions
 ~~~~~~~~~~~~~~~~~~
 
-.. _text-get_table:
-.. _text-set_table:
+.. _text-table_get:
+.. _text-table_set:
 
 .. math::
    \begin{array}{llclll}
    \production{instruction} & \Tplaininstr_I &::=& \dots \\ &&|&
-     \text{get\_table}~~x{:}\Ttableidx_I &\Rightarrow& \GETTABLE~x \\ &&|&
-     \text{set\_table}~~x{:}\Ttableidx_I &\Rightarrow& \SETTABLE~x \\
+     \text{table.get}~~x{:}\Ttableidx_I &\Rightarrow& \TABLEGET~x \\ &&|&
+     \text{table.set}~~x{:}\Ttableidx_I &\Rightarrow& \TABLESET~x \\
    \end{array}
 
 

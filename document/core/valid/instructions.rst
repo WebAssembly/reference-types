@@ -359,9 +359,9 @@ Variable Instructions
 Table Instructions
 ~~~~~~~~~~~~~~~~~~
 
-.. _valid-get_table:
+.. _valid-table_get:
 
-:math:`\GETTABLE~x`
+:math:`\TABLEGET~x`
 ...................
 
 * The table :math:`C.\CTABLES[x]` must be defined in the context.
@@ -374,13 +374,13 @@ Table Instructions
    \frac{
      C.\CTABLES[x] = \limits~t
    }{
-     C \vdashinstr \GETTABLE~x : [\I32] \to [t]
+     C \vdashinstr \TABLEGET~x : [\I32] \to [t]
    }
 
 
-.. _valid-set_table:
+.. _valid-table_set:
 
-:math:`\SETTABLE~x`
+:math:`\TABLESET~x`
 ...................
 
 * The local :math:`C.\CTABLES[x]` must be defined in the context.
@@ -393,7 +393,7 @@ Table Instructions
    \frac{
      C.\CTABLES[x] = t
    }{
-     C \vdashinstr \SETTABLE~x : [\I32~t] \to []
+     C \vdashinstr \TABLESET~x : [\I32~t] \to []
    }
 
 

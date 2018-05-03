@@ -238,8 +238,8 @@ The |TEELOCAL| instruction is like |SETLOCAL| but also returns its argument.
 
 .. index:: ! table instruction, table, table index, trap
    pair: abstract syntax; instruction
-.. _syntax-get_table:
-.. _syntax-set_table:
+.. _syntax-table_get:
+.. _syntax-table_set:
 .. _syntax-instr-table:
 
 Table Instructions
@@ -251,8 +251,8 @@ Instructions in this group are concerned with accessing :ref:`tables <syntax-tab
    \begin{array}{llcl}
    \production{instruction} & \instr &::=&
      \dots \\&&|&
-     \GETTABLE~\tableidx \\&&|&
-     \SETTABLE~\tableidx \\
+     \TABLEGET~\tableidx \\&&|&
+     \TABLESET~\tableidx \\
    \end{array}
 
 These instructions get or set an element in a table, respectively.

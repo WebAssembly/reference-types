@@ -266,8 +266,8 @@ let rec instr s =
   | 0x22 -> tee_local (at var s)
   | 0x23 -> get_global (at var s)
   | 0x24 -> set_global (at var s)
-  | 0x25 -> get_table (at var s)
-  | 0x26 -> set_table (at var s)
+  | 0x25 -> table_get (at var s)
+  | 0x26 -> table_set (at var s)
 
   | 0x27 as b -> illegal s pos b
 

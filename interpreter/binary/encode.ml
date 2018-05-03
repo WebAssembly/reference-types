@@ -174,8 +174,8 @@ let encode m =
       | TeeLocal x -> op 0x22; var x
       | GetGlobal x -> op 0x23; var x
       | SetGlobal x -> op 0x24; var x
-      | GetTable x -> op 0x25; var x
-      | SetTable x -> op 0x26; var x
+      | TableGet x -> op 0x25; var x
+      | TableSet x -> op 0x26; var x
 
       | Load ({ty = I32Type; sz = None; _} as mo) -> op 0x28; memop mo
       | Load ({ty = I64Type; sz = None; _} as mo) -> op 0x29; memop mo

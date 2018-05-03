@@ -1248,7 +1248,7 @@
   (func (export "meet-anyfunc") (param i32) (result anyref)
     (block $l1 (result anyref)
       (block $l2 (result anyfunc)
-        (br_table $l2 $l1 $l2 (get_table 0 (i32.const 0)) (get_local 0))
+        (br_table $l2 $l1 $l2 (table.get 0 (i32.const 0)) (get_local 0))
       )
     )
   )

@@ -141,14 +141,14 @@ Table Instructions
 
 :ref:`Table instructions <syntax-instr-table>` are represented by single byte codes.
 
-.. _binary-get_table:
-.. _binary-set_table:
+.. _binary-table_get:
+.. _binary-table_set:
 
 .. math::
    \begin{array}{llclll}
    \production{instruction} & \Binstr &::=& \dots \\ &&|&
-     \hex{25}~~x{:}\Btableidx &\Rightarrow& \GETTABLE~x \\ &&|&
-     \hex{26}~~x{:}\Btableidx &\Rightarrow& \SETTABLE~x \\
+     \hex{25}~~x{:}\Btableidx &\Rightarrow& \TABLEGET~x \\ &&|&
+     \hex{26}~~x{:}\Btableidx &\Rightarrow& \TABLESET~x \\
    \end{array}
 
 .. note::

@@ -444,22 +444,22 @@ Variable Instructions
 Table Instructions
 ~~~~~~~~~~~~~~~~~~
 
-.. _exec-get_table:
+.. _exec-table_get:
 
-:math:`\GETTABLE~x`
+:math:`\TABLEGET~x`
 ...................
 
 1. Let :math:`F` be the :ref:`current <exec-notation-textual>` :ref:`frame <syntax-frame>`.
 
-2. Assert: due to :ref:`validation <valid-get_table>`, :math:`F.\AMODULE.\MITABLES[x]` exists.
+2. Assert: due to :ref:`validation <valid-table_get>`, :math:`F.\AMODULE.\MITABLES[x]` exists.
 
 3. Let :math:`a` be the :ref:`table address <syntax-tableaddr>` :math:`F.\AMODULE.\MITABLES[x]`.
 
-4. Assert: due to :ref:`validation <valid-get_table>`, :math:`S.\STABLES[a]` exists.
+4. Assert: due to :ref:`validation <valid-table_get>`, :math:`S.\STABLES[a]` exists.
 
 5. Let :math:`\X{tab}` be the :ref:`table instance <syntax-tableinst>` :math:`S.\STABLES[a]`.
 
-6. Assert: due to :ref:`validation <valid-get_table>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
+6. Assert: due to :ref:`validation <valid-table_get>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
 
 7. Pop the value :math:`\I32.\CONST~i` from the stack.
 
@@ -474,38 +474,38 @@ Table Instructions
 .. math::
    \begin{array}{l}
    \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~i)~(\GETTABLE~x) &\stepto& S; F; \val
+   S; F; (\I32.\CONST~i)~(\TABLEGET~x) &\stepto& S; F; \val
    \end{array}
    \\ \qquad
      (\iff S.\STABLES[F.\AMODULE.\MITABLES[x]][i] = \val) \\
    \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~i)~(\GETTABLE~x) &\stepto& S; F; \TRAP
+   S; F; (\I32.\CONST~i)~(\TABLEGET~x) &\stepto& S; F; \TRAP
    \end{array}
    \\ \qquad
      (\otherwise) \\
    \end{array}
 
 
-.. _exec-set_table:
+.. _exec-table_set:
 
-:math:`\SETTABLE~x`
+:math:`\TABLESET~x`
 ...................
 
 1. Let :math:`F` be the :ref:`current <exec-notation-textual>` :ref:`frame <syntax-frame>`.
 
-2. Assert: due to :ref:`validation <valid-set_table>`, :math:`F.\AMODULE.\MITABLES[x]` exists.
+2. Assert: due to :ref:`validation <valid-table_set>`, :math:`F.\AMODULE.\MITABLES[x]` exists.
 
 3. Let :math:`a` be the :ref:`table address <syntax-tableaddr>` :math:`F.\AMODULE.\MITABLES[x]`.
 
-4. Assert: due to :ref:`validation <valid-set_table>`, :math:`S.\STABLES[a]` exists.
+4. Assert: due to :ref:`validation <valid-table_set>`, :math:`S.\STABLES[a]` exists.
 
 5. Let :math:`\X{tab}` be the :ref:`table instance <syntax-tableinst>` :math:`S.\STABLES[a]`.
 
-6. Assert: due to :ref:`validation <valid-set_table>`, a :ref:`reference value <syntax-ref>` is on the top of the stack.
+6. Assert: due to :ref:`validation <valid-table_set>`, a :ref:`reference value <syntax-ref>` is on the top of the stack.
 
 7. Pop the value :math:`\val` from the stack.
 
-8. Assert: due to :ref:`validation <valid-set_table>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
+8. Assert: due to :ref:`validation <valid-table_set>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
 
 9. Pop the value :math:`\I32.\CONST~i` from the stack.
 
@@ -518,12 +518,12 @@ Table Instructions
 .. math::
    \begin{array}{l}
    \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~i)~\val~(\SETTABLE~x) &\stepto& S'; F; \epsilon
+   S; F; (\I32.\CONST~i)~\val~(\TABLESET~x) &\stepto& S'; F; \epsilon
    \end{array}
    \\ \qquad
      (\iff S' = S \with \STABLES[F.\AMODULE.\MITABLES[x]][i] = \val) \\
    \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~i)~\val~(\SETTABLE~x) &\stepto& S; F; \TRAP
+   S; F; (\I32.\CONST~i)~\val~(\TABLESET~x) &\stepto& S; F; \TRAP
    \end{array}
    \\ \qquad
      (\otherwise) \\
@@ -1068,11 +1068,11 @@ Control Instructions
 
     a. Trap.
 
-13. Assert: due to :ref:`validation of table mutation <valid-set_table>`, :math:`r` is a :ref:`function reference <syntax-ref_func>`.
+13. Assert: due to :ref:`validation of table mutation <valid-table_set>`, :math:`r` is a :ref:`function reference <syntax-ref_func>`.
 
 14. Let :math:`\REFFUNC~a` be the :ref:`function reference <syntax-ref_func>` :math:`r`.
 
-15. Assert: due to :ref:`validation of table mutation <valid-set_table>`, :math:`S.\SFUNCS[a]` exists.
+15. Assert: due to :ref:`validation of table mutation <valid-table_set>`, :math:`S.\SFUNCS[a]` exists.
 
 16. Let :math:`\X{f}` be the :ref:`function instance <syntax-funcinst>` :math:`S.\SFUNCS[a]`.
 

@@ -205,8 +205,9 @@ rule token = parse
   | "tee_local" { TEE_LOCAL }
   | "get_global" { GET_GLOBAL }
   | "set_global" { SET_GLOBAL }
-  | "get_table" { GET_TABLE }
-  | "set_table" { SET_TABLE }
+
+  | "table.get" { TABLE_GET }
+  | "table.set" { TABLE_SET }
 
   | (nxx as t)".load"
     { LOAD (fun a o ->

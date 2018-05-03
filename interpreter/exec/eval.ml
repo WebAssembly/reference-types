@@ -197,11 +197,11 @@ let rec step (c : config) : config =
         with Global.NotMutable -> Crash.error e.at "write to immutable global"
            | Global.Type -> Crash.error e.at "type mismatch at global write")
 
-      | GetTable x, Num (I32 i) :: vs' ->
+      | TableGet x, Num (I32 i) :: vs' ->
         (try Ref (Table.load (table frame.inst x) i) :: vs', []
         with exn -> vs', [Trapping (table_error e.at exn) @@ e.at])
 
-      | SetTable x, Ref r :: Num (I32 i) :: vs' ->
+      | TableSet x, Ref r :: Num (I32 i) :: vs' ->
         (try Table.store (table frame.inst x) i r; vs', []
         with exn -> vs', [Trapping (table_error e.at exn) @@ e.at])
 

@@ -34,8 +34,8 @@ let set_local x = SetLocal x
 let tee_local x = TeeLocal x
 let get_global x = GetGlobal x
 let set_global x = SetGlobal x
-let get_table x = GetTable x
-let set_table x = SetTable x
+let table_get x = TableGet x
+let table_set x = TableSet x
 
 let i32_load align offset = Load {ty = I32Type; align; offset; sz = None}
 let i64_load align offset = Load {ty = I64Type; align; offset; sz = None}

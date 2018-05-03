@@ -150,7 +150,7 @@ let inline_type_explicit (c : context) x ft at =
 %token EQREF ANYREF ANYFUNC NUM_TYPE MUT
 %token NOP DROP BLOCK END IF THEN ELSE SELECT LOOP BR BR_IF BR_TABLE
 %token CALL CALL_INDIRECT RETURN
-%token GET_LOCAL SET_LOCAL TEE_LOCAL GET_GLOBAL SET_GLOBAL GET_TABLE SET_TABLE
+%token GET_LOCAL SET_LOCAL TEE_LOCAL GET_GLOBAL SET_GLOBAL TABLE_GET TABLE_SET
 %token LOAD STORE OFFSET_EQ_NAT ALIGN_EQ_NAT
 %token REF_NULL REF_HOST REF_ISNULL REF_EQ
 %token CONST UNARY BINARY TEST COMPARE CONVERT
@@ -325,8 +325,8 @@ plain_instr :
   | TEE_LOCAL var { fun c -> tee_local ($2 c local) }
   | GET_GLOBAL var { fun c -> get_global ($2 c global) }
   | SET_GLOBAL var { fun c -> set_global ($2 c global) }
-  | GET_TABLE var { fun c -> get_table ($2 c table) }
-  | SET_TABLE var { fun c -> set_table ($2 c table) }
+  | TABLE_GET var { fun c -> table_get ($2 c table) }
+  | TABLE_SET var { fun c -> table_set ($2 c table) }
   | LOAD offset_opt align_opt { fun c -> $1 $3 $2 }
   | STORE offset_opt align_opt { fun c -> $1 $3 $2 }
   | CURRENT_MEMORY { fun c -> current_memory }
