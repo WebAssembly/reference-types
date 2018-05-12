@@ -48,11 +48,11 @@ Because there is no top type, a join does not exist in all cases.
 Similarly, a meet must always be defined on known value types that exclude the auxiliary bottom type <cite>Unknown</cite>,
 hence a meet does not exist in all cases either.
 A type error is encountered if a join or meet is required when it does not exist.</p>
-<div class="highlight-pseudo notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="nf">val_type</span> = I32 | I64 | F32 | F64 | Anyref | Anyfunc | Anyeqref | Nullref
+<div class="highlight-pseudo notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="nf">val_type</span> = I32 | I64 | F32 | F64 | Anyref | Anyfunc | Nullref
 <span class="k">type</span> <span class="nf">opd_type</span> = val_type | Unknown
 
 <span class="k">func</span> <span class="nf">is_ref</span>(<span class="nf">t</span> : opd_type) : bool =
-  <span class="k">return</span> t = Anyref || t = Anyfunc || t = Anyeqref || t = Nullref
+  <span class="k">return</span> t = Anyref || t = Anyfunc || t = Nullref
 
 <span class="k">func</span> <span class="nf">matches</span>(<span class="nf">t1</span> : opd_type, <span class="nf">t2</span> : opd_type) : bool =
   <span class="k">return</span> t1 = t2 || t1 = Unknown ||
@@ -174,11 +174,6 @@ That is an easy addition and therefore omitted from this presentation.</p>
     <span class="k">case</span> (i32.add)
       pop_opd(I32)
       pop_opd(I32)
-      push_opd(I32)
-
-    <span class="k">case</span> (ref.eq)
-      pop_opd(Anyeqref)
-      pop_opd(Anyeqref)
       push_opd(I32)
 
     <span class="k">case</span> (drop)
