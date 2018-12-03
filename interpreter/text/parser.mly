@@ -152,7 +152,7 @@ let inline_type_explicit (c : context) x ft at =
 %token CALL CALL_INDIRECT RETURN
 %token GET_LOCAL SET_LOCAL TEE_LOCAL GET_GLOBAL SET_GLOBAL GET_TABLE SET_TABLE
 %token LOAD STORE OFFSET_EQ_NAT ALIGN_EQ_NAT
-%token REF_NULL REF_HOST REF_ISNULL
+%token REF_NULL REF_HOST REF_IS_NULL
 %token CONST UNARY BINARY TEST COMPARE CONVERT
 %token UNREACHABLE CURRENT_MEMORY GROW_MEMORY
 %token FUNC START TYPE PARAM RESULT LOCAL GLOBAL
@@ -331,7 +331,7 @@ plain_instr :
   | CURRENT_MEMORY { fun c -> current_memory }
   | GROW_MEMORY { fun c -> grow_memory }
   | REF_NULL { fun c -> ref_null }
-  | REF_ISNULL { fun c -> ref_isnull }
+  | REF_IS_NULL { fun c -> ref_is_null }
   | CONST literal { fun c -> fst (literal $1 $2) }
   | TEST { fun c -> $1 }
   | COMPARE { fun c -> $1 }

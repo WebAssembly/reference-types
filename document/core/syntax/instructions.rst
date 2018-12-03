@@ -169,7 +169,7 @@ Occasionally, it is convenient to group operators together according to the foll
 .. index:: ! reference instruction, reference, null
    pair: abstract syntax; instruction
 .. _syntax-ref_null:
-.. _syntax-ref_isnull:
+.. _syntax-ref_is_null:
 .. _syntax-instr-ref:
 
 Reference Instructions

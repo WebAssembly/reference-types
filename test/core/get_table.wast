@@ -15,8 +15,8 @@
     (get_table $t3 (get_local $i))
   )
 
-  (func (export "isnull-anyfunc") (param $i i32) (result i32)
-    (ref.isnull (call $f3 (get_local $i)))
+  (func (export "is_null-anyfunc") (param $i i32) (result i32)
+    (ref.is_null (call $f3 (get_local $i)))
   )
 )
 
@@ -26,8 +26,8 @@
 (assert_return (invoke "get-anyref" (i32.const 1)) (ref.host 1))
 
 (assert_return (invoke "get-anyfunc" (i32.const 0)) (ref.null))
-(assert_return (invoke "isnull-anyfunc" (i32.const 1)) (i32.const 0))
-(assert_return (invoke "isnull-anyfunc" (i32.const 2)) (i32.const 0))
+(assert_return (invoke "is_null-anyfunc" (i32.const 1)) (i32.const 0))
+(assert_return (invoke "is_null-anyfunc" (i32.const 2)) (i32.const 0))
 
 (assert_trap (invoke "get-anyref" (i32.const 2)) "out of bounds")
 (assert_trap (invoke "get-anyfunc" (i32.const 3)) "out of bounds")

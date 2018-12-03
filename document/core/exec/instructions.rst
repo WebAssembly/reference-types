@@ -193,12 +193,12 @@ Reference Instructions
    No formal reduction rule is required for this instruction, since the |REFNULL| instruction is already a :ref:`value <syntax-val>`.
 
 
-.. _exec-ref_isnull:
+.. _exec-ref_is_null:
 
 :math:`\REFISNULL`
 ..................
 
-1. Assert: due to :ref:`validation <valid-ref_isnull>`, a :ref:`reference value <syntax-ref>` is on the top of the stack.
+1. Assert: due to :ref:`validation <valid-ref_is_null>`, a :ref:`reference value <syntax-ref>` is on the top of the stack.
 
 2. Pop the value :math:`\val` from the stack.
 

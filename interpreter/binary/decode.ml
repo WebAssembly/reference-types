@@ -445,7 +445,7 @@ let rec instr s =
 
   (* TODO: Allocate more adequate opcodes *)
   | 0xd0 -> ref_null
-  | 0xd1 -> ref_isnull
+  | 0xd1 -> ref_is_null
 
   | b -> illegal s pos b
 
