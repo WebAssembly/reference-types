@@ -248,6 +248,10 @@ let rec step (c : config) : config =
       | RefIsNull, v :: vs' ->
         Num (I32 0l) :: vs', []
 
+      | RefFunc x, vs' ->
+        let f = func frame.inst x in
+        Ref (FuncRef f) :: vs', []
+
       | Const n, vs ->
         Num n.it :: vs, []
 

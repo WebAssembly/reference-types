@@ -189,6 +189,21 @@ Reference Instructions
      C \vdashinstr \REFISNULL : [\ANYREF] \to [\I32]
    }
 
+.. _valid-ref.func:
+
+:math:`\REFFUNC~x`
+..................
+
+* The function :math:`C.\CFUNCS[x]` must be defined in the context.
+
+* The instruction is valid with type :math:`[] \to [\FUNCREF]`.
+
+.. math::
+   \frac{
+     C.\CFUNCS[x] = \functype
+   }{
+     C \vdashinstr \REFFUNC~x : [] \to [\FUNCREF]
+   }
 
 
 .. index:: parametric instructions, value type, polymorphism
