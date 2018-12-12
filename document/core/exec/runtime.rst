@@ -11,8 +11,7 @@ Runtime Structure
    pair: abstract syntax; value
 .. _syntax-num:
 .. _syntax-ref:
-.. _syntax-ref_func:
-.. _syntax-ref_host:
+.. _syntax-ref.host:
 .. _syntax-val:
 
 Values
@@ -37,7 +36,7 @@ or *host references* pointing to an uninterpreted form of :ref:`host address <sy
      \F64.\CONST~\f64 \\
    \production{(reference)} & \reff &::=&
      \REFNULL \\&&|&
-     \REFFUNC~\funcaddr \\&&|&
+     \REFFUNCADDR~\funcaddr \\&&|&
      \REFHOST~\hostaddr \\
    \production{(value)} & \val &::=&
      \num ~|~ \reff \\
@@ -459,6 +458,7 @@ Conventions
 .. index:: ! administrative instructions, function, function instance, function address, label, frame, instruction, trap, call, memory, memory instance, table, table instance, element, data, segment
    pair:: abstract syntax; administrative instruction
 .. _syntax-trap:
+.. _syntax-reffuncaddr:
 .. _syntax-invoke:
 .. _syntax-init_elem:
 .. _syntax-init_data:
@@ -477,7 +477,8 @@ In order to express the reduction of :ref:`traps <trap>`, :ref:`calls <syntax-ca
    \production{(administrative instruction)} & \instr &::=&
      \dots \\ &&|&
      \TRAP \\ &&|&
-     \REFFUNC~\funcaddr \\ &&|&
+     \REFFUNCADDR~\funcaddr \\ &&|&
+     \REFHOST~\hostaddr \\ &&|&
      \INVOKE~\funcaddr \\ &&|&
      \INITELEM~\tableaddr~\u32~\funcidx^\ast \\ &&|&
      \INITDATA~\memaddr~\u32~\byte^\ast \\ &&|&
@@ -488,7 +489,7 @@ In order to express the reduction of :ref:`traps <trap>`, :ref:`calls <syntax-ca
 The |TRAP| instruction represents the occurrence of a trap.
 Traps are bubbled up through nested instruction sequences, ultimately reducing the entire program to a single |TRAP| instruction, signalling abrupt termination.
 
-The |REFFUNC| instruction represents :ref:`function reference values <syntax-ref_func>`.
+The |REFFUNCADDR| instruction represents :ref:`function reference values <syntax-ref.func>`. Similarly, |REFHOST| represents :ref:`host references <syntax-ref.host>`.
 
 The |INVOKE| instruction represents the imminent invocation of a :ref:`function instance <syntax-funcinst>`, identified by its :ref:`address <syntax-funcaddr>`.
 It unifies the handling of different forms of calls.
@@ -603,22 +604,14 @@ Finally, the following definition of *evaluation context* and associated structu
    \end{array}
 
 .. math::
-   \begin{array}{l}
-   \begin{array}{lcl@{\qquad}l}
-   S; F; E[\instr^\ast] &\stepto& S'; F'; E[{\instr'}^\ast]
-   \end{array}
-   \\ \qquad
-     (\iff S; F; \instr^\ast \stepto S'; F'; {\instr'}^\ast) \\
-   \begin{array}{lcl@{\qquad}l}
-   S; F; \FRAME_n\{F'\}~\instr^\ast~\END &\stepto& S'; F; \FRAME_n\{F''\}~\instr'^\ast~\END
-   \end{array}
-   \\ \qquad
-     (\iff S; F'; \instr^\ast \stepto S'; F''; {\instr'}^\ast) \\[1ex]
-   \begin{array}{lcl@{\qquad}l}
+   \begin{array}{rcl}
+   S; F; E[\instr^\ast] &\stepto& S'; F'; E[{\instr'}^\ast] \\
+     && (\iff S; F; \instr^\ast \stepto S'; F'; {\instr'}^\ast) \\
+   S; F; \FRAME_n\{F'\}~\instr^\ast~\END &\stepto& S'; F; \FRAME_n\{F''\}~\instr'^\ast~\END \\
+     && (\iff S; F'; \instr^\ast \stepto S'; F''; {\instr'}^\ast) \\[1ex]
    S; F; E[\TRAP] &\stepto& S; F; \TRAP
-     &(\iff E \neq [\_]) \\
-   S; F; \FRAME_n\{F'\}~\TRAP~\END &\stepto& S; F; \TRAP
-   \end{array} \\
+     \qquad (\iff E \neq [\_]) \\
+   S; F; \FRAME_n\{F'\}~\TRAP~\END &\stepto& S; F; \TRAP \\
    \end{array}
 
 Reduction terminates when a thread's instruction sequence has been reduced to a :ref:`result <syntax-result>`,

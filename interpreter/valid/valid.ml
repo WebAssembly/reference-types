@@ -155,14 +155,14 @@ let type_cvtop at = function
 (* Expressions *)
 
 let check_memop (c : context) (memop : 'a memop) get_sz at =
-  ignore (memory c (0l @@ at));
+  let _mt = memory c (0l @@ at) in
   let size =
     match get_sz memop.sz with
     | None -> size memop.ty
     | Some sz ->
-      require (memop.ty = I64Type || sz <> Memory.Mem32) at
+      require (memop.ty = I64Type || sz <> Memory.Pack32) at
         "memory size too big";
-      Memory.mem_size sz
+      Memory.packed_size sz
   in
   require (1 lsl memop.align <= size) at
     "alignment must not be larger than natural"
@@ -198,6 +198,15 @@ let rec check_instr (c : context) (e : instr) (s : infer_stack_type) : op_type =
 
   | Nop ->
     [] --> []
+
+  | Drop ->
+    [peek 0 s] -~> []
+
+  | Select ->
+    let t1 = peek 2 s in
+    let t2 = peek 1 s in
+    let t = join_type t1 t2 e.at in
+    [t; t; Some (NumType I32Type)] -~> [t]
 
   | Block (ts, es) ->
     check_arity (List.length ts) e.at;
@@ -246,43 +255,34 @@ let rec check_instr (c : context) (e : instr) (s : infer_stack_type) : op_type =
   | CallIndirect (x, y) ->
     let TableType (lim, t) = table c x in
     let FuncType (ins, out) = type_ c y in
-    require (match_ref_type t AnyFuncType) x.at
+    require (match_ref_type t FuncRefType) x.at
       ("type mismatch: operator requires table of functions, " ^ 
        "but table has " ^ string_of_ref_type t);
     (ins @ [NumType I32Type]) --> out
 
-  | Drop ->
-    [peek 0 s] -~> []
-
-  | Select ->
-    let t1 = peek 2 s in
-    let t2 = peek 1 s in
-    let t = join_type t1 t2 e.at in
-    [t; t; Some (NumType I32Type)] -~> [t]
-
-  | GetLocal x ->
+  | LocalGet x ->
     [] --> [local c x]
 
-  | SetLocal x ->
+  | LocalSet x ->
     [local c x] --> []
 
-  | TeeLocal x ->
+  | LocalTee x ->
     [local c x] --> [local c x]
 
-  | GetGlobal x ->
+  | GlobalGet x ->
     let GlobalType (t, mut) = global c x in
     [] --> [t]
 
-  | SetGlobal x ->
+  | GlobalSet x ->
     let GlobalType (t, mut) = global c x in
     require (mut = Mutable) x.at "global is immutable";
     [t] --> []
 
-  | GetTable x ->
+  | TableGet x ->
     let TableType (lim, t) = table c x in
     [NumType I32Type] --> [RefType t]
 
-  | SetTable x ->
+  | TableSet x ->
     let TableType (lim, t) = table c x in
     [NumType I32Type; RefType t] --> []
 
@@ -294,19 +294,23 @@ let rec check_instr (c : context) (e : instr) (s : infer_stack_type) : op_type =
     check_memop c memop (fun sz -> sz) e.at;
     [NumType I32Type; NumType memop.ty] --> []
 
-  | CurrentMemory ->
-    ignore (memory c (0l @@ e.at));
+  | MemorySize ->
+    let _mt = memory c (0l @@ e.at) in
     [] --> [NumType I32Type]
 
-  | GrowMemory ->
-    ignore (memory c (0l @@ e.at));
+  | MemoryGrow ->
+    let _mt = memory c (0l @@ e.at) in
     [NumType I32Type] --> [NumType I32Type]
 
-  | Null ->
+  | RefNull ->
     [] --> [RefType NullRefType]
 
-  | IsNull ->
+  | RefIsNull ->
     [RefType AnyRefType] --> [NumType I32Type]
+
+  | RefFunc x ->
+    let _ft = func c x in
+    [] --> [RefType FuncRefType]
 
   | Const v ->
     let t = NumType (type_num v.it) in
@@ -353,10 +357,12 @@ and check_block (c : context) (es : instr list) (ts : stack_type) at =
 
 (* Types *)
 
-let check_limits {min; max} at =
+let check_limits {min; max} range at msg =
+  require (I64.le_u (Int64.of_int32 min) range) at msg;
   match max with
   | None -> ()
   | Some max ->
+    require (I64.le_u (Int64.of_int32 max) range) at msg;
     require (I32.le_u min max) at
       "size minimum must not be greater than maximum"
 
@@ -379,18 +385,13 @@ let check_func_type (ft : func_type) at =
 
 let check_table_type (tt : table_type) at =
   let TableType (lim, t) = tt in
-  check_limits lim at;
+  check_limits lim 0x1_0000_0000L at "table size must be at most 2^32";
   check_ref_type t at
-
-let check_memory_size (sz : I32.t) at =
-  require (I32.le_u sz 65536l) at
-    "memory size must be at most 65536 pages (4GiB)"
 
 let check_memory_type (mt : memory_type) at =
   let MemoryType lim = mt in
-  check_limits lim at;
-  check_memory_size lim.min at;
-  Lib.Option.app (fun max -> check_memory_size max at) lim.max
+  check_limits lim 0x1_0000L at
+    "memory size must be at most 65536 pages (4GiB)"
 
 let check_global_type (gt : global_type) at =
   let GlobalType (t, mut) = gt in
@@ -423,9 +424,10 @@ let check_func (c : context) (f : func) =
 
 let is_const (c : context) (e : instr) =
   match e.it with
-  | Null
+  | RefNull
+  | RefFunc _
   | Const _ -> true
-  | GetGlobal x -> let GlobalType (_, mut) = global c x in mut = Immutable
+  | GlobalGet x -> let GlobalType (_, mut) = global c x in mut = Immutable
   | _ -> false
 
 let check_const (c : context) (const : const) (t : value_type) =
@@ -446,14 +448,14 @@ let check_memory (c : context) (mem : memory) =
 
 let check_elem (c : context) (seg : table_segment) =
   let {index; offset; init} = seg.it in
-  check_const c offset (NumType I32Type);
-  ignore (table c index);
-  ignore (List.map (func c) init)
+  let _tt = table c index in
+  let _xs = List.map (func c) init in
+  check_const c offset (NumType I32Type)
 
 let check_data (c : context) (seg : memory_segment) =
   let {index; offset; init} = seg.it in
-  check_const c offset (NumType I32Type);
-  ignore (memory c index)
+  let _mt = memory c index in
+  check_const c offset (NumType I32Type)
 
 let check_global (c : context) (glob : global) =
   let {gtype; value} = glob.it in
@@ -482,9 +484,6 @@ let check_import (im : import) (c : context) : context =
     {c with memories = mt :: c.memories}
   | GlobalImport gt ->
     check_global_type gt idesc.at;
-    let GlobalType (_, mut) = gt in
-    require (mut = Immutable) idesc.at
-      "mutable globals cannot be imported (yet)";
     {c with globals = gt :: c.globals}
 
 module NameSet = Set.Make(struct type t = Ast.name let compare = compare end)
@@ -495,10 +494,7 @@ let check_export (c : context) (set : NameSet.t) (ex : export) : NameSet.t =
   | FuncExport x -> ignore (func c x)
   | TableExport x -> ignore (table c x)
   | MemoryExport x -> ignore (memory c x)
-  | GlobalExport x ->
-    let GlobalType (_, mut) = global c x in
-    require (mut = Immutable) edesc.at
-      "mutable globals cannot be exported (yet)"
+  | GlobalExport x -> ignore (global c x)
   );
   require (not (NameSet.mem name set)) ex.at "duplicate export name";
   NameSet.add name set
