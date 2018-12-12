@@ -425,6 +425,7 @@ let check_func (c : context) (f : func) =
 let is_const (c : context) (e : instr) =
   match e.it with
   | RefNull
+  | RefFunc _
   | Const _ -> true
   | GlobalGet x -> let GlobalType (_, mut) = global c x in mut = Immutable
   | _ -> false

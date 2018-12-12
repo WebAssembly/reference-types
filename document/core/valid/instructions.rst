@@ -892,6 +892,10 @@ Constant Expressions
 
   * either of the form :math:`t.\CONST~c`,
 
+  * or of the form :math:`\REFNULL`,
+
+  * or of the form :math:`\REFFUNC~x`,
+
   * or of the form :math:`\GLOBALGET~x`, in which case :math:`C.\CGLOBALS[x]` must be a :ref:`global type <syntax-globaltype>` of the form :math:`\CONST~t`.
 
 .. math::
@@ -912,6 +916,12 @@ Constant Expressions
      C \vdashinstrconst \REFNULL \const
    }
    \qquad
+   \frac{
+   }{
+     C \vdashinstrconst \REFFUNC~x \const
+   }
+
+.. math::
    \frac{
      C.\CGLOBALS[x] = \CONST~t
    }{
