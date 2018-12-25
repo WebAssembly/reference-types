@@ -1,7 +1,13 @@
 # WebAssembly Specifications
 
 This directory contains the source code for the WebAssembly spec documents, as served from the [webassembly.github.io/spec](https://webassembly.github.io/spec) pages.
-It uses [Sphinx](http://www.sphinx-doc.org/) and [Bikeshed](https://github.com/tabatkins/bikeshed).
+It uses [Sphinx](http://www.sphinx-doc.org/) and [Bikeshed](https://github.com/tabatkins/bikeshed), which needs Python2.7
+
+Initialize submodules
+
+```
+git submodule update --init --recursive
+```
 
 To install Sphinx:
 ```
