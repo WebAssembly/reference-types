@@ -350,8 +350,12 @@ let wrap item_name wrap_action wrap_assertion at =
       {module_name = Utf8.decode "spectest"; item_name = Utf8.decode "eq_ref";
        idesc = FuncImport (4l @@ at) @@ at} @@ at ]
   in
-  let idesc_isnt_func = match idesc.it with FuncImport _ -> 0l | _ -> 1l in
-  let item = Int32.sub (Lib.List32.length imports) idesc_isnt_func @@ at in
+  let item =
+    List.fold_left
+      (fun i im ->
+        match im.it.idesc.it with FuncImport _ -> Int32.add i 1l | _ -> i
+      ) 0l imports @@ at
+  in
   let edesc = FuncExport item @@ at in
   let exports = [{name = Utf8.decode "run"; edesc} @@ at] in
   let body =
