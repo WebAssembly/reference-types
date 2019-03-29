@@ -21,11 +21,15 @@ let harness =
   "function is_funcref(x) {\n" ^
   "  return typeof x === \"function\" ? 1 : 0;\n" ^
   "}\n" ^
+  "function eq_ref(x, y) {\n" ^
+  "  return x === y ? 1 : 0;\n" ^
+  "}\n" ^
   "\n" ^
   "let spectest = {\n" ^
   "  hostref: hostref,\n" ^
   "  is_hostref: is_hostref,\n" ^
   "  is_funcref: is_funcref,\n" ^
+  "  eq_ref: eq_ref,\n" ^
   "  print: console.log.bind(console),\n" ^
   "  print_i32: console.log.bind(console),\n" ^
   "  print_i32_f32: console.log.bind(console),\n" ^
