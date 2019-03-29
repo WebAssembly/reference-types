@@ -83,7 +83,7 @@ let harness =
   "}\n" ^
   "\n" ^
   "function exports(instance) {\n" ^
-  "  return {module: instance.exports, host: {ref: hostref}};\n" ^
+  "  return {module: instance.exports, spectest: spectest};\n" ^
   "}\n" ^
   "\n" ^
   "function run(action) {\n" ^
@@ -327,7 +327,6 @@ let assert_return_func ts at =
 let wrap item_name wrap_action wrap_assertion at =
   let itypes, idesc, action = wrap_action at in
   let locals, assertion = wrap_assertion at in
-  let item = Lib.List32.length itypes @@ at in
   let types =
     (FuncType ([], []) @@ at) ::
     (FuncType ([NumType I32Type], [RefType AnyRefType]) @@ at) ::
@@ -347,6 +346,8 @@ let wrap item_name wrap_action wrap_assertion at =
       {module_name = Utf8.decode "spectest"; item_name = Utf8.decode "eq_ref";
        idesc = FuncImport (4l @@ at) @@ at} @@ at ]
   in
+  let idesc_is_func = match idesc.it with FuncImport _ -> 1l | _ -> 0l in
+  let item = Int32.add idesc_is_func (Lib.List32.length imports) @@ at in
   let edesc = FuncExport item @@ at in
   let exports = [{name = Utf8.decode "run"; edesc} @@ at] in
   let body =
