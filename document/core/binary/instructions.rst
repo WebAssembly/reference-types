@@ -151,9 +151,9 @@ Table Instructions
    \production{instruction} & \Binstr &::=& \dots \\ &&|&
      \hex{25}~~x{:}\Btableidx &\Rightarrow& \TABLEGET~x \\ &&|&
      \hex{26}~~x{:}\Btableidx &\Rightarrow& \TABLESET~x \\ &&|&
-     \hex{FC}~\hex{0F}~~x{:}\Btableidx &\Rightarrow& \TABLESIZE~x \\ &&|&
-     \hex{FC}~\hex{10}~~x{:}\Btableidx &\Rightarrow& \TABLEGROW~x \\ &&|&
-     \hex{FC}~\hex{11}~~x{:}\Btableidx &\Rightarrow& \TABLEFILL~x \\
+     \hex{FC}~\hex{0F}~~x{:}\Btableidx &\Rightarrow& \TABLEFILL~x \\ &&|&
+     \hex{FC}~\hex{10}~~x{:}\Btableidx &\Rightarrow& \TABLESIZE~x \\ &&|&
+     \hex{FC}~\hex{11}~~x{:}\Btableidx &\Rightarrow& \TABLEGROW~x \\
    \end{array}
 
 

@@ -176,9 +176,9 @@ let encode m =
 
       | TableGet x -> op 0x25; var x
       | TableSet x -> op 0x26; var x
-      | TableSize x -> op 0xfc; op 0x0f; var x
-      | TableGrow x -> op 0xfc; op 0x10; var x
-      | TableFill x -> op 0xfc; op 0x11; var x
+      | TableSize x -> op 0xfc; op 0x10; var x
+      | TableGrow x -> op 0xfc; op 0x11; var x
+      | TableFill x -> op 0xfc; op 0x0f; var x
 
       | Load ({ty = I32Type; sz = None; _} as mo) -> op 0x28; memop mo
       | Load ({ty = I64Type; sz = None; _} as mo) -> op 0x29; memop mo
