@@ -14,6 +14,7 @@ Motivation:
   - allow representing data structures containing references
 by repurposing tables as a general memory for opaque data types
   - allow manipulating function tables from within Wasm.
+  - add instructions missing from [bulk operations proposal](https://github.com/WebAssembly/bulk-memory-operations/blob/master/proposals/bulk-memory-operations/Overview.md)
 
 * Set the stage for later additions:
 
@@ -31,7 +32,7 @@ Summary:
 
 * Introduce instructions to get and set table slots.
 
-* Add missing table bulk instructions.
+* Add missing table size, grow, fill instructions.
 
 * Allow multiple tables.
 
