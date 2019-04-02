@@ -223,12 +223,10 @@ let rec step (c : config) : config =
           vs', []
 
       | TableFill x, Num (I32 n) :: Ref r :: Num (I32 i) :: vs' ->
-        (try
-          Table.store (table frame.inst x) i r;
-          assert (I32.lt_u i 0xffff_ffffl);
+        assert (I32.lt_u i 0xffff_ffffl);
+        Ref r :: Num (I32 i) ::
           Num (I32 (I32.sub n 1l)) :: Ref r :: Num (I32 (I32.add i 1l)) :: vs',
-            [Plain (TableFill x) @@ e.at]
-        with exn -> vs', [Trapping (table_error e.at exn) @@ e.at])
+          [Plain (TableSet x) @@ e.at; Plain (TableFill x) @@ e.at]
 
       | Load {offset; ty; sz; _}, Num (I32 i) :: vs' ->
         let mem = memory frame.inst (0l @@ e.at) in
