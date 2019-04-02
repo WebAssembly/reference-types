@@ -489,7 +489,12 @@ let encode m =
     (* Element section *)
     let segment dat seg =
       let {index; offset; init} = seg.it in
-      var index; const offset; dat init
+      if index.it = 0l then
+        u8 0x00
+      else begin
+        u8 0x02; var index
+      end;
+      const offset; dat init
 
     let table_segment seg =
       segment (vec var) seg

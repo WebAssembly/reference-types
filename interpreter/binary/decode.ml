@@ -621,7 +621,14 @@ let code_section s =
 (* Element section *)
 
 let segment dat s =
-  let index = at var s in
+  let pos = pos s in
+  let x = at vu32 s in
+  let index =
+    match x.Source.it with
+    | 0l -> x
+    | 2l -> at var s
+    | _ -> error s pos "invalid segment kind"
+  in
   let offset = const s in
   let init = dat s in
   {index; offset; init}
