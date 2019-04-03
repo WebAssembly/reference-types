@@ -572,25 +572,29 @@ Table Instructions
 
 8. Pop the value :math:`\I32.\CONST~n` from the stack.
 
-9. Either, try :ref:`growing <grow-table>` :math:`\X{table}` by :math:`n` entries:
+9. Assert: due to :ref:`validation <valid-table.fill>`, a :ref:`reference value <syntax-ref>` is on the top of the stack.
+
+10. Pop the value :math:`\val` from the stack.
+
+11. Either, try :ref:`growing <grow-table>` :math:`\X{table}` by :math:`n` entries with initialization value :math:`\val`:
 
    a. If it succeeds, push the value :math:`\I32.\CONST~\X{sz}` to the stack.
 
    b. Else, push the value :math:`\I32.\CONST~(-1)` to the stack.
 
-10. Or, push the value :math:`\I32.\CONST~(-1)` to the stack.
+12. Or, push the value :math:`\I32.\CONST~(-1)` to the stack.
 
 .. math::
    ~\\[-1ex]
    \begin{array}{l}
    \begin{array}{lcl@{\qquad}l}
-   S; F; (\I32.\CONST~n)~\TABLEGROW~x &\stepto& S'; F; (\I32.\CONST~\X{sz})
+   S; F; \val~(\I32.\CONST~n)~\TABLEGROW~x &\stepto& S'; F; (\I32.\CONST~\X{sz})
    \end{array}
    \\ \qquad
      \begin{array}[t]{@{}r@{~}l@{}}
      (\iff & F.\AMODULE.\MITABLES[x] = a \\
      \wedge & \X{sz} = |S.\STABLES[a].\TIELEM| \\
-     \wedge & S' = S \with \STABLES[a] = \growtable(S.\STABLES[a], n)) \\
+     \wedge & S' = S \with \STABLES[a] = \growtable(S.\STABLES[a], n, \val)) \\
      \end{array}
    \\[1ex]
    \begin{array}{lcl@{\qquad}l}

@@ -452,9 +452,9 @@ let rec instr s =
 
   | 0xfc as b1 ->
     (match op s with
-    | 0x0f -> table_fill (at var s)
+    | 0x0f -> table_grow (at var s)
     | 0x10 -> table_size (at var s)
-    | 0x11 -> table_grow (at var s)
+    | 0x11 -> table_fill (at var s)
 
     | b2 -> illegal2 s pos b1 b2
     )
