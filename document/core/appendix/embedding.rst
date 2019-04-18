@@ -608,15 +608,17 @@ Globals
 
 1. Let :math:`\X{gi}` be the :ref:`global instance <syntax-globalinst>` :math:`\store.\SGLOBALS[\globaladdr]`.
 
-2. If :math:`\X{gi}.\GIMUT` is not :math:`\MVAR`, then return :math:`\ERROR`.
+2. Let :math:`\mut~t` be the structure of the :ref:`global type <syntax-globaltype>` :math:`\X{gi}.\GITYPE`.
 
-3. Replace :math:`\X{gi}.\GIVALUE` with the :ref:`value <syntax-val>` :math:`\val`.
+3. If :math:`\mut` is not :math:`\MVAR`, then return :math:`\ERROR`.
 
-4. Return the updated store.
+4. Replace :math:`\X{gi}.\GIVALUE` with the :ref:`value <syntax-val>` :math:`\val`.
+
+5. Return the updated store.
 
 .. math::
    ~ \\
    \begin{array}{lclll}
-   \F{global\_write}(S, a, v) &=& S' && (\iff S.\SGLOBALS[a].\GIMUT = \MVAR \wedge S' = S \with \SGLOBALS[a].\GIVALUE = v) \\
+   \F{global\_write}(S, a, v) &=& S' && (\iff S.\SGLOBALS[a].\GITYPE = \MVAR~t \wedge S' = S \with \SGLOBALS[a].\GIVALUE = v) \\
    \F{global\_write}(S, a, v) &=& \ERROR && (\otherwise) \\
    \end{array}
