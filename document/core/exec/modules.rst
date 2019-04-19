@@ -23,51 +23,48 @@ The following auxiliary typing rules specify this typing relation relative to a 
 :math:`\EVFUNC~a`
 .................
 
-* The store entry :math:`S.\SFUNCS[a]` must be a :ref:`function instance <syntax-funcinst>` :math:`\{\FITYPE~\functype, \dots\}`.
+* The store entry :math:`S.\SFUNCS[a]` must exist.
 
-* Then :math:`\EVFUNC~a` is valid with :ref:`external type <syntax-externtype>` :math:`\ETFUNC~\functype`.
+* Then :math:`\EVFUNC~a` is valid with :ref:`external type <syntax-externtype>` :math:`\ETFUNC~S.\SFUNCS[a].\FITYPE`.
 
 .. math::
    \frac{
-     S.\SFUNCS[a] = \{\FITYPE~\functype, \dots\}
    }{
-     S \vdashexternval \EVFUNC~a : \ETFUNC~\functype
+     S \vdashexternval \EVFUNC~a : \ETFUNC~S.\SFUNCS[a].\FITYPE
    }
 
 
-.. index:: table type, table address, limits
+.. index:: table type, table address
 .. _valid-externval-table:
 
 :math:`\EVTABLE~a`
 ..................
 
-* The store entry :math:`S.\STABLES[a]` must be a :ref:`table instance <syntax-tableinst>` :math:`\{\TITYPE~(\{\LMIN~n', \LMAX~m^?\}~t), \TIELEM~\reff^n\}`.
+* The store entry :math:`S.\STABLES[a]` must exist.
 
-* Then :math:`\EVTABLE~a` is valid with :ref:`external type <syntax-externtype>` :math:`\ETTABLE~(\{\LMIN~n, \LMAX~m^?\}~t)`.
+* Then :math:`\EVTABLE~a` is valid with :ref:`external type <syntax-externtype>` :math:`\ETTABLE~S.\STABLES[a].\TITYPE`.
 
 .. math::
    \frac{
-     S.\STABLES[a] = \{ \TITYPE~(\{\LMIN~n', \LMAX~m^?\}~t), \TIELEM~\reff^n \}
    }{
-     S \vdashexternval \EVTABLE~a : \ETTABLE~(\{\LMIN~n, \LMAX~m^?\}~t)
+     S \vdashexternval \EVTABLE~a : \ETTABLE~S.\STABLES[a].\TITYPE
    }
 
 
-.. index:: memory type, memory address, limits
+.. index:: memory type, memory address
 .. _valid-externval-mem:
 
 :math:`\EVMEM~a`
 ................
 
-* The store entry :math:`S.\SMEMS[a]` must be a :ref:`memory instance <syntax-meminst>` :math:`\{\MITYPE~\{\LMIN~n', \LMAX~m^?\}, \MIDATA~b^{n\cdot64\,\F{Ki}}\}`, for some :math:`n`.
+* The store entry :math:`S.\SMEMS[a]` must exist.
 
-* Then :math:`\EVMEM~a` is valid with :ref:`external type <syntax-externtype>` :math:`\ETMEM~(\{\LMIN~n, \LMAX~m^?\})`.
+* Then :math:`\EVMEM~a` is valid with :ref:`external type <syntax-externtype>` :math:`\ETMEM~S.\SMEMS[a].\MITYPE`.
 
 .. math::
    \frac{
-     S.\SMEMS[a] = \{ \MITYPE~\{\LMIN~n', \LMAX~m^?\}, \MIDATA~b^{n\cdot64\,\F{Ki}} \}
    }{
-     S \vdashexternval \EVMEM~a : \ETMEM~\{\LMIN~n, \LMAX~m^?\}
+     S \vdashexternval \EVMEM~a : \ETMEM~S.\SMEMS[a].\MITYPE
    }
 
 
@@ -77,15 +74,14 @@ The following auxiliary typing rules specify this typing relation relative to a 
 :math:`\EVGLOBAL~a`
 ...................
 
-* The store entry :math:`S.\SGLOBALS[a]` must be a :ref:`global instance <syntax-globalinst>` :math:`\{\GITYPE~(\mut~t), \GIVALUE~\val\}`.
+* The store entry :math:`S.\SGLOBALS[a]` must exist.
 
-* Then :math:`\EVGLOBAL~a` is valid with :ref:`external type <syntax-externtype>` :math:`\ETGLOBAL~(\mut~t)`.
+* Then :math:`\EVGLOBAL~a` is valid with :ref:`external type <syntax-externtype>` :math:`\ETGLOBAL~S.\SGLOBALS[a].\GITYPE`.
 
 .. math::
    \frac{
-     S.\SGLOBALS[a] = \{ \GITYPE~(\mut~t), \GIVALUE~\val \}
    }{
-     S \vdashexternval \EVGLOBAL~a : \ETGLOBAL~(\mut~t)
+     S \vdashexternval \EVGLOBAL~a : \ETGLOBAL~S.\SGLOBALS[a].\GITYPE
    }
 
 
@@ -452,21 +448,26 @@ Growing :ref:`tables <syntax-tableinst>`
 
 3. If :math:`\X{len}` is larger than :math:`2^{32}`, then fail.
 
-4. Let :math:`\limits~t` be the structure of :ref:`memory type <syntax-memtype>` :math:`\tableinst.\TITYPE`.
+4. Let :math:`\limits~t` be the structure of :ref:`table type <syntax-tabletype>` :math:`\tableinst.\TITYPE`.
 
-5. If :math:`\limits.\LMAX` is not empty and its value is smaller than :math:`\X{len}`, then fail.
+5. Let :math:`\limits'` be :math:`\limits` with :math:`\LMIN` updated to :math:`\X{len}`.
 
-6. Append :math:`\reff^n` to :math:`\tableinst.\TIELEM`.
+6. If :math:`\limits'` is not :ref:`valid <valid-limits>`, then fail.
+
+7. Append :math:`\reff^n` to :math:`\tableinst.\TIELEM`.
+
+8. Set :math:`\tableinst.\TITYPE` to the :ref:`table type <syntax-tabletype>` :math:`\limits'~t`.
 
 .. math::
    \begin{array}{rllll}
-   \growtable(\tableinst, n, \reff) &=& \tableinst \with \TIELEM = \tableinst.\TIELEM~\reff^n \\
+   \growtable(\tableinst, n, \reff) &=& \tableinst \with \TITYPE = \limits'~t \with \TIELEM = \tableinst.\TIELEM~\reff^n \\
      && (
        \begin{array}[t]{@{}r@{~}l@{}}
        \iff & \X{len} = n + |\tableinst.\TIELEM| \\
        \wedge & \X{len} \leq 2^{32} \\
        \wedge & \limits~t = \tableinst.\TITYPE \\
-       \wedge & (\limits.\LMAX = \epsilon \vee \X{len} \leq \limits.\LMAX)) \\
+       \wedge & \limits' = \limits \with \LMIN = \X{len} \\
+       \wedge & \vdashlimits \limits' \ok \\
        \end{array} \\
    \end{array}
 
@@ -487,19 +488,24 @@ Growing :ref:`memories <syntax-meminst>`
 
 5. Let :math:`\limits` be the structure of :ref:`memory type <syntax-memtype>` :math:`\meminst.\MITYPE`.
 
-6. If :math:`\limits.\LMAX` is not empty and its value is smaller than :math:`\X{len}`, then fail.
+6. Let :math:`\limits'` be :math:`\limits` with :math:`\LMIN` updated to :math:`\X{len}`.
 
-7. Append :math:`n` times :math:`64\,\F{Ki}` :ref:`bytes <syntax-byte>` with value :math:`\hex{00}` to :math:`\meminst.\MIDATA`.
+7. If :math:`\limits'` is not :ref:`valid <valid-limits>`, then fail.
+
+8. Append :math:`n` times :math:`64\,\F{Ki}` :ref:`bytes <syntax-byte>` with value :math:`\hex{00}` to :math:`\meminst.\MIDATA`.
+
+9. Set :math:`\meminst.\MITYPE` to the :ref:`memory type <syntax-memtype>` :math:`\limits'`.
 
 .. math::
    \begin{array}{rllll}
-   \growmem(\meminst, n) &=& \meminst \with \MIDATA = \meminst.\MIDATA~(\hex{00})^{n \cdot 64\,\F{Ki}} \\
+   \growmem(\meminst, n) &=& \meminst \with \MITYPE = \limits' \with \MIDATA = \meminst.\MIDATA~(\hex{00})^{n \cdot 64\,\F{Ki}} \\
      && (
        \begin{array}[t]{@{}r@{~}l@{}}
        \iff & \X{len} = n + |\meminst.\MIDATA| / 64\,\F{Ki} \\
        \wedge & \X{len} \leq 2^{16} \\
        \wedge & \limits = \meminst.\MITYPE \\
-       \wedge & (\limits.\LMAX = \epsilon \vee \X{len} \leq \limits.\LMAX)) \\
+       \wedge & \limits' = \limits \with \LMIN = \X{len} \\
+       \wedge & \vdashlimits \limits' \ok \\
        \end{array} \\
    \end{array}
 

@@ -196,10 +196,12 @@ Module instances are classified by *module contexts*, which are regular :ref:`co
 .. index:: table type, table instance, limits, function address
 .. _valid-tableinst:
 
-:ref:`Table Instances <syntax-tableinst>` :math:`\{ \TITYPE~(\{\LMIN~n', \LMAX~m^?\}~t), \TIELEM~\reff^n \}`
-............................................................................................................
+:ref:`Table Instances <syntax-tableinst>` :math:`\{ \TITYPE~(\limits~t), \TIELEM~\reff^\ast \}`
+...............................................................................................
 
-* The :ref:`table type <syntax-tabletype>` :math:`\{\LMIN~n', \LMAX~m^?\}~t` must be :ref:`valid <valid-tabletype>`.
+* The :ref:`table type <syntax-tabletype>` :math:`\limits~t` must be :ref:`valid <valid-tabletype>`.
+
+* The length of :math:`\reff^\ast` must equal :math:`\limits.\LMIN`.
 
 * For each :ref:`reference <syntax-ref>` :math:`\reff_i` in the table elements :math:`\reff^n`:
 
@@ -207,35 +209,41 @@ Module instances are classified by *module contexts*, which are regular :ref:`co
 
   * The :ref:`reference type <syntax-reftype>` :math:`t'_i` must :ref:`match <match-reftype>` the :ref:`reference type <syntax-reftype>` :math:`t`.
 
-* Then the table instance is valid with :ref:`table type <syntax-tabletype>` :math:`\{\LMIN~n, \LMAX~m^?\}~t`.
+* Then the table instance is valid with :ref:`table type <syntax-tabletype>` :math:`\limits~t`.
 
 .. math::
    \frac{
-     \vdashtabletype \{\LMIN~n', \LMAX~m^?\}~t \ok
+     \vdashtabletype \limits~t \ok
+     \qquad
+     n = \limits.\LMIN
      \qquad
      (S \vdash \reff : t')^n
      \qquad
      (\vdashreftypematch t' \matchesvaltype t)^n
    }{
-     S \vdashtableinst \{ \TITYPE~(\{\LMIN~n', \LMAX~m^?\}~t), \TIELEM~\reff^n \} : \{\LMIN~n, \LMAX~m^?\}~t
+     S \vdashtableinst \{ \TITYPE~(\limits~t), \TIELEM~\reff^n \} : \limits~t
    }
 
 
 .. index:: memory type, memory instance, limits, byte
 .. _valid-meminst:
 
-:ref:`Memory Instances <syntax-meminst>` :math:`\{ \MITYPE~\{\LMIN~n', \LMAX~m^?\}, \MIDATA~b^n \}`
-...................................................................................................
+:ref:`Memory Instances <syntax-meminst>` :math:`\{ \MITYPE~\limits, \MIDATA~b^\ast \}`
+......................................................................................
 
 * The :ref:`memory type <syntax-memtype>` :math:`\{\LMIN~n, \LMAX~m^?\}` must be :ref:`valid <valid-memtype>`.
 
-* Then the memory instance is valid with :ref:`memory type <syntax-memtype>` :math:`\{\LMIN~n, \LMAX~m^?\}`.
+* The length of :math:`b^\ast` must equal :math:`\limits.\LMIN` multiplied by the :ref:`page size <page-size>` :math:`64\,\F{Ki}`.
+
+* Then the memory instance is valid with :ref:`memory type <syntax-memtype>` :math:`\limits`.
 
 .. math::
    \frac{
-     \vdashmemtype \{\LMIN~n, \LMAX~m^?\} \ok
+     \vdashmemtype \limits \ok
+     \qquad
+     n = \limits.\LMIN \cdot 64\,\F{Ki}
    }{
-     S \vdashmeminst \{ \MITYPE~\{\LMIN~n', \LMAX~m^?\}, \MIDATA~b^n \} : \{\LMIN~n, \LMAX~m^?\}
+     S \vdashmeminst \{ \MITYPE~\limits, \MIDATA~b^n \} : \limits
    }
 
 
@@ -521,7 +529,7 @@ To that end, all previous typing judgements :math:`C \vdash \X{prop}` are genera
 :math:`\INITELEM~\tableaddr~o~x^n`
 ..................................
 
-* The :ref:`external table value <syntax-externval>` :math:`\EVTABLE~\tableaddr` must be :ref:`valid <valid-externval-table>` with some :ref:`external table type <syntax-externtype>` :math:`\ETTABLE~\limits~\FUNCREF`.
+* The :ref:`external table value <syntax-externval>` :math:`\EVTABLE~\tableaddr` must be :ref:`valid <valid-externval-table>` with some :ref:`external table type <syntax-externtype>` :math:`\ETTABLE~(\limits~\FUNCREF)`.
 
 * The index :math:`o + n` must be smaller than or equal to :math:`\limits.\LMIN`.
 

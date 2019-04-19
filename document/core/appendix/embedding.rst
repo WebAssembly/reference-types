@@ -280,15 +280,13 @@ Functions
 :math:`\F{func\_type}(\store, \funcaddr) : \functype`
 .....................................................
 
-1. Assert: the :ref:`external value <syntax-externval>` :math:`\EVFUNC~\funcaddr` is :ref:`valid <valid-externval>` with :ref:`external type <syntax-externtype>` :math:`\ETFUNC~\functype`.
+1. Return :math:`S.\SFUNCS[a].\FITYPE`.
 
-2. Return :math:`\functype`.
-
-3. Post-condition: :math:`\functype` is :ref:`valid <valid-functype>`.
+2. Post-condition: the returned :ref:`function type <syntax-functype>` is :ref:`valid <valid-functype>`.
 
 .. math::
    \begin{array}{lclll}
-   \F{func\_type}(S, a) &=& \X{ft} && (\iff S \vdashexternval \EVFUNC~a : \ETFUNC~\X{ft}) \\
+   \F{func\_type}(S, a) &=& S.\SFUNCS[a].\FITYPE \\
    \end{array}
 
 
@@ -345,15 +343,13 @@ Tables
 :math:`\F{table\_type}(\store, \tableaddr) : \tabletype`
 ........................................................
 
-1. Assert: the :ref:`external value <syntax-externval>` :math:`\EVTABLE~\tableaddr` is :ref:`valid <valid-externval>` with :ref:`external type <syntax-externtype>` :math:`\ETTABLE~\tabletype`.
+1. Return :math:`S.\STABLES[a].\TITYPE`.
 
-2. Return :math:`\tabletype`.
-
-3. Post-condition: :math:`\tabletype` is :math:`valid <valid-tabletype>`.
+2. Post-condition: the returned :ref:`table type <syntax-tabletype>` is :math:`valid <valid-tabletype>`.
 
 .. math::
    \begin{array}{lclll}
-   \F{table\_type}(S, a) &=& \X{tt} && (\iff S \vdashexternval \EVTABLE~a : \ETTABLE~\X{tt}) \\
+   \F{table\_type}(S, a) &=& S.\STABLES[a].\TITYPE \\
    \end{array}
 
 
@@ -459,15 +455,13 @@ Memories
 :math:`\F{mem\_type}(\store, \memaddr) : \memtype`
 ..................................................
 
-1. Assert: the :ref:`external value <syntax-externval>` :math:`\EVMEM~\memaddr` is :ref:`valid <valid-externval>` with :ref:`external type <syntax-externtype>` :math:`\ETMEM~\memtype`.
+1. Return :math:`S.\SMEMS[a].\MITYPE`.
 
-2. Return :math:`\memtype`.
-
-3. Post-condition: :math:`\memtype` is :math:`valid <valid-memtype>`.
+2. Post-condition: the returned :ref:`memory type <syntax-memtype>` is :math:`valid <valid-memtype>`.
 
 .. math::
    \begin{array}{lclll}
-   \F{mem\_type}(S, a) &=& \X{mt} && (\iff S \vdashexternval \EVMEM~a : \ETMEM~\X{mt}) \\
+   \F{mem\_type}(S, a) &=& S.\SMEMS[a].\MITYPE \\
    \end{array}
 
 
@@ -574,15 +568,13 @@ Globals
 :math:`\F{global\_type}(\store, \globaladdr) : \globaltype`
 ...........................................................
 
-1. Assert: the :ref:`external value <syntax-externval>` :math:`\EVGLOBAL~\globaladdr` is :ref:`valid <valid-externval>` with :ref:`external type <syntax-externtype>` :math:`\ETGLOBAL~\globaltype`.
+1. Return :math:`S.\SGLOBALS[a].\GITYPE`.
 
-2. Return :math:`\globaltype`.
-
-3. Post-condition: :math:`\globaltype` is :math:`valid <valid-globaltype>`.
+2. Post-condition: the returned :ref:`global type <syntax-globaltype>` is :math:`valid <valid-globaltype>`.
 
 .. math::
    \begin{array}{lclll}
-   \F{global\_type}(S, a) &=& \X{gt} && (\iff S \vdashexternval \EVGLOBAL~a : \ETGLOBAL~\X{gt}) \\
+   \F{global\_type}(S, a) &=& S.\SGLOBALS[a].\GITYPE \\
    \end{array}
 
 
