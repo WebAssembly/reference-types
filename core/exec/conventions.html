@@ -22,7 +22,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
-  </head> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>  
+  </head> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -58,7 +58,7 @@ that is modified by <em>pushing</em> or <em>popping</em>
 <a class="reference internal" href="../syntax/values.html#syntax-value"><span class="std std-ref">values</span></a>, <a class="reference internal" href="runtime.html#syntax-label"><span class="std std-ref">labels</span></a>, and <a class="reference internal" href="runtime.html#syntax-frame"><span class="std std-ref">frames</span></a>.</li>
 <li>Certain rules require the stack to contain at least one frame.
 The most recent frame is referred to as the <em>current</em> frame.</li>
-<li>Both the store and the current frame are mutated by <em>replacing</em> some of its components.
+<li>Both the store and the current frame are mutated by <em>replacing</em> some of their components.
 Such replacement is assumed to apply globally.</li>
 <li>The execution of an instruction may <em>trap</em>,
 in which case the entire computation is aborted and no further modifications to the store are performed by it. (Other computations can still be initiated afterwards.)</li>
@@ -152,11 +152,7 @@ Andreas Haas, Andreas Rossberg, Derek Schuff, Ben Titzer, Dan Gohman, Luke Wagne
 <li class="toctree-l1"><a class="reference internal" href="../syntax/index.html">Structure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../valid/index.html">Validation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Execution</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Conventions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#prose-notation">Prose Notation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#formal-notation">Formal Notation</a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Conventions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="runtime.html">Runtime Structure</a></li>
 <li class="toctree-l2"><a class="reference internal" href="numerics.html">Numerics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="instructions.html">Instructions</a></li>

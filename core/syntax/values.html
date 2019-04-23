@@ -22,7 +22,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
-  </head> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>  
+  </head> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -39,8 +39,8 @@ Moreover, in the definition of programs, immutable sequences of values occur to 
 In the abstract syntax they are represented as hexadecimal literals.</p>
 <div class="math notranslate">
 \[\begin{split}\begin{array}{llll}
-\def\mathdef2208#1{{}}\mathdef2208{byte} &amp; \href{../syntax/values.html#syntax-byte}{\mathit{byte}} &amp;::=&amp;
-  \def\mathdef2265#1{\mathtt{0x#1}}\mathdef2265{00} ~|~ \dots ~|~ \def\mathdef2266#1{\mathtt{0x#1}}\mathdef2266{FF} \\
+\def\mathdef1590#1{{}}\mathdef1590{byte} &amp; \href{../syntax/values.html#syntax-byte}{\mathit{byte}} &amp;::=&amp;
+  \def\mathdef1626#1{\mathtt{0x#1}}\mathdef1626{00} ~|~ \dots ~|~ \def\mathdef1627#1{\mathtt{0x#1}}\mathdef1627{FF} \\
 \end{array}\end{split}\]</div>
 <div class="section" id="conventions">
 <h3>Conventions<a class="headerlink" href="#conventions" title="Permalink to this headline">¶</a></h3>
@@ -55,19 +55,19 @@ In the abstract syntax they are represented as hexadecimal literals.</p>
 <p>Different classes of <em>integers</em> with different value ranges are distinguished by their <em>bit width</em> <span class="math notranslate">\(N\)</span> and by whether they are <em>unsigned</em> or <em>signed</em>.</p>
 <div class="math notranslate">
 \[\begin{split}\begin{array}{llll}
-\def\mathdef2208#1{{}}\mathdef2208{unsigned integer} &amp; \href{../syntax/values.html#syntax-int}{\def\mathdef2209#1{{\mathit{u}#1}}\mathdef2209{N}} &amp;::=&amp;
+\def\mathdef1590#1{{}}\mathdef1590{unsigned integer} &amp; \href{../syntax/values.html#syntax-int}{\mathit{u}N} &amp;::=&amp;
   0 ~|~ 1 ~|~ \dots ~|~ 2^N{-}1 \\
-\def\mathdef2208#1{{}}\mathdef2208{signed integer} &amp; \href{../syntax/values.html#syntax-int}{\def\mathdef2216#1{{\mathit{s}#1}}\mathdef2216{N}} &amp;::=&amp;
+\def\mathdef1590#1{{}}\mathdef1590{signed integer} &amp; \href{../syntax/values.html#syntax-int}{\mathit{s}N} &amp;::=&amp;
   -2^{N-1} ~|~ \dots ~|~ {-}1 ~|~ 0 ~|~ 1 ~|~ \dots ~|~ 2^{N-1}{-}1 \\
-\def\mathdef2208#1{{}}\mathdef2208{uninterpreted integer} &amp; \href{../syntax/values.html#syntax-int}{\def\mathdef2221#1{{\mathit{i}#1}}\mathdef2221{N}} &amp;::=&amp;
-  \href{../syntax/values.html#syntax-int}{\def\mathdef2209#1{{\mathit{u}#1}}\mathdef2209{N}} \\
+\def\mathdef1590#1{{}}\mathdef1590{uninterpreted integer} &amp; \href{../syntax/values.html#syntax-int}{\mathit{i}N} &amp;::=&amp;
+  \href{../syntax/values.html#syntax-int}{\mathit{u}N} \\
 \end{array}\end{split}\]</div>
 <p>The latter class defines <em>uninterpreted</em> integers, whose signedness interpretation can vary depending on context.
 In the abstract syntax, they are represented as unsigned values.
 However, some operations <a class="reference internal" href="../exec/numerics.html#aux-signed"><span class="std std-ref">convert</span></a> them to signed based on a two’s complement interpretation.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The main integer types occurring in this specification are <span class="math notranslate">\(\href{../syntax/values.html#syntax-int}{\def\mathdef2214#1{{\mathit{u}#1}}\mathdef2214{\mathit{32}}}\)</span>, <span class="math notranslate">\(\href{../syntax/values.html#syntax-int}{\def\mathdef2215#1{{\mathit{u}#1}}\mathdef2215{\mathit{64}}}\)</span>, <span class="math notranslate">\(\href{../syntax/values.html#syntax-int}{\def\mathdef2219#1{{\mathit{s}#1}}\mathdef2219{\mathit{32}}}\)</span>, <span class="math notranslate">\(\href{../syntax/values.html#syntax-int}{\def\mathdef2220#1{{\mathit{s}#1}}\mathdef2220{\mathit{64}}}\)</span>, <span class="math notranslate">\(\href{../syntax/values.html#syntax-int}{\def\mathdef2222#1{{\mathit{i}#1}}\mathdef2222{\mathit{8}}}\)</span>, <span class="math notranslate">\(\href{../syntax/values.html#syntax-int}{\def\mathdef2223#1{{\mathit{i}#1}}\mathdef2223{\mathit{16}}}\)</span>, <span class="math notranslate">\(\href{../syntax/values.html#syntax-int}{\def\mathdef2224#1{{\mathit{i}#1}}\mathdef2224{\mathit{32}}}\)</span>, <span class="math notranslate">\(\href{../syntax/values.html#syntax-int}{\def\mathdef2225#1{{\mathit{i}#1}}\mathdef2225{\mathit{64}}}\)</span>.
+<p class="last">The main integer types occurring in this specification are <span class="math notranslate">\(\href{../syntax/values.html#syntax-int}{\mathit{u32}}\)</span>, <span class="math notranslate">\(\href{../syntax/values.html#syntax-int}{\mathit{u64}}\)</span>, <span class="math notranslate">\(\href{../syntax/values.html#syntax-int}{\mathit{s32}}\)</span>, <span class="math notranslate">\(\href{../syntax/values.html#syntax-int}{\mathit{s64}}\)</span>, <span class="math notranslate">\(\href{../syntax/values.html#syntax-int}{\mathit{i8}}\)</span>, <span class="math notranslate">\(\href{../syntax/values.html#syntax-int}{\mathit{i16}}\)</span>, <span class="math notranslate">\(\href{../syntax/values.html#syntax-int}{\mathit{i32}}\)</span>, <span class="math notranslate">\(\href{../syntax/values.html#syntax-int}{\mathit{i64}}\)</span>.
 However, other sizes occur as auxiliary constructions, e.g., in the definition of <a class="reference internal" href="#syntax-float"><span class="std std-ref">floating-point</span></a> numbers.</p>
 </div>
 <div class="section" id="id1">
@@ -91,11 +91,11 @@ NaN values have a <em>payload</em> that describes the mantissa bits in the under
 No distinction is made between signalling and quiet NaNs.</p>
 <div class="math notranslate">
 \[\begin{split}\begin{array}{llcll}
-\def\mathdef2208#1{{}}\mathdef2208{floating-point value} &amp; \href{../syntax/values.html#syntax-float}{\def\mathdef2226#1{{\mathit{f}#1}}\mathdef2226{N}} &amp;::=&amp;
-  {+} \href{../syntax/values.html#syntax-float}{\def\mathdef2227#1{{\mathit{f}#1}}\mathdef2227{\mathit{Nmag}}} ~|~ {-} \href{../syntax/values.html#syntax-float}{\def\mathdef2227#1{{\mathit{f}#1}}\mathdef2227{\mathit{Nmag}}} \\
-\def\mathdef2208#1{{}}\mathdef2208{floating-point magnitude} &amp; \href{../syntax/values.html#syntax-float}{\def\mathdef2227#1{{\mathit{f}#1}}\mathdef2227{\mathit{Nmag}}} &amp;::=&amp;
-  (1 + \href{../syntax/values.html#syntax-int}{\def\mathdef2210#1{{\mathit{u}#1}}\mathdef2210{M}}\cdot 2^{-M}) \cdot 2^e &amp; (\mathrel{\mbox{if}} -2^{E-1}+2 \leq e \leq 2^{E-1}-1) \\ &amp;&amp;|&amp;
-  (0 + \href{../syntax/values.html#syntax-int}{\def\mathdef2210#1{{\mathit{u}#1}}\mathdef2210{M}}\cdot 2^{-M}) \cdot 2^e &amp; (\mathrel{\mbox{if}} e = -2^{E-1}+2) \\ &amp;&amp;|&amp;
+\def\mathdef1590#1{{}}\mathdef1590{floating-point value} &amp; \href{../syntax/values.html#syntax-float}{\mathit{f}N} &amp;::=&amp;
+  {+} \href{../syntax/values.html#syntax-float}{\mathit{f}\mathit{Nmag}} ~|~ {-} \href{../syntax/values.html#syntax-float}{\mathit{f}\mathit{Nmag}} \\
+\def\mathdef1590#1{{}}\mathdef1590{floating-point magnitude} &amp; \href{../syntax/values.html#syntax-float}{\mathit{f}\mathit{Nmag}} &amp;::=&amp;
+  (1 + \href{../syntax/values.html#syntax-int}{\mathit{u}M}\cdot 2^{-M}) \cdot 2^e &amp; (\mathrel{\mbox{if}} -2^{E-1}+2 \leq e \leq 2^{E-1}-1) \\ &amp;&amp;|&amp;
+  (0 + \href{../syntax/values.html#syntax-int}{\mathit{u}M}\cdot 2^{-M}) \cdot 2^e &amp; (\mathrel{\mbox{if}} e = -2^{E-1}+2) \\ &amp;&amp;|&amp;
   \infty \\ &amp;&amp;|&amp;
   \href{../syntax/values.html#syntax-float}{\mathsf{nan}}(n) &amp; (\mathrel{\mbox{if}} 1 \leq n &lt; 2^M) \\
 \end{array}\end{split}\]</div>
@@ -123,22 +123,22 @@ No distinction is made between signalling and quiet NaNs.</p>
 </div>
 </div>
 <div class="section" id="names">
-<span id="syntax-name"></span><span id="syntax-codepoint"></span><span id="index-4"></span><h2>Names<a class="headerlink" href="#names" title="Permalink to this headline">¶</a></h2>
-<p><em>Names</em> are sequences of scalar <em>code points</em> as defined by <a class="reference external" href="http://www.unicode.org/versions/latest/">Unicode</a> (Section 2.4).</p>
+<span id="syntax-name"></span><span id="syntax-char"></span><span id="index-4"></span><h2>Names<a class="headerlink" href="#names" title="Permalink to this headline">¶</a></h2>
+<p><em>Names</em> are sequences of <em>characters</em>, which are <em>scalar values</em> as defined by <a class="reference external" href="http://www.unicode.org/versions/latest/">Unicode</a> (Section 2.4).</p>
 <div class="math notranslate">
 \[\begin{split}\begin{array}{llclll}
-\def\mathdef2208#1{{}}\mathdef2208{name} &amp; \href{../syntax/values.html#syntax-name}{\mathit{name}} &amp;::=&amp;
-  \href{../syntax/values.html#syntax-name}{\mathit{codepoint}}^\ast \qquad\qquad (\mathrel{\mbox{if}} |\href{../binary/values.html#binary-utf8}{\mathrm{utf8}}(\href{../syntax/values.html#syntax-name}{\mathit{codepoint}}^\ast)| &lt; 2^{32}) \\
-\def\mathdef2208#1{{}}\mathdef2208{code point} &amp; \href{../syntax/values.html#syntax-name}{\mathit{codepoint}} &amp;::=&amp;
-  \def\mathdef2267#1{\mathrm{U{+}#1}}\mathdef2267{00} ~|~ \dots ~|~ \def\mathdef2268#1{\mathrm{U{+}#1}}\mathdef2268{D7FF} ~|~
-  \def\mathdef2269#1{\mathrm{U{+}#1}}\mathdef2269{E000} ~|~ \dots ~|~ \def\mathdef2270#1{\mathrm{U{+}#1}}\mathdef2270{10FFFF} \\
+\def\mathdef1590#1{{}}\mathdef1590{name} &amp; \href{../syntax/values.html#syntax-name}{\mathit{name}} &amp;::=&amp;
+  \href{../syntax/values.html#syntax-name}{\mathit{char}}^\ast \qquad\qquad (\mathrel{\mbox{if}} |\href{../binary/values.html#binary-utf8}{\mathrm{utf8}}(\href{../syntax/values.html#syntax-name}{\mathit{char}}^\ast)| &lt; 2^{32}) \\
+\def\mathdef1590#1{{}}\mathdef1590{character} &amp; \href{../syntax/values.html#syntax-name}{\mathit{char}} &amp;::=&amp;
+  \def\mathdef1628#1{\mathrm{U{+}#1}}\mathdef1628{00} ~|~ \dots ~|~ \def\mathdef1629#1{\mathrm{U{+}#1}}\mathdef1629{D7FF} ~|~
+  \def\mathdef1630#1{\mathrm{U{+}#1}}\mathdef1630{E000} ~|~ \dots ~|~ \def\mathdef1631#1{\mathrm{U{+}#1}}\mathdef1631{10FFFF} \\
 \end{array}\end{split}\]</div>
 <p>Due to the limitations of the <a class="reference internal" href="../binary/values.html#binary-name"><span class="std std-ref">binary format</span></a>,
-the lengths of a name is bounded by the length of its <a class="reference internal" href="../binary/values.html#binary-utf8"><span class="std std-ref">UTF-8</span></a> encoding.</p>
+the length of a name is bounded by the length of its <a class="reference internal" href="../binary/values.html#binary-utf8"><span class="std std-ref">UTF-8</span></a> encoding.</p>
 <div class="section" id="convention">
 <h3>Convention<a class="headerlink" href="#convention" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Code points are sometimes used interchangeably with natural numbers <span class="math notranslate">\(n &lt; 1114112\)</span>.</li>
+<li>Characters (Unicode scalar values) are sometimes used interchangeably with natural numbers <span class="math notranslate">\(n &lt; 1114112\)</span>.</li>
 </ul>
 </div>
 </div>
@@ -157,13 +157,7 @@ the lengths of a name is bounded by the length of its <a class="reference intern
 <li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Structure</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="conventions.html">Conventions</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Values</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#bytes">Bytes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#integers">Integers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#floating-point">Floating-Point</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#names">Names</a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Values</a></li>
 <li class="toctree-l2"><a class="reference internal" href="types.html">Types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="instructions.html">Instructions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html">Modules</a></li>

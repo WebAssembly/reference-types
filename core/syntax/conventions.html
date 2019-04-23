@@ -22,7 +22,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
-  </head> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>  
+  </head> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -50,11 +50,12 @@ All parts of this specification are defined in terms of this abstract syntax.</p
 <li><span class="math notranslate">\(A^?\)</span> is an optional occurrence of <span class="math notranslate">\(A\)</span>.
 (This is a shorthand for <span class="math notranslate">\(A^n\)</span> where <span class="math notranslate">\(n \leq 1\)</span>.)</li>
 <li>Productions are written <span class="math notranslate">\(\mathit{sym} ::= A_1 ~|~ \dots ~|~ A_n\)</span>.</li>
+<li>Large productions may be split into multiple definitions, indicated by ending the first one with explicit ellipses, <span class="math notranslate">\(\mathit{sym} ::= A_1 ~|~ \dots\)</span>, and starting continuations with ellipses, <span class="math notranslate">\(\mathit{sym} ::= \dots ~|~ A_2\)</span>.</li>
 <li>Some productions are augmented with side conditions in parentheses, “<span class="math notranslate">\((\mathrel{\mbox{if}} \mathit{condition})\)</span>”, that provide a shorthand for a combinatorial expansion of the production into many separate cases.</li>
 </ul>
 </div>
 <div class="section" id="auxiliary-notation">
-<span id="notation-compose"></span><span id="notation-concat"></span><span id="notation-record"></span><span id="notation-replace"></span><span id="notation-slice"></span><h2>Auxiliary Notation<a class="headerlink" href="#auxiliary-notation" title="Permalink to this headline">¶</a></h2>
+<span id="notation-compose"></span><span id="notation-concat"></span><span id="notation-project"></span><span id="notation-record"></span><span id="notation-replace"></span><span id="notation-slice"></span><span id="notation-index"></span><span id="notation-length"></span><span id="notation-epsilon"></span><h2>Auxiliary Notation<a class="headerlink" href="#auxiliary-notation" title="Permalink to this headline">¶</a></h2>
 <p>When dealing with syntactic constructs the following notation is also used:</p>
 <ul class="simple">
 <li><span class="math notranslate">\(\epsilon\)</span> denotes the empty sequence.</li>
@@ -62,7 +63,7 @@ All parts of this specification are defined in terms of this abstract syntax.</p
 <li><span class="math notranslate">\(s[i]\)</span> denotes the <span class="math notranslate">\(i\)</span>-th element of a sequence <span class="math notranslate">\(s\)</span>, starting from <span class="math notranslate">\(0\)</span>.</li>
 <li><span class="math notranslate">\(s[i \href{../syntax/conventions.html#notation-slice}{\mathrel{\mathbf{:}}} n]\)</span> denotes the sub-sequence <span class="math notranslate">\(s[i]~\dots~s[i+n-1]\)</span> of a sequence <span class="math notranslate">\(s\)</span>.</li>
 <li><span class="math notranslate">\(s \href{../syntax/conventions.html#notation-replace}{\mathrel{\mbox{with}}} [i] = A\)</span> denotes the same sequence as <span class="math notranslate">\(s\)</span>,
-except that the <span class="math notranslate">\(i\)</span>-the element is replaced with <span class="math notranslate">\(A\)</span>.</li>
+except that the <span class="math notranslate">\(i\)</span>-th element is replaced with <span class="math notranslate">\(A\)</span>.</li>
 <li><span class="math notranslate">\(s \href{../syntax/conventions.html#notation-replace}{\mathrel{\mbox{with}}} [i \href{../syntax/conventions.html#notation-slice}{\mathrel{\mathbf{:}}} n] = A^n\)</span> denotes the same sequence as <span class="math notranslate">\(s\)</span>,
 except that the sub-sequence <span class="math notranslate">\(s[i \href{../syntax/conventions.html#notation-slice}{\mathrel{\mathbf{:}}} n]\)</span> is replaced with <span class="math notranslate">\(A^n\)</span>.</li>
 <li><span class="math notranslate">\(\href{../syntax/conventions.html#notation-concat}{\mathrm{concat}}(s^\ast)\)</span> denotes the flat sequence formed by concatenating all sequences <span class="math notranslate">\(s_i\)</span> in <span class="math notranslate">\(s^\ast\)</span>.</li>
@@ -106,7 +107,7 @@ where the <span class="math notranslate">\(A\)</span> can either be values or co
 A vector can have at most <span class="math notranslate">\(2^{32}-1\)</span> elements.</p>
 <div class="math notranslate">
 \[\begin{split}\begin{array}{lllll}
-\def\mathdef1921#1{{}}\mathdef1921{vector} &amp; \href{../syntax/conventions.html#syntax-vec}{\mathit{vec}}(A) &amp;::=&amp;
+\def\mathdef1408#1{{}}\mathdef1408{vector} &amp; \href{../syntax/conventions.html#syntax-vec}{\mathit{vec}}(A) &amp;::=&amp;
   A^n
   &amp; (\mathrel{\mbox{if}} n &lt; 2^{32})\\
 \end{array}\end{split}\]</div>
@@ -125,12 +126,7 @@ A vector can have at most <span class="math notranslate">\(2^{32}-1\)</span> ele
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Structure</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Conventions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#grammar-notation">Grammar Notation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#auxiliary-notation">Auxiliary Notation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#vectors">Vectors</a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Conventions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="values.html">Values</a></li>
 <li class="toctree-l2"><a class="reference internal" href="types.html">Types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="instructions.html">Instructions</a></li>

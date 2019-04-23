@@ -22,7 +22,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
-  </head> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>  
+  </head> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -115,7 +115,7 @@ When several of these placeholders occur in a single clause, then they must be r
 \[\begin{split}\begin{array}{lll&#64;{\qquad}l}
 \href{../exec/numerics.html#aux-bytes}{\mathrm{bytes}}_t(i) &amp;=&amp; \href{../exec/numerics.html#aux-littleendian}{\mathrm{littleendian}}(\href{../exec/numerics.html#aux-bits}{\mathrm{bits}}_t(i)) \\[1ex]
 \href{../exec/numerics.html#aux-littleendian}{\mathrm{littleendian}}(\epsilon) &amp;=&amp; \epsilon \\
-\href{../exec/numerics.html#aux-littleendian}{\mathrm{littleendian}}(d_1^8~d_2^{N-8}) &amp;=&amp; \href{../exec/numerics.html#aux-ibits}{\mathrm{ibits}}_8^{-1}(d_1^8)~\href{../exec/numerics.html#aux-littleendian}{\mathrm{littleendian}}(d_2^{N-8}) \\
+\href{../exec/numerics.html#aux-littleendian}{\mathrm{littleendian}}(d^8~{d'}^\ast~) &amp;=&amp; \href{../exec/numerics.html#aux-littleendian}{\mathrm{littleendian}}({d'}^\ast)~\href{../exec/numerics.html#aux-ibits}{\mathrm{ibits}}_8^{-1}(d^8) \\
 \end{array}\end{split}\]</div>
 <p>Again these functions are invertable bijections.</p>
 </div>
@@ -124,7 +124,7 @@ When several of these placeholders occur in a single clause, then they must be r
 <span id="int-ops"></span><span id="index-5"></span><h2>Integer Operations<a class="headerlink" href="#integer-operations" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="sign-interpretation">
 <span id="aux-signed"></span><span id="index-6"></span><h3>Sign Interpretation<a class="headerlink" href="#sign-interpretation" title="Permalink to this headline">¶</a></h3>
-<p>Integer operators are defined on <span class="math notranslate">\(\href{../syntax/values.html#syntax-int}{\def\mathdef1592#1{{\mathit{i}#1}}\mathdef1592{N}}\)</span> values.
+<p>Integer operators are defined on <span class="math notranslate">\(\href{../syntax/values.html#syntax-int}{\mathit{i}N}\)</span> values.
 Operators that use a signed interpretation convert the value using the following definition, which takes the two’s complement when the value lies in the upper half of the value range (i.e., its most significant bit is <span class="math notranslate">\(1\)</span>):</p>
 <div class="math notranslate">
 \[\begin{split}\begin{array}{lll&#64;{\qquad}l}
@@ -238,7 +238,8 @@ it holds that <span class="math notranslate">\(i_1 = i_2\cdot\href{../exec/numer
 <div class="math notranslate">
 \[\begin{split}\begin{array}{&#64;{}lcll}
 \href{../exec/numerics.html#op-irem-s}{\mathrm{irem\_s}}_N(i_1, 0) &amp;=&amp; \{\} \\
-\href{../exec/numerics.html#op-irem-s}{\mathrm{irem\_s}}_N(i_1, i_2) &amp;=&amp; \href{../exec/numerics.html#aux-signed}{\mathrm{signed}}_N^{-1}(i_1 - i_2 \cdot \href{../exec/numerics.html#aux-trunc}{\mathrm{trunc}}(\href{../exec/numerics.html#aux-signed}{\mathrm{signed}}_N(i_1) / \href{../exec/numerics.html#aux-signed}{\mathrm{signed}}_N(i_2))) \\
+\href{../exec/numerics.html#op-irem-s}{\mathrm{irem\_s}}_N(i_1, i_2) &amp;=&amp; \href{../exec/numerics.html#aux-signed}{\mathrm{signed}}_N^{-1}(j_1 - j_2 \cdot \href{../exec/numerics.html#aux-trunc}{\mathrm{trunc}}(j_1 / j_2)) \\
+  &amp;&amp; (\mathrel{\mbox{where}} j_1 = \href{../exec/numerics.html#aux-signed}{\mathrm{signed}}_N(i_1) \wedge j_2 = \href{../exec/numerics.html#aux-signed}{\mathrm{signed}}_N(i_2)) \\
 \end{array}\end{split}\]</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -553,7 +554,7 @@ There is no observable difference between quiet and signalling NaNs.</li>
 <p>where:</p>
 <div class="math notranslate">
 \[\begin{split}\begin{array}{lll&#64;{\qquad}l}
-\mathrm{exact}_N &amp;=&amp; \href{../syntax/values.html#syntax-float}{\def\mathdef1597#1{{\mathit{f}#1}}\mathdef1597{N}} \cap \mathbb{Q} \\
+\mathrm{exact}_N &amp;=&amp; \href{../syntax/values.html#syntax-float}{\mathit{f}N} \cap \mathbb{Q} \\
 \mathrm{limit}_N &amp;=&amp; 2^{2^{\href{../syntax/values.html#aux-exponent}{\mathrm{expon}}(N)-1}} \\
 \mathrm{candidate}_N &amp;=&amp; \mathrm{exact}_N \cup \{+\mathrm{limit}_N, -\mathrm{limit}_N\} \\
 \mathrm{candidatepair}_N &amp;=&amp; \{ (z_1, z_2) \in \mathrm{candidate}_N^2 ~|~ z_1 &lt; z_2 \wedge \forall z \in \mathrm{candidate}_N, z \leq z_1 \vee z \geq z_2\} \\[1ex]
@@ -1034,13 +1035,13 @@ then its sign is non-deterministic and the <a class="reference internal" href=".
 <div class="section" id="conversions">
 <span id="convert-ops"></span><h2>Conversions<a class="headerlink" href="#conversions" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="op-extend-u">
-<span id="id50"></span><h3><span class="math notranslate">\(\href{../exec/numerics.html#op-extend-u}{\mathrm{extend\_u}}_{M,N}(i)\)</span><a class="headerlink" href="#op-extend-u" title="Permalink to this headline">¶</a></h3>
+<span id="id50"></span><h3><span class="math notranslate">\(\href{../exec/numerics.html#op-extend-u}{\mathrm{extend}^{\mathsf{u}}}_{M,N}(i)\)</span><a class="headerlink" href="#op-extend-u" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Return <span class="math notranslate">\(i\)</span>.</li>
 </ul>
 <div class="math notranslate">
 \[\begin{split}\begin{array}{lll&#64;{\qquad}l}
-\href{../exec/numerics.html#op-extend-u}{\mathrm{extend\_u}}_{M,N}(i) &amp;=&amp; i \\
+\href{../exec/numerics.html#op-extend-u}{\mathrm{extend}^{\mathsf{u}}}_{M,N}(i) &amp;=&amp; i \\
 \end{array}\end{split}\]</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -1048,14 +1049,14 @@ then its sign is non-deterministic and the <a class="reference internal" href=".
 </div>
 </div>
 <div class="section" id="op-extend-s">
-<span id="id51"></span><h3><span class="math notranslate">\(\href{../exec/numerics.html#op-extend-s}{\mathrm{extend\_s}}_{M,N}(i)\)</span><a class="headerlink" href="#op-extend-s" title="Permalink to this headline">¶</a></h3>
+<span id="id51"></span><h3><span class="math notranslate">\(\href{../exec/numerics.html#op-extend-s}{\mathrm{extend}^{\mathsf{s}}}_{M,N}(i)\)</span><a class="headerlink" href="#op-extend-s" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Let <span class="math notranslate">\(j\)</span> be the <a class="reference internal" href="#aux-signed"><span class="std std-ref">signed interpretation</span></a> of <span class="math notranslate">\(i\)</span> of size <span class="math notranslate">\(M\)</span>.</li>
 <li>Return the two’s complement of <span class="math notranslate">\(j\)</span> relative to size <span class="math notranslate">\(N\)</span>.</li>
 </ul>
 <div class="math notranslate">
 \[\begin{split}\begin{array}{lll&#64;{\qquad}l}
-\href{../exec/numerics.html#op-extend-s}{\mathrm{extend\_s}}_{M,N}(i) &amp;=&amp; \href{../exec/numerics.html#aux-signed}{\mathrm{signed}}_N^{-1}(\href{../exec/numerics.html#aux-signed}{\mathrm{signed}}_M(i)) \\
+\href{../exec/numerics.html#op-extend-s}{\mathrm{extend}^{\mathsf{s}}}_{M,N}(i) &amp;=&amp; \href{../exec/numerics.html#aux-signed}{\mathrm{signed}}_N^{-1}(\href{../exec/numerics.html#aux-signed}{\mathrm{signed}}_M(i)) \\
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="op-wrap">
@@ -1069,7 +1070,7 @@ then its sign is non-deterministic and the <a class="reference internal" href=".
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="op-trunc-u">
-<span id="id53"></span><h3><span class="math notranslate">\(\href{../exec/numerics.html#op-trunc-u}{\mathrm{trunc\_u}}_{M,N}(z)\)</span><a class="headerlink" href="#op-trunc-u" title="Permalink to this headline">¶</a></h3>
+<span id="id53"></span><h3><span class="math notranslate">\(\href{../exec/numerics.html#op-trunc-u}{\mathrm{trunc}^{\mathsf{u}}}_{M,N}(z)\)</span><a class="headerlink" href="#op-trunc-u" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>If <span class="math notranslate">\(z\)</span> is a NaN, then the result is undefined.</li>
 <li>Else if <span class="math notranslate">\(z\)</span> is an infinity, then the result is undefined.</li>
@@ -1078,10 +1079,10 @@ then its sign is non-deterministic and the <a class="reference internal" href=".
 </ul>
 <div class="math notranslate">
 \[\begin{split}\begin{array}{lll&#64;{\qquad}l}
-\href{../exec/numerics.html#op-trunc-u}{\mathrm{trunc\_u}}_{M,N}(\pm \href{../syntax/values.html#syntax-float}{\mathsf{nan}}(n)) &amp;=&amp; \{\} \\
-\href{../exec/numerics.html#op-trunc-u}{\mathrm{trunc\_u}}_{M,N}(\pm \infty) &amp;=&amp; \{\} \\
-\href{../exec/numerics.html#op-trunc-u}{\mathrm{trunc\_u}}_{M,N}(\pm q) &amp;=&amp; \href{../exec/numerics.html#aux-trunc}{\mathrm{trunc}}(\pm q) &amp; (\mathrel{\mbox{if}} -1 &lt; \href{../exec/numerics.html#aux-trunc}{\mathrm{trunc}}(\pm q) &lt; 2^N) \\
-\href{../exec/numerics.html#op-trunc-u}{\mathrm{trunc\_u}}_{M,N}(\pm q) &amp;=&amp; \{\} &amp; (\mathrel{\mbox{otherwise}}) \\
+\href{../exec/numerics.html#op-trunc-u}{\mathrm{trunc}^{\mathsf{u}}}_{M,N}(\pm \href{../syntax/values.html#syntax-float}{\mathsf{nan}}(n)) &amp;=&amp; \{\} \\
+\href{../exec/numerics.html#op-trunc-u}{\mathrm{trunc}^{\mathsf{u}}}_{M,N}(\pm \infty) &amp;=&amp; \{\} \\
+\href{../exec/numerics.html#op-trunc-u}{\mathrm{trunc}^{\mathsf{u}}}_{M,N}(\pm q) &amp;=&amp; \href{../exec/numerics.html#aux-trunc}{\mathrm{trunc}}(\pm q) &amp; (\mathrel{\mbox{if}} -1 &lt; \href{../exec/numerics.html#aux-trunc}{\mathrm{trunc}}(\pm q) &lt; 2^N) \\
+\href{../exec/numerics.html#op-trunc-u}{\mathrm{trunc}^{\mathsf{u}}}_{M,N}(\pm q) &amp;=&amp; \{\} &amp; (\mathrel{\mbox{otherwise}}) \\
 \end{array}\end{split}\]</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -1090,7 +1091,7 @@ It is not defined for NaNs, infinities, or values for which the result is out of
 </div>
 </div>
 <div class="section" id="op-trunc-s">
-<span id="id54"></span><h3><span class="math notranslate">\(\href{../exec/numerics.html#op-trunc-s}{\mathrm{trunc\_s}}_{M,N}(z)\)</span><a class="headerlink" href="#op-trunc-s" title="Permalink to this headline">¶</a></h3>
+<span id="id54"></span><h3><span class="math notranslate">\(\href{../exec/numerics.html#op-trunc-s}{\mathrm{trunc}^{\mathsf{s}}}_{M,N}(z)\)</span><a class="headerlink" href="#op-trunc-s" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>If <span class="math notranslate">\(z\)</span> is a NaN, then the result is undefined.</li>
 <li>Else if <span class="math notranslate">\(z\)</span> is an infinity, then the result is undefined.</li>
@@ -1099,10 +1100,10 @@ It is not defined for NaNs, infinities, or values for which the result is out of
 </ul>
 <div class="math notranslate">
 \[\begin{split}\begin{array}{lll&#64;{\qquad}l}
-\href{../exec/numerics.html#op-trunc-s}{\mathrm{trunc\_s}}_{M,N}(\pm \href{../syntax/values.html#syntax-float}{\mathsf{nan}}(n)) &amp;=&amp; \{\} \\
-\href{../exec/numerics.html#op-trunc-s}{\mathrm{trunc\_s}}_{M,N}(\pm \infty) &amp;=&amp; \{\} \\
-\href{../exec/numerics.html#op-trunc-s}{\mathrm{trunc\_s}}_{M,N}(\pm q) &amp;=&amp; \href{../exec/numerics.html#aux-trunc}{\mathrm{trunc}}(\pm q) &amp; (\mathrel{\mbox{if}} -2^{N-1} - 1 &lt; \href{../exec/numerics.html#aux-trunc}{\mathrm{trunc}}(\pm q) &lt; 2^{N-1}) \\
-\href{../exec/numerics.html#op-trunc-s}{\mathrm{trunc\_s}}_{M,N}(\pm q) &amp;=&amp; \{\} &amp; (\mathrel{\mbox{otherwise}}) \\
+\href{../exec/numerics.html#op-trunc-s}{\mathrm{trunc}^{\mathsf{s}}}_{M,N}(\pm \href{../syntax/values.html#syntax-float}{\mathsf{nan}}(n)) &amp;=&amp; \{\} \\
+\href{../exec/numerics.html#op-trunc-s}{\mathrm{trunc}^{\mathsf{s}}}_{M,N}(\pm \infty) &amp;=&amp; \{\} \\
+\href{../exec/numerics.html#op-trunc-s}{\mathrm{trunc}^{\mathsf{s}}}_{M,N}(\pm q) &amp;=&amp; \href{../exec/numerics.html#aux-trunc}{\mathrm{trunc}}(\pm q) &amp; (\mathrel{\mbox{if}} -2^{N-1} - 1 &lt; \href{../exec/numerics.html#aux-trunc}{\mathrm{trunc}}(\pm q) &lt; 2^{N-1}) \\
+\href{../exec/numerics.html#op-trunc-s}{\mathrm{trunc}^{\mathsf{s}}}_{M,N}(\pm q) &amp;=&amp; \{\} &amp; (\mathrel{\mbox{otherwise}}) \\
 \end{array}\end{split}\]</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -1143,24 +1144,24 @@ It is not defined for NaNs, infinities, or values for which the result is out of
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="op-convert-u">
-<span id="id57"></span><h3><span class="math notranslate">\(\href{../exec/numerics.html#op-convert-u}{\mathrm{convert\_u}}_{M,N}(i)\)</span><a class="headerlink" href="#op-convert-u" title="Permalink to this headline">¶</a></h3>
+<span id="id57"></span><h3><span class="math notranslate">\(\href{../exec/numerics.html#op-convert-u}{\mathrm{convert}^{\mathsf{u}}}_{M,N}(i)\)</span><a class="headerlink" href="#op-convert-u" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Return <span class="math notranslate">\(\href{../exec/numerics.html#aux-ieee}{\mathrm{float}}_N(i)\)</span>.</li>
 </ul>
 <div class="math notranslate">
 \[\begin{split}\begin{array}{lll&#64;{\qquad}l}
-\href{../exec/numerics.html#op-convert-u}{\mathrm{convert\_u}}_{M,N}(i) &amp;=&amp; \href{../exec/numerics.html#aux-ieee}{\mathrm{float}}_N(i) \\
+\href{../exec/numerics.html#op-convert-u}{\mathrm{convert}^{\mathsf{u}}}_{M,N}(i) &amp;=&amp; \href{../exec/numerics.html#aux-ieee}{\mathrm{float}}_N(i) \\
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="op-convert-s">
-<span id="id58"></span><h3><span class="math notranslate">\(\href{../exec/numerics.html#op-convert-s}{\mathrm{convert\_s}}_{M,N}(i)\)</span><a class="headerlink" href="#op-convert-s" title="Permalink to this headline">¶</a></h3>
+<span id="id58"></span><h3><span class="math notranslate">\(\href{../exec/numerics.html#op-convert-s}{\mathrm{convert}^{\mathsf{s}}}_{M,N}(i)\)</span><a class="headerlink" href="#op-convert-s" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Let <span class="math notranslate">\(j\)</span> be the <a class="reference internal" href="#aux-signed"><span class="std std-ref">signed interpretation</span></a> of <span class="math notranslate">\(i\)</span>.</li>
 <li>Return <span class="math notranslate">\(\href{../exec/numerics.html#aux-ieee}{\mathrm{float}}_N(j)\)</span>.</li>
 </ul>
 <div class="math notranslate">
 \[\begin{split}\begin{array}{lll&#64;{\qquad}l}
-\href{../exec/numerics.html#op-convert-u}{\mathrm{convert\_u}}_{M,N}(i) &amp;=&amp; \href{../exec/numerics.html#aux-ieee}{\mathrm{float}}_N(\href{../exec/numerics.html#aux-signed}{\mathrm{signed}}_M(i)) \\
+\href{../exec/numerics.html#op-convert-u}{\mathrm{convert}^{\mathsf{u}}}_{M,N}(i) &amp;=&amp; \href{../exec/numerics.html#aux-ieee}{\mathrm{float}}_N(\href{../exec/numerics.html#aux-signed}{\mathrm{signed}}_M(i)) \\
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="op-reinterpret">
@@ -1193,13 +1194,7 @@ It is not defined for NaNs, infinities, or values for which the result is out of
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Execution</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="conventions.html">Conventions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="runtime.html">Runtime Structure</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Numerics</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#representations">Representations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#integer-operations">Integer Operations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#floating-point-operations">Floating-Point Operations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#conversions">Conversions</a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Numerics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="instructions.html">Instructions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules.html">Modules</a></li>
 </ul>

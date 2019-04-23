@@ -22,7 +22,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
-  </head> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>  
+  </head> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -48,11 +48,11 @@ Because there is no top type, a join does not exist in all cases.
 Similarly, a meet must always be defined on known value types that exclude the auxiliary bottom type <cite>Unknown</cite>,
 hence a meet does not exist in all cases either.
 A type error is encountered if a join or meet is required when it does not exist.</p>
-<div class="highlight-pseudo notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="nf">val_type</span> = I32 | I64 | F32 | F64 | Anyref | Anyfunc | Nullref
+<div class="highlight-pseudo notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="nf">val_type</span> = I32 | I64 | F32 | F64 | Anyref | Funcref | Nullref
 <span class="k">type</span> <span class="nf">opd_type</span> = val_type | Unknown
 
 <span class="k">func</span> <span class="nf">is_ref</span>(<span class="nf">t</span> : opd_type) : bool =
-  <span class="k">return</span> t = Anyref || t = Anyfunc || t = Nullref
+  <span class="k">return</span> t = Anyref || t = Funcref || t = Nullref
 
 <span class="k">func</span> <span class="nf">matches</span>(<span class="nf">t1</span> : opd_type, <span class="nf">t2</span> : opd_type) : bool =
   <span class="k">return</span> t1 = t2 || t1 = Unknown ||
@@ -136,9 +136,10 @@ so that <code class="code docutils literal notranslate"><span class="pre">ctrls[
 
 <span class="k">func</span> <span class="nf">pop_ctrl</span>() : list(val_type) =
   error_if(ctrls.is_empty())
-  <span class="k">let</span> <span class="nf">frame</span> = ctrls.pop()
+  <span class="k">let</span> <span class="nf">frame</span> = ctrls[0]
   pop_opds(frame.end_types)
   error_if(opds.size() =/= frame.height)
+  ctrls.pop()
   <span class="k">return</span> frame.end_types
 
 <span class="k">func</span> <span class="nf">unreachable</span>() =
@@ -256,11 +257,7 @@ Under such an extension, the above algorithm would need to be refined by replaci
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Appendix</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="embedding.html">Embedding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="implementation.html">Implementation Limitations</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Validation Algorithm</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#data-structures">Data Structures</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#validation-of-opcode-sequences">Validation of Opcode Sequences</a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Validation Algorithm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="custom.html">Custom Sections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="properties.html">Soundness</a></li>
 </ul>

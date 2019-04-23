@@ -22,7 +22,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
-  </head> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>  
+  </head> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -34,7 +34,7 @@
 <p>WebAssembly (abbreviated Wasm <a class="footnote-reference" href="#wasm" id="id1">[1]</a>) is a <em>safe, portable, low-level code format</em>
 designed for efficient execution and compact representation.
 Its main goal is to enable high performance applications on the Web, but it does not make any Web-specific assumptions or provide Web-specific features, so it can be employed in other environments as well.</p>
-<p>WebAssembly is an open standard developed by a <a class="reference external" href="https://www.w3.org/community/webassembly/">W3C Community Group</a> that includes representatives of all major browser vendors.</p>
+<p>WebAssembly is an open standard developed by a <a class="reference external" href="https://www.w3.org/community/webassembly/">W3C Community Group</a>.</p>
 <p>This document describes version 1.0 of the <a class="reference internal" href="#scope"><span class="std std-ref">core</span></a> WebAssembly standard.
 It is intended that it will be superseded by new incremental releases with additional features in the future.</p>
 <div class="section" id="design-goals">
@@ -94,10 +94,10 @@ These will each define a WebAssembly <em>application programming interface (API)
 <li><a class="reference external" href="http://www.unicode.org/versions/latest/">Unicode</a>, for the representation of import/export <a class="reference internal" href="../syntax/values.html#syntax-name"><span class="std std-ref">names</span></a> and the <a class="reference internal" href="../text/index.html#text"><span class="std std-ref">text format</span></a>.</li>
 </ul>
 <p>However, to make this specification self-contained, relevant aspects of the aforementioned standards are defined and formalized as part of this specification,
-such as the <a class="reference internal" href="../exec/numerics.html#aux-fbits"><span class="std std-ref">binary representation</span></a> and <a class="reference internal" href="../exec/numerics.html#aux-ieee"><span class="std std-ref">rounding</span></a> of floating-point values, and the <a class="reference internal" href="../syntax/values.html#syntax-codepoint"><span class="std std-ref">value range</span></a> and <a class="reference internal" href="../binary/values.html#binary-utf8"><span class="std std-ref">UTF-8 encoding</span></a> of Unicode characters.</p>
+such as the <a class="reference internal" href="../exec/numerics.html#aux-fbits"><span class="std std-ref">binary representation</span></a> and <a class="reference internal" href="../exec/numerics.html#aux-ieee"><span class="std std-ref">rounding</span></a> of floating-point values, and the <a class="reference internal" href="../syntax/values.html#syntax-char"><span class="std std-ref">value range</span></a> and <a class="reference internal" href="../binary/values.html#binary-utf8"><span class="std std-ref">UTF-8 encoding</span></a> of Unicode characters.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The aforementioned standards are the authorative source of all respective definitions.
+<p class="last">The aforementioned standards are the authoritative source of all respective definitions.
 Formalizations given in this specification are intended to match these definitions.
 Any discrepancy in the syntax or semantics described is to be considered an error.</p>
 </div>
@@ -115,12 +115,7 @@ Any discrepancy in the syntax or semantics described is to be considered an erro
             </a></p><h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Introduction</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Introduction</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#design-goals">Design Goals</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#scope">Scope</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#dependencies">Dependencies</a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="overview.html">Overview</a></li>
 </ul>
 </li>
