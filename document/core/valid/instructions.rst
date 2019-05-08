@@ -230,19 +230,31 @@ Parametric Instructions
 
 .. _valid-select:
 
-:math:`\SELECT`
-...............
+:math:`\SELECT~t^?`
+...................
 
-* The instruction is valid with type :math:`[t~t~\I32] \to [t]`, for any :ref:`value type <syntax-valtype>` :math:`t`.
+* If :math:`t` is present, then:
+
+  * The instruction is valid with type :math:`[t~t~\I32] \to [t]`.
+
+* Else:
+
+  * The instruction is valid with type :math:`[t~t~\I32] \to [t]`, for any :ref:`value type <syntax-valtype>` :math:`t` that :ref:`matches <match-valtype>` some :ref:`number type <syntax-numtype>`.
 
 .. math::
    \frac{
+   }{
+     C \vdashinstr \SELECT~t : [t~t~\I32] \to [t]
+   }
+   \qquad
+   \frac{
+     \vdashvaltypematch t \matchesvaltype \numtype
    }{
      C \vdashinstr \SELECT : [t~t~\I32] \to [t]
    }
 
 .. note::
-   Both |DROP| and |SELECT| are :ref:`value-polymorphic <polymorphism>` instructions.
+   Both |DROP| and |SELECT| without annotation are :ref:`value-polymorphic <polymorphism>` instructions.
 
 
 .. index:: variable instructions, local index, global index, context

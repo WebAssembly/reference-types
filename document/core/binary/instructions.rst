@@ -92,7 +92,7 @@ Reference Instructions
 Parametric Instructions
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-:ref:`Parametric instructions <syntax-instr-parametric>` are represented by single byte codes.
+:ref:`Parametric instructions <syntax-instr-parametric>` are represented by single byte codes, possibly followd by a type annotation.
 
 .. _binary-drop:
 .. _binary-select:
@@ -101,7 +101,8 @@ Parametric Instructions
    \begin{array}{llclll}
    \production{instruction} & \Binstr &::=& \dots \\ &&|&
      \hex{1A} &\Rightarrow& \DROP \\ &&|&
-     \hex{1B} &\Rightarrow& \SELECT \\
+     \hex{1B} &\Rightarrow& \SELECT \\ &&|&
+     \hex{1C}~~t{:}\Bvaltype &\Rightarrow& \SELECT~t \\
    \end{array}
 
 
