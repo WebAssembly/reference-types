@@ -163,7 +163,7 @@ Parametric Instructions
    \begin{array}{llclll}
    \production{instruction} & \Tplaininstr_I &::=& \dots \\ &&|&
      \text{drop} &\Rightarrow& \DROP \\ &&|&
-     \text{select}~(t{:}\Tresult)^? &\Rightarrow& \SELECT~t^? \\
+     \text{select}~((t{:}\Tresult)^\ast)^? &\Rightarrow& \SELECT~(t^\ast)^? \\
    \end{array}
 
 

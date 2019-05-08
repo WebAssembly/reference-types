@@ -102,7 +102,7 @@ Parametric Instructions
    \production{instruction} & \Binstr &::=& \dots \\ &&|&
      \hex{1A} &\Rightarrow& \DROP \\ &&|&
      \hex{1B} &\Rightarrow& \SELECT \\ &&|&
-     \hex{1C}~~t{:}\Bvaltype &\Rightarrow& \SELECT~t \\
+     \hex{1C}~~t^\ast{:}\Bvec(\Bvaltype) &\Rightarrow& \SELECT~t^\ast \\
    \end{array}
 
 

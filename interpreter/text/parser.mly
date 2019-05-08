@@ -348,25 +348,26 @@ plain_instr :
 
 select_instr :
   | SELECT select_instr_results
-    { let at = at () in fun c -> select $2 @@ at }
+    { let at = at () in fun c -> let b, ts = $2 in
+      select (if b then (Some ts) else None) @@ at }
 
 select_instr_results :
-  | LPAR RESULT value_type RPAR
-    { Some $3 }
+  | LPAR RESULT value_type_list RPAR select_instr_results
+    { let _, ts = $5 in true, $3 @ ts }
   | /* empty */
-    { None }
+    { false, [] }
 
 select_instr_instr :
   | SELECT select_instr_results_instr
     { let at1 = ati 1 in
-      fun c -> let t_opt, es = $2 c in
-      select t_opt @@ at1, es }
+      fun c -> let b, ts, es = $2 c in
+      select (if b then (Some ts) else None) @@ at1, es }
 
 select_instr_results_instr :
-  | LPAR RESULT value_type RPAR instr
-    { fun c -> Some $3, $5 c }
+  | LPAR RESULT value_type_list RPAR select_instr_results_instr
+    { fun c -> let _, ts, es = $5 c in true, $3 @ ts, es }
   | instr
-    { fun c -> None, $1 c }
+    { fun c -> false, [], $1 c }
 
 
 call_instr :
@@ -457,7 +458,7 @@ expr :  /* Sugar */
 expr1 :  /* Sugar */
   | plain_instr expr_list { fun c -> $2 c, $1 c }
   | SELECT select_expr_results
-    { fun c -> let t_opt, es = $2 c in es, select t_opt }
+    { fun c -> let b, ts, es = $2 c in es, select (if b then (Some ts) else None) }
   | CALL_INDIRECT var call_expr_type
     { fun c -> let x, es = $3 c in es, call_indirect ($2 c table) x }
   | CALL_INDIRECT call_expr_type  /* Sugar */
@@ -472,10 +473,10 @@ expr1 :  /* Sugar */
       let ts, (es, es1, es2) = $3 c c' in es, if_ ts es1 es2 }
 
 select_expr_results :
-  | LPAR RESULT value_type RPAR expr_list
-    { fun c -> Some $3, $5 c }
+  | LPAR RESULT value_type_list RPAR select_expr_results
+    { fun c -> let _, ts, es = $5 c in true, $3 @ ts, es }
   | expr_list
-    { fun c -> None, $1 c }
+    { fun c -> false, [], $1 c }
 
 call_expr_type :
   | type_use call_expr_params

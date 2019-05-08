@@ -227,15 +227,21 @@ Parametric Instructions
      C \vdashinstr \DROP : [t] \to []
    }
 
+.. note::
+   Both |DROP| and |SELECT| without annotation are :ref:`value-polymorphic <polymorphism>` instructions.
+
+
 
 .. _valid-select:
 
-:math:`\SELECT~t^?`
-...................
+:math:`\SELECT~(t^\ast)^?`
+..........................
 
-* If :math:`t` is present, then:
+* If :math:`t^\ast` is present, then:
 
-  * The instruction is valid with type :math:`[t~t~\I32] \to [t]`.
+  * The length of :math:`t^\ast` must be :math:`1`.
+
+  * Then the instruction is valid with type :math:`[t^\ast~t^\ast~\I32] \to [t^\ast]`.
 
 * Else:
 
@@ -254,7 +260,7 @@ Parametric Instructions
    }
 
 .. note::
-   Both |DROP| and |SELECT| without annotation are :ref:`value-polymorphic <polymorphism>` instructions.
+   In future versions of WebAssembly, |SELECT| may allow more than one value per choice.
 
 
 .. index:: variable instructions, local index, global index, context

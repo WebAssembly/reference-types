@@ -168,7 +168,7 @@ let encode m =
 
       | Drop -> op 0x1a
       | Select None -> op 0x1b
-      | Select (Some t) -> op 0x1c; value_type t
+      | Select (Some ts) -> op 0x1c; vec value_type ts
 
       | LocalGet x -> op 0x20; var x
       | LocalSet x -> op 0x21; var x
