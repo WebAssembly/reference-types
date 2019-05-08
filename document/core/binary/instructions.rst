@@ -92,7 +92,7 @@ Reference Instructions
 Parametric Instructions
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-:ref:`Parametric instructions <syntax-instr-parametric>` are represented by single byte codes, possibly followd by a type annotation.
+:ref:`Parametric instructions <syntax-instr-parametric>` are represented by single byte codes, possibly followed by a type annotation.
 
 .. _binary-drop:
 .. _binary-select:

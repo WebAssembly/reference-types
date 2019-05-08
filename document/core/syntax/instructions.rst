@@ -211,7 +211,7 @@ Instructions in this group can operate on operands of any :ref:`value type <synt
 The |DROP| operator simply throws away a single operand.
 
 The |SELECT| operator selects one of its first two operands based on whether its third operand is zero or not.
-It may be include by a :ref:`value type <syntax-valtype>` determining the type of these operands. If missing, the operands must be of :ref:`numeric type <syntax-numtype>`.
+It may include a :ref:`value type <syntax-valtype>` determining the type of these operands. If missing, the operands must be of :ref:`numeric type <syntax-numtype>`.
 
 
 .. index:: ! variable instruction, local, global, local index, global index
