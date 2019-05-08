@@ -259,7 +259,7 @@ let rec instr s =
 
   | 0x1a -> drop
   | 0x1b -> select None
-  | 0x1c -> select (Some (vec value_type s))
+  | 0x1c -> select (Some (value_type s))
 
   | 0x1d | 0x1e | 0x1f as b -> illegal s pos b
 

@@ -185,10 +185,8 @@ let rec check_instr (c : context) (e : instr) (s : infer_stack_type) : op_type =
        " but stack has " ^ string_of_value_type t);
     [t; t; NumType I32Type] --> [t]
 
-  | Select (Some ts) ->
-    check_arity (List.length ts) e.at;
-    require (List.length ts <> 0) e.at "invalid result arity, 0 is not (yet) allowed";
-    (ts @ ts @ [NumType I32Type]) --> ts
+  | Select (Some t) ->
+    [t; t; NumType I32Type] --> [t]
 
   | Block (ts, es) ->
     check_arity (List.length ts) e.at;

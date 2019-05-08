@@ -225,8 +225,7 @@ let rec instr e =
     | Nop -> "nop", []
     | Drop -> "drop", []
     | Select None -> "select", []
-    | Select (Some []) -> "select", [Node ("result", [])]
-    | Select (Some ts) -> "select", decls "result" ts
+    | Select (Some t) -> "select", decls "result" [t]
     | Block (ts, es) -> "block", stack_type ts @ list instr es
     | Loop (ts, es) -> "loop", stack_type ts @ list instr es
     | If (ts, es1, es2) ->
