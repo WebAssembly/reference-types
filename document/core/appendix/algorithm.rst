@@ -97,7 +97,7 @@ Pushing an operand value simply pushes the respective type to the value stack.
 Popping an operand value checks that the value stack does not underflow the current block and then removes one type.
 But first, a special case is handled where the block contains no known values, but has been marked as unreachable.
 That can occur after an unconditional branch, when the stack is typed :ref:`polymorphically <polymorphism>`.
-In that case, the :code:`Bot` type is returned.
+In that case, the :code:`Bot` type is returned, because that is a *principal* choice trivially satisfying all use constraints.
 
 A second function for popping an operand value takes an expected type, which the actual operand type is checked against.
 The types may differ by subtyping, including the case where the actual type is :code:`Bot`, and thereby matches unconditionally.
