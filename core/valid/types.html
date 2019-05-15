@@ -22,7 +22,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
-  </head> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>  
+  </head> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -227,7 +227,14 @@ However, restrictions apply to <a class="reference internal" href="../syntax/typ
 <ul class="simple">
 <li>Either both <span class="math notranslate">\(\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}_1\)</span> and <span class="math notranslate">\(\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}_2\)</span> are <a class="reference internal" href="../syntax/types.html#syntax-numtype"><span class="std std-ref">number types</span></a> and <span class="math notranslate">\(\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}_1\)</span> <a class="reference internal" href="#match-numtype"><span class="std std-ref">matches</span></a> <span class="math notranslate">\(\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}_2\)</span>.</li>
 <li>Or both <span class="math notranslate">\(\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}_1\)</span> and <span class="math notranslate">\(\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}_2\)</span> are <a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">reference types</span></a> and <span class="math notranslate">\(\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}_1\)</span> <a class="reference internal" href="#match-reftype"><span class="std std-ref">matches</span></a> <span class="math notranslate">\(\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}_2\)</span>.</li>
+<li>Or <span class="math notranslate">\(\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}_1\)</span> is <span class="math notranslate">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{bot}}\)</span>.</li>
 </ul>
+<div class="math notranslate">
+\[\begin{split}~\\[-1ex]
+\frac{
+}{
+  \href{../valid/types.html#match-valtype}{\vdash} \href{../syntax/types.html#syntax-valtype}{\mathsf{bot}} \href{../valid/types.html#match-valtype}{\leq} \href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}
+}\end{split}\]</div>
 </div>
 <div class="section" id="result-types">
 <span id="match-resulttype"></span><h3>Result Types<a class="headerlink" href="#result-types" title="Permalink to this headline">¶</a></h3>
@@ -243,6 +250,103 @@ That is, a <a class="reference internal" href="../syntax/types.html#syntax-resul
   (\href{../valid/types.html#match-valtype}{\vdash} t_1 \href{../valid/types.html#match-valtype}{\leq} t_2)^?
 }{
   \href{../valid/types.html#match-resulttype}{\vdash} [t_1^?] \href{../valid/types.html#match-resulttype}{\leq} [t_2^?]
+}\end{split}\]</div>
+</div>
+</div>
+<div class="section" id="import-subtyping">
+<span id="match"></span><span id="exec-import"></span><span id="index-10"></span><h2>Import Subtyping<a class="headerlink" href="#import-subtyping" title="Permalink to this headline">¶</a></h2>
+<p>When <a class="reference internal" href="../exec/modules.html#exec-module"><span class="std std-ref">instantiating</span></a> a module,
+<a class="reference internal" href="../exec/runtime.html#syntax-externval"><span class="std std-ref">external values</span></a> must be provided whose <a class="reference internal" href="../exec/modules.html#valid-externval"><span class="std std-ref">types</span></a> are <em>matched</em> against the respective <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external types</span></a> classifying each import.
+In some cases, this allows for a simple form of subtyping, as defined here.</p>
+<div class="section" id="match-limits">
+<span id="index-11"></span><span id="id10"></span><h3>Limits<a class="headerlink" href="#match-limits" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="../syntax/types.html#syntax-limits"><span class="std std-ref">Limits</span></a> <span class="math notranslate">\(\{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n_1, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m_1^? \}\)</span> match limits <span class="math notranslate">\(\{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n_2, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m_2^? \}\)</span> if and only if:</p>
+<ul class="simple">
+<li><span class="math notranslate">\(n_1\)</span> is larger than or equal to <span class="math notranslate">\(n_2\)</span>.</li>
+<li>Either:<ul>
+<li><span class="math notranslate">\(m_2^?\)</span> is empty.</li>
+</ul>
+</li>
+<li>Or:<ul>
+<li>Both <span class="math notranslate">\(m_1^?\)</span> and <span class="math notranslate">\(m_2^?\)</span> are non-empty.</li>
+<li><span class="math notranslate">\(m_1\)</span> is smaller than or equal to <span class="math notranslate">\(m_2\)</span>.</li>
+</ul>
+</li>
+</ul>
+<div class="math notranslate">
+\[\begin{split}~\\[-1ex]
+\frac{
+  n_1 \geq n_2
+}{
+  \href{../exec/modules.html#match-limits}{\vdash} \{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n_1, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m_1^? \} \href{../exec/modules.html#match-limits}{\leq} \{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n_2, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~\epsilon \}
+}
+\quad
+\frac{
+  n_1 \geq n_2
+  \qquad
+  m_1 \leq m_2
+}{
+  \href{../exec/modules.html#match-limits}{\vdash} \{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n_1, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m_1 \} \href{../exec/modules.html#match-limits}{\leq} \{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n_2, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m_2 \}
+}\end{split}\]</div>
+<span class="target" id="match-externtype"></span></div>
+<div class="section" id="functions">
+<span id="match-functype"></span><span id="index-12"></span><h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<p>An <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external type</span></a> <span class="math notranslate">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{func}}~\href{../syntax/types.html#syntax-functype}{\mathit{functype}}_1\)</span> matches <span class="math notranslate">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{func}}~\href{../syntax/types.html#syntax-functype}{\mathit{functype}}_2\)</span> if and only if:</p>
+<ul class="simple">
+<li>Both <span class="math notranslate">\(\href{../syntax/types.html#syntax-functype}{\mathit{functype}}_1\)</span> and <span class="math notranslate">\(\href{../syntax/types.html#syntax-functype}{\mathit{functype}}_2\)</span> are the same.</li>
+</ul>
+<div class="math notranslate">
+\[\begin{split}~\\[-1ex]
+\frac{
+}{
+  \href{../exec/modules.html#match-externtype}{\vdash} \href{../syntax/types.html#syntax-externtype}{\mathsf{func}}~\href{../syntax/types.html#syntax-functype}{\mathit{functype}} \href{../exec/modules.html#match-externtype}{\leq} \href{../syntax/types.html#syntax-externtype}{\mathsf{func}}~\href{../syntax/types.html#syntax-functype}{\mathit{functype}}
+}\end{split}\]</div>
+</div>
+<div class="section" id="tables">
+<span id="match-tabletype"></span><span id="index-13"></span><h3>Tables<a class="headerlink" href="#tables" title="Permalink to this headline">¶</a></h3>
+<p>An <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external type</span></a> <span class="math notranslate">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{table}}~(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_1~\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}_1)\)</span> matches <span class="math notranslate">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{table}}~(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_2~\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}_2)\)</span> if and only if:</p>
+<ul class="simple">
+<li>Limits <span class="math notranslate">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_1\)</span> <a class="reference internal" href="#match-limits"><span class="std std-ref">match</span></a> <span class="math notranslate">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_2\)</span>.</li>
+<li>Both <span class="math notranslate">\(\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}_1\)</span> and <span class="math notranslate">\(\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}_2\)</span> are the same.</li>
+</ul>
+<div class="math notranslate">
+\[\frac{
+  \href{../exec/modules.html#match-limits}{\vdash} \href{../syntax/types.html#syntax-limits}{\mathit{limits}}_1 \href{../exec/modules.html#match-limits}{\leq} \href{../syntax/types.html#syntax-limits}{\mathit{limits}}_2
+}{
+  \href{../exec/modules.html#match-externtype}{\vdash} \href{../syntax/types.html#syntax-externtype}{\mathsf{table}}~(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_1~\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}) \href{../exec/modules.html#match-externtype}{\leq} \href{../syntax/types.html#syntax-externtype}{\mathsf{table}}~(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_2~\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}})
+}\]</div>
+</div>
+<div class="section" id="memories">
+<span id="match-memtype"></span><span id="index-14"></span><h3>Memories<a class="headerlink" href="#memories" title="Permalink to this headline">¶</a></h3>
+<p>An <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external type</span></a> <span class="math notranslate">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{mem}}~\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_1\)</span> matches <span class="math notranslate">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{mem}}~\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_2\)</span> if and only if:</p>
+<ul class="simple">
+<li>Limits <span class="math notranslate">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_1\)</span> <a class="reference internal" href="#match-limits"><span class="std std-ref">match</span></a> <span class="math notranslate">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_2\)</span>.</li>
+</ul>
+<div class="math notranslate">
+\[\frac{
+  \href{../exec/modules.html#match-limits}{\vdash} \href{../syntax/types.html#syntax-limits}{\mathit{limits}}_1 \href{../exec/modules.html#match-limits}{\leq} \href{../syntax/types.html#syntax-limits}{\mathit{limits}}_2
+}{
+  \href{../exec/modules.html#match-externtype}{\vdash} \href{../syntax/types.html#syntax-externtype}{\mathsf{mem}}~\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_1 \href{../exec/modules.html#match-externtype}{\leq} \href{../syntax/types.html#syntax-externtype}{\mathsf{mem}}~\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_2
+}\]</div>
+</div>
+<div class="section" id="globals">
+<span id="match-globaltype"></span><span id="index-15"></span><h3>Globals<a class="headerlink" href="#globals" title="Permalink to this headline">¶</a></h3>
+<p>An <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external type</span></a> <span class="math notranslate">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{global}}~(\href{../syntax/types.html#syntax-mut}{\mathit{mut}}_1~t_1)\)</span> matches <span class="math notranslate">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{global}}~(\href{../syntax/types.html#syntax-mut}{\mathit{mut}}_2~t_2)\)</span> if and only if:</p>
+<ul class="simple">
+<li>Either both <span class="math notranslate">\(\href{../syntax/types.html#syntax-mut}{\mathit{mut}}_1\)</span> and <span class="math notranslate">\(\href{../syntax/types.html#syntax-mut}{\mathit{mut}}_2\)</span> are <span class="math notranslate">\(\href{../syntax/types.html#syntax-mut}{\mathsf{var}}\)</span> and <span class="math notranslate">\(t_1\)</span> and <span class="math notranslate">\(t_2\)</span> are the same.</li>
+<li>Or both <span class="math notranslate">\(\href{../syntax/types.html#syntax-mut}{\mathit{mut}}_1\)</span> and <span class="math notranslate">\(\href{../syntax/types.html#syntax-mut}{\mathit{mut}}_2\)</span> are <span class="math notranslate">\(\href{../syntax/types.html#syntax-mut}{\mathsf{const}}\)</span> and <span class="math notranslate">\(t_1\)</span> <a class="reference internal" href="#match-valtype"><span class="std std-ref">matches</span></a> <span class="math notranslate">\(t_2\)</span>.</li>
+</ul>
+<div class="math notranslate">
+\[\begin{split}~\\[-1ex]
+\frac{
+}{
+  \href{../exec/modules.html#match-externtype}{\vdash} \href{../syntax/types.html#syntax-externtype}{\mathsf{global}}~(\href{../syntax/types.html#syntax-mut}{\mathsf{var}}~t) \href{../exec/modules.html#match-externtype}{\leq} \href{../syntax/types.html#syntax-externtype}{\mathsf{global}}~(\href{../syntax/types.html#syntax-mut}{\mathsf{var}}~t)
+}
+\qquad
+\frac{
+  \href{../valid/types.html#match-valtype}{\vdash} t_1 \href{../valid/types.html#match-valtype}{\leq} t_2
+}{
+  \href{../exec/modules.html#match-externtype}{\vdash} \href{../syntax/types.html#syntax-externtype}{\mathsf{global}}~(\href{../syntax/types.html#syntax-mut}{\mathsf{const}}~t_1) \href{../exec/modules.html#match-externtype}{\leq} \href{../syntax/types.html#syntax-externtype}{\mathsf{global}}~(\href{../syntax/types.html#syntax-mut}{\mathsf{const}}~t_2)
 }\end{split}\]</div>
 </div>
 </div>

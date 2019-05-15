@@ -22,7 +22,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
-  </head> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>  
+  </head> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -32,7 +32,7 @@
   <div class="section" id="modules">
 <h1>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h1>
 <p>For modules, the execution semantics primarily defines <a class="reference internal" href="#exec-instantiation"><span class="std std-ref">instantiation</span></a>, which <a class="reference internal" href="#alloc"><span class="std std-ref">allocates</span></a> instances for a module and its contained definitions, inititializes <a class="reference internal" href="../syntax/modules.html#syntax-table"><span class="std std-ref">tables</span></a> and <a class="reference internal" href="../syntax/modules.html#syntax-mem"><span class="std std-ref">memories</span></a> from contained <a class="reference internal" href="../syntax/modules.html#syntax-elem"><span class="std std-ref">element</span></a> and <a class="reference internal" href="../syntax/modules.html#syntax-data"><span class="std std-ref">data</span></a> segments, and invokes the <a class="reference internal" href="../syntax/modules.html#syntax-start"><span class="std std-ref">start function</span></a> if present. It also includes <a class="reference internal" href="#exec-invocation"><span class="std std-ref">invocation</span></a> of exported functions.</p>
-<p>Instantiation depends on a number of auxiliary notions for <a class="reference internal" href="#exec-import"><span class="std std-ref">type-checking imports</span></a> and <a class="reference internal" href="#alloc"><span class="std std-ref">allocating</span></a> instances.</p>
+<p>Instantiation depends on a number of auxiliary notions for <a class="reference internal" href="../valid/types.html#exec-import"><span class="std std-ref">type-checking imports</span></a> and <a class="reference internal" href="#alloc"><span class="std std-ref">allocating</span></a> instances.</p>
 <div class="section" id="external-typing">
 <span id="valid-externval"></span><span id="index-0"></span><h2>External Typing<a class="headerlink" href="#external-typing" title="Permalink to this headline">¶</a></h2>
 <p>For the purpose of checking <a class="reference internal" href="runtime.html#syntax-externval"><span class="std std-ref">external values</span></a> against <a class="reference internal" href="../syntax/modules.html#syntax-import"><span class="std std-ref">imports</span></a>,
@@ -139,108 +139,11 @@ The following auxiliary typing rules specify this typing relation relative to a 
 }\]</div>
 </div>
 </div>
-<div class="section" id="import-matching">
-<span id="match"></span><span id="exec-import"></span><span id="index-6"></span><h2>Import Matching<a class="headerlink" href="#import-matching" title="Permalink to this headline">¶</a></h2>
-<p>When <a class="reference internal" href="#exec-module"><span class="std std-ref">instantiating</span></a> a module,
-<a class="reference internal" href="runtime.html#syntax-externval"><span class="std std-ref">external values</span></a> must be provided whose <a class="reference internal" href="#valid-externval"><span class="std std-ref">types</span></a> are <em>matched</em> against the respective <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external types</span></a> classifying each import.
-In some cases, this allows for a simple form of subtyping, as defined below.</p>
-<div class="section" id="limits">
-<span id="match-limits"></span><span id="index-7"></span><h3>Limits<a class="headerlink" href="#limits" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference internal" href="../syntax/types.html#syntax-limits"><span class="std std-ref">Limits</span></a> <span class="math notranslate">\(\{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n_1, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m_1^? \}\)</span> match limits <span class="math notranslate">\(\{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n_2, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m_2^? \}\)</span> if and only if:</p>
-<ul class="simple">
-<li><span class="math notranslate">\(n_1\)</span> is larger than or equal to <span class="math notranslate">\(n_2\)</span>.</li>
-<li>Either:<ul>
-<li><span class="math notranslate">\(m_2^?\)</span> is empty.</li>
-</ul>
-</li>
-<li>Or:<ul>
-<li>Both <span class="math notranslate">\(m_1^?\)</span> and <span class="math notranslate">\(m_2^?\)</span> are non-empty.</li>
-<li><span class="math notranslate">\(m_1\)</span> is smaller than or equal to <span class="math notranslate">\(m_2\)</span>.</li>
-</ul>
-</li>
-</ul>
-<div class="math notranslate">
-\[\begin{split}~\\[-1ex]
-\frac{
-  n_1 \geq n_2
-}{
-  \href{../exec/modules.html#match-limits}{\vdash} \{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n_1, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m_1^? \} \href{../exec/modules.html#match-limits}{\leq} \{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n_2, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~\epsilon \}
-}
-\quad
-\frac{
-  n_1 \geq n_2
-  \qquad
-  m_1 \leq m_2
-}{
-  \href{../exec/modules.html#match-limits}{\vdash} \{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n_1, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m_1 \} \href{../exec/modules.html#match-limits}{\leq} \{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n_2, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m_2 \}
-}\end{split}\]</div>
-<span class="target" id="match-externtype"></span></div>
-<div class="section" id="functions">
-<span id="match-functype"></span><span id="index-8"></span><h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
-<p>An <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external type</span></a> <span class="math notranslate">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{func}}~\href{../syntax/types.html#syntax-functype}{\mathit{functype}}_1\)</span> matches <span class="math notranslate">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{func}}~\href{../syntax/types.html#syntax-functype}{\mathit{functype}}_2\)</span> if and only if:</p>
-<ul class="simple">
-<li>Both <span class="math notranslate">\(\href{../syntax/types.html#syntax-functype}{\mathit{functype}}_1\)</span> and <span class="math notranslate">\(\href{../syntax/types.html#syntax-functype}{\mathit{functype}}_2\)</span> are the same.</li>
-</ul>
-<div class="math notranslate">
-\[\begin{split}~\\[-1ex]
-\frac{
-}{
-  \href{../exec/modules.html#match-externtype}{\vdash} \href{../syntax/types.html#syntax-externtype}{\mathsf{func}}~\href{../syntax/types.html#syntax-functype}{\mathit{functype}} \href{../exec/modules.html#match-externtype}{\leq} \href{../syntax/types.html#syntax-externtype}{\mathsf{func}}~\href{../syntax/types.html#syntax-functype}{\mathit{functype}}
-}\end{split}\]</div>
-</div>
-<div class="section" id="tables">
-<span id="match-tabletype"></span><span id="index-9"></span><h3>Tables<a class="headerlink" href="#tables" title="Permalink to this headline">¶</a></h3>
-<p>An <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external type</span></a> <span class="math notranslate">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{table}}~(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_1~\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}_1)\)</span> matches <span class="math notranslate">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{table}}~(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_2~\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}_2)\)</span> if and only if:</p>
-<ul class="simple">
-<li>Limits <span class="math notranslate">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_1\)</span> <a class="reference internal" href="#match-limits"><span class="std std-ref">match</span></a> <span class="math notranslate">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_2\)</span>.</li>
-<li>Both <span class="math notranslate">\(\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}_1\)</span> and <span class="math notranslate">\(\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}_2\)</span> are the same.</li>
-</ul>
-<div class="math notranslate">
-\[\frac{
-  \href{../exec/modules.html#match-limits}{\vdash} \href{../syntax/types.html#syntax-limits}{\mathit{limits}}_1 \href{../exec/modules.html#match-limits}{\leq} \href{../syntax/types.html#syntax-limits}{\mathit{limits}}_2
-}{
-  \href{../exec/modules.html#match-externtype}{\vdash} \href{../syntax/types.html#syntax-externtype}{\mathsf{table}}~(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_1~\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}) \href{../exec/modules.html#match-externtype}{\leq} \href{../syntax/types.html#syntax-externtype}{\mathsf{table}}~(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_2~\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}})
-}\]</div>
-</div>
-<div class="section" id="memories">
-<span id="match-memtype"></span><span id="index-10"></span><h3>Memories<a class="headerlink" href="#memories" title="Permalink to this headline">¶</a></h3>
-<p>An <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external type</span></a> <span class="math notranslate">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{mem}}~\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_1\)</span> matches <span class="math notranslate">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{mem}}~\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_2\)</span> if and only if:</p>
-<ul class="simple">
-<li>Limits <span class="math notranslate">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_1\)</span> <a class="reference internal" href="#match-limits"><span class="std std-ref">match</span></a> <span class="math notranslate">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_2\)</span>.</li>
-</ul>
-<div class="math notranslate">
-\[\frac{
-  \href{../exec/modules.html#match-limits}{\vdash} \href{../syntax/types.html#syntax-limits}{\mathit{limits}}_1 \href{../exec/modules.html#match-limits}{\leq} \href{../syntax/types.html#syntax-limits}{\mathit{limits}}_2
-}{
-  \href{../exec/modules.html#match-externtype}{\vdash} \href{../syntax/types.html#syntax-externtype}{\mathsf{mem}}~\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_1 \href{../exec/modules.html#match-externtype}{\leq} \href{../syntax/types.html#syntax-externtype}{\mathsf{mem}}~\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_2
-}\]</div>
-</div>
-<div class="section" id="globals">
-<span id="match-globaltype"></span><span id="index-11"></span><h3>Globals<a class="headerlink" href="#globals" title="Permalink to this headline">¶</a></h3>
-<p>An <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external type</span></a> <span class="math notranslate">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{global}}~(\href{../syntax/types.html#syntax-mut}{\mathit{mut}}_1~t_1)\)</span> matches <span class="math notranslate">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{global}}~(\href{../syntax/types.html#syntax-mut}{\mathit{mut}}_2~t_2)\)</span> if and only if:</p>
-<ul class="simple">
-<li>Either both <span class="math notranslate">\(\href{../syntax/types.html#syntax-mut}{\mathit{mut}}_1\)</span> and <span class="math notranslate">\(\href{../syntax/types.html#syntax-mut}{\mathit{mut}}_2\)</span> are <span class="math notranslate">\(\href{../syntax/types.html#syntax-mut}{\mathsf{var}}\)</span> and <span class="math notranslate">\(t_1\)</span> and <span class="math notranslate">\(t_2\)</span> are the same.</li>
-<li>Or both <span class="math notranslate">\(\href{../syntax/types.html#syntax-mut}{\mathit{mut}}_1\)</span> and <span class="math notranslate">\(\href{../syntax/types.html#syntax-mut}{\mathit{mut}}_2\)</span> are <span class="math notranslate">\(\href{../syntax/types.html#syntax-mut}{\mathsf{const}}\)</span> and <span class="math notranslate">\(t_1\)</span> <a class="reference internal" href="../valid/types.html#match-valtype"><span class="std std-ref">matches</span></a> <span class="math notranslate">\(t_2\)</span>.</li>
-</ul>
-<div class="math notranslate">
-\[\begin{split}~\\[-1ex]
-\frac{
-}{
-  \href{../exec/modules.html#match-externtype}{\vdash} \href{../syntax/types.html#syntax-externtype}{\mathsf{global}}~(\href{../syntax/types.html#syntax-mut}{\mathsf{var}}~t) \href{../exec/modules.html#match-externtype}{\leq} \href{../syntax/types.html#syntax-externtype}{\mathsf{global}}~(\href{../syntax/types.html#syntax-mut}{\mathsf{var}}~t)
-}
-\qquad
-\frac{
-  \href{../valid/types.html#match-valtype}{\vdash} t_1 \href{../valid/types.html#match-valtype}{\leq} t_2
-}{
-  \href{../exec/modules.html#match-externtype}{\vdash} \href{../syntax/types.html#syntax-externtype}{\mathsf{global}}~(\href{../syntax/types.html#syntax-mut}{\mathsf{const}}~t_1) \href{../exec/modules.html#match-externtype}{\leq} \href{../syntax/types.html#syntax-externtype}{\mathsf{global}}~(\href{../syntax/types.html#syntax-mut}{\mathsf{const}}~t_2)
-}\end{split}\]</div>
-</div>
-</div>
 <div class="section" id="allocation">
-<span id="alloc"></span><span id="index-12"></span><h2>Allocation<a class="headerlink" href="#allocation" title="Permalink to this headline">¶</a></h2>
+<span id="alloc"></span><span id="index-6"></span><h2>Allocation<a class="headerlink" href="#allocation" title="Permalink to this headline">¶</a></h2>
 <p>New instances of <a class="reference internal" href="runtime.html#syntax-funcinst"><span class="std std-ref">functions</span></a>, <a class="reference internal" href="runtime.html#syntax-tableinst"><span class="std std-ref">tables</span></a>, <a class="reference internal" href="runtime.html#syntax-meminst"><span class="std std-ref">memories</span></a>, and <a class="reference internal" href="runtime.html#syntax-globalinst"><span class="std std-ref">globals</span></a> are <em>allocated</em> in a <a class="reference internal" href="runtime.html#syntax-store"><span class="std std-ref">store</span></a> <span class="math notranslate">\(S\)</span>, as defined by the following auxiliary functions.</p>
-<div class="section" id="alloc-func">
-<span id="index-13"></span><span id="id5"></span><h3><a class="reference internal" href="runtime.html#syntax-funcinst"><span class="std std-ref">Functions</span></a><a class="headerlink" href="#alloc-func" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="functions">
+<span id="alloc-func"></span><span id="index-7"></span><h3><a class="reference internal" href="runtime.html#syntax-funcinst"><span class="std std-ref">Functions</span></a><a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li>Let <span class="math notranslate">\(\href{../syntax/modules.html#syntax-func}{\mathit{func}}\)</span> be the <a class="reference internal" href="../syntax/modules.html#syntax-func"><span class="std std-ref">function</span></a> to allocate and <span class="math notranslate">\(\href{../exec/runtime.html#syntax-moduleinst}{\mathit{moduleinst}}\)</span> its <a class="reference internal" href="runtime.html#syntax-moduleinst"><span class="std std-ref">module instance</span></a>.</li>
 <li>Let <span class="math notranslate">\(a\)</span> be the first free <a class="reference internal" href="runtime.html#syntax-funcaddr"><span class="std std-ref">function address</span></a> in <span class="math notranslate">\(S\)</span>.</li>
@@ -261,7 +164,7 @@ S' &amp;=&amp; S \href{../syntax/conventions.html#notation-compose}{\oplus} \{\h
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="host-functions">
-<span id="alloc-hostfunc"></span><span id="index-14"></span><h3><a class="reference internal" href="runtime.html#syntax-hostfunc"><span class="std std-ref">Host Functions</span></a><a class="headerlink" href="#host-functions" title="Permalink to this headline">¶</a></h3>
+<span id="alloc-hostfunc"></span><span id="index-8"></span><h3><a class="reference internal" href="runtime.html#syntax-hostfunc"><span class="std std-ref">Host Functions</span></a><a class="headerlink" href="#host-functions" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li>Let <span class="math notranslate">\(\href{../exec/runtime.html#syntax-hostfunc}{\mathit{hostfunc}}\)</span> be the <a class="reference internal" href="runtime.html#syntax-hostfunc"><span class="std std-ref">host function</span></a> to allocate and <span class="math notranslate">\(\href{../syntax/types.html#syntax-functype}{\mathit{functype}}\)</span> its <a class="reference internal" href="../syntax/types.html#syntax-functype"><span class="std std-ref">function type</span></a>.</li>
 <li>Let <span class="math notranslate">\(a\)</span> be the first free <a class="reference internal" href="runtime.html#syntax-funcaddr"><span class="std std-ref">function address</span></a> in <span class="math notranslate">\(S\)</span>.</li>
@@ -284,8 +187,8 @@ S' &amp;=&amp; S \href{../syntax/conventions.html#notation-compose}{\oplus} \{\h
 but may be allocated by the <a class="reference internal" href="../intro/overview.html#embedder"><span class="std std-ref">embedder</span></a>.</p>
 </div>
 </div>
-<div class="section" id="alloc-table">
-<span id="index-15"></span><span id="id6"></span><h3><a class="reference internal" href="runtime.html#syntax-tableinst"><span class="std std-ref">Tables</span></a><a class="headerlink" href="#alloc-table" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="tables">
+<span id="alloc-table"></span><span id="index-9"></span><h3><a class="reference internal" href="runtime.html#syntax-tableinst"><span class="std std-ref">Tables</span></a><a class="headerlink" href="#tables" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li>Let <span class="math notranslate">\(\href{../syntax/types.html#syntax-tabletype}{\mathit{tabletype}}\)</span> be the <a class="reference internal" href="../syntax/types.html#syntax-tabletype"><span class="std std-ref">table type</span></a> to allocate and <span class="math notranslate">\(\href{../exec/runtime.html#syntax-ref}{\mathit{ref}}\)</span> the initialization value.</li>
 <li>Let <span class="math notranslate">\((\{\href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m^?\}~\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}})\)</span> be the structure of <a class="reference internal" href="../syntax/types.html#syntax-tabletype"><span class="std std-ref">table type</span></a> <span class="math notranslate">\(\href{../syntax/types.html#syntax-tabletype}{\mathit{tabletype}}\)</span>.</li>
@@ -304,13 +207,13 @@ but may be allocated by the <a class="reference internal" href="../intro/overvie
 S' &amp;=&amp; S \href{../syntax/conventions.html#notation-compose}{\oplus} \{\href{../exec/runtime.html#syntax-store}{\mathsf{tables}}~\href{../exec/runtime.html#syntax-tableinst}{\mathit{tableinst}}\} \\
 \end{array}\end{split}\]</div>
 </div>
-<div class="section" id="alloc-mem">
-<span id="index-16"></span><span id="id7"></span><h3><a class="reference internal" href="runtime.html#syntax-meminst"><span class="std std-ref">Memories</span></a><a class="headerlink" href="#alloc-mem" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="memories">
+<span id="alloc-mem"></span><span id="index-10"></span><h3><a class="reference internal" href="runtime.html#syntax-meminst"><span class="std std-ref">Memories</span></a><a class="headerlink" href="#memories" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li>Let <span class="math notranslate">\(\href{../syntax/types.html#syntax-memtype}{\mathit{memtype}}\)</span> be the <a class="reference internal" href="../syntax/types.html#syntax-memtype"><span class="std std-ref">memory type</span></a> to allocate.</li>
 <li>Let <span class="math notranslate">\(\{\href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m^?\}\)</span> be the structure of <a class="reference internal" href="../syntax/types.html#syntax-memtype"><span class="std std-ref">memory type</span></a> <span class="math notranslate">\(\href{../syntax/types.html#syntax-memtype}{\mathit{memtype}}\)</span>.</li>
 <li>Let <span class="math notranslate">\(a\)</span> be the first free <a class="reference internal" href="runtime.html#syntax-memaddr"><span class="std std-ref">memory address</span></a> in <span class="math notranslate">\(S\)</span>.</li>
-<li>Let <span class="math notranslate">\(\href{../exec/runtime.html#syntax-meminst}{\mathit{meminst}}\)</span> be the <a class="reference internal" href="runtime.html#syntax-meminst"><span class="std std-ref">memory instance</span></a> <span class="math notranslate">\(\{ \href{../exec/runtime.html#syntax-meminst}{\mathsf{type}}~\href{../syntax/types.html#syntax-memtype}{\mathit{memtype}}, \href{../exec/runtime.html#syntax-meminst}{\mathsf{data}}~(\def\mathdef1188#1{\mathtt{0x#1}}\mathdef1188{00})^{n \cdot 64\,\mathrm{Ki}} \}\)</span> that contains <span class="math notranslate">\(n\)</span> pages of zeroed <a class="reference internal" href="../syntax/values.html#syntax-byte"><span class="std std-ref">bytes</span></a>.</li>
+<li>Let <span class="math notranslate">\(\href{../exec/runtime.html#syntax-meminst}{\mathit{meminst}}\)</span> be the <a class="reference internal" href="runtime.html#syntax-meminst"><span class="std std-ref">memory instance</span></a> <span class="math notranslate">\(\{ \href{../exec/runtime.html#syntax-meminst}{\mathsf{type}}~\href{../syntax/types.html#syntax-memtype}{\mathit{memtype}}, \href{../exec/runtime.html#syntax-meminst}{\mathsf{data}}~(\def\mathdef1189#1{\mathtt{0x#1}}\mathdef1189{00})^{n \cdot 64\,\mathrm{Ki}} \}\)</span> that contains <span class="math notranslate">\(n\)</span> pages of zeroed <a class="reference internal" href="../syntax/values.html#syntax-byte"><span class="std std-ref">bytes</span></a>.</li>
 <li>Append <span class="math notranslate">\(\href{../exec/runtime.html#syntax-meminst}{\mathit{meminst}}\)</span> to the <span class="math notranslate">\(\href{../exec/runtime.html#syntax-store}{\mathsf{mems}}\)</span> of <span class="math notranslate">\(S\)</span>.</li>
 <li>Return <span class="math notranslate">\(a\)</span>.</li>
 </ol>
@@ -320,12 +223,12 @@ S' &amp;=&amp; S \href{../syntax/conventions.html#notation-compose}{\oplus} \{\h
 \mbox{where:} \hfill \\
 \href{../syntax/types.html#syntax-memtype}{\mathit{memtype}} &amp;=&amp; \{\href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m^?\} \\
 \href{../exec/runtime.html#syntax-memaddr}{\mathit{memaddr}} &amp;=&amp; |S.\href{../exec/runtime.html#syntax-store}{\mathsf{mems}}| \\
-\href{../exec/runtime.html#syntax-meminst}{\mathit{meminst}} &amp;=&amp; \{ \href{../exec/runtime.html#syntax-meminst}{\mathsf{type}}~\href{../syntax/types.html#syntax-memtype}{\mathit{memtype}}, \href{../exec/runtime.html#syntax-meminst}{\mathsf{data}}~(\def\mathdef1189#1{\mathtt{0x#1}}\mathdef1189{00})^{n \cdot 64\,\mathrm{Ki}} \} \\
+\href{../exec/runtime.html#syntax-meminst}{\mathit{meminst}} &amp;=&amp; \{ \href{../exec/runtime.html#syntax-meminst}{\mathsf{type}}~\href{../syntax/types.html#syntax-memtype}{\mathit{memtype}}, \href{../exec/runtime.html#syntax-meminst}{\mathsf{data}}~(\def\mathdef1190#1{\mathtt{0x#1}}\mathdef1190{00})^{n \cdot 64\,\mathrm{Ki}} \} \\
 S' &amp;=&amp; S \href{../syntax/conventions.html#notation-compose}{\oplus} \{\href{../exec/runtime.html#syntax-store}{\mathsf{mems}}~\href{../exec/runtime.html#syntax-meminst}{\mathit{meminst}}\} \\
 \end{array}\end{split}\]</div>
 </div>
-<div class="section" id="alloc-global">
-<span id="index-17"></span><span id="id8"></span><h3><a class="reference internal" href="runtime.html#syntax-globalinst"><span class="std std-ref">Globals</span></a><a class="headerlink" href="#alloc-global" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="globals">
+<span id="alloc-global"></span><span id="index-11"></span><h3><a class="reference internal" href="runtime.html#syntax-globalinst"><span class="std std-ref">Globals</span></a><a class="headerlink" href="#globals" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li>Let <span class="math notranslate">\(\href{../syntax/types.html#syntax-globaltype}{\mathit{globaltype}}\)</span> be the <a class="reference internal" href="../syntax/types.html#syntax-globaltype"><span class="std std-ref">global type</span></a> to allocate and <span class="math notranslate">\(\href{../exec/runtime.html#syntax-val}{\mathit{val}}\)</span> the <a class="reference internal" href="runtime.html#syntax-val"><span class="std std-ref">value</span></a> to initialize the global with.</li>
 <li>Let <span class="math notranslate">\(a\)</span> be the first free <a class="reference internal" href="runtime.html#syntax-globaladdr"><span class="std std-ref">global address</span></a> in <span class="math notranslate">\(S\)</span>.</li>
@@ -343,7 +246,7 @@ S' &amp;=&amp; S \href{../syntax/conventions.html#notation-compose}{\oplus} \{\h
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="growing-tables">
-<span id="grow-table"></span><span id="index-18"></span><h3>Growing <a class="reference internal" href="runtime.html#syntax-tableinst"><span class="std std-ref">tables</span></a><a class="headerlink" href="#growing-tables" title="Permalink to this headline">¶</a></h3>
+<span id="grow-table"></span><span id="index-12"></span><h3>Growing <a class="reference internal" href="runtime.html#syntax-tableinst"><span class="std std-ref">tables</span></a><a class="headerlink" href="#growing-tables" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li>Let <span class="math notranslate">\(\href{../exec/runtime.html#syntax-tableinst}{\mathit{tableinst}}\)</span> be the <a class="reference internal" href="runtime.html#syntax-tableinst"><span class="std std-ref">table instance</span></a> to grow, <span class="math notranslate">\(n\)</span> the number of elements by which to grow it, and <span class="math notranslate">\(\href{../exec/runtime.html#syntax-ref}{\mathit{ref}}\)</span> the initialization value.</li>
 <li>Let <span class="math notranslate">\(\mathit{len}\)</span> be <span class="math notranslate">\(n\)</span> added to the length of <span class="math notranslate">\(\href{../exec/runtime.html#syntax-tableinst}{\mathit{tableinst}}.\href{../exec/runtime.html#syntax-tableinst}{\mathsf{elem}}\)</span>.</li>
@@ -368,7 +271,7 @@ S' &amp;=&amp; S \href{../syntax/conventions.html#notation-compose}{\oplus} \{\h
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="growing-memories">
-<span id="grow-mem"></span><span id="index-19"></span><h3>Growing <a class="reference internal" href="runtime.html#syntax-meminst"><span class="std std-ref">memories</span></a><a class="headerlink" href="#growing-memories" title="Permalink to this headline">¶</a></h3>
+<span id="grow-mem"></span><span id="index-13"></span><h3>Growing <a class="reference internal" href="runtime.html#syntax-meminst"><span class="std std-ref">memories</span></a><a class="headerlink" href="#growing-memories" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li>Let <span class="math notranslate">\(\href{../exec/runtime.html#syntax-meminst}{\mathit{meminst}}\)</span> be the <a class="reference internal" href="runtime.html#syntax-meminst"><span class="std std-ref">memory instance</span></a> to grow and <span class="math notranslate">\(n\)</span> the number of <a class="reference internal" href="runtime.html#page-size"><span class="std std-ref">pages</span></a> by which to grow it.</li>
 <li>Assert: The length of <span class="math notranslate">\(\href{../exec/runtime.html#syntax-meminst}{\mathit{meminst}}.\href{../exec/runtime.html#syntax-meminst}{\mathsf{data}}\)</span> is divisible by the <a class="reference internal" href="runtime.html#page-size"><span class="std std-ref">page size</span></a> <span class="math notranslate">\(64\,\mathrm{Ki}\)</span>.</li>
@@ -377,12 +280,12 @@ S' &amp;=&amp; S \href{../syntax/conventions.html#notation-compose}{\oplus} \{\h
 <li>Let <span class="math notranslate">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}\)</span> be the structure of <a class="reference internal" href="../syntax/types.html#syntax-memtype"><span class="std std-ref">memory type</span></a> <span class="math notranslate">\(\href{../exec/runtime.html#syntax-meminst}{\mathit{meminst}}.\href{../exec/runtime.html#syntax-meminst}{\mathsf{type}}\)</span>.</li>
 <li>Let <span class="math notranslate">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}'\)</span> be <span class="math notranslate">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}\)</span> with <span class="math notranslate">\(\href{../syntax/types.html#syntax-limits}{\mathsf{min}}\)</span> updated to <span class="math notranslate">\(\mathit{len}\)</span>.</li>
 <li>If <span class="math notranslate">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}'\)</span> is not <a class="reference internal" href="../valid/types.html#valid-limits"><span class="std std-ref">valid</span></a>, then fail.</li>
-<li>Append <span class="math notranslate">\(n\)</span> times <span class="math notranslate">\(64\,\mathrm{Ki}\)</span> <a class="reference internal" href="../syntax/values.html#syntax-byte"><span class="std std-ref">bytes</span></a> with value <span class="math notranslate">\(\def\mathdef1190#1{\mathtt{0x#1}}\mathdef1190{00}\)</span> to <span class="math notranslate">\(\href{../exec/runtime.html#syntax-meminst}{\mathit{meminst}}.\href{../exec/runtime.html#syntax-meminst}{\mathsf{data}}\)</span>.</li>
+<li>Append <span class="math notranslate">\(n\)</span> times <span class="math notranslate">\(64\,\mathrm{Ki}\)</span> <a class="reference internal" href="../syntax/values.html#syntax-byte"><span class="std std-ref">bytes</span></a> with value <span class="math notranslate">\(\def\mathdef1191#1{\mathtt{0x#1}}\mathdef1191{00}\)</span> to <span class="math notranslate">\(\href{../exec/runtime.html#syntax-meminst}{\mathit{meminst}}.\href{../exec/runtime.html#syntax-meminst}{\mathsf{data}}\)</span>.</li>
 <li>Set <span class="math notranslate">\(\href{../exec/runtime.html#syntax-meminst}{\mathit{meminst}}.\href{../exec/runtime.html#syntax-meminst}{\mathsf{type}}\)</span> to the <a class="reference internal" href="../syntax/types.html#syntax-memtype"><span class="std std-ref">memory type</span></a> <span class="math notranslate">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}'\)</span>.</li>
 </ol>
 <div class="math notranslate">
 \[\begin{split}\begin{array}{rllll}
-\href{../exec/modules.html#grow-mem}{\mathrm{growmem}}(\href{../exec/runtime.html#syntax-meminst}{\mathit{meminst}}, n) &amp;=&amp; \href{../exec/runtime.html#syntax-meminst}{\mathit{meminst}} \href{../syntax/conventions.html#notation-replace}{\mathrel{\mbox{with}}} \href{../exec/runtime.html#syntax-meminst}{\mathsf{type}} = \href{../syntax/types.html#syntax-limits}{\mathit{limits}}' \href{../syntax/conventions.html#notation-replace}{\mathrel{\mbox{with}}} \href{../exec/runtime.html#syntax-meminst}{\mathsf{data}} = \href{../exec/runtime.html#syntax-meminst}{\mathit{meminst}}.\href{../exec/runtime.html#syntax-meminst}{\mathsf{data}}~(\def\mathdef1191#1{\mathtt{0x#1}}\mathdef1191{00})^{n \cdot 64\,\mathrm{Ki}} \\
+\href{../exec/modules.html#grow-mem}{\mathrm{growmem}}(\href{../exec/runtime.html#syntax-meminst}{\mathit{meminst}}, n) &amp;=&amp; \href{../exec/runtime.html#syntax-meminst}{\mathit{meminst}} \href{../syntax/conventions.html#notation-replace}{\mathrel{\mbox{with}}} \href{../exec/runtime.html#syntax-meminst}{\mathsf{type}} = \href{../syntax/types.html#syntax-limits}{\mathit{limits}}' \href{../syntax/conventions.html#notation-replace}{\mathrel{\mbox{with}}} \href{../exec/runtime.html#syntax-meminst}{\mathsf{data}} = \href{../exec/runtime.html#syntax-meminst}{\mathit{meminst}}.\href{../exec/runtime.html#syntax-meminst}{\mathsf{data}}~(\def\mathdef1192#1{\mathtt{0x#1}}\mathdef1192{00})^{n \cdot 64\,\mathrm{Ki}} \\
   &amp;&amp; (
     \begin{array}[t]{&#64;{}r&#64;{~}l&#64;{}}
     \mathrel{\mbox{if}} &amp; \mathit{len} = n + |\href{../exec/runtime.html#syntax-meminst}{\mathit{meminst}}.\href{../exec/runtime.html#syntax-meminst}{\mathsf{data}}| / 64\,\mathrm{Ki} \\
@@ -394,8 +297,8 @@ S' &amp;=&amp; S \href{../syntax/conventions.html#notation-compose}{\oplus} \{\h
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="alloc-module">
-<span id="index-20"></span><span id="id9"></span><h3><a class="reference internal" href="runtime.html#syntax-moduleinst"><span class="std std-ref">Modules</span></a><a class="headerlink" href="#alloc-module" title="Permalink to this headline">¶</a></h3>
-<p>The allocation function for <a class="reference internal" href="../syntax/modules.html#syntax-module"><span class="std std-ref">modules</span></a> requires a suitable list of <a class="reference internal" href="runtime.html#syntax-externval"><span class="std std-ref">external values</span></a> that are assumed to <a class="reference internal" href="#match-externtype"><span class="std std-ref">match</span></a> the <a class="reference internal" href="../syntax/modules.html#syntax-import"><span class="std std-ref">import</span></a> vector of the module,
+<span id="index-14"></span><span id="id5"></span><h3><a class="reference internal" href="runtime.html#syntax-moduleinst"><span class="std std-ref">Modules</span></a><a class="headerlink" href="#alloc-module" title="Permalink to this headline">¶</a></h3>
+<p>The allocation function for <a class="reference internal" href="../syntax/modules.html#syntax-module"><span class="std std-ref">modules</span></a> requires a suitable list of <a class="reference internal" href="runtime.html#syntax-externval"><span class="std std-ref">external values</span></a> that are assumed to <a class="reference internal" href="../valid/types.html#match-externtype"><span class="std std-ref">match</span></a> the <a class="reference internal" href="../syntax/modules.html#syntax-import"><span class="std std-ref">import</span></a> vector of the module,
 and a list of initialization <a class="reference internal" href="runtime.html#syntax-val"><span class="std std-ref">values</span></a> for the module’s <a class="reference internal" href="../syntax/modules.html#syntax-global"><span class="std std-ref">globals</span></a>.</p>
 <p>1. Let <span class="math notranslate">\(\href{../syntax/modules.html#syntax-module}{\mathit{module}}\)</span> be the <a class="reference internal" href="../syntax/modules.html#syntax-module"><span class="std std-ref">module</span></a> to allocate and <span class="math notranslate">\(\href{../exec/runtime.html#syntax-externval}{\mathit{externval}}_{\mathrm{im}}^\ast\)</span> the vector of <a class="reference internal" href="runtime.html#syntax-externval"><span class="std std-ref">external values</span></a> providing the module’s imports,
 and <span class="math notranslate">\(\href{../exec/runtime.html#syntax-val}{\mathit{val}}^\ast\)</span> the initialization <a class="reference internal" href="runtime.html#syntax-val"><span class="std std-ref">values</span></a> of the module’s <a class="reference internal" href="../syntax/modules.html#syntax-global"><span class="std std-ref">globals</span></a>.</p>
@@ -486,9 +389,9 @@ In an implementation, this recursion is easily unraveled by mutating one or the 
 </div>
 </div>
 <div class="section" id="instantiation">
-<span id="exec-instantiation"></span><span id="exec-module"></span><span id="index-21"></span><h2>Instantiation<a class="headerlink" href="#instantiation" title="Permalink to this headline">¶</a></h2>
+<span id="exec-instantiation"></span><span id="exec-module"></span><span id="index-15"></span><h2>Instantiation<a class="headerlink" href="#instantiation" title="Permalink to this headline">¶</a></h2>
 <p>Given a <a class="reference internal" href="runtime.html#syntax-store"><span class="std std-ref">store</span></a> <span class="math notranslate">\(S\)</span>, a <a class="reference internal" href="../syntax/modules.html#syntax-module"><span class="std std-ref">module</span></a> <span class="math notranslate">\(\href{../syntax/modules.html#syntax-module}{\mathit{module}}\)</span> is instantiated with a list of <a class="reference internal" href="runtime.html#syntax-externval"><span class="std std-ref">external values</span></a> <span class="math notranslate">\(\href{../exec/runtime.html#syntax-externval}{\mathit{externval}}^n\)</span> supplying the required imports as follows.</p>
-<p>Instantiation checks that the module is <a class="reference internal" href="../valid/index.html#valid"><span class="std std-ref">valid</span></a> and the provided imports <a class="reference internal" href="#match-externtype"><span class="std std-ref">match</span></a> the declared types,
+<p>Instantiation checks that the module is <a class="reference internal" href="../valid/index.html#valid"><span class="std std-ref">valid</span></a> and the provided imports <a class="reference internal" href="../valid/types.html#match-externtype"><span class="std std-ref">match</span></a> the declared types,
 and may <em>fail</em> with an error otherwise.
 Instantiation can also result in a <a class="reference internal" href="../intro/overview.html#trap"><span class="std std-ref">trap</span></a> from executing the start function.
 It is up to the <a class="reference internal" href="../intro/overview.html#embedder"><span class="std std-ref">embedder</span></a> to define how such conditions are reported.</p>
@@ -507,7 +410,7 @@ It is up to the <a class="reference internal" href="../intro/overview.html#embed
 <li>Fail.</li>
 </ol>
 </li>
-<li>If <span class="math notranslate">\(\href{../syntax/types.html#syntax-externtype}{\mathit{externtype}}_i\)</span> does not <a class="reference internal" href="#match-externtype"><span class="std std-ref">match</span></a> <span class="math notranslate">\(\href{../syntax/types.html#syntax-externtype}{\mathit{externtype}}'_i\)</span>, then:<ol class="lowerroman">
+<li>If <span class="math notranslate">\(\href{../syntax/types.html#syntax-externtype}{\mathit{externtype}}_i\)</span> does not <a class="reference internal" href="../valid/types.html#match-externtype"><span class="std std-ref">match</span></a> <span class="math notranslate">\(\href{../syntax/types.html#syntax-externtype}{\mathit{externtype}}'_i\)</span>, then:<ol class="lowerroman">
 <li>Fail.</li>
 </ol>
 </li>
@@ -651,7 +554,7 @@ it happens in individual steps that may be interleaved with other threads.</p>
 </div>
 </div>
 <div class="section" id="invocation">
-<span id="exec-invocation"></span><span id="index-22"></span><h2>Invocation<a class="headerlink" href="#invocation" title="Permalink to this headline">¶</a></h2>
+<span id="exec-invocation"></span><span id="index-16"></span><h2>Invocation<a class="headerlink" href="#invocation" title="Permalink to this headline">¶</a></h2>
 <p>Once a <a class="reference internal" href="../syntax/modules.html#syntax-module"><span class="std std-ref">module</span></a> has been <a class="reference internal" href="#exec-instantiation"><span class="std std-ref">instantiated</span></a>, any exported function can be <em>invoked</em> externally via its <a class="reference internal" href="runtime.html#syntax-funcaddr"><span class="std std-ref">function address</span></a> <span class="math notranslate">\(\href{../exec/runtime.html#syntax-funcaddr}{\mathit{funcaddr}}\)</span> in the <a class="reference internal" href="runtime.html#syntax-store"><span class="std std-ref">store</span></a> <span class="math notranslate">\(S\)</span> and an appropriate list <span class="math notranslate">\(\href{../exec/runtime.html#syntax-val}{\mathit{val}}^\ast\)</span> of argument <a class="reference internal" href="runtime.html#syntax-val"><span class="std std-ref">values</span></a>.</p>
 <p>Invocation may <em>fail</em> with an error if the arguments do not fit the <a class="reference internal" href="../syntax/types.html#syntax-functype"><span class="std std-ref">function type</span></a>.
 Invocation can also result in a <a class="reference internal" href="../intro/overview.html#trap"><span class="std std-ref">trap</span></a>.

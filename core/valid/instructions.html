@@ -22,7 +22,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
-  </head> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>  
+  </head> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -57,7 +57,7 @@ That is the case for all <a class="reference internal" href="#valid-instr-contro
 <p>In both cases, the unconstrained types or type sequences can be chosen arbitrarily, as long as they meet the constraints imposed for the surrounding parts of the program.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>For example, the <span class="math notranslate">\(\href{../syntax/instructions.html#syntax-instr-parametric}{\mathsf{select}}\)</span> instruction is valid with type <span class="math notranslate">\([t~t~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}] \href{../syntax/types.html#syntax-functype}{\rightarrow} [t]\)</span>, for any possible <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math notranslate">\(t\)</span>.   Consequently, both instruction sequences</p>
+<p>For example, the <span class="math notranslate">\(\href{../syntax/instructions.html#syntax-instr-parametric}{\mathsf{select}}\)</span> instruction is valid with type <span class="math notranslate">\([t~t~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}] \href{../syntax/types.html#syntax-functype}{\rightarrow} [t]\)</span>, for any possible <a class="reference internal" href="../syntax/types.html#syntax-numtype"><span class="std std-ref">number type</span></a> <span class="math notranslate">\(t\)</span>.   Consequently, both instruction sequences</p>
 <div class="math notranslate">
 \[(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~1)~~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~2)~~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~3)~~\href{../syntax/instructions.html#syntax-instr-parametric}{\mathsf{select}}{}\]</div>
 <p>and</p>
@@ -74,6 +74,7 @@ In contrast,</p>
 \[\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{unreachable}}~~(\href{../syntax/types.html#syntax-valtype}{\mathsf{i64}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{const}}~0)~~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{add}}\]</div>
 <p class="last">is invalid, because there is no possible type to pick for the <span class="math notranslate">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{unreachable}}\)</span> instruction that would make the sequence well-typed.</p>
 </div>
+<p>The <a class="reference internal" href="../appendix/algorithm.html#algo-valid"><span class="std std-ref">Appendix</span></a> describes a type checking <a class="reference internal" href="../appendix/algorithm.html#algo-valid"><span class="std std-ref">algorithm</span></a> that efficiently implements validation of instruction sequences as prescribed by the rules given here.</p>
 <div class="section" id="numeric-instructions">
 <span id="valid-instr-numeric"></span><span id="index-1"></span><h2>Numeric Instructions<a class="headerlink" href="#numeric-instructions" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="valid-const">
@@ -193,20 +194,38 @@ In contrast,</p>
 }{
   C \href{../valid/instructions.html#valid-instr}{\vdash} \href{../syntax/instructions.html#syntax-instr-parametric}{\mathsf{drop}} : [t] \href{../syntax/types.html#syntax-functype}{\rightarrow} []
 }\]</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Both <span class="math notranslate">\(\href{../syntax/instructions.html#syntax-instr-parametric}{\mathsf{drop}}\)</span> and <span class="math notranslate">\(\href{../syntax/instructions.html#syntax-instr-parametric}{\mathsf{select}}\)</span> without annotation are <a class="reference internal" href="#polymorphism"><span class="std std-ref">value-polymorphic</span></a> instructions.</p>
+</div>
 </div>
 <div class="section" id="valid-select">
-<span id="id11"></span><h3><span class="math notranslate">\(\href{../syntax/instructions.html#syntax-instr-parametric}{\mathsf{select}}\)</span><a class="headerlink" href="#valid-select" title="Permalink to this headline">¶</a></h3>
+<span id="id11"></span><h3><span class="math notranslate">\(\href{../syntax/instructions.html#syntax-instr-parametric}{\mathsf{select}}~(t^\ast)^?\)</span><a class="headerlink" href="#valid-select" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>The instruction is valid with type <span class="math notranslate">\([t~t~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}] \href{../syntax/types.html#syntax-functype}{\rightarrow} [t]\)</span>, for any <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math notranslate">\(t\)</span>.</li>
+<li>If <span class="math notranslate">\(t^\ast\)</span> is present, then:<ul>
+<li>The length of <span class="math notranslate">\(t^\ast\)</span> must be <span class="math notranslate">\(1\)</span>.</li>
+<li>Then the instruction is valid with type <span class="math notranslate">\([t^\ast~t^\ast~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}] \href{../syntax/types.html#syntax-functype}{\rightarrow} [t^\ast]\)</span>.</li>
+</ul>
+</li>
+<li>Else:<ul>
+<li>The instruction is valid with type <span class="math notranslate">\([t~t~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}] \href{../syntax/types.html#syntax-functype}{\rightarrow} [t]\)</span>, for any <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math notranslate">\(t\)</span> that <a class="reference internal" href="types.html#match-valtype"><span class="std std-ref">matches</span></a> some <a class="reference internal" href="../syntax/types.html#syntax-numtype"><span class="std std-ref">number type</span></a>.</li>
+</ul>
+</li>
 </ul>
 <div class="math notranslate">
 \[\frac{
+}{
+  C \href{../valid/instructions.html#valid-instr}{\vdash} \href{../syntax/instructions.html#syntax-instr-parametric}{\mathsf{select}}~t : [t~t~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}] \href{../syntax/types.html#syntax-functype}{\rightarrow} [t]
+}
+\qquad
+\frac{
+  \href{../valid/types.html#match-valtype}{\vdash} t \href{../valid/types.html#match-valtype}{\leq} \href{../syntax/types.html#syntax-numtype}{\mathit{numtype}}
 }{
   C \href{../valid/instructions.html#valid-instr}{\vdash} \href{../syntax/instructions.html#syntax-instr-parametric}{\mathsf{select}} : [t~t~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}] \href{../syntax/types.html#syntax-functype}{\rightarrow} [t]
 }\]</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Both <span class="math notranslate">\(\href{../syntax/instructions.html#syntax-instr-parametric}{\mathsf{drop}}\)</span> and <span class="math notranslate">\(\href{../syntax/instructions.html#syntax-instr-parametric}{\mathsf{select}}\)</span> are <a class="reference internal" href="#polymorphism"><span class="std std-ref">value-polymorphic</span></a> instructions.</p>
+<p class="last">In future versions of WebAssembly, <span class="math notranslate">\(\href{../syntax/instructions.html#syntax-instr-parametric}{\mathsf{select}}\)</span> may allow more than one value per choice.</p>
 </div>
 </div>
 </div>

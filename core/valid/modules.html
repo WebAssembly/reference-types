@@ -22,7 +22,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
-  </head> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>  
+  </head> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -131,7 +131,7 @@ the expression <span class="math notranslate">\(\href{../syntax/instructions.htm
 <ul class="simple">
 <li>The table <span class="math notranslate">\(C.\href{../valid/conventions.html#context}{\mathsf{tables}}[x]\)</span> must be defined in the context.</li>
 <li>Let <span class="math notranslate">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}~t\)</span> be the <a class="reference internal" href="../syntax/types.html#syntax-tabletype"><span class="std std-ref">table type</span></a> <span class="math notranslate">\(C.\href{../valid/conventions.html#context}{\mathsf{tables}}[x]\)</span>.</li>
-<li>The <a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">reference type</span></a> <span class="math notranslate">\(t\)</span> must be <span class="math notranslate">\(\href{../syntax/types.html#syntax-reftype}{\mathsf{funcref}}\)</span>.</li>
+<li>The <a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">reference type</span></a> <span class="math notranslate">\(\href{../syntax/types.html#syntax-reftype}{\mathsf{funcref}}\)</span> must <a class="reference internal" href="types.html#match-reftype"><span class="std std-ref">match</span></a> the reference type <span class="math notranslate">\(t\)</span>.</li>
 <li>The expression <span class="math notranslate">\(\href{../syntax/instructions.html#syntax-expr}{\mathit{expr}}\)</span> must be <a class="reference internal" href="instructions.html#valid-expr"><span class="std std-ref">valid</span></a> with <a class="reference internal" href="../syntax/types.html#syntax-resulttype"><span class="std std-ref">result type</span></a> <span class="math notranslate">\([\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}]\)</span>.</li>
 <li>The expression <span class="math notranslate">\(\href{../syntax/instructions.html#syntax-expr}{\mathit{expr}}\)</span> must be <a class="reference internal" href="instructions.html#valid-constant"><span class="std std-ref">constant</span></a>.</li>
 <li>For each <span class="math notranslate">\(y_i\)</span> in <span class="math notranslate">\(y^\ast\)</span>,
@@ -140,7 +140,9 @@ the function <span class="math notranslate">\(C.\href{../valid/conventions.html#
 </ul>
 <div class="math notranslate">
 \[\frac{
-  C.\href{../valid/conventions.html#context}{\mathsf{tables}}[x] = \href{../syntax/types.html#syntax-limits}{\mathit{limits}}~\href{../syntax/types.html#syntax-reftype}{\mathsf{funcref}}
+  C.\href{../valid/conventions.html#context}{\mathsf{tables}}[x] = \href{../syntax/types.html#syntax-limits}{\mathit{limits}}~t
+  \qquad
+  \href{../valid/types.html#match-reftype}{\vdash} \href{../syntax/types.html#syntax-reftype}{\mathsf{funcref}} \href{../valid/types.html#match-valtype}{\leq} t
   \qquad
   C \href{../valid/instructions.html#valid-expr}{\vdash} \href{../syntax/instructions.html#syntax-expr}{\mathit{expr}} : [\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}]
   \qquad
