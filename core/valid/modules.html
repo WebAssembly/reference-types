@@ -139,12 +139,12 @@ the function <span class="math notranslate">\(C.\href{../valid/conventions.html#
 <li>Then the element segment is valid.</li>
 </ul>
 <div class="math notranslate">
-\[\frac{
+\[\begin{split}\frac{
   \begin{array}{&#64;{}c&#64;{}}
   C.\href{../valid/conventions.html#context}{\mathsf{tables}}[x] = \href{../syntax/types.html#syntax-limits}{\mathit{limits}}~t
   \qquad
   \href{../valid/types.html#match-reftype}{\vdash} \href{../syntax/types.html#syntax-reftype}{\mathsf{funcref}} \href{../valid/types.html#match-valtype}{\leq} t
-  \
+  \\
   C \href{../valid/instructions.html#valid-expr}{\vdash} \href{../syntax/instructions.html#syntax-expr}{\mathit{expr}} : [\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}]
   \qquad
   C \href{../valid/instructions.html#valid-constant}{\vdash} \href{../syntax/instructions.html#syntax-expr}{\mathit{expr}} \href{../valid/instructions.html#valid-constant}{\mathrel{\mbox{const}}}
@@ -153,7 +153,7 @@ the function <span class="math notranslate">\(C.\href{../valid/conventions.html#
   \end{array}
 }{
   C \href{../valid/modules.html#valid-elem}{\vdash} \{ \href{../syntax/modules.html#syntax-elem}{\mathsf{table}}~x, \href{../syntax/modules.html#syntax-elem}{\mathsf{offset}}~\href{../syntax/instructions.html#syntax-expr}{\mathit{expr}}, \href{../syntax/modules.html#syntax-elem}{\mathsf{init}}~y^\ast \} \mathrel{\mbox{ok}}
-}\]</div>
+}\end{split}\]</div>
 </div>
 </div>
 <div class="section" id="data-segments">
