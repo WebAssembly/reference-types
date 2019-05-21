@@ -9,7 +9,7 @@
     <title>Index of Types &#8212; WebAssembly 1.0</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -19,99 +19,14 @@
     <link rel="next" title="Index of Instructions" href="index-instructions.html" />
     <link rel="prev" title="Soundness" href="properties.html" />
    
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
-  <div class="section" id="index-of-types">
-<span id="index-type"></span><span id="index-0"></span><h1>Index of Types<a class="headerlink" href="#index-of-types" title="Permalink to this headline">¶</a></h1>
-<table border="1" class="docutils">
-<colgroup>
-<col width="25%" />
-<col width="27%" />
-<col width="49%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Category</th>
-<th class="head">Constructor</th>
-<th class="head">Binary Opcode</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td><a class="reference internal" href="../syntax/modules.html#syntax-typeidx"><span class="std std-ref">Type index</span></a></td>
-<td><span class="math notranslate">\(x\)</span></td>
-<td>(positive number as <span class="math notranslate">\(\href{../binary/values.html#binary-int}{\def\mathdef475#1{{\mathtt{s}#1}}\mathdef475{\mathtt{32}}}\)</span> or <span class="math notranslate">\(\href{../binary/values.html#binary-int}{\def\mathdef471#1{{\mathtt{u}#1}}\mathdef471{\mathtt{32}}}\)</span>)</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="../syntax/types.html#syntax-numtype"><span class="std std-ref">Number type</span></a></td>
-<td><span class="math notranslate">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\)</span></td>
-<td><span class="math notranslate">\(\def\mathdef502#1{\mathtt{0x#1}}\mathdef502{7F}\)</span> (-1 as <span class="math notranslate">\(\href{../binary/values.html#binary-int}{\def\mathdef474#1{{\mathtt{s}#1}}\mathdef474{\mathtt{7}}}\)</span>)</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="../syntax/types.html#syntax-numtype"><span class="std std-ref">Number type</span></a></td>
-<td><span class="math notranslate">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i64}}\)</span></td>
-<td><span class="math notranslate">\(\def\mathdef503#1{\mathtt{0x#1}}\mathdef503{7E}\)</span> (-2 as <span class="math notranslate">\(\href{../binary/values.html#binary-int}{\def\mathdef474#1{{\mathtt{s}#1}}\mathdef474{\mathtt{7}}}\)</span>)</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="../syntax/types.html#syntax-numtype"><span class="std std-ref">Number type</span></a></td>
-<td><span class="math notranslate">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{f32}}\)</span></td>
-<td><span class="math notranslate">\(\def\mathdef504#1{\mathtt{0x#1}}\mathdef504{7D}\)</span> (-3 as <span class="math notranslate">\(\href{../binary/values.html#binary-int}{\def\mathdef474#1{{\mathtt{s}#1}}\mathdef474{\mathtt{7}}}\)</span>)</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="../syntax/types.html#syntax-numtype"><span class="std std-ref">Number type</span></a></td>
-<td><span class="math notranslate">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{f64}}\)</span></td>
-<td><span class="math notranslate">\(\def\mathdef505#1{\mathtt{0x#1}}\mathdef505{7C}\)</span> (-4 as <span class="math notranslate">\(\href{../binary/values.html#binary-int}{\def\mathdef474#1{{\mathtt{s}#1}}\mathdef474{\mathtt{7}}}\)</span>)</td>
-</tr>
-<tr class="row-odd"><td>(reserved)</td>
-<td>&#160;</td>
-<td><span class="math notranslate">\(\def\mathdef506#1{\mathtt{0x#1}}\mathdef506{7B}\)</span> .. <span class="math notranslate">\(\def\mathdef507#1{\mathtt{0x#1}}\mathdef507{71}\)</span></td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">Reference type</span></a></td>
-<td><span class="math notranslate">\(\href{../syntax/types.html#syntax-reftype}{\mathsf{funcref}}\)</span></td>
-<td><span class="math notranslate">\(\def\mathdef508#1{\mathtt{0x#1}}\mathdef508{70}\)</span> (-16 as <span class="math notranslate">\(\href{../binary/values.html#binary-int}{\def\mathdef474#1{{\mathtt{s}#1}}\mathdef474{\mathtt{7}}}\)</span>)</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">Reference type</span></a></td>
-<td><span class="math notranslate">\(\href{../syntax/types.html#syntax-reftype}{\mathsf{anyref}}\)</span></td>
-<td><span class="math notranslate">\(\def\mathdef509#1{\mathtt{0x#1}}\mathdef509{6F}\)</span> (-17 as <span class="math notranslate">\(\href{../binary/values.html#binary-int}{\def\mathdef474#1{{\mathtt{s}#1}}\mathdef474{\mathtt{7}}}\)</span>)</td>
-</tr>
-<tr class="row-even"><td>(reserved)</td>
-<td>&#160;</td>
-<td><span class="math notranslate">\(\def\mathdef510#1{\mathtt{0x#1}}\mathdef510{6E}\)</span> .. <span class="math notranslate">\(\def\mathdef511#1{\mathtt{0x#1}}\mathdef511{61}\)</span></td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="../syntax/types.html#syntax-functype"><span class="std std-ref">Function type</span></a></td>
-<td><span class="math notranslate">\([\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}^\ast] \href{../syntax/types.html#syntax-functype}{\rightarrow} [\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}^\ast]\)</span></td>
-<td><span class="math notranslate">\(\def\mathdef512#1{\mathtt{0x#1}}\mathdef512{60}\)</span> (-32 as <span class="math notranslate">\(\href{../binary/values.html#binary-int}{\def\mathdef474#1{{\mathtt{s}#1}}\mathdef474{\mathtt{7}}}\)</span>)</td>
-</tr>
-<tr class="row-even"><td>(reserved)</td>
-<td>&#160;</td>
-<td><span class="math notranslate">\(\def\mathdef513#1{\mathtt{0x#1}}\mathdef513{5F}\)</span> .. <span class="math notranslate">\(\def\mathdef514#1{\mathtt{0x#1}}\mathdef514{41}\)</span></td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="../syntax/types.html#syntax-resulttype"><span class="std std-ref">Result type</span></a></td>
-<td><span class="math notranslate">\([\epsilon]\)</span></td>
-<td><span class="math notranslate">\(\def\mathdef515#1{\mathtt{0x#1}}\mathdef515{40}\)</span> (-64 as <span class="math notranslate">\(\href{../binary/values.html#binary-int}{\def\mathdef474#1{{\mathtt{s}#1}}\mathdef474{\mathtt{7}}}\)</span>)</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="../syntax/types.html#syntax-tabletype"><span class="std std-ref">Table type</span></a></td>
-<td><span class="math notranslate">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}~\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}\)</span></td>
-<td>(none)</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="../syntax/types.html#syntax-memtype"><span class="std std-ref">Memory type</span></a></td>
-<td><span class="math notranslate">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}\)</span></td>
-<td>(none)</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="../syntax/types.html#syntax-globaltype"><span class="std std-ref">Global type</span></a></td>
-<td><span class="math notranslate">\(\href{../syntax/types.html#syntax-mut}{\mathit{mut}}~\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}\)</span></td>
-<td>(none)</td>
-</tr>
-</tbody>
-</table>
-</div>
-
-
-          </div>
-        </div>
-      </div>
+  </head> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>
+  <div class="document">
+    
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../index.html">
@@ -156,8 +71,98 @@
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="index-of-types">
+<span id="index-type"></span><span id="index-0"></span><h1>Index of Types<a class="headerlink" href="#index-of-types" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="27%" />
+<col width="49%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Category</th>
+<th class="head">Constructor</th>
+<th class="head">Binary Opcode</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><a class="reference internal" href="../syntax/modules.html#syntax-typeidx"><span class="std std-ref">Type index</span></a></td>
+<td><span class="math notranslate nohighlight">\(x\)</span></td>
+<td>(positive number as <span class="math notranslate nohighlight">\(\href{../binary/values.html#binary-int}{\def\mathdef475#1{{\mathtt{s}#1}}\mathdef475{\mathtt{32}}}\)</span> or <span class="math notranslate nohighlight">\(\href{../binary/values.html#binary-int}{\def\mathdef471#1{{\mathtt{u}#1}}\mathdef471{\mathtt{32}}}\)</span>)</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../syntax/types.html#syntax-numtype"><span class="std std-ref">Number type</span></a></td>
+<td><span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}\)</span></td>
+<td><span class="math notranslate nohighlight">\(\def\mathdef502#1{\mathtt{0x#1}}\mathdef502{7F}\)</span> (-1 as <span class="math notranslate nohighlight">\(\href{../binary/values.html#binary-int}{\def\mathdef474#1{{\mathtt{s}#1}}\mathdef474{\mathtt{7}}}\)</span>)</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../syntax/types.html#syntax-numtype"><span class="std std-ref">Number type</span></a></td>
+<td><span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i64}}\)</span></td>
+<td><span class="math notranslate nohighlight">\(\def\mathdef503#1{\mathtt{0x#1}}\mathdef503{7E}\)</span> (-2 as <span class="math notranslate nohighlight">\(\href{../binary/values.html#binary-int}{\def\mathdef474#1{{\mathtt{s}#1}}\mathdef474{\mathtt{7}}}\)</span>)</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../syntax/types.html#syntax-numtype"><span class="std std-ref">Number type</span></a></td>
+<td><span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{f32}}\)</span></td>
+<td><span class="math notranslate nohighlight">\(\def\mathdef504#1{\mathtt{0x#1}}\mathdef504{7D}\)</span> (-3 as <span class="math notranslate nohighlight">\(\href{../binary/values.html#binary-int}{\def\mathdef474#1{{\mathtt{s}#1}}\mathdef474{\mathtt{7}}}\)</span>)</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../syntax/types.html#syntax-numtype"><span class="std std-ref">Number type</span></a></td>
+<td><span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{f64}}\)</span></td>
+<td><span class="math notranslate nohighlight">\(\def\mathdef505#1{\mathtt{0x#1}}\mathdef505{7C}\)</span> (-4 as <span class="math notranslate nohighlight">\(\href{../binary/values.html#binary-int}{\def\mathdef474#1{{\mathtt{s}#1}}\mathdef474{\mathtt{7}}}\)</span>)</td>
+</tr>
+<tr class="row-odd"><td>(reserved)</td>
+<td>&#160;</td>
+<td><span class="math notranslate nohighlight">\(\def\mathdef506#1{\mathtt{0x#1}}\mathdef506{7B}\)</span> .. <span class="math notranslate nohighlight">\(\def\mathdef507#1{\mathtt{0x#1}}\mathdef507{71}\)</span></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">Reference type</span></a></td>
+<td><span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-reftype}{\mathsf{funcref}}\)</span></td>
+<td><span class="math notranslate nohighlight">\(\def\mathdef508#1{\mathtt{0x#1}}\mathdef508{70}\)</span> (-16 as <span class="math notranslate nohighlight">\(\href{../binary/values.html#binary-int}{\def\mathdef474#1{{\mathtt{s}#1}}\mathdef474{\mathtt{7}}}\)</span>)</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">Reference type</span></a></td>
+<td><span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-reftype}{\mathsf{anyref}}\)</span></td>
+<td><span class="math notranslate nohighlight">\(\def\mathdef509#1{\mathtt{0x#1}}\mathdef509{6F}\)</span> (-17 as <span class="math notranslate nohighlight">\(\href{../binary/values.html#binary-int}{\def\mathdef474#1{{\mathtt{s}#1}}\mathdef474{\mathtt{7}}}\)</span>)</td>
+</tr>
+<tr class="row-even"><td>(reserved)</td>
+<td>&#160;</td>
+<td><span class="math notranslate nohighlight">\(\def\mathdef510#1{\mathtt{0x#1}}\mathdef510{6E}\)</span> .. <span class="math notranslate nohighlight">\(\def\mathdef511#1{\mathtt{0x#1}}\mathdef511{61}\)</span></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../syntax/types.html#syntax-functype"><span class="std std-ref">Function type</span></a></td>
+<td><span class="math notranslate nohighlight">\([\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}^\ast] \href{../syntax/types.html#syntax-functype}{\rightarrow} [\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}^\ast]\)</span></td>
+<td><span class="math notranslate nohighlight">\(\def\mathdef512#1{\mathtt{0x#1}}\mathdef512{60}\)</span> (-32 as <span class="math notranslate nohighlight">\(\href{../binary/values.html#binary-int}{\def\mathdef474#1{{\mathtt{s}#1}}\mathdef474{\mathtt{7}}}\)</span>)</td>
+</tr>
+<tr class="row-even"><td>(reserved)</td>
+<td>&#160;</td>
+<td><span class="math notranslate nohighlight">\(\def\mathdef513#1{\mathtt{0x#1}}\mathdef513{5F}\)</span> .. <span class="math notranslate nohighlight">\(\def\mathdef514#1{\mathtt{0x#1}}\mathdef514{41}\)</span></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../syntax/types.html#syntax-resulttype"><span class="std std-ref">Result type</span></a></td>
+<td><span class="math notranslate nohighlight">\([\epsilon]\)</span></td>
+<td><span class="math notranslate nohighlight">\(\def\mathdef515#1{\mathtt{0x#1}}\mathdef515{40}\)</span> (-64 as <span class="math notranslate nohighlight">\(\href{../binary/values.html#binary-int}{\def\mathdef474#1{{\mathtt{s}#1}}\mathdef474{\mathtt{7}}}\)</span>)</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../syntax/types.html#syntax-tabletype"><span class="std std-ref">Table type</span></a></td>
+<td><span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}~\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}\)</span></td>
+<td>(none)</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../syntax/types.html#syntax-memtype"><span class="std std-ref">Memory type</span></a></td>
+<td><span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}\)</span></td>
+<td>(none)</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../syntax/types.html#syntax-globaltype"><span class="std std-ref">Global type</span></a></td>
+<td><span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-mut}{\mathit{mut}}~\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}\)</span></td>
+<td>(none)</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
     <div class="footer">
       &copy;2017, WebAssembly Community Group.
       
