@@ -93,18 +93,18 @@
 )
 
 
-(module $Mref-ex
+(module $ref_ex
   (global (export "g-const") funcref (ref.null))
   (global (export "g-var") (mut funcref) (ref.null))
 )
-(register "Mref-ex" $Mref-ex)
+(register "ref_ex" $ref_ex)
 
-(module $Mref-im
-  (global (import "Mref-ex" "g-const") anyref)
+(module $ref_im
+  (global (import "ref_ex" "g-const") anyref)
 )
 
 (assert_unlinkable
-  (module (global (import "Mref-ex" "g-var") (mut anyref)))
+  (module (global (import "ref_ex" "g-var") (mut anyref)))
   "incompatible import type"
 )
 
