@@ -129,6 +129,12 @@
   "incompatible import type"
 )
 
+
+(module $Mglobal-ex
+  (func $f (export))
+  (global (export "g") anyref (ref.func $f))
+)
+
 (assert_unlinkable
   (module (global (import "Mref_ex" "g-var-null") (mut funcref)))
   "incompatible import type"

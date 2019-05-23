@@ -533,15 +533,18 @@ let create_global (inst : module_inst) (glob : global) : global_inst =
   let v = eval_const inst ginit in
   Global.alloc gtype v
 
-let create_export (inst : module_inst) (ex : export) : export_inst =
+let create_export (inst : module_inst) (ex : export) : export_inst option =
   let {name; edesc} = ex.it in
-  let ext =
-    match edesc.it with
-    | FuncExport x -> ExternFunc (func inst x)
-    | TableExport x -> ExternTable (table inst x)
-    | MemoryExport x -> ExternMemory (memory inst x)
-    | GlobalExport x -> ExternGlobal (global inst x)
-  in name, ext
+  match name with
+  | None -> None
+  | Some n ->
+    let ext =
+      match edesc.it with
+      | FuncExport x -> ExternFunc (func inst x)
+      | TableExport x -> ExternTable (table inst x)
+      | MemoryExport x -> ExternMemory (memory inst x)
+      | GlobalExport x -> ExternGlobal (global inst x)
+    in Some (n, ext)
 
 let create_elem (inst : module_inst) (seg : elem_segment) : elem_inst =
   let {etype; einit; _} = seg.it in
@@ -620,7 +623,7 @@ let init (m : module_) (exts : extern list) : module_inst =
   in
   let inst =
     { inst2 with
-      exports = List.map (create_export inst2) exports;
+      exports = Lib.List.map_filter (create_export inst2) exports;
       elems = List.map (create_elem inst2) elems;
       datas = List.map (create_data inst2) datas;
     }

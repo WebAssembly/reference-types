@@ -4,8 +4,10 @@
 (register "M")
 
 (module
-  (func $f (import "M" "f") (param i32) (result i32))
-  (func $g (param $x i32) (result i32) (i32.add (local.get $x) (i32.const 1)))
+  (func $f (export) (import "M" "f") (param i32) (result i32))
+  (func $g (export "") (param $x i32) (result i32)
+    (i32.add (local.get $x) (i32.const 1))
+  )
 
   (global anyref (ref.func $f))
   (global anyref (ref.func $g))
@@ -61,4 +63,9 @@
     (global funcref (ref.func 7))
   )
   "unknown function 7"
+)
+
+(assert_invalid
+  (module (func $f (drop (ref.func $f))))
+  "unexported function"
 )

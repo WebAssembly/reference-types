@@ -186,7 +186,11 @@ type modules = {mutable env : exports Map.t; mutable current : int}
 
 let exports m : exports =
   List.fold_left
-    (fun map exp -> NameMap.add exp.it.name (export_type m exp) map)
+    (fun map exp ->
+      match exp.it.name with
+      | None -> map
+      | Some n -> NameMap.add n (export_type m exp) map
+    )
     NameMap.empty m.it.exports
 
 let modules () : modules = {env = Map.empty; current = 0}
@@ -345,7 +349,7 @@ let wrap item_name wrap_action wrap_assertion at =
       ) 0l imports @@ at
   in
   let edesc = FuncExport item @@ at in
-  let exports = [{name = Utf8.decode "run"; edesc} @@ at] in
+  let exports = [{name = Some (Utf8.decode "run"); edesc} @@ at] in
   let body =
     [ Block ([], action @ assertion @ [Return @@ at]) @@ at;
       Unreachable @@ at ]

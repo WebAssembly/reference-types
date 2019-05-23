@@ -26,12 +26,13 @@ type context =
   locals : value_type list;
   results : value_type list;
   labels : stack_type list;
+  exports : export_desc' list;
 }
 
 let empty_context =
   { types = []; funcs = []; tables = []; memories = [];
     globals = []; datas = []; elems = [];
-    locals = []; results = []; labels = [] }
+    locals = []; results = []; labels = []; exports = [] }
 
 let lookup category list x =
   try Lib.List32.nth list x.it with Failure _ ->
@@ -46,6 +47,13 @@ let data (c : context) x = lookup "data segment" c.datas x
 let elem (c : context) x = lookup "elem segment" c.elems x
 let local (c : context) x = lookup "local" c.locals x
 let label (c : context) x = lookup "label" c.labels x
+
+let export category (c : context) f x =
+  if not (List.mem x.it (Lib.List.map_filter f c.exports)) then
+    error x.at ("unexported " ^ category ^ " " ^ Int32.to_string x.it)
+
+let export_func (c : context) x =
+  export "function" c (function (FuncExport x) -> Some x.it | _ -> None) x
 
 
 (* Stack typing *)
@@ -334,6 +342,7 @@ let rec check_instr (c : context) (e : instr) (s : infer_stack_type) : op_type =
 
   | RefFunc x ->
     let _ft = func c x in
+    export_func c x;
     [] --> [RefType FuncRefType]
 
   | Const v ->
@@ -535,8 +544,11 @@ let check_export (c : context) (set : NameSet.t) (ex : export) : NameSet.t =
   | MemoryExport x -> ignore (memory c x)
   | GlobalExport x -> ignore (global c x)
   );
-  require (not (NameSet.mem name set)) ex.at "duplicate export name";
-  NameSet.add name set
+  match name with
+  | None -> set
+  | Some n ->
+    require (not (NameSet.mem n set)) ex.at "duplicate export name";
+    NameSet.add n set
 
 let check_module (m : module_) =
   let
@@ -545,7 +557,10 @@ let check_module (m : module_) =
   in
   let c0 =
     List.fold_right check_import imports
-      {empty_context with types = List.map (fun ty -> ty.it) types}
+      { empty_context with
+        exports = List.map (fun ex -> ex.it.edesc.it) exports;
+        types = List.map (fun ty -> ty.it) types;
+      }
   in
   let c1 =
     { c0 with

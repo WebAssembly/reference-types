@@ -824,13 +824,18 @@ export_desc :
   | LPAR GLOBAL var RPAR { fun c -> GlobalExport ($3 c global) }
 
 export :
+  | LPAR EXPORT export_desc RPAR
+    { let at = at () and at3 = ati 3 in
+      fun c -> {name = None; edesc = $3 c @@ at3} @@ at }
   | LPAR EXPORT name export_desc RPAR
     { let at = at () and at4 = ati 4 in
-      fun c -> {name = $3; edesc = $4 c @@ at4} @@ at }
+      fun c -> {name = Some $3; edesc = $4 c @@ at4} @@ at }
 
 inline_export :
+  | LPAR EXPORT RPAR
+    { let at = at () in fun d c -> {name = None; edesc = d @@ at} @@ at }
   | LPAR EXPORT name RPAR
-    { let at = at () in fun d c -> {name = $3; edesc = d @@ at} @@ at }
+    { let at = at () in fun d c -> {name = Some $3; edesc = d @@ at} @@ at }
 
 
 /* Modules */

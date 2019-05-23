@@ -512,6 +512,7 @@ let id s =
     | 10 -> `CodeSection
     | 11 -> `DataSection
     | 12 -> `DataCountSection
+    | 13 -> `AnonSection
     | _ -> error s (pos s) "invalid section id"
     ) bo
 
@@ -600,12 +601,22 @@ let export_desc s =
   | _ -> error s (pos s - 1) "invalid export kind"
 
 let export s =
-  let name = name s in
+  let name = Some (name s) in
   let edesc = at export_desc s in
   {name; edesc}
 
 let export_section s =
   section `ExportSection (vec (at export)) [] s
+
+
+(* Anonymous export section *)
+
+let anon s =
+  let edesc = at export_desc s in
+  {name = None; edesc}
+
+let anon_section s =
+  section `AnonSection (vec (at anon)) [] s
 
 
 (* Start section *)
@@ -761,7 +772,9 @@ let module_ s =
   iterate custom_section s;
   let globals = global_section s in
   iterate custom_section s;
-  let exports = export_section s in
+  let exports' = export_section s in
+  iterate custom_section s;
+  let exports = exports' @ anon_section s in
   iterate custom_section s;
   let start = start_section s in
   iterate custom_section s;

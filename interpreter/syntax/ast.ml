@@ -182,7 +182,7 @@ and export_desc' =
 type export = export' Source.phrase
 and export' =
 {
-  name : name;
+  name : name option;
   edesc : export_desc;
 }
 

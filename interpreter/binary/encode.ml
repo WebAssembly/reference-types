@@ -463,11 +463,25 @@ let encode m =
       | GlobalExport x -> u8 3; var x
 
     let export ex =
-      let {name = n; edesc} = ex.it in
-      name n; export_desc edesc
+      let {name = n_opt; edesc} = ex.it in
+      match n_opt with
+      | None -> assert false
+      | Some n -> name n; export_desc edesc
 
     let export_section exs =
-      section 7 (vec export) exs (exs <> [])
+      let exs' = List.filter (fun ex -> ex.it.name <> None) exs in
+      section 7 (vec export) exs' (exs' <> [])
+
+    (* Anonymous export section *)
+    let anon ex =
+      let {name = n_opt; edesc} = ex.it in
+      match n_opt with
+      | None -> export_desc edesc
+      | Some _ -> assert false
+
+    let anon_section exs =
+      let exs' = List.filter (fun ex -> ex.it.name = None) exs in
+      section 13 (vec anon) exs' (exs' <> [])
 
     (* Start section *)
     let start_section xo =
@@ -565,6 +579,7 @@ let encode m =
       memory_section m.it.memories;
       global_section m.it.globals;
       export_section m.it.exports;
+      anon_section m.it.exports;
       start_section m.it.start;
       elem_section m.it.elems;
       data_count_section m.it.datas m;

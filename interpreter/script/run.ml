@@ -230,8 +230,11 @@ let print_export m ex =
     | ExternMemoryType t -> "memory", string_of_memory_type t
     | ExternGlobalType t -> "global", string_of_global_type t
   in
-  Printf.printf "  export %s \"%s\" : %s\n"
-    category (Ast.string_of_name ex.it.Ast.name) annotation
+  match ex.it.Ast.name with
+  | None -> ()
+  | Some n ->
+    Printf.printf "  export %s \"%s\" : %s\n"
+      category (Ast.string_of_name n) annotation
 
 let print_module x_opt m =
   Printf.printf "module%s :\n"

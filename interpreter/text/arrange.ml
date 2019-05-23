@@ -380,8 +380,10 @@ let export_desc d =
   | GlobalExport x -> Node ("global", [atom var x])
 
 let export ex =
-  let {name = n; edesc} = ex.it in
-  Node ("export", [atom name n; export_desc edesc])
+  let {name = n_opt; edesc} = ex.it in
+  match n_opt with
+  | None -> Node ("export", [export_desc edesc])
+  | Some n -> Node ("export", [atom name n; export_desc edesc])
 
 let global off i g =
   let {gtype; ginit} = g.it in
