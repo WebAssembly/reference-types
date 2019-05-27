@@ -320,9 +320,9 @@ It decodes into a vector of :ref:`element segments <syntax-elem>` that represent
      \X{seg}^\ast{:}\Bsection_9(\Bvec(\Belem)) &\Rightarrow& \X{seg} \\
    \production{element segment} & \Belem &::=&
      \hex{00}~~e{:}\Bexpr~~y^\ast{:}\Bvec(\Bfuncidx)
-       &\Rightarrow& \{ \ETABLE~0, \EOFFSET~e, \EINIT~((\REFFUNC~y)~\END)^\ast \} \\ &&|&
+       &\Rightarrow& \{ \ETABLE~0, \EOFFSET~e, \EINIT~y^\ast \} \\ &&|&
      \hex{02}~~x{:}\Btableidx~~e{:}\Bexpr~~y^\ast{:}\Bvec(\Bfuncidx)
-       &\Rightarrow& \{ \ETABLE~x, \EOFFSET~e, \EINIT~((\REFFUNC~y)~\END)^\ast \} \\
+       &\Rightarrow& \{ \ETABLE~x, \EOFFSET~e, \EINIT~y^\ast \} \\
    \end{array}
 
 
