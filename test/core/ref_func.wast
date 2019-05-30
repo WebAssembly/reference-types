@@ -4,8 +4,8 @@
 (register "M")
 
 (module
-  (func $f (export) (import "M" "f") (param i32) (result i32))
-  (func $g (export "") (param $x i32) (result i32)
+  (func $f (ref) (import "M" "f") (param i32) (result i32))
+  (func $g (ref) (param $x i32) (result i32)
     (i32.add (local.get $x) (i32.const 1))
   )
 
@@ -67,5 +67,5 @@
 
 (assert_invalid
   (module (func $f (drop (ref.func $f))))
-  "unexported function"
+  "undeclared function reference"
 )

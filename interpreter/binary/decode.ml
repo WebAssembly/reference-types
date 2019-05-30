@@ -512,7 +512,7 @@ let id s =
     | 10 -> `CodeSection
     | 11 -> `DataSection
     | 12 -> `DataCountSection
-    | 13 -> `AnonSection
+    | 13 -> `ReferSection
     | _ -> error s (pos s) "invalid section id"
     ) bo
 
@@ -601,7 +601,7 @@ let export_desc s =
   | _ -> error s (pos s - 1) "invalid export kind"
 
 let export s =
-  let name = Some (name s) in
+  let name = name s in
   let edesc = at export_desc s in
   {name; edesc}
 
@@ -611,12 +611,12 @@ let export_section s =
 
 (* Anonymous export section *)
 
-let anon s =
-  let edesc = at export_desc s in
-  {name = None; edesc}
+let refer s =
+  let rdesc = at export_desc s in
+  {rdesc}
 
-let anon_section s =
-  section `AnonSection (vec (at anon)) [] s
+let refer_section s =
+  section `ReferSection (vec (at refer)) [] s
 
 
 (* Start section *)
@@ -772,9 +772,9 @@ let module_ s =
   iterate custom_section s;
   let globals = global_section s in
   iterate custom_section s;
-  let exports' = export_section s in
+  let exports = export_section s in
   iterate custom_section s;
-  let exports = exports' @ anon_section s in
+  let refers = refer_section s in
   iterate custom_section s;
   let start = start_section s in
   iterate custom_section s;
@@ -797,7 +797,7 @@ let module_ s =
   let funcs =
     List.map2 Source.(fun t f -> {f.it with ftype = t} @@ f.at)
       func_types func_bodies
-  in {types; tables; memories; globals; funcs; imports; exports; elems; datas; start}
+  in {types; tables; memories; globals; funcs; imports; exports; refers; elems; datas; start}
 
 
 let decode name bs = at module_ (stream name bs)

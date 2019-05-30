@@ -380,10 +380,12 @@ let export_desc d =
   | GlobalExport x -> Node ("global", [atom var x])
 
 let export ex =
-  let {name = n_opt; edesc} = ex.it in
-  match n_opt with
-  | None -> Node ("export", [export_desc edesc])
-  | Some n -> Node ("export", [atom name n; export_desc edesc])
+  let {name = n; edesc} = ex.it in
+  Node ("export", [atom name n; export_desc edesc])
+
+let refer an =
+  let {rdesc} = an.it in
+  Node ("ref", [export_desc rdesc])
 
 let global off i g =
   let {gtype; ginit} = g.it in
@@ -410,6 +412,7 @@ let module_with_var_opt x_opt m =
     listi (global !gx) m.it.globals @
     listi (func_with_index !fx) m.it.funcs @
     list export m.it.exports @
+    list refer m.it.refers @
     opt start m.it.start @
     list elem m.it.elems @
     list data m.it.datas

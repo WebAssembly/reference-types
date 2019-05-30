@@ -182,8 +182,14 @@ and export_desc' =
 type export = export' Source.phrase
 and export' =
 {
-  name : name option;
+  name : name;
   edesc : export_desc;
+}
+
+type refer = refer' Source.phrase
+and refer' =
+{
+  rdesc : export_desc;
 }
 
 type import_desc = import_desc' Source.phrase
@@ -214,6 +220,7 @@ and module_' =
   datas : data_segment list;
   imports : import list;
   exports : export list;
+  refers : refer list;
 }
 
 
@@ -231,6 +238,7 @@ let empty_module =
   datas = [];
   imports = [];
   exports = [];
+  refers = [];
 }
 
 open Source

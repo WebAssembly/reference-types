@@ -26,13 +26,13 @@ type context =
   locals : value_type list;
   results : value_type list;
   labels : stack_type list;
-  exports : export_desc' list;
+  refers : export_desc' list;
 }
 
 let empty_context =
   { types = []; funcs = []; tables = []; memories = [];
     globals = []; datas = []; elems = [];
-    locals = []; results = []; labels = []; exports = [] }
+    locals = []; results = []; labels = []; refers = [] }
 
 let lookup category list x =
   try Lib.List32.nth list x.it with Failure _ ->
@@ -48,12 +48,13 @@ let elem (c : context) x = lookup "elem segment" c.elems x
 let local (c : context) x = lookup "local" c.locals x
 let label (c : context) x = lookup "label" c.labels x
 
-let export category (c : context) f x =
-  if not (List.mem x.it (Lib.List.map_filter f c.exports)) then
-    error x.at ("unexported " ^ category ^ " " ^ Int32.to_string x.it)
+let refer category (c : context) f x =
+  if not (List.mem x.it (Lib.List.map_filter f c.refers)) then
+    error x.at
+      ("undeclared " ^ category ^ " reference " ^ Int32.to_string x.it)
 
-let export_func (c : context) x =
-  export "function" c (function (FuncExport x) -> Some x.it | _ -> None) x
+let refer_func (c : context) x =
+  refer "function" c (function (FuncExport x) -> Some x.it | _ -> None) x
 
 
 (* Stack typing *)
@@ -342,7 +343,7 @@ let rec check_instr (c : context) (e : instr) (s : infer_stack_type) : op_type =
 
   | RefFunc x ->
     let _ft = func c x in
-    export_func c x;
+    refer_func c x;
     [] --> [RefType FuncRefType]
 
   | Const v ->
@@ -544,21 +545,18 @@ let check_export (c : context) (set : NameSet.t) (ex : export) : NameSet.t =
   | MemoryExport x -> ignore (memory c x)
   | GlobalExport x -> ignore (global c x)
   );
-  match name with
-  | None -> set
-  | Some n ->
-    require (not (NameSet.mem n set)) ex.at "duplicate export name";
-    NameSet.add n set
+  require (not (NameSet.mem name set)) ex.at "duplicate export name";
+  NameSet.add name set
 
 let check_module (m : module_) =
   let
     { types; imports; tables; memories; globals; funcs; start; elems; datas;
-      exports } = m.it
+      exports; refers } = m.it
   in
   let c0 =
     List.fold_right check_import imports
       { empty_context with
-        exports = List.map (fun ex -> ex.it.edesc.it) exports;
+        refers = List.map (fun ex -> ex.it.rdesc.it) refers;
         types = List.map (fun ty -> ty.it) types;
       }
   in

@@ -174,7 +174,7 @@ let inline_type_explicit (c : context) x ft at =
 %token MEMORY_SIZE MEMORY_GROW MEMORY_FILL MEMORY_COPY MEMORY_INIT DATA_DROP
 %token LOAD STORE OFFSET_EQ_NAT ALIGN_EQ_NAT
 %token CONST UNARY BINARY TEST COMPARE CONVERT
-%token REF_ANY REF_NULL REF_FUNC REF_HOST REF_IS_NULL
+%token REF REF_ANY REF_NULL REF_FUNC REF_HOST REF_IS_NULL
 %token FUNC START TYPE PARAM RESULT LOCAL GLOBAL
 %token TABLE ELEM MEMORY DATA OFFSET IMPORT EXPORT
 %token MODULE BIN QUOTE
@@ -570,26 +570,29 @@ func_fields :
   | type_use func_fields_body
     { fun c x at ->
       let t = inline_type_explicit c ($1 c type_) (fst $2) at in
-      [{(snd $2 (enter_func c)) with ftype = t} @@ at], [], [] }
+      [{(snd $2 (enter_func c)) with ftype = t} @@ at], [], [], [] }
   | func_fields_body  /* Sugar */
     { fun c x at ->
       let t = inline_type c (fst $1) at in
-      [{(snd $1 (enter_func c)) with ftype = t} @@ at], [], [] }
+      [{(snd $1 (enter_func c)) with ftype = t} @@ at], [], [], [] }
   | inline_import type_use func_fields_import  /* Sugar */
     { fun c x at ->
       let t = inline_type_explicit c ($2 c type_) $3 at in
       [],
       [{ module_name = fst $1; item_name = snd $1;
-         idesc = FuncImport t @@ at } @@ at ], [] }
+         idesc = FuncImport t @@ at } @@ at ], [], [] }
   | inline_import func_fields_import  /* Sugar */
     { fun c x at ->
       let t = inline_type c $2 at in
       [],
       [{ module_name = fst $1; item_name = snd $1;
-         idesc = FuncImport t @@ at } @@ at ], [] }
+         idesc = FuncImport t @@ at } @@ at ], [], [] }
   | inline_export func_fields  /* Sugar */
-    { fun c x at ->
-      let fns, ims, exs = $2 c x at in fns, ims, $1 (FuncExport x) c :: exs }
+    { fun c x at -> let fns, ims, exs, refs = $2 c x at in
+      fns, ims, $1 (FuncExport x) c :: exs, refs }
+  | inline_refer func_fields  /* Sugar */
+    { fun c x at -> let fns, ims, exs, refs = $2 c x at in 
+      fns, ims, exs, $1 (FuncExport x) c :: refs }
 
 func_fields_import :  /* Sugar */
   | func_fields_import_result { $1 }
@@ -700,15 +703,18 @@ table :
 
 table_fields :
   | table_type
-    { fun c x at -> [{ttype = $1} @@ at], [], [], [] }
+    { fun c x at -> [{ttype = $1} @@ at], [], [], [], [] }
   | inline_import table_type  /* Sugar */
     { fun c x at ->
       [], [],
       [{ module_name = fst $1; item_name = snd $1;
-        idesc = TableImport $2 @@ at } @@ at], [] }
+        idesc = TableImport $2 @@ at } @@ at], [], [] }
   | inline_export table_fields  /* Sugar */
-    { fun c x at -> let tabs, elems, ims, exs = $2 c x at in
-      tabs, elems, ims, $1 (TableExport x) c :: exs }
+    { fun c x at -> let tabs, elems, ims, exs, refs = $2 c x at in
+      tabs, elems, ims, $1 (TableExport x) c :: exs, refs }
+  | inline_refer table_fields  /* Sugar */
+    { fun c x at -> let tabs, elems, ims, exs, refs = $2 c x at in
+      tabs, elems, ims, exs, $1 (TableExport x) c :: refs }
   | ref_type LPAR ELEM elem_var_list RPAR  /* Sugar */
     { fun c x at ->
       let offset = [i32_const (0l @@ at) @@ at] @@ at in
@@ -717,7 +723,7 @@ table_fields :
       let emode = Active {index = x; offset} @@ at in
       [{ttype = TableType ({min = size; max = Some size}, $1)} @@ at],
       [{etype = FuncRefType; einit; emode} @@ at],
-      [], [] }
+      [], [], [] }
   | ref_type LPAR ELEM elem_expr elem_expr_list RPAR  /* Sugar */
     { fun c x at ->
       let offset = [i32_const (0l @@ at) @@ at] @@ at in
@@ -726,7 +732,7 @@ table_fields :
       let emode = Active {index = x; offset} @@ at in
       [{ttype = TableType ({min = size; max = Some size}, $1)} @@ at],
       [{etype = FuncRefType; einit; emode} @@ at],
-      [], [] }
+      [], [], [] }
 
 data :
   | LPAR DATA bind_var_opt string_list RPAR
@@ -752,22 +758,25 @@ memory :
 
 memory_fields :
   | memory_type
-    { fun c x at -> [{mtype = $1} @@ at], [], [], [] }
+    { fun c x at -> [{mtype = $1} @@ at], [], [], [], [] }
   | inline_import memory_type  /* Sugar */
     { fun c x at ->
       [], [],
       [{ module_name = fst $1; item_name = snd $1;
-         idesc = MemoryImport $2 @@ at } @@ at], [] }
+         idesc = MemoryImport $2 @@ at } @@ at], [], [] }
   | inline_export memory_fields  /* Sugar */
-    { fun c x at -> let mems, data, ims, exs = $2 c x at in
-      mems, data, ims, $1 (MemoryExport x) c :: exs }
+    { fun c x at -> let mems, data, ims, exs, refs = $2 c x at in
+      mems, data, ims, $1 (MemoryExport x) c :: exs, refs }
+  | inline_refer memory_fields  /* Sugar */
+    { fun c x at -> let mems, data, ims, exs, refs = $2 c x at in
+      mems, data, ims, exs, $1 (MemoryExport x) c :: refs }
   | LPAR DATA string_list RPAR  /* Sugar */
     { fun c x at ->
       let offset = [i32_const (0l @@ at) @@ at] @@ at in
       let size = Int32.(div (add (of_int (String.length $3)) 65535l) 65536l) in
       [{mtype = MemoryType {min = size; max = Some size}} @@ at],
       [{dinit = $3; dmode = Active {index = x; offset} @@ at} @@ at],
-      [], [] }
+      [], [], [] }
 
 global :
   | LPAR GLOBAL bind_var_opt global_fields RPAR
@@ -777,15 +786,18 @@ global :
 
 global_fields :
   | global_type const_expr
-    { fun c x at -> [{gtype = $1; ginit = $2 c} @@ at], [], [] }
+    { fun c x at -> [{gtype = $1; ginit = $2 c} @@ at], [], [], [] }
   | inline_import global_type  /* Sugar */
     { fun c x at ->
       [],
       [{ module_name = fst $1; item_name = snd $1;
-         idesc = GlobalImport $2 @@ at } @@ at], [] }
+         idesc = GlobalImport $2 @@ at } @@ at], [], [] }
   | inline_export global_fields  /* Sugar */
-    { fun c x at -> let globs, ims, exs = $2 c x at in
-      globs, ims, $1 (GlobalExport x) c :: exs }
+    { fun c x at -> let globs, ims, exs, refs = $2 c x at in
+      globs, ims, $1 (GlobalExport x) c :: exs, refs }
+  | inline_refer global_fields  /* Sugar */
+    { fun c x at -> let globs, ims, exs, refs = $2 c x at in
+      globs, ims, exs, $1 (GlobalExport x) c :: refs }
 
 
 /* Imports & Exports */
@@ -824,18 +836,22 @@ export_desc :
   | LPAR GLOBAL var RPAR { fun c -> GlobalExport ($3 c global) }
 
 export :
-  | LPAR EXPORT export_desc RPAR
-    { let at = at () and at3 = ati 3 in
-      fun c -> {name = None; edesc = $3 c @@ at3} @@ at }
   | LPAR EXPORT name export_desc RPAR
     { let at = at () and at4 = ati 4 in
-      fun c -> {name = Some $3; edesc = $4 c @@ at4} @@ at }
+      fun c -> {name = $3; edesc = $4 c @@ at4} @@ at }
 
 inline_export :
-  | LPAR EXPORT RPAR
-    { let at = at () in fun d c -> {name = None; edesc = d @@ at} @@ at }
   | LPAR EXPORT name RPAR
-    { let at = at () in fun d c -> {name = Some $3; edesc = d @@ at} @@ at }
+    { let at = at () in fun d c -> {name = $3; edesc = d @@ at} @@ at }
+
+refer :
+  | LPAR REF export_desc RPAR
+    { let at = at () and at3 = ati 3 in
+      fun c -> {rdesc = $3 c @@ at3} @@ at }
+
+inline_refer :
+  | LPAR REF RPAR
+    { let at = at () in fun d c -> {rdesc = d @@ at} @@ at }
 
 
 /* Modules */
@@ -863,32 +879,34 @@ module_fields1 :
     { fun c -> ignore ($1 c); $2 c }
   | global module_fields
     { fun c -> let gf = $1 c in let mf = $2 c in
-      fun () -> let globs, ims, exs = gf () in let m = mf () in
+      fun () -> let globs, ims, exs, refs = gf () in let m = mf () in
       if globs <> [] && m.imports <> [] then
         error (List.hd m.imports).at "import after global definition";
-      { m with globals = globs @ m.globals;
-        imports = ims @ m.imports; exports = exs @ m.exports } }
+      { m with globals = globs @ m.globals; imports = ims @ m.imports;
+        exports = exs @ m.exports; refers = refs @ m.refers } }
   | table module_fields
     { fun c -> let tf = $1 c in let mf = $2 c in
-      fun () -> let tabs, elems, ims, exs = tf () in let m = mf () in
+      fun () -> let tabs, elems, ims, exs, refs = tf () in let m = mf () in
       if tabs <> [] && m.imports <> [] then
         error (List.hd m.imports).at "import after table definition";
       { m with tables = tabs @ m.tables; elems = elems @ m.elems;
-        imports = ims @ m.imports; exports = exs @ m.exports } }
+        imports = ims @ m.imports; exports = exs @ m.exports;
+        refers = refs @ m.refers } }
   | memory module_fields
     { fun c -> let mmf = $1 c in let mf = $2 c in
-      fun () -> let mems, data, ims, exs = mmf () in let m = mf () in
+      fun () -> let mems, data, ims, exs, refs = mmf () in let m = mf () in
       if mems <> [] && m.imports <> [] then
         error (List.hd m.imports).at "import after memory definition";
       { m with memories = mems @ m.memories; datas = data @ m.datas;
-        imports = ims @ m.imports; exports = exs @ m.exports } }
+        imports = ims @ m.imports; exports = exs @ m.exports;
+        refers = refs @ m.refers } }
   | func module_fields
     { fun c -> let ff = $1 c in let mf = $2 c in
-      fun () -> let funcs, ims, exs = ff () in let m = mf () in
+      fun () -> let funcs, ims, exs, refs = ff () in let m = mf () in
       if funcs <> [] && m.imports <> [] then
         error (List.hd m.imports).at "import after function definition";
-      { m with funcs = funcs @ m.funcs;
-        imports = ims @ m.imports; exports = exs @ m.exports } }
+      { m with funcs = funcs @ m.funcs; imports = ims @ m.imports;
+        exports = exs @ m.exports; refers = refs @ m.refers } }
   | elem module_fields
     { fun c -> let ef = $1 c in let mf = $2 c in
       fun () -> let elems = ef () in let m = mf () in
@@ -911,6 +929,10 @@ module_fields1 :
     { fun c -> let mf = $2 c in
       fun () -> let m = mf () in
       {m with exports = $1 c :: m.exports} }
+  | refer module_fields
+    { fun c -> let mf = $2 c in
+      fun () -> let m = mf () in
+      {m with refers = $1 c :: m.refers} }
 
 module_var_opt :
   | /* empty */ { None }

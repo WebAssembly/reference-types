@@ -131,7 +131,7 @@
 
 
 (module $Mglobal-ex
-  (func $f (export))
+  (func $f (ref))
   (global (export "g") anyref (ref.func $f))
 )
 
