@@ -98,11 +98,12 @@ Parametric Instructions
 .. _binary-select:
 
 .. math::
-   \begin{array}{llclll}
+   \begin{array}{llclll@{\qquad}l}
    \production{instruction} & \Binstr &::=& \dots \\ &&|&
      \hex{1A} &\Rightarrow& \DROP \\ &&|&
      \hex{1B} &\Rightarrow& \SELECT \\ &&|&
-     \hex{1C}~~t^\ast{:}\Bvec(\Bvaltype) &\Rightarrow& \SELECT~t^\ast \\
+     \hex{1C}~~\X{rt}{:}\Bblocktype
+       &\Rightarrow& \SELECT~[t] & (\iff \X{rt} = [t]) \\
    \end{array}
 
 
