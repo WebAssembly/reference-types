@@ -626,13 +626,13 @@ let code_section s =
 (* Element section *)
 
 let segment dat kind s =
-  match vu32 s with
-  | 0l ->
+  match u8 s with
+  | 0 ->
     let index = Source.(0l @@ Source.no_region) in
     let offset = const s in
     let init = dat s in
     {index; offset; init}
-  | 2l ->
+  | 2 ->
     let index = at var s in
     let offset = const s in
     let _ = kind s in
