@@ -491,7 +491,7 @@ let encode m =
     (* Element section *)
     let segment dat seg =
       match seg.it with
-      | {index = {it = 0l;_}; offset; init} ->
+      | {index; offset; init} when index.it = 0l ->
         u8 0x00; const offset; dat init
       | {index; offset; init} ->
         u8 0x02; var index; const offset; u8 0x00; dat init
