@@ -317,7 +317,7 @@ It decodes into a vector of <a class="reference internal" href="../syntax/module
 \def\mathdef864#1{{}}\mathdef864{element segment} &amp; \href{../binary/modules.html#binary-elem}{\mathtt{elem}} &amp;::=&amp;
   \def\mathdef908#1{\mathtt{0x#1}}\mathdef908{00}~~e{:}\href{../binary/instructions.html#binary-expr}{\mathtt{expr}}~~y^\ast{:}\href{../binary/conventions.html#binary-vec}{\mathtt{vec}}(\href{../binary/modules.html#binary-funcidx}{\mathtt{funcidx}})
     &amp;\Rightarrow&amp; \{ \href{../syntax/modules.html#syntax-elem}{\mathsf{table}}~0, \href{../syntax/modules.html#syntax-elem}{\mathsf{offset}}~e, \href{../syntax/modules.html#syntax-elem}{\mathsf{init}}~y^\ast \} \\ &amp;&amp;|&amp;
-  \def\mathdef909#1{\mathtt{0x#1}}\mathdef909{02}~~x{:}\href{../binary/modules.html#binary-tableidx}{\mathtt{tableidx}}~~e{:}\href{../binary/instructions.html#binary-expr}{\mathtt{expr}}~~y^\ast{:}\href{../binary/conventions.html#binary-vec}{\mathtt{vec}}(\href{../binary/modules.html#binary-funcidx}{\mathtt{funcidx}})
+  \def\mathdef909#1{\mathtt{0x#1}}\mathdef909{02}~~x{:}\href{../binary/modules.html#binary-tableidx}{\mathtt{tableidx}}~~e{:}\href{../binary/instructions.html#binary-expr}{\mathtt{expr}}~~\def\mathdef910#1{\mathtt{0x#1}}\mathdef910{00}~~y^\ast{:}\href{../binary/conventions.html#binary-vec}{\mathtt{vec}}(\href{../binary/modules.html#binary-funcidx}{\mathtt{funcidx}})
     &amp;\Rightarrow&amp; \{ \href{../syntax/modules.html#syntax-elem}{\mathsf{table}}~x, \href{../syntax/modules.html#syntax-elem}{\mathsf{offset}}~e, \href{../syntax/modules.html#syntax-elem}{\mathsf{init}}~y^\ast \} \\
 \end{array}\end{split}\]</div>
 </div>
@@ -381,7 +381,7 @@ It decodes into a vector of <a class="reference internal" href="../syntax/module
 </div>
 <div class="section" id="binary-module">
 <span id="binary-version"></span><span id="binary-magic"></span><span id="index-14"></span><span id="id1"></span><h2>Modules<a class="headerlink" href="#binary-module" title="Permalink to this headline">¶</a></h2>
-<p>The encoding of a <a class="reference internal" href="../syntax/modules.html#syntax-module"><span class="std std-ref">module</span></a> starts with a preamble containing a 4-byte magic number (the string <span class="math notranslate nohighlight">\(\def\mathdef910#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef910{\backslash0asm}\)</span>) and a version field.
+<p>The encoding of a <a class="reference internal" href="../syntax/modules.html#syntax-module"><span class="std std-ref">module</span></a> starts with a preamble containing a 4-byte magic number (the string <span class="math notranslate nohighlight">\(\def\mathdef911#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef911{\backslash0asm}\)</span>) and a version field.
 The current version of the WebAssembly binary format is 1.</p>
 <p>The preamble is followed by a sequence of <a class="reference internal" href="#binary-section"><span class="std std-ref">sections</span></a>.
 <a class="reference internal" href="#binary-customsec"><span class="std std-ref">Custom sections</span></a> may be inserted at any place in this sequence,
@@ -391,9 +391,9 @@ All sections can be empty.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llcllll}
 \def\mathdef864#1{{}}\mathdef864{magic} &amp; \href{../binary/modules.html#binary-magic}{\mathtt{magic}} &amp;::=&amp;
-  \def\mathdef911#1{\mathtt{0x#1}}\mathdef911{00}~\def\mathdef912#1{\mathtt{0x#1}}\mathdef912{61}~\def\mathdef913#1{\mathtt{0x#1}}\mathdef913{73}~\def\mathdef914#1{\mathtt{0x#1}}\mathdef914{6D} \\
+  \def\mathdef912#1{\mathtt{0x#1}}\mathdef912{00}~\def\mathdef913#1{\mathtt{0x#1}}\mathdef913{61}~\def\mathdef914#1{\mathtt{0x#1}}\mathdef914{73}~\def\mathdef915#1{\mathtt{0x#1}}\mathdef915{6D} \\
 \def\mathdef864#1{{}}\mathdef864{version} &amp; \href{../binary/modules.html#binary-version}{\mathtt{version}} &amp;::=&amp;
-  \def\mathdef915#1{\mathtt{0x#1}}\mathdef915{01}~\def\mathdef916#1{\mathtt{0x#1}}\mathdef916{00}~\def\mathdef917#1{\mathtt{0x#1}}\mathdef917{00}~\def\mathdef918#1{\mathtt{0x#1}}\mathdef918{00} \\
+  \def\mathdef916#1{\mathtt{0x#1}}\mathdef916{01}~\def\mathdef917#1{\mathtt{0x#1}}\mathdef917{00}~\def\mathdef918#1{\mathtt{0x#1}}\mathdef918{00}~\def\mathdef919#1{\mathtt{0x#1}}\mathdef919{00} \\
 \def\mathdef864#1{{}}\mathdef864{module} &amp; \href{../binary/modules.html#binary-module}{\mathtt{module}} &amp;::=&amp;
   \href{../binary/modules.html#binary-magic}{\mathtt{magic}} \\ &amp;&amp;&amp;
   \href{../binary/modules.html#binary-version}{\mathtt{version}} \\ &amp;&amp;&amp;
