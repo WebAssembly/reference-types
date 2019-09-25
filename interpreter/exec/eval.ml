@@ -600,7 +600,7 @@ let run_start start =
 let init (m : module_) (exts : extern list) : module_inst =
   let
     { imports; tables; memories; globals; funcs; types;
-      exports; refers; elems; datas; start
+      exports; elems; datas; start
     } = m.it
   in
   if List.length exts <> List.length imports then

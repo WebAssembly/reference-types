@@ -131,7 +131,8 @@
 
 
 (module $Mglobal-ex
-  (func $f (ref))
+  (func $f)
+  (table $dummy funcref (elem $f))  ;; TODO
   (global (export "g") anyref (ref.func $f))
 )
 

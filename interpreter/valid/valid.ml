@@ -26,13 +26,15 @@ type context =
   locals : value_type list;
   results : value_type list;
   labels : stack_type list;
-  refers : export_desc' list;
+  refs : Free.t;
 }
 
 let empty_context =
   { types = []; funcs = []; tables = []; memories = [];
     globals = []; datas = []; elems = [];
-    locals = []; results = []; labels = []; refers = [] }
+    locals = []; results = []; labels = [];
+    refs = Free.empty
+  }
 
 let lookup category list x =
   try Lib.List32.nth list x.it with Failure _ ->
@@ -48,13 +50,12 @@ let elem (c : context) x = lookup "elem segment" c.elems x
 let local (c : context) x = lookup "local" c.locals x
 let label (c : context) x = lookup "label" c.labels x
 
-let refer category (c : context) f x =
-  if not (List.mem x.it (Lib.List.map_filter f c.refers)) then
+let refer category (s : Free.Set.t) x =
+  if not (Free.Set.mem x.it s) then
     error x.at
       ("undeclared " ^ category ^ " reference " ^ Int32.to_string x.it)
 
-let refer_func (c : context) x =
-  refer "function" c (function (FuncExport x) -> Some x.it | _ -> None) x
+let refer_func (c : context) x = refer "function" c.refs.Free.funcs x
 
 
 (* Stack typing *)
@@ -551,12 +552,12 @@ let check_export (c : context) (set : NameSet.t) (ex : export) : NameSet.t =
 let check_module (m : module_) =
   let
     { types; imports; tables; memories; globals; funcs; start; elems; datas;
-      exports; refers } = m.it
+      exports } = m.it
   in
   let c0 =
     List.fold_right check_import imports
       { empty_context with
-        refers = List.map (fun ex -> ex.it.rdesc.it) refers;
+        refs = Free.list Free.elem elems;
         types = List.map (fun ty -> ty.it) types;
       }
   in

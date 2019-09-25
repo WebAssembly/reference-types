@@ -469,14 +469,6 @@ let encode m =
     let export_section exs =
       section 7 (vec export) exs (exs <> [])
 
-    (* Anonymous export section *)
-    let refer ref =
-      let {rdesc} = ref.it in
-      export_desc rdesc
-
-    let refer_section refs =
-      section 13 (vec refer) refs (refs <> [])
-
     (* Start section *)
     let start_section xo =
       section 8 (opt var) xo (xo <> None)
@@ -573,7 +565,6 @@ let encode m =
       memory_section m.it.memories;
       global_section m.it.globals;
       export_section m.it.exports;
-      refer_section m.it.refers;
       start_section m.it.start;
       elem_section m.it.elems;
       data_count_section m.it.datas m;

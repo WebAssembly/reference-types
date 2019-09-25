@@ -512,7 +512,6 @@ let id s =
     | 10 -> `CodeSection
     | 11 -> `DataSection
     | 12 -> `DataCountSection
-    | 13 -> `ReferSection
     | _ -> error s (pos s) "invalid section id"
     ) bo
 
@@ -607,16 +606,6 @@ let export s =
 
 let export_section s =
   section `ExportSection (vec (at export)) [] s
-
-
-(* Anonymous export section *)
-
-let refer s =
-  let rdesc = at export_desc s in
-  {rdesc}
-
-let refer_section s =
-  section `ReferSection (vec (at refer)) [] s
 
 
 (* Start section *)
@@ -774,8 +763,6 @@ let module_ s =
   iterate custom_section s;
   let exports = export_section s in
   iterate custom_section s;
-  let refers = refer_section s in
-  iterate custom_section s;
   let start = start_section s in
   iterate custom_section s;
   let elems = elem_section s in
@@ -797,7 +784,7 @@ let module_ s =
   let funcs =
     List.map2 Source.(fun t f -> {f.it with ftype = t} @@ f.at)
       func_types func_bodies
-  in {types; tables; memories; globals; funcs; imports; exports; refers; elems; datas; start}
+  in {types; tables; memories; globals; funcs; imports; exports; elems; datas; start}
 
 
 let decode name bs = at module_ (stream name bs)

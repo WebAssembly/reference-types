@@ -4,8 +4,8 @@
 (register "M")
 
 (module
-  (func $f (ref) (import "M" "f") (param i32) (result i32))
-  (func $g (ref) (param $x i32) (result i32)
+  (func $f (import "M" "f") (param i32) (result i32))
+  (func $g (param $x i32) (result i32)
     (i32.add (local.get $x) (i32.const 1))
   )
 
@@ -29,6 +29,7 @@
   (func (export "set-g") (global.set $v (ref.func $g)))
 
   (table $t 1 funcref)
+  (table $dummy funcref (elem $f $g))  ;; TODO
 
   (func (export "call-f") (param $x i32) (result i32)
     (table.set $t (i32.const 0) (ref.func $f))

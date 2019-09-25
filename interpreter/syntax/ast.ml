@@ -186,12 +186,6 @@ and export' =
   edesc : export_desc;
 }
 
-type refer = refer' Source.phrase
-and refer' =
-{
-  rdesc : export_desc;
-}
-
 type import_desc = import_desc' Source.phrase
 and import_desc' =
   | FuncImport of var
@@ -220,7 +214,6 @@ and module_' =
   datas : data_segment list;
   imports : import list;
   exports : export list;
-  refers : refer list;
 }
 
 
@@ -238,7 +231,6 @@ let empty_module =
   datas = [];
   imports = [];
   exports = [];
-  refers = [];
 }
 
 open Source
