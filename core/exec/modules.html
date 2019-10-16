@@ -305,7 +305,7 @@ S' &amp;=&amp; S \href{../syntax/conventions.html#notation-compose}{\oplus} \{\h
 <ol class="arabic simple">
 <li>Let <span class="math notranslate nohighlight">\(\href{../exec/runtime.html#syntax-tableinst}{\mathit{tableinst}}\)</span> be the <a class="reference internal" href="runtime.html#syntax-tableinst"><span class="std std-ref">table instance</span></a> to grow, <span class="math notranslate nohighlight">\(n\)</span> the number of elements by which to grow it, and <span class="math notranslate nohighlight">\(\href{../exec/runtime.html#syntax-ref}{\mathit{ref}}\)</span> the initialization value.</li>
 <li>Let <span class="math notranslate nohighlight">\(\mathit{len}\)</span> be <span class="math notranslate nohighlight">\(n\)</span> added to the length of <span class="math notranslate nohighlight">\(\href{../exec/runtime.html#syntax-tableinst}{\mathit{tableinst}}.\href{../exec/runtime.html#syntax-tableinst}{\mathsf{elem}}\)</span>.</li>
-<li>If <span class="math notranslate nohighlight">\(\mathit{len}\)</span> is larger than <span class="math notranslate nohighlight">\(2^{32}\)</span>, then fail.</li>
+<li>If <span class="math notranslate nohighlight">\(\mathit{len}\)</span> is larger than or equal to <span class="math notranslate nohighlight">\(2^{32}\)</span>, then fail.</li>
 <li>Let <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}~t\)</span> be the structure of <a class="reference internal" href="../syntax/types.html#syntax-tabletype"><span class="std std-ref">table type</span></a> <span class="math notranslate nohighlight">\(\href{../exec/runtime.html#syntax-tableinst}{\mathit{tableinst}}.\href{../exec/runtime.html#syntax-tableinst}{\mathsf{type}}\)</span>.</li>
 <li>Let <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}'\)</span> be <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}\)</span> with <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-limits}{\mathsf{min}}\)</span> updated to <span class="math notranslate nohighlight">\(\mathit{len}\)</span>.</li>
 <li>If <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}'\)</span> is not <a class="reference internal" href="../valid/types.html#valid-limits"><span class="std std-ref">valid</span></a>, then fail.</li>
@@ -318,7 +318,7 @@ S' &amp;=&amp; S \href{../syntax/conventions.html#notation-compose}{\oplus} \{\h
   &amp;&amp; (
     \begin{array}[t]{&#64;{}r&#64;{~}l&#64;{}}
     \mathrel{\mbox{if}} &amp; \mathit{len} = n + |\href{../exec/runtime.html#syntax-tableinst}{\mathit{tableinst}}.\href{../exec/runtime.html#syntax-tableinst}{\mathsf{elem}}| \\
-    \wedge &amp; \mathit{len} \leq 2^{32} \\
+    \wedge &amp; \mathit{len} &lt; 2^{32} \\
     \wedge &amp; \href{../syntax/types.html#syntax-limits}{\mathit{limits}}~t = \href{../exec/runtime.html#syntax-tableinst}{\mathit{tableinst}}.\href{../exec/runtime.html#syntax-tableinst}{\mathsf{type}} \\
     \wedge &amp; \href{../syntax/types.html#syntax-limits}{\mathit{limits}}' = \href{../syntax/types.html#syntax-limits}{\mathit{limits}} \href{../syntax/conventions.html#notation-replace}{\mathrel{\mbox{with}}} \href{../syntax/types.html#syntax-limits}{\mathsf{min}} = \mathit{len} \\
     \wedge &amp; \href{../valid/types.html#valid-limits}{\vdash} \href{../syntax/types.html#syntax-limits}{\mathit{limits}}' \mathrel{\mbox{ok}} \\
@@ -634,6 +634,8 @@ It is up to the <a class="reference internal" href="../intro/overview.html#embed
 </li>
 </ol>
 </li>
+<li>Let <span class="math notranslate nohighlight">\(F\)</span> be the dummy <a class="reference internal" href="runtime.html#syntax-frame"><span class="std std-ref">frame</span></a> <span class="math notranslate nohighlight">\(\{ \href{../exec/runtime.html#syntax-frame}{\mathsf{module}}~\{\}, \href{../exec/runtime.html#syntax-frame}{\mathsf{locals}}~\epsilon \}\)</span>.</li>
+<li>Push the frame <span class="math notranslate nohighlight">\(F\)</span> to the stack.</li>
 <li>Push the values <span class="math notranslate nohighlight">\(\href{../exec/runtime.html#syntax-val}{\mathit{val}}^\ast\)</span> to the stack.</li>
 <li><a class="reference internal" href="instructions.html#exec-invoke"><span class="std std-ref">Invoke</span></a> the function instance at address <span class="math notranslate nohighlight">\(\href{../exec/runtime.html#syntax-funcaddr}{\mathit{funcaddr}}\)</span>.</li>
 </ol>

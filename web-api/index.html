@@ -5,9 +5,9 @@
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <meta content="ED" name="w3c-status">
   <meta content="This document describes the integration of WebAssembly with the broader web platform." name="abstract">
-  <meta content="Bikeshed version e86d5b1b47a216fa66165c234892adc259212183" name="generator">
+  <meta content="Bikeshed version e083b97d279e61e6afd0a5513a243eb8c7d6df6c" name="generator">
   <link href="https://www.w3.org/TR/wasm-web-api-1/" rel="canonical">
-  <meta content="c1a04150d5783c6dda057a4499dd9d78252d11a1" name="document-revision">
+  <meta content="074a6fa40b1d1de05384fbf8c4b2b68d61a08663" name="document-revision">
 <style>/* style-md-lists */
 
 /* This is a weird hack for me not yet following the commonmark spec
@@ -266,7 +266,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">WebAssembly Web API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-09-21">21 September 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-10-16">16 October 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -274,7 +274,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
      <dt>Latest published version:
      <dd><a href="https://www.w3.org/TR/wasm-web-api-1/">https://www.w3.org/TR/wasm-web-api-1/</a>
      <dt class="editor">Editor:
-     <dd class="editor p-author h-card vcard"><span class="p-name fn">Daniel Ehrenberg (Igalia)</span>
+     <dd class="editor p-author h-card vcard"><span class="p-name fn">Ms2ger (Igalia)</span>
      <dt>Issue Tracking:
      <dd><a href="https://github.com/WebAssembly/spec/labels/wasm-web-api-1">GitHub Issues</a>
     </dl>
@@ -385,7 +385,7 @@ and the <a href="https://www.w3.org/TR/wasm-web-api/">WebAssembly Web API</a>.
          <li data-md>
           <p>Let <var>stableBytes</var> be a <a data-link-type="dfn" href="https://heycam.github.io/webidl/#dfn-get-buffer-source-copy" id="ref-for-dfn-get-buffer-source-copy">copy of the bytes held by the buffer</a> <var>bodyArrayBuffer</var>.</p>
          <li data-md>
-          <p><a data-link-type="dfn" href="https://webassembly.github.io/spec/js-api/#asynchronously-compile-a-webassembly-module" id="ref-for-asynchronously-compile-a-webassembly-module">Asynchronously compile the WebAssembly module</a> <var>stableBytes</var> using the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#networking-task-source" id="ref-for-networking-task-source">networking task source</a> and <a data-link-type="dfn">resolve</a> <var>returnValue</var> with the result.</p>
+          <p><a data-link-type="dfn" href="https://webassembly.github.io/spec/js-api/#asynchronously-compile-a-webassembly-module" id="ref-for-asynchronously-compile-a-webassembly-module">Asynchronously compile the WebAssembly module</a> <var>stableBytes</var> using the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#networking-task-source" id="ref-for-networking-task-source">networking task source</a> and <a data-link-type="dfn" href="https://heycam.github.io/webidl/#resolve" id="ref-for-resolve">resolve</a> <var>returnValue</var> with the result.</p>
         </ol>
        <li data-md>
         <p><a data-link-type="dfn" href="https://heycam.github.io/webidl/#upon-rejection" id="ref-for-upon-rejection">Upon rejection</a> of <var>bodyPromise</var> with reason <var>reason</var>:</p>
@@ -744,6 +744,12 @@ JavaScript.</p>
     <li><a href="#ref-for-reject">1. Streaming Module Compilation and Instantiation</a> <a href="#ref-for-reject①">(2)</a> <a href="#ref-for-reject②">(3)</a> <a href="#ref-for-reject③">(4)</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-resolve">
+   <a href="https://heycam.github.io/webidl/#resolve">https://heycam.github.io/webidl/#resolve</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-resolve">1. Streaming Module Compilation and Instantiation</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-upon-fulfillment">
    <a href="https://heycam.github.io/webidl/#upon-fulfillment">https://heycam.github.io/webidl/#upon-fulfillment</a><b>Referenced in:</b>
    <ul>
@@ -816,6 +822,7 @@ JavaScript.</p>
      <li><span class="dfn-paneled" id="term-for-dfn-get-buffer-source-copy" style="color:initial">get a copy of the buffer source</span>
      <li><span class="dfn-paneled" id="term-for-idl-object" style="color:initial">object</span>
      <li><span class="dfn-paneled" id="term-for-reject" style="color:initial">reject</span>
+     <li><span class="dfn-paneled" id="term-for-resolve" style="color:initial">resolve</span>
      <li><span class="dfn-paneled" id="term-for-upon-fulfillment" style="color:initial">upon fulfillment</span>
      <li><span class="dfn-paneled" id="term-for-upon-rejection" style="color:initial">upon rejection</span>
     </ul>
