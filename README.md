@@ -11,6 +11,18 @@ It is meant for discussion, prototype specification and implementation of a prop
 
 Original `README` from upstream repository follows...
 
+# Bulk Memory Operations Proposal for WebAssembly
+
+This repository is a clone of github.com/WebAssembly/spec/. It is meant for
+discussion, prototype specification and implementation of a proposal to add
+bulk memory operations (e.g. instructions with behavior similar to `memmove`
+and `memset`) to WebAssembly.
+
+See the [overview](proposals/bulk-memory-operations/Overview.md) for a summary of the
+proposal.
+
+Original README from upstream repository follows...
+
 # spec
 
 This repository holds a prototypical reference implementation for WebAssembly,

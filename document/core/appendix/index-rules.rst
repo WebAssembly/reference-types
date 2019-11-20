@@ -27,7 +27,9 @@ Construct                                        Judgement
 :ref:`Memory <valid-mem>`                        :math:`C \vdashmem \mem : \memtype`
 :ref:`Global <valid-global>`                     :math:`C \vdashglobal \global : \globaltype`
 :ref:`Element segment <valid-elem>`              :math:`C \vdashelem \elem \ok`
+:ref:`Element mode <valid-elemmode>`             :math:`C \vdashelemmode \elemmode \ok`
 :ref:`Data segment <valid-data>`                 :math:`C \vdashdata \data \ok`
+:ref:`Data mode <valid-datamode>`                :math:`C \vdashdatamode \datamode \ok`
 :ref:`Start function <valid-start>`              :math:`C \vdashstart \start \ok`
 :ref:`Export <valid-export>`                     :math:`C \vdashexport \export : \externtype`
 :ref:`Export description <valid-exportdesc>`     :math:`C \vdashexportdesc \exportdesc : \externtype`
