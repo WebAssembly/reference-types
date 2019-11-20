@@ -319,7 +319,7 @@ let elem_kind = function
   | _ -> assert false
 
 let is_elem_index e =
-  match e.it with 
+  match e.it with
   | [{it = RefFunc _; _}] -> true
   | _ -> false
 

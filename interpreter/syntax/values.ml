@@ -38,7 +38,7 @@ let as_num = function
 
 let as_ref = function
   | Num _ -> failwith "as_ref"
-  | Ref r -> r 
+  | Ref r -> r
 
 
 (* Defaults *)

@@ -152,7 +152,9 @@ Element segments :math:`\elem` are not classified by any type but merely checked
 
 * For each :math:`e_i` in :math:`e^\ast`,
 
-  * The element expression :math:`e_i` must be :ref:`valid <valid-elemexpr>`.
+  * The expression :math:`e_i` must be :ref:`valid <valid-expr>`.
+
+  * The expression :math:`e_i` must be :ref:`constant <valid-const>`.
 
 * The element mode :math:`\elemmode` must be valid.
 
@@ -161,35 +163,13 @@ Element segments :math:`\elem` are not classified by any type but merely checked
 
 .. math::
    \frac{
-     (C \vdashelemexpr e \ok)^\ast
+     (C \vdashexpr e \ok)^\ast
+     \qquad
+     (C \vdashexprconst e \const)^\ast
      \qquad
      C; \X{et} \vdashelemmode \elemmode \ok
    }{
      C \vdashelem \{ \ETYPE~et, \EINIT~e^\ast, \EMODE~\elemmode \} \ok
-   }
-
-
-.. _valid-elemexpr:
-
-:math:`\elemexpr`
-.................
-
-* An element expression must be:
-
-  * either of the form :math:`\REFNULL~\END`,
-
-  * or of the form :math:`(\REFFUNC~x)~\END`, in which case :math:`C.\CFUNCS[x]` must be defined in the context.
-
-.. math::
-   \frac{
-   }{
-     C \vdashelemexpr \REFNULL~\END \ok
-   }
-   \qquad
-   \frac{
-     C.\CFUNCS[x] = \functype
-   }{
-     C \vdashelemexpr (\REFFUNC~x)~\END \ok
    }
 
 

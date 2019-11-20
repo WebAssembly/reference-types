@@ -59,7 +59,7 @@ let blit tab offset rs =
   try Lib.Array32.blit data 0l tab.content offset (Lib.Array32.length data)
   with Invalid_argument _ -> raise Bounds
 
-(*TODO*)
+(*TODO: remove*)
 let init tab es d s n =
   let rec loop es d s n =
     match s, n, es with

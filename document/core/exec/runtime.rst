@@ -525,8 +525,6 @@ Conventions
 .. _syntax-trap:
 .. _syntax-reffuncaddr:
 .. _syntax-invoke:
-.. _syntax-table_get:
-.. _syntax-table_set:
 .. _syntax-instr-admin:
 
 Administrative Instructions
@@ -545,8 +543,6 @@ In order to express the reduction of :ref:`traps <trap>`, :ref:`calls <syntax-ca
      \REFFUNCADDR~\funcaddr \\ &&|&
      \REFHOST~\hostaddr \\ &&|&
      \INVOKE~\funcaddr \\ &&|&
-     \TABLEGET \\ &&|&
-     \TABLESET \\ &&|&
      \LABEL_n\{\instr^\ast\}~\instr^\ast~\END \\ &&|&
      \FRAME_n\{\frame\}~\instr^\ast~\END \\
    \end{array}
@@ -558,11 +554,6 @@ The |REFFUNCADDR| instruction represents :ref:`function reference values <syntax
 
 The |INVOKE| instruction represents the imminent invocation of a :ref:`function instance <syntax-funcinst>`, identified by its :ref:`address <syntax-funcaddr>`.
 It unifies the handling of different forms of calls.
-
-The |TABLEGET| and |TABLESET| instructions are used to simplify the specification of the |TABLEINIT| and |TABLECOPY| instructions.
-
-.. note::
-   In the future, |TABLEGET| and |TABLESET| may be provided as regular instructions.
 
 The |LABEL| and |FRAME| instructions model :ref:`labels <syntax-label>` and :ref:`frames <syntax-frame>` :ref:`"on the stack" <exec-notation>`.
 Moreover, the administrative syntax maintains the nesting structure of the original :ref:`structured control instruction <syntax-instr-control>` or :ref:`function body <syntax-func>` and their :ref:`instruction sequences <syntax-instr-seq>` with an |END| marker.
