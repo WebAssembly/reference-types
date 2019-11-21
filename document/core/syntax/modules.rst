@@ -248,7 +248,6 @@ starting with the smallest index not referencing a global :ref:`import <syntax-i
    single: element; segment
 .. _syntax-elem:
 .. _syntax-elemmode:
-.. _syntax-elemexpr:
 
 Element Segments
 ~~~~~~~~~~~~~~~~
@@ -256,7 +255,7 @@ Element Segments
 The initial contents of a table is uninitialized. *Element segments* can be used to initialize a subrange of a table from a static :ref:`vector <syntax-vec>` of elements.
 
 The |MELEMS| component of a module defines a vector of element segments.
-Each element segment defines an :ref:`element type <syntax-elemtype>` and a corresponding list of :ref:`element expressions <syntax-elemexpr>`.
+Each element segment defines an :ref:`reference type <syntax-reftype>` and a corresponding list of :ref:`constant <valid-constant>` element :ref:`expressions <syntax-expr>`.
 
 Element segments have a mode that identifies them as either *passive* or *active*.
 A passive element segment's elements can be copied to a table using the |TABLEINIT| instruction.
@@ -265,13 +264,10 @@ An active element segment copies its elements into a table during :ref:`instanti
 .. math::
    \begin{array}{llll}
    \production{element segment} & \elem &::=&
-     \{ \ETYPE~\elemtype, \EINIT~\vec(\elemexpr), \EMODE~\elemmode \} \\
+     \{ \ETYPE~\reftype, \EINIT~\vec(\expr), \EMODE~\elemmode \} \\
    \production{element segment mode} & \elemmode &::=&
      \EPASSIVE \\&&|&
      \EACTIVE~\{ \ETABLE~\tableidx, \EOFFSET~\expr \} \\
-   \production{elemexpr} & \elemexpr &::=&
-     \REFNULL~\END \\&&|&
-     (\REFFUNC~\funcidx)~\END \\
    \end{array}
 
 The |EOFFSET| is given by a :ref:`constant <valid-constant>` :ref:`expression <syntax-expr>`.

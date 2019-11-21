@@ -628,11 +628,13 @@ It is up to the :ref:`embedder <embedder>` to define how such conditions are rep
 
 6. Let :math:`(\funcelem^\ast)^\ast` be the list of :ref:`function element <syntax-funcelem>` vectors determined by the :ref:`element segments <syntax-elem>` in :math:`\module`. These may be calculated as follows.
 
+    .. todo:: TODO desugar
+
     a. For each :ref:`element segment <syntax-elem>` :math:`\elem_i` in :math:`\module.\MELEMS`, and for each element :ref:`expression <syntax-expr>` :math:`\expr_{ij}` in :math:`\elem_i.\EINIT`, do:
 
        i. If :math:`\expr_{ij}` is of the form :math:`\REFNULL`, then let the :ref:`function element <syntax-funcelem>` :math:`\funcelem_{ij}` be :math:`\epsilon`.
 
-       ii. Else, :math:`\elemexpr_{ij}` is of the form is :math:`\REFFUNC~\funcidx_{ij}`.
+       ii. Else, :math:`\expr_{ij}` is of the form is :math:`\REFFUNC~\funcidx_{ij}`.
 
        iii. Assert: due to :ref:`validation <valid-elem>`, :math:`\moduleinst.\MIFUNCS[\funcidx_{ij}]` exists.
 

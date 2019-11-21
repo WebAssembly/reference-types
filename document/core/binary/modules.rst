@@ -335,9 +335,9 @@ It decodes into a vector of :ref:`element segments <syntax-elem>` that represent
        &\Rightarrow& \{ \ETYPE~\X{et}, \EINIT~((\REFFUNC~y)~\END)^\ast, \EMODE~\EACTIVE~\{ \ETABLE~x, \EOFFSET~e \} \} \\ &&|&
      \hex{04}~~e{:}\Bexpr~~\X{el}^\ast{:}\Bvec(\Bexpr)
        &\Rightarrow& \{ \ETYPE~\FUNCREF, \EINIT~\X{el}^\ast, \EMODE~\EACTIVE~\{ \ETABLE~0, \EOFFSET~e \} \} \\ &&|&
-     \hex{05}~~\X{et}:\Belemtype~~\X{el}^\ast{:}\Bvec(\Bexpr)
+     \hex{05}~~\X{et}:\Breftype~~\X{el}^\ast{:}\Bvec(\Bexpr)
        &\Rightarrow& \{ \ETYPE~et, \EINIT~\X{el}^\ast, \EMODE~\EPASSIVE \} \\ &&|&
-     \hex{06}~~x{:}\Btableidx~~e{:}\Bexpr~~\X{et}:\Belemtype~~\X{el}^\ast{:}\Bvec(\Bexpr)
+     \hex{06}~~x{:}\Btableidx~~e{:}\Bexpr~~\X{et}:\Breftype~~\X{el}^\ast{:}\Bvec(\Bexpr)
        &\Rightarrow& \{ \ETYPE~et, \EINIT~\X{el}^\ast, \EMODE~\EACTIVE~\{ \ETABLE~x, \EOFFSET~e \} \} \\
    \production{element kind} & \Belemkind &::=&
      \hex{00} &\Rightarrow& \FUNCREF \\

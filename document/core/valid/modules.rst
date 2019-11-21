@@ -156,7 +156,7 @@ Element segments :math:`\elem` are not classified by any type but merely checked
 
   * The expression :math:`e_i` must be :ref:`constant <valid-const>`.
 
-* The element mode :math:`\elemmode` must be valid.
+* The element mode :math:`\elemmode` must be valid for :ref:`reference type <syntax-reftype>` :math:`\X{et}`.
 
 * Then the element segment is valid.
 
@@ -178,7 +178,7 @@ Element segments :math:`\elem` are not classified by any type but merely checked
 :math:`\EPASSIVE`
 .................
 
-* The element mode is valid.
+* The element mode is valid for any :ref:`reference type <syntax-reftype>` :math:`\X{et}`.
 
 .. math::
    \frac{
@@ -194,24 +194,25 @@ Element segments :math:`\elem` are not classified by any type but merely checked
 
 * Let :math:`\limits~t` be the :ref:`table type <syntax-tabletype>` :math:`C.\CTABLES[x]`.
 
-* The :ref:`reference type <syntax-reftype>` |FUNCREF| must :ref:`match <match-reftype>` the reference type :math:`t`.
+* The :ref:`reference type <syntax-reftype>` :math:`\X{et}` must :ref:`match <match-reftype>` the reference type :math:`t`.
 
 * The expression :math:`\expr` must be :ref:`valid <valid-expr>` with :ref:`result type <syntax-resulttype>` :math:`[\I32]`.
 
 * The expression :math:`\expr` must be :ref:`constant <valid-constant>`.
 
-* Then the element mode is valid.
+* Then the element mode is valid for :ref:`reference type <syntax-reftype>` :math:`\X{et}`.
 
 .. math::
    \frac{
      \begin{array}{@{}c@{}}
      C.\CTABLES[x] = \limits~t
      \qquad
-     \vdashreftypematch \FUNCREF \matchesvaltype t
+     \vdashreftypematch \X{et} \matchesvaltype t
      \\
      C \vdashexpr \expr : [\I32]
      \qquad
      C \vdashexprconst \expr \const
+     \end{array}
    }{
      C; \X{et} \vdashelemmode \EACTIVE~\{ \ETABLE~x, \EOFFSET~\expr \} \ok
    }

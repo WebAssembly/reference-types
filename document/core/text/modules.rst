@@ -493,6 +493,8 @@ Element Segments
 
 Element segments allow for an optional :ref:`table index <text-tableidx>` to identify the table to initialize.
 
+.. todo:: TODO: multi-instr elemexpr
+
 .. math::
    \begin{array}{llclll}
    \production{element segment} & \Telem_I &::=&
@@ -501,7 +503,7 @@ Element segments allow for an optional :ref:`table index <text-tableidx>` to ide
      \text{(}~\text{elem}~~\Tid^?~~x{:}\Ttableuse_I~~\text{(}~\text{offset}~~e{:}\Texpr_I~\text{)}~~(et, y^\ast){:}\Telemlist~\text{)} \\ &&& \qquad
        \Rightarrow\quad \{ \ETYPE~et, \EINIT~y^\ast, \EMODE~\EACTIVE~\{ \ETABLE~x, \EOFFSET~e \} \} \\
    \production{element list} & \Telemlist &::=&
-     et{:}\Telemtype~~y^\ast{:}\Tvec(\Telemexpr_I) \qquad\Rightarrow\quad ( \ETYPE~et, \EINIT~y^\ast ) \\
+     t{:}\Treftype~~y^\ast{:}\Tvec(\Telemexpr_I) \qquad\Rightarrow\quad ( \ETYPE~t, \EINIT~y^\ast ) \\
    \production{element expression} & \Telemexpr &::=&
      \text{(}~e{:}\Tinstr~\text{)}
        \quad\Rightarrow\quad e \\
@@ -509,10 +511,6 @@ Element segments allow for an optional :ref:`table index <text-tableidx>` to ide
      \text{(}~\text{table}~~x{:}\Ttableidx_I ~\text{)}
        \quad\Rightarrow\quad x \\
    \end{array}
-
-.. note::
-   In the current version of WebAssembly, the only valid table index is 0
-   or a symbolic :ref:`table identifier <text-id>` resolving to the same value.
 
 
 Abbreviations
