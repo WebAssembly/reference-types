@@ -273,6 +273,9 @@ Module instances are classified by *module contexts*, which are regular :ref:`co
    }
 
 
+.. todo:: TODO: adjust elem instances
+
+
 .. index:: external type, export instance, name, external value
 .. _valid-exportinst:
 
