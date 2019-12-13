@@ -5,9 +5,9 @@
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <meta content="ED" name="w3c-status">
   <meta content="This document provides an explicit JavaScript API for interacting with WebAssembly." name="abstract">
-  <meta content="Bikeshed version 0dd2bba6dfda6c3168490a3a3044dd1d0b1ef8e0" name="generator">
+  <meta content="Bikeshed version 087ea90e1ebd0321c20373d89950d1c6b73d5df1" name="generator">
   <link href="https://www.w3.org/TR/wasm-js-api-1/" rel="canonical">
-  <meta content="303c94206dd108ee210dd45377b61bebed21d57f" name="document-revision">
+  <meta content="d4bc208c0f62ac19529e9e734b10c17c960549e5" name="document-revision">
 <style>
 emu-const {
     font-family: serif;
@@ -271,7 +271,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">WebAssembly JavaScript Interface</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-11-20">20 November 2019</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2019-12-13">13 December 2019</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -286,7 +286,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     </dl>
    </div>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2019 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="http://www.keio.ac.jp/">Keio</a>, <a href="https://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document">permissive document license</a> rules apply. </p>
+   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2019 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>, <a href="https://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document" rel="license">permissive document license</a> rules apply. </p>
    <hr title="Separator for header">
   </div>
   <div class="p-summary" data-fill-with="abstract">
@@ -1109,6 +1109,7 @@ If this throws an exception, catch it, <a data-link-type="dfn" href="https://hey
    <div class="algorithm" data-algorithm="buffer"> The getter of the <dfn class="dfn-paneled idl-code" data-dfn-for="Memory" data-dfn-type="attribute" data-export id="dom-memory-buffer"><code>buffer</code></dfn> attribute of <code class="idl"><a data-link-type="idl" href="#memory" id="ref-for-memory⑦">Memory</a></code> returns <strong>this</strong>.[[BufferObject]]. </div>
    <h3 class="heading settled" data-level="3.4" id="tables"><span class="secno">3.4. </span><span class="content">Tables</span><a class="self-link" href="#tables"></a></h3>
 <pre class="idl highlight def"><c- b>enum</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="enum" data-export id="enumdef-tablekind"><code><c- g>TableKind</c-></code></dfn> {
+  <dfn class="idl-code" data-dfn-for="TableKind" data-dfn-type="enum-value" data-export id="dom-tablekind-nullref"><code><c- s>"nullref"</c-></code><a class="self-link" href="#dom-tablekind-nullref"></a></dfn>,
   <dfn class="idl-code" data-dfn-for="TableKind" data-dfn-type="enum-value" data-export id="dom-tablekind-anyref"><code><c- s>"anyref"</c-></code><a class="self-link" href="#dom-tablekind-anyref"></a></dfn>,
   <dfn class="idl-code" data-dfn-for="TableKind" data-dfn-type="enum-value" data-export id="dom-tablekind-anyfunc"><code><c- s>"anyfunc"</c-></code><a class="self-link" href="#dom-tablekind-anyfunc"></a></dfn>,
   // Note: More values may be added in future iterations,
@@ -1334,6 +1335,14 @@ If this throws an exception, catch it, <a data-link-type="dfn" href="https://hey
       <p>If <var>s</var> equals "f32", return <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/syntax/types.html#syntax-numtype" id="ref-for-syntax-numtype③">𝖿𝟥𝟤</a>.</p>
      <li data-md>
       <p>If <var>s</var> equals "f64", return <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/syntax/types.html#syntax-numtype" id="ref-for-syntax-numtype④">𝖿𝟨𝟦</a>.</p>
+     <li data-md>
+      <p>If <var>s</var> equals "anyref", return <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/syntax/types.html#syntax-reftype" id="ref-for-syntax-reftype">anyref</a>.</p>
+     <li data-md>
+      <p>If <var>s</var> equals "funcref", return <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/syntax/types.html#syntax-reftype" id="ref-for-syntax-reftype①">funcref</a>.</p>
+     <li data-md>
+      <p>If <var>s</var> equals "nullref", return <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/syntax/types.html#syntax-reftype" id="ref-for-syntax-reftype②">nullref</a>.</p>
+     <li data-md>
+      <p class="assertion">Assert: This step is not reached.</p>
     </ol>
    </div>
    <div class="algorithm" data-algorithm="DefaultValue">
@@ -1348,7 +1357,7 @@ If this throws an exception, catch it, <a data-link-type="dfn" href="https://hey
      <li data-md>
       <p>If <var>valuetype</var> equals <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/syntax/types.html#syntax-numtype" id="ref-for-syntax-numtype⑧">𝖿𝟨𝟦</a>, return <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values⑧">𝖿𝟨𝟦.𝖼𝗈𝗇𝗌𝗍</a> 0.</p>
      <li data-md>
-      <p class="assertion">Assert: This step is not reached.</p>
+      <p>Else, return <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values⑨">ref.null</a>.</p>
     </ol>
    </div>
    <div class="algorithm" data-algorithm="Global(descriptor, v)">
@@ -1553,7 +1562,7 @@ This slot holds a <a data-link-type="dfn" href="https://webassembly.github.io/sp
    <p class="note" role="note"><span>Note:</span> <a data-link-type="dfn" href="#call-an-exported-function" id="ref-for-call-an-exported-function①">Calling an Exported Function</a> executes in the [[Realm]] of the callee Exported Function, as per the definition of <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-built-in-function-objects" id="ref-for-sec-built-in-function-objects①">built-in function objects</a>.</p>
    <p class="note" role="note"><span>Note:</span> Exported Functions do not have a [[Construct]] method and thus it is not possible to call one with the <code>new</code> operator.</p>
    <div class="algorithm" data-algorithm="run a host function">
-     To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="run-a-host-function">run a host function</dfn> from the JavaScript object <var>func</var>, type <var>functype</var>, and <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list⑤">list</a> of <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values⑨">WebAssembly values</a> <var>arguments</var>, perform the following steps: 
+     To <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="run-a-host-function">run a host function</dfn> from the JavaScript object <var>func</var>, type <var>functype</var>, and <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list" id="ref-for-list⑤">list</a> of <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values①⓪">WebAssembly values</a> <var>arguments</var>, perform the following steps: 
     <ol>
      <li data-md>
       <p>Let [<var>parameters</var>] → [<var>results</var>] be <var>functype</var>.</p>
@@ -1605,22 +1614,22 @@ This slot holds a <a data-link-type="dfn" href="https://webassembly.github.io/sp
     </ol>
    </div>
    <div class="algorithm" data-algorithm="ToJSValue">
-     The algorithm <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="tojsvalue">ToJSValue</dfn>(<var>w</var>) coerces a <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values①⓪">WebAssembly value</a> to a JavaScript value performs the following steps: 
+     The algorithm <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="tojsvalue">ToJSValue</dfn>(<var>w</var>) coerces a <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values①①">WebAssembly value</a> to a JavaScript value performs the following steps: 
     <ol>
      <li data-md>
-      <p class="assertion">Assert: <var>w</var> is not of the form <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values①①">𝗂𝟨𝟦.𝖼𝗈𝗇𝗌𝗍</a> <var>i64</var>.</p>
+      <p class="assertion">Assert: <var>w</var> is not of the form <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values①②">𝗂𝟨𝟦.𝖼𝗈𝗇𝗌𝗍</a> <var>i64</var>.</p>
      <li data-md>
-      <p>If <var>w</var> is of the form <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values①②">𝗂𝟥𝟤.𝖼𝗈𝗇𝗌𝗍</a> <var>i32</var>, return <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-ecmascript-language-types-number-type" id="ref-for-sec-ecmascript-language-types-number-type">the Number value</a> for <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/numerics.html#aux-signed" id="ref-for-aux-signed">signed_32</a>(<var>i32</var>).</p>
+      <p>If <var>w</var> is of the form <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values①③">𝗂𝟥𝟤.𝖼𝗈𝗇𝗌𝗍</a> <var>i32</var>, return <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-ecmascript-language-types-number-type" id="ref-for-sec-ecmascript-language-types-number-type">the Number value</a> for <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/numerics.html#aux-signed" id="ref-for-aux-signed">signed_32</a>(<var>i32</var>).</p>
      <li data-md>
-      <p>If <var>w</var> is of the form <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values①③">𝖿𝟥𝟤.𝖼𝗈𝗇𝗌𝗍</a> <var>f32</var>, return <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-ecmascript-language-types-number-type" id="ref-for-sec-ecmascript-language-types-number-type①">the Number value</a> for <var>f32</var>.</p>
+      <p>If <var>w</var> is of the form <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values①④">𝖿𝟥𝟤.𝖼𝗈𝗇𝗌𝗍</a> <var>f32</var>, return <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-ecmascript-language-types-number-type" id="ref-for-sec-ecmascript-language-types-number-type①">the Number value</a> for <var>f32</var>.</p>
      <li data-md>
-      <p>If <var>w</var> is of the form <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values①④">𝖿𝟨𝟦.𝖼𝗈𝗇𝗌𝗍</a> <var>f64</var>, return <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-ecmascript-language-types-number-type" id="ref-for-sec-ecmascript-language-types-number-type②">the Number value</a> for <var>f64</var>.</p>
+      <p>If <var>w</var> is of the form <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values①⑤">𝖿𝟨𝟦.𝖼𝗈𝗇𝗌𝗍</a> <var>f64</var>, return <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-ecmascript-language-types-number-type" id="ref-for-sec-ecmascript-language-types-number-type②">the Number value</a> for <var>f64</var>.</p>
      <li data-md>
-      <p>If <var>w</var> is of the form <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values①⑤">ref.null</a>, return null.</p>
+      <p>If <var>w</var> is of the form <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values①⑥">ref.null</a>, return null.</p>
      <li data-md>
-      <p>If <var>w</var> is of the form <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values①⑥">ref.func</a> <var>funcaddr</var>, return the result of creating <a data-link-type="dfn" href="#a-new-exported-function" id="ref-for-a-new-exported-function①">a new Exported Function</a> from <var>funcaddr</var>.</p>
+      <p>If <var>w</var> is of the form <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values①⑦">ref.func</a> <var>funcaddr</var>, return the result of creating <a data-link-type="dfn" href="#a-new-exported-function" id="ref-for-a-new-exported-function①">a new Exported Function</a> from <var>funcaddr</var>.</p>
      <li data-md>
-      <p>If <var>w</var> is of the form <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values①⑦">ref.host</a> <var>hostaddr</var>, return the result of <a data-link-type="dfn" href="#retrieving-a-host-value" id="ref-for-retrieving-a-host-value">retrieving a host value</a> from <var>hostaddr</var>.</p>
+      <p>If <var>w</var> is of the form <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values①⑧">ref.host</a> <var>hostaddr</var>, return the result of <a data-link-type="dfn" href="#retrieving-a-host-value" id="ref-for-retrieving-a-host-value">retrieving a host value</a> from <var>hostaddr</var>.</p>
     </ol>
     <p class="note" role="note"><span>Note:</span> Number values which are equal to NaN may have various observable NaN payloads; see <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-numbertorawbytes" id="ref-for-sec-numbertorawbytes">NumberToRawBytes</a> for details.</p>
    </div>
@@ -1636,7 +1645,7 @@ This slot holds a <a data-link-type="dfn" href="https://webassembly.github.io/sp
     </ol>
    </div>
    <div class="algorithm" data-algorithm="ToWebAssemblyValue">
-     The algorithm <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="towebassemblyvalue">ToWebAssemblyValue</dfn>(<var>v</var>, <var>type</var>, <var>error</var>) coerces a JavaScript value to a <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values①⑧">WebAssembly value</a> performs the following steps: 
+     The algorithm <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="towebassemblyvalue">ToWebAssemblyValue</dfn>(<var>v</var>, <var>type</var>, <var>error</var>) coerces a JavaScript value to a <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values①⑨">WebAssembly value</a> performs the following steps: 
     <ol>
      <li data-md>
       <p class="assertion">Assert: <var>type</var> is not <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/syntax/types.html#syntax-numtype" id="ref-for-syntax-numtype①④">𝗂𝟨𝟦</a>.</p>
@@ -1646,7 +1655,7 @@ This slot holds a <a data-link-type="dfn" href="https://webassembly.github.io/sp
        <li data-md>
         <p>Let <var>i32</var> be ? <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-toint32" id="ref-for-sec-toint32">ToInt32</a>(<var>v</var>).</p>
        <li data-md>
-        <p>Return <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values①⑨">𝗂𝟥𝟤.𝖼𝗈𝗇𝗌𝗍</a> <var>i32</var>.</p>
+        <p>Return <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values②⓪">𝗂𝟥𝟤.𝖼𝗈𝗇𝗌𝗍</a> <var>i32</var>.</p>
       </ol>
      <li data-md>
       <p>If <var>type</var> is <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/syntax/types.html#syntax-numtype" id="ref-for-syntax-numtype①⑥">𝖿𝟥𝟤</a>,</p>
@@ -1654,7 +1663,7 @@ This slot holds a <a data-link-type="dfn" href="https://webassembly.github.io/sp
        <li data-md>
         <p>Let <var>f32</var> be ? <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-tonumber" id="ref-for-sec-tonumber">ToNumber</a>(<var>v</var>) rounded to the nearest representable value using IEEE 754-2008 round to nearest, ties to even mode.</p>
        <li data-md>
-        <p>Return <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values②⓪">𝖿𝟥𝟤.𝖼𝗈𝗇𝗌𝗍</a> <var>f32</var>.</p>
+        <p>Return <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values②①">𝖿𝟥𝟤.𝖼𝗈𝗇𝗌𝗍</a> <var>f32</var>.</p>
       </ol>
      <li data-md>
       <p>If <var>type</var> is <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/syntax/types.html#syntax-numtype" id="ref-for-syntax-numtype①⑦">𝖿𝟨𝟦</a>,</p>
@@ -1662,22 +1671,30 @@ This slot holds a <a data-link-type="dfn" href="https://webassembly.github.io/sp
        <li data-md>
         <p>Let <var>f64</var> be ? <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#sec-tonumber" id="ref-for-sec-tonumber①">ToNumber</a>(<var>v</var>).</p>
        <li data-md>
-        <p>Return <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values②①">𝖿𝟨𝟦.𝖼𝗈𝗇𝗌𝗍</a> <var>f64</var>.</p>
+        <p>Return <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values②②">𝖿𝟨𝟦.𝖼𝗈𝗇𝗌𝗍</a> <var>f64</var>.</p>
       </ol>
      <li data-md>
-      <p>If <var>type</var> is <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/syntax/types.html#syntax-reftype" id="ref-for-syntax-reftype">anyref</a>,</p>
+      <p class="assertion">Assert: <var>type</var> is a reference type.</p>
+     <li data-md>
+      <p>If <var>type</var> is <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/syntax/types.html#syntax-reftype" id="ref-for-syntax-reftype③">anyref</a>,</p>
       <ol>
        <li data-md>
-        <p>Return the result of <a data-link-type="dfn" href="#allocating-a-host-address" id="ref-for-allocating-a-host-address">allocating a host address</a> for <var>v</var>.</p>
+        <p>Do nothing.</p>
       </ol>
      <li data-md>
-      <p>If <var>type</var> is <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/syntax/types.html#syntax-reftype" id="ref-for-syntax-reftype①">funcref</a>,</p>
+      <p>If <var>type</var> is <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/syntax/types.html#syntax-reftype" id="ref-for-syntax-reftype④">funcref</a>,</p>
       <ol>
        <li data-md>
         <p>If <var>v</var> is not an <a data-link-type="dfn" href="#exported-function" id="ref-for-exported-function③">Exported function</a> or null, throw <var>error</var>.</p>
-       <li data-md>
-        <p>Return the result of <a data-link-type="dfn" href="#allocating-a-host-address" id="ref-for-allocating-a-host-address①">allocating a host address</a> for <var>v</var>.</p>
       </ol>
+     <li data-md>
+      <p>If <var>type</var> is <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/syntax/types.html#syntax-reftype" id="ref-for-syntax-reftype⑤">nullref</a>,</p>
+      <ol>
+       <li data-md>
+        <p>If <var>v</var> is not null, throw <var>error</var>.</p>
+      </ol>
+     <li data-md>
+      <p>Return the result of <a data-link-type="dfn" href="#allocating-a-host-address" id="ref-for-allocating-a-host-address">allocating a host address</a> for <var>v</var>.</p>
     </ol>
    </div>
    <div class="algorithm" data-algorithm="allocating a host address">
@@ -1687,7 +1704,7 @@ This slot holds a <a data-link-type="dfn" href="https://webassembly.github.io/sp
       <p>If <var>v</var> is null,</p>
       <ol>
        <li data-md>
-        <p>Return <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values②②">ref.null</a>.</p>
+        <p>Return <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values②③">ref.null</a>.</p>
       </ol>
      <li data-md>
       <p>If <var>v</var> is an <a data-link-type="dfn" href="#exported-function" id="ref-for-exported-function④">Exported Function</a>,</p>
@@ -1695,7 +1712,7 @@ This slot holds a <a data-link-type="dfn" href="https://webassembly.github.io/sp
        <li data-md>
         <p>Let <var>funcaddr</var> be the value of <var>v</var>’s [[FunctionAddress]] internal slot.</p>
        <li data-md>
-        <p>Return <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values②③">ref.func</a> <var>funcaddr</var>.</p>
+        <p>Return <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values②④">ref.func</a> <var>funcaddr</var>.</p>
       </ol>
      <li data-md>
       <p>Let <var>map</var> be the <a data-link-type="dfn" href="https://tc39.github.io/ecma262/#surrounding-agent" id="ref-for-surrounding-agent③⓪">surrounding agent</a>'s associated <a data-link-type="dfn" href="#host-value-cache" id="ref-for-host-value-cache①">host value cache</a>.</p>
@@ -1703,14 +1720,14 @@ This slot holds a <a data-link-type="dfn" href="https://webassembly.github.io/sp
       <p>If a <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#syntax-hostaddr" id="ref-for-syntax-hostaddr②">host address</a> <var>hostaddr</var> exists such that <var>map</var>[<var>hostaddr</var>] is the same as <var>v</var>,</p>
       <ol>
        <li data-md>
-        <p>Return <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values②④">ref.host</a> <var>hostaddr</var>.</p>
+        <p>Return <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values②⑤">ref.host</a> <var>hostaddr</var>.</p>
       </ol>
      <li data-md>
       <p>Let <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#syntax-hostaddr" id="ref-for-syntax-hostaddr③">host address</a> <var>hostaddr</var> be the smallest address such that <var>map</var>[<var>hostaddr</var>] <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-exists" id="ref-for-map-exists⑨">exists</a> is false.</p>
      <li data-md>
       <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-set" id="ref-for-map-set④">Set</a> <var>map</var>[<var>hostaddr</var>] to <var>v</var>.</p>
      <li data-md>
-      <p>Return <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values②⑤">ref.host</a> <var>hostaddr</var>.</p>
+      <p>Return <a data-link-type="dfn" href="https://webassembly.github.io/spec/core/exec/runtime.html#values" id="ref-for-values②⑥">ref.host</a> <var>hostaddr</var>.</p>
     </ol>
    </div>
    <h3 class="heading settled" data-level="3.7" id="error-objects"><span class="secno">3.7. </span><span class="content">Error Objects</span><a class="self-link" href="#error-objects"></a></h3>
@@ -1930,6 +1947,7 @@ In practice, an implementation may run out of resources for valid modules below 
      <li><a href="#dom-moduleimportdescriptor-name">dict-member for ModuleImportDescriptor</a><span>, in §3.1</span>
     </ul>
    <li><a href="#name-of-the-webassembly-function">name of the WebAssembly function</a><span>, in §3.6</span>
+   <li><a href="#dom-tablekind-nullref">"nullref"</a><span>, in §3.4</span>
    <li><a href="#read-the-imports">read the imports</a><span>, in §3</span>
    <li><a href="#reset-the-memory-buffer">reset the Memory buffer</a><span>, in §3.3</span>
    <li><a href="#retrieving-a-host-value">retrieving a host value</a><span>, in §3.6</span>
@@ -2236,7 +2254,8 @@ In practice, an implementation may run out of resources for valid modules below 
   <aside class="dfn-panel" data-for="term-for-syntax-reftype">
    <a href="https://webassembly.github.io/spec/core/syntax/types.html#syntax-reftype">https://webassembly.github.io/spec/core/syntax/types.html#syntax-reftype</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-syntax-reftype">3.6. Exported Functions</a> <a href="#ref-for-syntax-reftype①">(2)</a>
+    <li><a href="#ref-for-syntax-reftype">3.5. Globals</a> <a href="#ref-for-syntax-reftype①">(2)</a> <a href="#ref-for-syntax-reftype②">(3)</a>
+    <li><a href="#ref-for-syntax-reftype③">3.6. Exported Functions</a> <a href="#ref-for-syntax-reftype④">(2)</a> <a href="#ref-for-syntax-reftype⑤">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-syntax-mut">
@@ -2302,7 +2321,8 @@ In practice, an implementation may run out of resources for valid modules below 
   <aside class="dfn-panel" data-for="term-for-syntax-reftype">
    <a href="https://webassembly.github.io/spec/core/syntax/types.html#syntax-reftype">https://webassembly.github.io/spec/core/syntax/types.html#syntax-reftype</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-syntax-reftype">3.6. Exported Functions</a> <a href="#ref-for-syntax-reftype①">(2)</a>
+    <li><a href="#ref-for-syntax-reftype">3.5. Globals</a> <a href="#ref-for-syntax-reftype①">(2)</a> <a href="#ref-for-syntax-reftype②">(3)</a>
+    <li><a href="#ref-for-syntax-reftype③">3.6. Exported Functions</a> <a href="#ref-for-syntax-reftype④">(2)</a> <a href="#ref-for-syntax-reftype⑤">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-syntax-funcaddr">
@@ -2458,13 +2478,11 @@ In practice, an implementation may run out of resources for valid modules below 
     <li><a href="#ref-for-embed-module-validate">3. The WebAssembly Namespace</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-values">
-   <a href="https://webassembly.github.io/spec/core/exec/runtime.html#values">https://webassembly.github.io/spec/core/exec/runtime.html#values</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-syntax-reftype">
+   <a href="https://webassembly.github.io/spec/core/syntax/types.html#syntax-reftype">https://webassembly.github.io/spec/core/syntax/types.html#syntax-reftype</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-values">3.3. Memories</a>
-    <li><a href="#ref-for-values①">3.4. Tables</a> <a href="#ref-for-values②">(2)</a> <a href="#ref-for-values③">(3)</a> <a href="#ref-for-values④">(4)</a>
-    <li><a href="#ref-for-values⑤">3.5. Globals</a> <a href="#ref-for-values⑥">(2)</a> <a href="#ref-for-values⑦">(3)</a> <a href="#ref-for-values⑧">(4)</a>
-    <li><a href="#ref-for-values⑨">3.6. Exported Functions</a> <a href="#ref-for-values①⓪">(2)</a> <a href="#ref-for-values①①">(3)</a> <a href="#ref-for-values①②">(4)</a> <a href="#ref-for-values①③">(5)</a> <a href="#ref-for-values①④">(6)</a> <a href="#ref-for-values①⑤">(7)</a> <a href="#ref-for-values①⑥">(8)</a> <a href="#ref-for-values①⑦">(9)</a> <a href="#ref-for-values①⑧">(10)</a> <a href="#ref-for-values①⑨">(11)</a> <a href="#ref-for-values②⓪">(12)</a> <a href="#ref-for-values②①">(13)</a> <a href="#ref-for-values②②">(14)</a> <a href="#ref-for-values②③">(15)</a> <a href="#ref-for-values②④">(16)</a> <a href="#ref-for-values②⑤">(17)</a>
+    <li><a href="#ref-for-syntax-reftype">3.5. Globals</a> <a href="#ref-for-syntax-reftype①">(2)</a> <a href="#ref-for-syntax-reftype②">(3)</a>
+    <li><a href="#ref-for-syntax-reftype③">3.6. Exported Functions</a> <a href="#ref-for-syntax-reftype④">(2)</a> <a href="#ref-for-syntax-reftype⑤">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-values">
@@ -2472,8 +2490,8 @@ In practice, an implementation may run out of resources for valid modules below 
    <ul>
     <li><a href="#ref-for-values">3.3. Memories</a>
     <li><a href="#ref-for-values①">3.4. Tables</a> <a href="#ref-for-values②">(2)</a> <a href="#ref-for-values③">(3)</a> <a href="#ref-for-values④">(4)</a>
-    <li><a href="#ref-for-values⑤">3.5. Globals</a> <a href="#ref-for-values⑥">(2)</a> <a href="#ref-for-values⑦">(3)</a> <a href="#ref-for-values⑧">(4)</a>
-    <li><a href="#ref-for-values⑨">3.6. Exported Functions</a> <a href="#ref-for-values①⓪">(2)</a> <a href="#ref-for-values①①">(3)</a> <a href="#ref-for-values①②">(4)</a> <a href="#ref-for-values①③">(5)</a> <a href="#ref-for-values①④">(6)</a> <a href="#ref-for-values①⑤">(7)</a> <a href="#ref-for-values①⑥">(8)</a> <a href="#ref-for-values①⑦">(9)</a> <a href="#ref-for-values①⑧">(10)</a> <a href="#ref-for-values①⑨">(11)</a> <a href="#ref-for-values②⓪">(12)</a> <a href="#ref-for-values②①">(13)</a> <a href="#ref-for-values②②">(14)</a> <a href="#ref-for-values②③">(15)</a> <a href="#ref-for-values②④">(16)</a> <a href="#ref-for-values②⑤">(17)</a>
+    <li><a href="#ref-for-values⑤">3.5. Globals</a> <a href="#ref-for-values⑥">(2)</a> <a href="#ref-for-values⑦">(3)</a> <a href="#ref-for-values⑧">(4)</a> <a href="#ref-for-values⑨">(5)</a>
+    <li><a href="#ref-for-values①⓪">3.6. Exported Functions</a> <a href="#ref-for-values①①">(2)</a> <a href="#ref-for-values①②">(3)</a> <a href="#ref-for-values①③">(4)</a> <a href="#ref-for-values①④">(5)</a> <a href="#ref-for-values①⑤">(6)</a> <a href="#ref-for-values①⑥">(7)</a> <a href="#ref-for-values①⑦">(8)</a> <a href="#ref-for-values①⑧">(9)</a> <a href="#ref-for-values①⑨">(10)</a> <a href="#ref-for-values②⓪">(11)</a> <a href="#ref-for-values②①">(12)</a> <a href="#ref-for-values②②">(13)</a> <a href="#ref-for-values②③">(14)</a> <a href="#ref-for-values②④">(15)</a> <a href="#ref-for-values②⑤">(16)</a> <a href="#ref-for-values②⑥">(17)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-values">
@@ -2481,8 +2499,17 @@ In practice, an implementation may run out of resources for valid modules below 
    <ul>
     <li><a href="#ref-for-values">3.3. Memories</a>
     <li><a href="#ref-for-values①">3.4. Tables</a> <a href="#ref-for-values②">(2)</a> <a href="#ref-for-values③">(3)</a> <a href="#ref-for-values④">(4)</a>
-    <li><a href="#ref-for-values⑤">3.5. Globals</a> <a href="#ref-for-values⑥">(2)</a> <a href="#ref-for-values⑦">(3)</a> <a href="#ref-for-values⑧">(4)</a>
-    <li><a href="#ref-for-values⑨">3.6. Exported Functions</a> <a href="#ref-for-values①⓪">(2)</a> <a href="#ref-for-values①①">(3)</a> <a href="#ref-for-values①②">(4)</a> <a href="#ref-for-values①③">(5)</a> <a href="#ref-for-values①④">(6)</a> <a href="#ref-for-values①⑤">(7)</a> <a href="#ref-for-values①⑥">(8)</a> <a href="#ref-for-values①⑦">(9)</a> <a href="#ref-for-values①⑧">(10)</a> <a href="#ref-for-values①⑨">(11)</a> <a href="#ref-for-values②⓪">(12)</a> <a href="#ref-for-values②①">(13)</a> <a href="#ref-for-values②②">(14)</a> <a href="#ref-for-values②③">(15)</a> <a href="#ref-for-values②④">(16)</a> <a href="#ref-for-values②⑤">(17)</a>
+    <li><a href="#ref-for-values⑤">3.5. Globals</a> <a href="#ref-for-values⑥">(2)</a> <a href="#ref-for-values⑦">(3)</a> <a href="#ref-for-values⑧">(4)</a> <a href="#ref-for-values⑨">(5)</a>
+    <li><a href="#ref-for-values①⓪">3.6. Exported Functions</a> <a href="#ref-for-values①①">(2)</a> <a href="#ref-for-values①②">(3)</a> <a href="#ref-for-values①③">(4)</a> <a href="#ref-for-values①④">(5)</a> <a href="#ref-for-values①⑤">(6)</a> <a href="#ref-for-values①⑥">(7)</a> <a href="#ref-for-values①⑦">(8)</a> <a href="#ref-for-values①⑧">(9)</a> <a href="#ref-for-values①⑨">(10)</a> <a href="#ref-for-values②⓪">(11)</a> <a href="#ref-for-values②①">(12)</a> <a href="#ref-for-values②②">(13)</a> <a href="#ref-for-values②③">(14)</a> <a href="#ref-for-values②④">(15)</a> <a href="#ref-for-values②⑤">(16)</a> <a href="#ref-for-values②⑥">(17)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="term-for-values">
+   <a href="https://webassembly.github.io/spec/core/exec/runtime.html#values">https://webassembly.github.io/spec/core/exec/runtime.html#values</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-values">3.3. Memories</a>
+    <li><a href="#ref-for-values①">3.4. Tables</a> <a href="#ref-for-values②">(2)</a> <a href="#ref-for-values③">(3)</a> <a href="#ref-for-values④">(4)</a>
+    <li><a href="#ref-for-values⑤">3.5. Globals</a> <a href="#ref-for-values⑥">(2)</a> <a href="#ref-for-values⑦">(3)</a> <a href="#ref-for-values⑧">(4)</a> <a href="#ref-for-values⑨">(5)</a>
+    <li><a href="#ref-for-values①⓪">3.6. Exported Functions</a> <a href="#ref-for-values①①">(2)</a> <a href="#ref-for-values①②">(3)</a> <a href="#ref-for-values①③">(4)</a> <a href="#ref-for-values①④">(5)</a> <a href="#ref-for-values①⑤">(6)</a> <a href="#ref-for-values①⑥">(7)</a> <a href="#ref-for-values①⑦">(8)</a> <a href="#ref-for-values①⑧">(9)</a> <a href="#ref-for-values①⑨">(10)</a> <a href="#ref-for-values②⓪">(11)</a> <a href="#ref-for-values②①">(12)</a> <a href="#ref-for-values②②">(13)</a> <a href="#ref-for-values②③">(14)</a> <a href="#ref-for-values②④">(15)</a> <a href="#ref-for-values②⑤">(16)</a> <a href="#ref-for-values②⑥">(17)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-grammar-notation">
@@ -2578,8 +2605,8 @@ In practice, an implementation may run out of resources for valid modules below 
    <ul>
     <li><a href="#ref-for-values">3.3. Memories</a>
     <li><a href="#ref-for-values①">3.4. Tables</a> <a href="#ref-for-values②">(2)</a> <a href="#ref-for-values③">(3)</a> <a href="#ref-for-values④">(4)</a>
-    <li><a href="#ref-for-values⑤">3.5. Globals</a> <a href="#ref-for-values⑥">(2)</a> <a href="#ref-for-values⑦">(3)</a> <a href="#ref-for-values⑧">(4)</a>
-    <li><a href="#ref-for-values⑨">3.6. Exported Functions</a> <a href="#ref-for-values①⓪">(2)</a> <a href="#ref-for-values①①">(3)</a> <a href="#ref-for-values①②">(4)</a> <a href="#ref-for-values①③">(5)</a> <a href="#ref-for-values①④">(6)</a> <a href="#ref-for-values①⑤">(7)</a> <a href="#ref-for-values①⑥">(8)</a> <a href="#ref-for-values①⑦">(9)</a> <a href="#ref-for-values①⑧">(10)</a> <a href="#ref-for-values①⑨">(11)</a> <a href="#ref-for-values②⓪">(12)</a> <a href="#ref-for-values②①">(13)</a> <a href="#ref-for-values②②">(14)</a> <a href="#ref-for-values②③">(15)</a> <a href="#ref-for-values②④">(16)</a> <a href="#ref-for-values②⑤">(17)</a>
+    <li><a href="#ref-for-values⑤">3.5. Globals</a> <a href="#ref-for-values⑥">(2)</a> <a href="#ref-for-values⑦">(3)</a> <a href="#ref-for-values⑧">(4)</a> <a href="#ref-for-values⑨">(5)</a>
+    <li><a href="#ref-for-values①⓪">3.6. Exported Functions</a> <a href="#ref-for-values①①">(2)</a> <a href="#ref-for-values①②">(3)</a> <a href="#ref-for-values①③">(4)</a> <a href="#ref-for-values①④">(5)</a> <a href="#ref-for-values①⑤">(6)</a> <a href="#ref-for-values①⑥">(7)</a> <a href="#ref-for-values①⑦">(8)</a> <a href="#ref-for-values①⑧">(9)</a> <a href="#ref-for-values①⑨">(10)</a> <a href="#ref-for-values②⓪">(11)</a> <a href="#ref-for-values②①">(12)</a> <a href="#ref-for-values②②">(13)</a> <a href="#ref-for-values②③">(14)</a> <a href="#ref-for-values②④">(15)</a> <a href="#ref-for-values②⑤">(16)</a> <a href="#ref-for-values②⑥">(17)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-external-types">
@@ -2602,8 +2629,8 @@ In practice, an implementation may run out of resources for valid modules below 
    <ul>
     <li><a href="#ref-for-values">3.3. Memories</a>
     <li><a href="#ref-for-values①">3.4. Tables</a> <a href="#ref-for-values②">(2)</a> <a href="#ref-for-values③">(3)</a> <a href="#ref-for-values④">(4)</a>
-    <li><a href="#ref-for-values⑤">3.5. Globals</a> <a href="#ref-for-values⑥">(2)</a> <a href="#ref-for-values⑦">(3)</a> <a href="#ref-for-values⑧">(4)</a>
-    <li><a href="#ref-for-values⑨">3.6. Exported Functions</a> <a href="#ref-for-values①⓪">(2)</a> <a href="#ref-for-values①①">(3)</a> <a href="#ref-for-values①②">(4)</a> <a href="#ref-for-values①③">(5)</a> <a href="#ref-for-values①④">(6)</a> <a href="#ref-for-values①⑤">(7)</a> <a href="#ref-for-values①⑥">(8)</a> <a href="#ref-for-values①⑦">(9)</a> <a href="#ref-for-values①⑧">(10)</a> <a href="#ref-for-values①⑨">(11)</a> <a href="#ref-for-values②⓪">(12)</a> <a href="#ref-for-values②①">(13)</a> <a href="#ref-for-values②②">(14)</a> <a href="#ref-for-values②③">(15)</a> <a href="#ref-for-values②④">(16)</a> <a href="#ref-for-values②⑤">(17)</a>
+    <li><a href="#ref-for-values⑤">3.5. Globals</a> <a href="#ref-for-values⑥">(2)</a> <a href="#ref-for-values⑦">(3)</a> <a href="#ref-for-values⑧">(4)</a> <a href="#ref-for-values⑨">(5)</a>
+    <li><a href="#ref-for-values①⓪">3.6. Exported Functions</a> <a href="#ref-for-values①①">(2)</a> <a href="#ref-for-values①②">(3)</a> <a href="#ref-for-values①③">(4)</a> <a href="#ref-for-values①④">(5)</a> <a href="#ref-for-values①⑤">(6)</a> <a href="#ref-for-values①⑥">(7)</a> <a href="#ref-for-values①⑦">(8)</a> <a href="#ref-for-values①⑧">(9)</a> <a href="#ref-for-values①⑨">(10)</a> <a href="#ref-for-values②⓪">(11)</a> <a href="#ref-for-values②①">(12)</a> <a href="#ref-for-values②②">(13)</a> <a href="#ref-for-values②③">(14)</a> <a href="#ref-for-values②④">(15)</a> <a href="#ref-for-values②⑤">(16)</a> <a href="#ref-for-values②⑥">(17)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-syntax-numtype">
@@ -2619,8 +2646,8 @@ In practice, an implementation may run out of resources for valid modules below 
    <ul>
     <li><a href="#ref-for-values">3.3. Memories</a>
     <li><a href="#ref-for-values①">3.4. Tables</a> <a href="#ref-for-values②">(2)</a> <a href="#ref-for-values③">(3)</a> <a href="#ref-for-values④">(4)</a>
-    <li><a href="#ref-for-values⑤">3.5. Globals</a> <a href="#ref-for-values⑥">(2)</a> <a href="#ref-for-values⑦">(3)</a> <a href="#ref-for-values⑧">(4)</a>
-    <li><a href="#ref-for-values⑨">3.6. Exported Functions</a> <a href="#ref-for-values①⓪">(2)</a> <a href="#ref-for-values①①">(3)</a> <a href="#ref-for-values①②">(4)</a> <a href="#ref-for-values①③">(5)</a> <a href="#ref-for-values①④">(6)</a> <a href="#ref-for-values①⑤">(7)</a> <a href="#ref-for-values①⑥">(8)</a> <a href="#ref-for-values①⑦">(9)</a> <a href="#ref-for-values①⑧">(10)</a> <a href="#ref-for-values①⑨">(11)</a> <a href="#ref-for-values②⓪">(12)</a> <a href="#ref-for-values②①">(13)</a> <a href="#ref-for-values②②">(14)</a> <a href="#ref-for-values②③">(15)</a> <a href="#ref-for-values②④">(16)</a> <a href="#ref-for-values②⑤">(17)</a>
+    <li><a href="#ref-for-values⑤">3.5. Globals</a> <a href="#ref-for-values⑥">(2)</a> <a href="#ref-for-values⑦">(3)</a> <a href="#ref-for-values⑧">(4)</a> <a href="#ref-for-values⑨">(5)</a>
+    <li><a href="#ref-for-values①⓪">3.6. Exported Functions</a> <a href="#ref-for-values①①">(2)</a> <a href="#ref-for-values①②">(3)</a> <a href="#ref-for-values①③">(4)</a> <a href="#ref-for-values①④">(5)</a> <a href="#ref-for-values①⑤">(6)</a> <a href="#ref-for-values①⑥">(7)</a> <a href="#ref-for-values①⑦">(8)</a> <a href="#ref-for-values①⑧">(9)</a> <a href="#ref-for-values①⑨">(10)</a> <a href="#ref-for-values②⓪">(11)</a> <a href="#ref-for-values②①">(12)</a> <a href="#ref-for-values②②">(13)</a> <a href="#ref-for-values②③">(14)</a> <a href="#ref-for-values②④">(15)</a> <a href="#ref-for-values②⑤">(16)</a> <a href="#ref-for-values②⑥">(17)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-external-types">
@@ -2649,8 +2676,8 @@ In practice, an implementation may run out of resources for valid modules below 
    <ul>
     <li><a href="#ref-for-values">3.3. Memories</a>
     <li><a href="#ref-for-values①">3.4. Tables</a> <a href="#ref-for-values②">(2)</a> <a href="#ref-for-values③">(3)</a> <a href="#ref-for-values④">(4)</a>
-    <li><a href="#ref-for-values⑤">3.5. Globals</a> <a href="#ref-for-values⑥">(2)</a> <a href="#ref-for-values⑦">(3)</a> <a href="#ref-for-values⑧">(4)</a>
-    <li><a href="#ref-for-values⑨">3.6. Exported Functions</a> <a href="#ref-for-values①⓪">(2)</a> <a href="#ref-for-values①①">(3)</a> <a href="#ref-for-values①②">(4)</a> <a href="#ref-for-values①③">(5)</a> <a href="#ref-for-values①④">(6)</a> <a href="#ref-for-values①⑤">(7)</a> <a href="#ref-for-values①⑥">(8)</a> <a href="#ref-for-values①⑦">(9)</a> <a href="#ref-for-values①⑧">(10)</a> <a href="#ref-for-values①⑨">(11)</a> <a href="#ref-for-values②⓪">(12)</a> <a href="#ref-for-values②①">(13)</a> <a href="#ref-for-values②②">(14)</a> <a href="#ref-for-values②③">(15)</a> <a href="#ref-for-values②④">(16)</a> <a href="#ref-for-values②⑤">(17)</a>
+    <li><a href="#ref-for-values⑤">3.5. Globals</a> <a href="#ref-for-values⑥">(2)</a> <a href="#ref-for-values⑦">(3)</a> <a href="#ref-for-values⑧">(4)</a> <a href="#ref-for-values⑨">(5)</a>
+    <li><a href="#ref-for-values①⓪">3.6. Exported Functions</a> <a href="#ref-for-values①①">(2)</a> <a href="#ref-for-values①②">(3)</a> <a href="#ref-for-values①③">(4)</a> <a href="#ref-for-values①④">(5)</a> <a href="#ref-for-values①⑤">(6)</a> <a href="#ref-for-values①⑥">(7)</a> <a href="#ref-for-values①⑦">(8)</a> <a href="#ref-for-values①⑧">(9)</a> <a href="#ref-for-values①⑨">(10)</a> <a href="#ref-for-values②⓪">(11)</a> <a href="#ref-for-values②①">(12)</a> <a href="#ref-for-values②②">(13)</a> <a href="#ref-for-values②③">(14)</a> <a href="#ref-for-values②④">(15)</a> <a href="#ref-for-values②⑤">(16)</a> <a href="#ref-for-values②⑥">(17)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-syntax-numtype">
@@ -2666,8 +2693,8 @@ In practice, an implementation may run out of resources for valid modules below 
    <ul>
     <li><a href="#ref-for-values">3.3. Memories</a>
     <li><a href="#ref-for-values①">3.4. Tables</a> <a href="#ref-for-values②">(2)</a> <a href="#ref-for-values③">(3)</a> <a href="#ref-for-values④">(4)</a>
-    <li><a href="#ref-for-values⑤">3.5. Globals</a> <a href="#ref-for-values⑥">(2)</a> <a href="#ref-for-values⑦">(3)</a> <a href="#ref-for-values⑧">(4)</a>
-    <li><a href="#ref-for-values⑨">3.6. Exported Functions</a> <a href="#ref-for-values①⓪">(2)</a> <a href="#ref-for-values①①">(3)</a> <a href="#ref-for-values①②">(4)</a> <a href="#ref-for-values①③">(5)</a> <a href="#ref-for-values①④">(6)</a> <a href="#ref-for-values①⑤">(7)</a> <a href="#ref-for-values①⑥">(8)</a> <a href="#ref-for-values①⑦">(9)</a> <a href="#ref-for-values①⑧">(10)</a> <a href="#ref-for-values①⑨">(11)</a> <a href="#ref-for-values②⓪">(12)</a> <a href="#ref-for-values②①">(13)</a> <a href="#ref-for-values②②">(14)</a> <a href="#ref-for-values②③">(15)</a> <a href="#ref-for-values②④">(16)</a> <a href="#ref-for-values②⑤">(17)</a>
+    <li><a href="#ref-for-values⑤">3.5. Globals</a> <a href="#ref-for-values⑥">(2)</a> <a href="#ref-for-values⑦">(3)</a> <a href="#ref-for-values⑧">(4)</a> <a href="#ref-for-values⑨">(5)</a>
+    <li><a href="#ref-for-values①⓪">3.6. Exported Functions</a> <a href="#ref-for-values①①">(2)</a> <a href="#ref-for-values①②">(3)</a> <a href="#ref-for-values①③">(4)</a> <a href="#ref-for-values①④">(5)</a> <a href="#ref-for-values①⑤">(6)</a> <a href="#ref-for-values①⑥">(7)</a> <a href="#ref-for-values①⑦">(8)</a> <a href="#ref-for-values①⑧">(9)</a> <a href="#ref-for-values①⑨">(10)</a> <a href="#ref-for-values②⓪">(11)</a> <a href="#ref-for-values②①">(12)</a> <a href="#ref-for-values②②">(13)</a> <a href="#ref-for-values②③">(14)</a> <a href="#ref-for-values②④">(15)</a> <a href="#ref-for-values②⑤">(16)</a> <a href="#ref-for-values②⑥">(17)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-external-types">
@@ -2932,6 +2959,7 @@ In practice, an implementation may run out of resources for valid modules below 
      <li><span class="dfn-paneled" id="term-for-embed-module-imports" style="color:initial">module_imports</span>
      <li><span class="dfn-paneled" id="term-for-embed-module-instantiate" style="color:initial">module_instantiate</span>
      <li><span class="dfn-paneled" id="term-for-embed-module-validate" style="color:initial">module_validate</span>
+     <li><span class="dfn-paneled" id="term-for-syntax-reftype②" style="color:initial">nullref</span>
      <li><span class="dfn-paneled" id="term-for-values" style="color:initial">ref.func</span>
      <li><span class="dfn-paneled" id="term-for-values①" style="color:initial">ref.host</span>
      <li><span class="dfn-paneled" id="term-for-values②" style="color:initial">ref.null</span>
@@ -3070,6 +3098,7 @@ In practice, an implementation may run out of resources for valid modules below 
 };
 
 <c- b>enum</c-> <a href="#enumdef-tablekind"><code><c- g>TableKind</c-></code></a> {
+  <a href="#dom-tablekind-nullref"><code><c- s>"nullref"</c-></code></a>,
   <a href="#dom-tablekind-anyref"><code><c- s>"anyref"</c-></code></a>,
   <a href="#dom-tablekind-anyfunc"><code><c- s>"anyfunc"</c-></code></a>,
   // Note: More values may be added in future iterations,
@@ -3659,7 +3688,7 @@ In practice, an implementation may run out of resources for valid modules below 
   <aside class="dfn-panel" data-for="allocating-a-host-address">
    <b><a href="#allocating-a-host-address">#allocating-a-host-address</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-allocating-a-host-address">3.6. Exported Functions</a> <a href="#ref-for-allocating-a-host-address①">(2)</a>
+    <li><a href="#ref-for-allocating-a-host-address">3.6. Exported Functions</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="exceptiondef-compileerror">
