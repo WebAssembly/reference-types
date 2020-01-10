@@ -291,8 +291,6 @@ Module instances are classified by *module contexts*, which are regular :ref:`co
 :ref:`Element Instances <syntax-eleminst>` :math:`\{ \EIELEM~\X{fa}^\ast \}`
 ............................................................................
 
-* The :ref:`reference type <syntax-reftype>` :math:`t` must be :ref:`valid <valid-reftype>`.
-
 * For each :ref:`reference <syntax-ref>` :math:`\reff_i` in the elements :math:`\reff^n`:
 
   * The :ref:`reference <syntax-ref>` :math:`\reff_i` must be :ref:`valid <valid-ref>` with some :ref:`reference type <syntax-reftype>` :math:`t'_i`.
@@ -303,8 +301,6 @@ Module instances are classified by *module contexts*, which are regular :ref:`co
 
 .. math::
    \frac{
-     \vdashreftype t \ok
-     \qquad
      (S \vdash \reff : t')^\ast
      \qquad
      (\vdashreftypematch t' \matchesvaltype t)^n
