@@ -105,7 +105,7 @@ They mirror the conventions used for <a class="reference internal" href="../synt
 In order to distinguish symbols of the textual syntax from symbols of the abstract syntax, <span class="math notranslate nohighlight">\(\mathtt{typewriter}\)</span> font is adopted for the former.</p>
 <ul class="simple">
 <li>Terminal symbols are either literal strings of characters enclosed in quotes
-or expressed as <a class="reference external" href="http://www.unicode.org/versions/latest/">Unicode</a> scalar values: <span class="math notranslate nohighlight">\(\def\mathdef1674#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1674{module}\)</span>, <span class="math notranslate nohighlight">\(\def\mathdef1675#1{\mathrm{U{+}#1}}\mathdef1675{0A}\)</span>.
+or expressed as <a class="reference external" href="http://www.unicode.org/versions/latest/">Unicode</a> scalar values: <span class="math notranslate nohighlight">\(\def\mathdef1712#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1712{module}\)</span>, <span class="math notranslate nohighlight">\(\def\mathdef1713#1{\mathrm{U{+}#1}}\mathdef1713{0A}\)</span>.
 (All characters written literally are unambiguously drawn from the 7-bit <a class="reference external" href="http://webstore.ansi.org/RecordDetail.aspx?sku=INCITS+4-1986%5bR2012%5d">ASCII</a> subset of Unicode.)</li>
 <li>Nonterminal symbols are written in typewriter font: <span class="math notranslate nohighlight">\(\mathtt{valtype}, \mathtt{instr}\)</span>.</li>
 <li><span class="math notranslate nohighlight">\(T^n\)</span> is a sequence of <span class="math notranslate nohighlight">\(n\geq 0\)</span> iterations  of <span class="math notranslate nohighlight">\(T\)</span>.</li>
@@ -118,6 +118,7 @@ or expressed as <a class="reference external" href="http://www.unicode.org/versi
 <li><span class="math notranslate nohighlight">\(x{:}T\)</span> denotes the same language as the nonterminal <span class="math notranslate nohighlight">\(T\)</span>, but also binds the variable <span class="math notranslate nohighlight">\(x\)</span> to the attribute synthesized for <span class="math notranslate nohighlight">\(T\)</span>.</li>
 <li>Productions are written <span class="math notranslate nohighlight">\(\mathtt{sym} ::= T_1 \Rightarrow A_1 ~|~ \dots ~|~ T_n \Rightarrow A_n\)</span>, where each <span class="math notranslate nohighlight">\(A_i\)</span> is the attribute that is synthesized for <span class="math notranslate nohighlight">\(\mathtt{sym}\)</span> in the given case, usually from attribute variables bound in <span class="math notranslate nohighlight">\(T_i\)</span>.</li>
 <li>Some productions are augmented by side conditions in parentheses, which restrict the applicability of the production. They provide a shorthand for a combinatorial expansion of the production into many separate cases.</li>
+<li>If the same meta variable or non-terminal symbol appears multiple times in a production (in the syntax or in an attribute), then all those occurrences must have the same instantiation.</li>
 </ul>
 <ul class="simple" id="text-syntactic">
 <li>A distinction is made between <em>lexical</em> and <em>syntactic</em> productions. For the latter, arbitrary <a class="reference internal" href="lexical.html#text-space"><span class="std std-ref">white space</span></a> is allowed in any place where the grammar contains spaces. The productions defining <a class="reference internal" href="lexical.html#text-lexical"><span class="std std-ref">lexical syntax</span></a> and the syntax of <a class="reference internal" href="values.html#text-value"><span class="std std-ref">values</span></a> are considered lexical, all others are syntactic.</li>
@@ -127,20 +128,20 @@ or expressed as <a class="reference external" href="http://www.unicode.org/versi
 <p>For example, the <a class="reference internal" href="types.html#text-valtype"><span class="std std-ref">textual grammar</span></a> for <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value types</span></a> is given as follows:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llcll&#64;{\qquad\qquad}l}
-\def\mathdef1638#1{{}}\mathdef1638{value types} &amp; \href{../text/types.html#text-valtype}{\mathtt{valtype}} &amp;::=&amp;
-  \def\mathdef1676#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1676{i32} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-valtype}{\mathsf{i32}} \\ &amp;&amp;|&amp;
-  \def\mathdef1677#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1677{i64} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-valtype}{\mathsf{i64}} \\ &amp;&amp;|&amp;
-  \def\mathdef1678#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1678{f32} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-valtype}{\mathsf{f32}} \\ &amp;&amp;|&amp;
-  \def\mathdef1679#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1679{f64} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-valtype}{\mathsf{f64}} \\
+\def\mathdef1676#1{{}}\mathdef1676{value types} &amp; \href{../text/types.html#text-valtype}{\mathtt{valtype}} &amp;::=&amp;
+  \def\mathdef1714#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1714{i32} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-valtype}{\mathsf{i32}} \\ &amp;&amp;|&amp;
+  \def\mathdef1715#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1715{i64} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-valtype}{\mathsf{i64}} \\ &amp;&amp;|&amp;
+  \def\mathdef1716#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1716{f32} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-valtype}{\mathsf{f32}} \\ &amp;&amp;|&amp;
+  \def\mathdef1717#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1717{f64} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-valtype}{\mathsf{f64}} \\
 \end{array}\end{split}\]</div>
 <p>The <a class="reference internal" href="types.html#text-limits"><span class="std std-ref">textual grammar</span></a> for <a class="reference internal" href="../syntax/types.html#syntax-limits"><span class="std std-ref">limits</span></a> is defined as follows:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llclll}
-\def\mathdef1638#1{{}}\mathdef1638{limits} &amp; \href{../text/types.html#text-limits}{\mathtt{limits}} &amp;::=&amp;
-  n{:}\href{../text/values.html#text-int}{\def\mathdef1662#1{{\mathtt{u}#1}}\mathdef1662{\mathtt{32}}} &amp;\Rightarrow&amp; \{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~\epsilon \} \\ &amp;&amp;|&amp;
-  n{:}\href{../text/values.html#text-int}{\def\mathdef1662#1{{\mathtt{u}#1}}\mathdef1662{\mathtt{32}}}~~m{:}\href{../text/values.html#text-int}{\def\mathdef1662#1{{\mathtt{u}#1}}\mathdef1662{\mathtt{32}}} &amp;\Rightarrow&amp; \{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m \} \\
+\def\mathdef1676#1{{}}\mathdef1676{limits} &amp; \href{../text/types.html#text-limits}{\mathtt{limits}} &amp;::=&amp;
+  n{:}\href{../text/values.html#text-int}{\def\mathdef1700#1{{\mathtt{u}#1}}\mathdef1700{\mathtt{32}}} &amp;\Rightarrow&amp; \{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~\epsilon \} \\ &amp;&amp;|&amp;
+  n{:}\href{../text/values.html#text-int}{\def\mathdef1700#1{{\mathtt{u}#1}}\mathdef1700{\mathtt{32}}}~~m{:}\href{../text/values.html#text-int}{\def\mathdef1700#1{{\mathtt{u}#1}}\mathdef1700{\mathtt{32}}} &amp;\Rightarrow&amp; \{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m \} \\
 \end{array}\end{split}\]</div>
-<p class="last">The variables <span class="math notranslate nohighlight">\(n\)</span> and <span class="math notranslate nohighlight">\(m\)</span> name the attributes of the respective <span class="math notranslate nohighlight">\(\href{../text/values.html#text-int}{\def\mathdef1662#1{{\mathtt{u}#1}}\mathdef1662{\mathtt{32}}}\)</span> nonterminals, which in this case are the actual <a class="reference internal" href="../syntax/values.html#syntax-uint"><span class="std std-ref">unsigned integers</span></a> those parse into.
+<p class="last">The variables <span class="math notranslate nohighlight">\(n\)</span> and <span class="math notranslate nohighlight">\(m\)</span> name the attributes of the respective <span class="math notranslate nohighlight">\(\href{../text/values.html#text-int}{\def\mathdef1700#1{{\mathtt{u}#1}}\mathdef1700{\mathtt{32}}}\)</span> nonterminals, which in this case are the actual <a class="reference internal" href="../syntax/values.html#syntax-uint"><span class="std std-ref">unsigned integers</span></a> those parse into.
 The attribute of the complete production then is the abstract syntax for the limit, expressed in terms of the former values.</p>
 </div>
 </div>
@@ -161,13 +162,15 @@ In addition, the context records the types defined in the module, so that <a cla
 <p>It is convenient to define identifier contexts as <a class="reference internal" href="../syntax/conventions.html#notation-record"><span class="std std-ref">records</span></a> <span class="math notranslate nohighlight">\(I\)</span> with abstract syntax as follows:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llll}
-\def\mathdef1638#1{{}}\mathdef1638{(identifier context)} &amp; I &amp;::=&amp;
+\def\mathdef1676#1{{}}\mathdef1676{(identifier context)} &amp; I &amp;::=&amp;
   \begin{array}[t]{l&#64;{~}ll}
   \{ &amp; \href{../text/conventions.html#text-context}{\mathsf{types}} &amp; (\href{../text/values.html#text-id}{\mathtt{id}}^?)^\ast, \\
      &amp; \href{../text/conventions.html#text-context}{\mathsf{funcs}} &amp; (\href{../text/values.html#text-id}{\mathtt{id}}^?)^\ast, \\
      &amp; \href{../text/conventions.html#text-context}{\mathsf{tables}} &amp; (\href{../text/values.html#text-id}{\mathtt{id}}^?)^\ast, \\
      &amp; \href{../text/conventions.html#text-context}{\mathsf{mems}} &amp; (\href{../text/values.html#text-id}{\mathtt{id}}^?)^\ast, \\
      &amp; \href{../text/conventions.html#text-context}{\mathsf{globals}} &amp; (\href{../text/values.html#text-id}{\mathtt{id}}^?)^\ast, \\
+     &amp; \href{../text/conventions.html#text-context}{\mathsf{elem}} &amp; (\href{../text/values.html#text-id}{\mathtt{id}}^?)^\ast, \\
+     &amp; \href{../text/conventions.html#text-context}{\mathsf{data}} &amp; (\href{../text/values.html#text-id}{\mathtt{id}}^?)^\ast, \\
      &amp; \href{../text/conventions.html#text-context}{\mathsf{locals}} &amp; (\href{../text/values.html#text-id}{\mathtt{id}}^?)^\ast, \\
      &amp; \href{../text/conventions.html#text-context}{\mathsf{labels}} &amp; (\href{../text/values.html#text-id}{\mathtt{id}}^?)^\ast, \\
      &amp; \href{../text/conventions.html#text-context}{\mathsf{typedefs}} &amp; \href{../syntax/types.html#syntax-functype}{\mathit{functype}}^\ast ~\} \\
@@ -187,7 +190,7 @@ For example, the record <span class="math notranslate nohighlight">\(\{\}\)</spa
 <p><a class="reference internal" href="../syntax/conventions.html#syntax-vec"><span class="std std-ref">Vectors</span></a> are written as plain sequences, but with a restriction on the length of these sequence.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llclll&#64;{\qquad\qquad}l}
-\def\mathdef1638#1{{}}\mathdef1638{vector} &amp; \href{../text/conventions.html#text-vec}{\mathtt{vec}}(\mathtt{A}) &amp;::=&amp;
+\def\mathdef1676#1{{}}\mathdef1676{vector} &amp; \href{../text/conventions.html#text-vec}{\mathtt{vec}}(\mathtt{A}) &amp;::=&amp;
   (x{:}\mathtt{A})^n &amp;\Rightarrow&amp; x^n &amp; (\mathrel{\mbox{if}} n &lt; 2^{32}) \\
 \end{array}\end{split}\]</div>
 </div>
