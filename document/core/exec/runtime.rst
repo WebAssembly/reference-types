@@ -56,19 +56,6 @@ it is the respective value :math:`0` for :ref:`number types <syntax-numtype>` an
    \default_t &=& \REFNULL & (\iff t = \reftype) \\
    \end{array}
 
-Conventions
-...........
-
-The following auxiliary notation is defined for constant values, to ensure they are well-formed for the given :ref:`value type <syntax-valtype>`.
-
-.. math::
-   \begin{array}{lcl@{\qquad}l}
-   \vconst_t(x) &=& (t\K{.}\CONST~x)
-     & (\iff x~\mbox{is well-formed for}~t) \\
-   \vconst_t(x) &=& \TRAP
-     & (\otherwise) \\
-   \end{array}
-
 
 Convention
 ..........
@@ -108,7 +95,6 @@ Store
 The *store* represents all global state that can be manipulated by WebAssembly programs.
 It consists of the runtime representation of all *instances* of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tableinst>`, :ref:`memories <syntax-meminst>`, and :ref:`globals <syntax-globalinst>`, :ref:`element segments <syntax-eleminst>`, and :ref:`data segments <syntax-datainst>` that have been :ref:`allocated <alloc>` during the life time of the abstract machine. [#gc]_
 
-Element and data segments can be dropped by the owning module, in which case the respective instances are replaced with :math:`\epsilon`.
 It is an invariant of the semantics that no element or data instance is :ref:`addressed <syntax-addr>` from anywhere else but the owning module instances.
 
 Syntactically, the store is defined as a :ref:`record <notation-record>` listing the existing instances of each category:
@@ -121,8 +107,8 @@ Syntactically, the store is defined as a :ref:`record <notation-record>` listing
      \STABLES & \tableinst^\ast, \\
      \SMEMS & \meminst^\ast, \\
      \SGLOBALS & \globalinst^\ast, \\
-     \SELEM & (\eleminst^?)^\ast, \\
-     \SDATA & (\datainst^?)^\ast ~\} \\
+     \SELEMS & \eleminst^\ast, \\
+     \SDATAS & \datainst^\ast ~\} \\
      \end{array}
    \end{array}
 
@@ -349,12 +335,12 @@ Element Instances
 ~~~~~~~~~~~~~~~~~
 
 An *element instance* is the runtime representation of an :ref:`element segment <syntax-elem>`.
-It holds a vector of function elements.
+It holds a vector of references and their common :ref:`type <syntax-reftype>`.
 
 .. math::
   \begin{array}{llll}
   \production{(element instance)} & \eleminst &::=&
-    \{ \EIINIT~\vec(\funcelem) \} \\
+    \{ \EITYPE~\reftype, \EIELEM~\vec(\funcelem) \} \\
   \end{array}
 
 
@@ -372,7 +358,7 @@ It holds a vector of :ref:`bytes <syntax-byte>`.
 .. math::
   \begin{array}{llll}
   \production{(data instance)} & \datainst &::=&
-    \{ \DIINIT~\vec(\byte) \} \\
+    \{ \DIDATA~\vec(\byte) \} \\
   \end{array}
 
 

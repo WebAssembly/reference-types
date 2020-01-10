@@ -309,23 +309,23 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
 :ref:`Element segments <syntax-eleminst>`
 .........................................
 
-1. Let :math:`\funcelem^\ast` be the vector of :ref:`function elements <syntax-funcelem>` to allocate.
+1. Let :math:`\reftype` be the elements' type and :math:`\reff^\ast` the vector of :ref:`references <syntax-ref>` to allocate.
 
 2. Let :math:`a` be the first free :ref:`element address <syntax-elemaddr>` in :math:`S`.
 
-3. Let :math:`\eleminst` be the :ref:`element instance <syntax-eleminst>` :math:`\{ \EIINIT~\funcelem^\ast \}`.
+3. Let :math:`\eleminst` be the :ref:`element instance <syntax-eleminst>` :math:`\{ \EITYPE~t, \EIELEM~\reff^\ast \}`.
 
-4. Append :math:`\eleminst` to the |SELEM| of :math:`S`.
+4. Append :math:`\eleminst` to the |SELEMS| of :math:`S`.
 
 5. Return :math:`a`.
 
 .. math::
   \begin{array}{rlll}
-  \allocelem(S, \funcelem^\ast) &=& S', \elemaddr \\[1ex]
+  \allocelem(S, \reftype, \reff^\ast) &=& S', \elemaddr \\[1ex]
   \mbox{where:} \hfill \\
-  \elemaddr &=& |S.\SELEM| \\
-  \eleminst &=& \{ \EIINIT~\funcelem^\ast \} \\
-  S' &=& S \compose \{\SELEM~\eleminst\} \\
+  \elemaddr &=& |S.\SELEMS| \\
+  \eleminst &=& \{ \EITYPE~\reftype, \EIELEM~\reff^\ast \} \\
+  S' &=& S \compose \{\SELEMS~\eleminst\} \\
   \end{array}
 
 
@@ -339,9 +339,9 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
 
 2. Let :math:`a` be the first free :ref:`data address <syntax-dataaddr>` in :math:`S`.
 
-3. Let :math:`\datainst` be the :ref:`data instance <syntax-datainst>` :math:`\{ \DIINIT~\bytes \}`.
+3. Let :math:`\datainst` be the :ref:`data instance <syntax-datainst>` :math:`\{ \DIDATA~\bytes \}`.
 
-4. Append :math:`\datainst` to the |SDATA| of :math:`S`.
+4. Append :math:`\datainst` to the |SDATAS| of :math:`S`.
 
 5. Return :math:`a`.
 
@@ -349,9 +349,9 @@ New instances of :ref:`functions <syntax-funcinst>`, :ref:`tables <syntax-tablei
   \begin{array}{rlll}
   \allocdata(S, \bytes) &=& S', \dataaddr \\[1ex]
   \mbox{where:} \hfill \\
-  \dataaddr &=& |S.\SDATA| \\
-  \datainst &=& \{ \DIINIT~\bytes \} \\
-  S' &=& S \compose \{\SDATA~\datainst\} \\
+  \dataaddr &=& |S.\SDATAS| \\
+  \datainst &=& \{ \DIDATA~\bytes \} \\
+  S' &=& S \compose \{\SDATAS~\datainst\} \\
   \end{array}
 
 
@@ -437,9 +437,9 @@ Growing :ref:`memories <syntax-meminst>`
 
 The allocation function for :ref:`modules <syntax-module>` requires a suitable list of :ref:`external values <syntax-externval>` that are assumed to :ref:`match <match-externtype>` the :ref:`import <syntax-import>` vector of the module,
 a list of initialization :ref:`values <syntax-val>` for the module's :ref:`globals <syntax-global>`,
-and list of :ref:`function element <syntax-funcelem>` vectors for the module's :ref:`element segments <syntax-elem>`.
+and list of :ref:`reference <syntax-ref>` vectors for the module's :ref:`element segments <syntax-elem>`.
 
-1. Let :math:`\module` be the :ref:`module <syntax-module>` to allocate and :math:`\externval_{\F{im}}^\ast` the vector of :ref:`external values <syntax-externval>` providing the module's imports, :math:`\val^\ast` the initialization :ref:`values <syntax-val>` of the module's :ref:`globals <syntax-global>`, and :math:`(\funcelem^\ast)^\ast` the :ref:`function element <syntax-funcelem>` vectors of the module's :ref:`element segments <syntax-elem>`.
+1. Let :math:`\module` be the :ref:`module <syntax-module>` to allocate and :math:`\externval_{\F{im}}^\ast` the vector of :ref:`external values <syntax-externval>` providing the module's imports, :math:`\val^\ast` the initialization :ref:`values <syntax-val>` of the module's :ref:`globals <syntax-global>`, and :math:`(\reff^\ast)^\ast` the :ref:`reference <syntax-ref>` vectors of the module's :ref:`element segments <syntax-elem>`.
 
 2. For each :ref:`function <syntax-func>` :math:`\func_i` in :math:`\module.\MFUNCS`, do:
 
@@ -459,7 +459,7 @@ and list of :ref:`function element <syntax-funcelem>` vectors for the module's :
 
 6. For each :ref:`element segment <syntax-elem>` :math:`\elem_i` in :math:`\module.\MELEMS`, do:
 
-   a. Let :math:`\elemaddr_i` be the :ref:`element address <syntax-elemaddr>` resulting from :ref:`allocating <alloc-elem>` a :ref:`element instance <syntax-eleminst>` with contents :math:`(\funcelem^\ast)^\ast[i]`.
+   a. Let :math:`\elemaddr_i` be the :ref:`element address <syntax-elemaddr>` resulting from :ref:`allocating <alloc-elem>` a :ref:`element instance <syntax-eleminst>` of :ref:`reference type <syntax-reftype>` :math:`\elem_i.\ETYPE` with contents :math:`(\reff^\ast)^\ast[i]`.
 
 7. For each :ref:`data segment <syntax-data>` :math:`\data_i` in :math:`\module.\MDATAS`, do:
 
@@ -507,7 +507,8 @@ and list of :ref:`function element <syntax-funcelem>` vectors for the module's :
 .. math::
    ~\\
    \begin{array}{rlll}
-   \allocmodule(S, \module, \externval_{\F{im}}^\ast, \val^\ast, (\funcelem^\ast)^\ast) &=& S', \moduleinst    \end{array}
+   \allocmodule(S, \module, \externval_{\F{im}}^\ast, \val^\ast, (\reff^\ast)^\ast) &=& S', \moduleinst
+   \end{array}
 
 where:
 
@@ -531,7 +532,8 @@ where:
      \qquad\qquad\qquad~ (\where \mem^\ast = \module.\MMEMS) \\
    S_4, \globaladdr^\ast &=& \allocglobal^\ast(S_3, (\global.\GTYPE)^\ast, \val^\ast)
      \qquad\quad~ (\where \global^\ast = \module.\MGLOBALS) \\
-   S_5, \elemaddr^\ast &=& \allocelem^\ast(S_4, (\funcelem^\ast)^\ast) \\
+   S_5, \elemaddr^\ast &=& \allocelem^\ast(S_4, (\elem.\ETYPE)^\ast, (\reff^\ast)^\ast) \\
+     \qquad\quad~ (\where \elem^\ast = \module.\MELEMS) \\
    S', \dataaddr^\ast &=& \allocdata^\ast(S_5, (\data.\DINIT)^\ast)
      \qquad\qquad\qquad~ (\where \data^\ast = \module.\MDATAS) \\
    \exportinst^\ast &=& \{ \EINAME~(\export.\ENAME), \EIVALUE~\externval_{\F{ex}} \}^\ast
@@ -626,9 +628,9 @@ It is up to the :ref:`embedder <embedder>` to define how such conditions are rep
 
    g. Let :math:`\val^\ast` be the conatenation of :math:`\val_i` in index order.
 
-6. Let :math:`(\funcelem^\ast)^\ast` be the list of :ref:`function element <syntax-funcelem>` vectors determined by the :ref:`element segments <syntax-elem>` in :math:`\module`. These may be calculated as follows.
+6. Let :math:`(\reff^\ast)^\ast` be the list of :ref:`reference <syntax-ref>` vectors determined by the :ref:`element segments <syntax-elem>` in :math:`\module`. These may be calculated as follows.
 
-    .. todo:: TODO desugar
+    .. todo:: TODO desugar funcelem
 
     a. For each :ref:`element segment <syntax-elem>` :math:`\elem_i` in :math:`\module.\MELEMS`, and for each element :ref:`expression <syntax-expr>` :math:`\expr_{ij}` in :math:`\elem_i.\EINIT`, do:
 
@@ -644,7 +646,7 @@ It is up to the :ref:`embedder <embedder>` to define how such conditions are rep
 
     c. Let :math:`(\funcelem^\ast)^\ast` be the concatenation of function element vectors :math:`\funcelem^\ast_i` in order of index :math:`i`.
 
-7. Let :math:`\moduleinst` be a new module instance :ref:`allocated <alloc-module>` from :math:`\module` in store :math:`S` with imports :math:`\externval^n`, global initializer values :math:`\val^\ast`, and element segment contents :math:`(\funcelem^\ast)^\ast`, and let :math:`S'` be the extended store produced by module allocation.
+7. Let :math:`\moduleinst` be a new module instance :ref:`allocated <alloc-module>` from :math:`\module` in store :math:`S` with imports :math:`\externval^n`, global initializer values :math:`\val^\ast`, and element segment contents :math:`(\reff^\ast)^\ast`, and let :math:`S'` be the extended store produced by module allocation.
 
 8. Let :math:`F` be the auxiliary :ref:`frame <syntax-frame>` :math:`\{ \AMODULE~\moduleinst, \ALOCALS~\epsilon \}`.
 
@@ -722,8 +724,8 @@ where:
 
 .. math::
    \begin{array}{@{}l}
-   \F{runelem}_i(\{\ETYPE~\X{et}, \EINIT~\funcelem^n, \EMODE~\EPASSIVE\}) \quad=\quad \epsilon \\
-   \F{runelem}_i(\{\ETYPE~\X{et}, \EINIT~\funcelem^n, \EMODE~\EACTIVE \{\ETABLE~0, \EOFFSET~\instr^\ast~\END\}\}) \quad=\\ \qquad
+   \F{runelem}_i(\{\ETYPE~\X{et}, \EINIT~\reff^n, \EMODE~\EPASSIVE\}) \quad=\quad \epsilon \\
+   \F{runelem}_i(\{\ETYPE~\X{et}, \EINIT~\reff^n, \EMODE~\EACTIVE \{\ETABLE~0, \EOFFSET~\instr^\ast~\END\}\}) \quad=\\ \qquad
      \instr^\ast~(\I32.\CONST~0)~(\I32.\CONST~n)~(\TABLEINIT~i)~(\ELEMDROP~i) \\[1ex]
    \F{rundata}_i(\{\DINIT~b^n, DMODE~\DPASSIVE\}) \quad=\quad \epsilon \\
    \F{rundata}_i(\{\DINIT~b^n, DMODE~\DACTIVE \{\DMEM~0, \DOFFSET~\instr^\ast~\END\}\}) \quad=\\ \qquad

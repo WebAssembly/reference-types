@@ -219,11 +219,13 @@
   "out of bounds"
 )
 
-(module
-  (table 0 funcref)
-  (elem (i32.const 1))
+(assert_trap
+  (module
+    (table 0 funcref)
+    (elem (i32.const 1))
+  )
+  "out of bounds"
 )
-
 (assert_trap
   (module
     (table 10 funcref)

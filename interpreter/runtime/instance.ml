@@ -17,8 +17,8 @@ and table_inst = Table.t
 and memory_inst = Memory.t
 and global_inst = Global.t
 and export_inst = Ast.name * extern
-and elem_inst = Values.ref_ list option ref
-and data_inst = string option ref
+and elem_inst = Values.ref_ list ref
+and data_inst = string ref
 
 and extern =
   | ExternFunc of func_inst
