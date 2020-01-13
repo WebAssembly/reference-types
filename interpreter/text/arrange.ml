@@ -265,7 +265,7 @@ let rec instr e =
     | RefNull -> "ref.null", []
     | RefIsNull -> "ref.is_null", []
     | RefFunc x -> "ref.func " ^ var x, []
-    | Const lit -> constop lit ^ " " ^ num lit, []
+    | Const n -> constop n ^ " " ^ num n, []
     | Test op -> testop op, []
     | Compare op -> relop op, []
     | Unary op -> unop op, []

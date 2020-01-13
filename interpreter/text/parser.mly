@@ -36,7 +36,7 @@ let ati i =
 
 (* Literals *)
 
-let literal f s =
+let num f s =
   try f s with Failure _ -> error s.at "constant out of range"
 
 let nanop f nan =
@@ -274,7 +274,7 @@ type_use :
 
 /* Immediates */
 
-literal :
+num :
   | NAT { $1 @@ at () }
   | INT { $1 @@ at () }
   | FLOAT { $1 @@ at () }
@@ -367,7 +367,7 @@ plain_instr :
   | REF_NULL { fun c -> ref_null }
   | REF_IS_NULL { fun c -> ref_is_null }
   | REF_FUNC var { fun c -> ref_func ($2 c func) }
-  | CONST literal { fun c -> fst (literal $1 $2) }
+  | CONST num { fun c -> fst (num $1 $2) }
   | TEST { fun c -> $1 }
   | COMPARE { fun c -> $1 }
   | UNARY { fun c -> $1 }
@@ -972,7 +972,7 @@ meta :
   | LPAR OUTPUT script_var_opt RPAR { Output ($3, None) @@ at () }
 
 const :
-  | LPAR CONST literal RPAR { Values.Num (snd (literal $2 $3)) @@ at () }
+  | LPAR CONST num RPAR { Values.Num (snd (num $2 $3)) @@ at () }
   | LPAR REF_NULL RPAR { Values.Ref Values.NullRef @@ at () }
   | LPAR REF_HOST NAT RPAR { Values.Ref (HostRef (nat32 $3 (ati 3))) @@ at () }
 
