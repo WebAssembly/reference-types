@@ -706,35 +706,35 @@ Table Instructions
 
 5. Let :math:`\X{tab}_d` be the :ref:`table instance <syntax-tableinst>` :math:`S.\STABLES[\X{ta}_d]`.
 
-7. Assert: due to :ref:`validation <valid-table.copy>`, :math:`F.\AMODULE.\MITABLES[y]` exists.
+6. Assert: due to :ref:`validation <valid-table.copy>`, :math:`F.\AMODULE.\MITABLES[y]` exists.
 
-8. Let :math:`\X{ta}_s` be the :ref:`table address <syntax-tableaddr>` :math:`F.\AMODULE.\MITABLES[y]`.
+7. Let :math:`\X{ta}_s` be the :ref:`table address <syntax-tableaddr>` :math:`F.\AMODULE.\MITABLES[y]`.
 
-9. Assert: due to :ref:`validation <valid-table.copy>`, :math:`S.\STABLES[\X{ta}_s]` exists.
+8. Assert: due to :ref:`validation <valid-table.copy>`, :math:`S.\STABLES[\X{ta}_s]` exists.
 
-10. Let :math:`\X{tab}_s` be the :ref:`table instance <syntax-tableinst>` :math:`S.\STABLES[\X{ta}_s]`.
+9. Let :math:`\X{tab}_s` be the :ref:`table instance <syntax-tableinst>` :math:`S.\STABLES[\X{ta}_s]`.
 
-11. Assert: due to :ref:`validation <valid-table.copy>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
+10. Assert: due to :ref:`validation <valid-table.copy>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
 
-12. Pop the value :math:`\I32.\CONST~n` from the stack.
+11. Pop the value :math:`\I32.\CONST~n` from the stack.
 
-13. Assert: due to :ref:`validation <valid-table.copy>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
+12. Assert: due to :ref:`validation <valid-table.copy>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
 
-14. Pop the value :math:`\I32.\CONST~s` from the stack.
+13. Pop the value :math:`\I32.\CONST~s` from the stack.
 
-15. Assert: due to :ref:`validation <valid-table.copy>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
+14. Assert: due to :ref:`validation <valid-table.copy>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
 
-16. Pop the value :math:`\I32.\CONST~d` from the stack.
+15. Pop the value :math:`\I32.\CONST~d` from the stack.
 
-17. If :math:`s + n` is larger than the length of :math:`\X{tab}_s.\TIELEM` or :math:`d + n` is larger than the length of :math:`\X{tab}_d.\TIELEM`, then:
+16. If :math:`s + n` is larger than the length of :math:`\X{tab}_s.\TIELEM` or :math:`d + n` is larger than the length of :math:`\X{tab}_d.\TIELEM`, then:
 
     a. Trap.
 
-18. If :math:`n = 0`, then:
+17. If :math:`n = 0`, then:
 
    a. Return.
 
-19. If :math:`d \leq s`, then:
+18. If :math:`d \leq s`, then:
 
    a. Push the value :math:`\I32.\CONST~d` to the stack.
 
@@ -752,7 +752,7 @@ Table Instructions
 
    h. Push the value :math:`\I32.\CONST~(s+1)` to the stack.
 
-20. Else:
+19. Else:
 
    a. Assert: due to the earlier check against the table size, :math:`d+n-1 < 2^{32}`.
 
@@ -770,9 +770,9 @@ Table Instructions
 
    h. Push the value :math:`\I32.\CONST~s` to the stack.
 
-21. Push the value :math:`\I32.\CONST~(n-1)` to the stack.
+20. Push the value :math:`\I32.\CONST~(n-1)` to the stack.
 
-22. Execute the instruction :math:`\TABLECOPY~x~y`.
+21. Execute the instruction :math:`\TABLECOPY~x~y`.
 
 .. math::
    ~\\[-1ex]
