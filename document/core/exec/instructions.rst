@@ -700,19 +700,19 @@ Table Instructions
 
 2. Assert: due to :ref:`validation <valid-table.copy>`, :math:`F.\AMODULE.\MITABLES[x]` exists.
 
-3. Let :math:`\X{ta}_d` be the :ref:`table address <syntax-tableaddr>` :math:`F.\AMODULE.\MITABLES[x]`.
+3. Let :math:`\X{ta}_x` be the :ref:`table address <syntax-tableaddr>` :math:`F.\AMODULE.\MITABLES[x]`.
 
-4. Assert: due to :ref:`validation <valid-table.copy>`, :math:`S.\STABLES[\X{ta}_d]` exists.
+4. Assert: due to :ref:`validation <valid-table.copy>`, :math:`S.\STABLES[\X{ta}_x]` exists.
 
-5. Let :math:`\X{tab}_d` be the :ref:`table instance <syntax-tableinst>` :math:`S.\STABLES[\X{ta}_d]`.
+5. Let :math:`\X{tab}_x` be the :ref:`table instance <syntax-tableinst>` :math:`S.\STABLES[\X{ta}_x]`.
 
 6. Assert: due to :ref:`validation <valid-table.copy>`, :math:`F.\AMODULE.\MITABLES[y]` exists.
 
-7. Let :math:`\X{ta}_s` be the :ref:`table address <syntax-tableaddr>` :math:`F.\AMODULE.\MITABLES[y]`.
+7. Let :math:`\X{ta}_y` be the :ref:`table address <syntax-tableaddr>` :math:`F.\AMODULE.\MITABLES[y]`.
 
-8. Assert: due to :ref:`validation <valid-table.copy>`, :math:`S.\STABLES[\X{ta}_s]` exists.
+8. Assert: due to :ref:`validation <valid-table.copy>`, :math:`S.\STABLES[\X{ta}_y]` exists.
 
-9. Let :math:`\X{tab}_s` be the :ref:`table instance <syntax-tableinst>` :math:`S.\STABLES[\X{ta}_s]`.
+9. Let :math:`\X{tab}_y` be the :ref:`table instance <syntax-tableinst>` :math:`S.\STABLES[\X{ta}_y]`.
 
 10. Assert: due to :ref:`validation <valid-table.copy>`, a value of :ref:`value type <syntax-valtype>` |I32| is on the top of the stack.
 
@@ -726,7 +726,7 @@ Table Instructions
 
 15. Pop the value :math:`\I32.\CONST~d` from the stack.
 
-16. If :math:`s + n` is larger than the length of :math:`\X{tab}_s.\TIELEM` or :math:`d + n` is larger than the length of :math:`\X{tab}_d.\TIELEM`, then:
+16. If :math:`s + n` is larger than the length of :math:`\X{tab}_y.\TIELEM` or :math:`d + n` is larger than the length of :math:`\X{tab}_x.\TIELEM`, then:
 
     a. Trap.
 
