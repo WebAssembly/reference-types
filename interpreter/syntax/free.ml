@@ -96,7 +96,7 @@ let memory (m : memory) = empty
 
 let segment_mode f (m : segment_mode) =
   match m.it with
-  | Passive -> empty
+  | Passive | Declarative -> empty
   | Active {index; offset} -> f (var index) ++ const offset
 
 let elem (s : elem_segment) =

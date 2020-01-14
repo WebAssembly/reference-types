@@ -568,31 +568,34 @@ let init_func (inst : module_inst) (func : func_inst) =
   | _ -> assert false
 
 let run_elem i elem =
+  let at = elem.it.emode.at in
+  let x = i @@ at in
   match elem.it.emode.it with
   | Passive -> []
   | Active {index; offset} ->
-    let at = elem.it.emode.at in
-    let x = i @@ at in
     offset.it @ [
       Const (I32 0l @@ at) @@ at;
       Const (I32 (Lib.List32.length elem.it.einit) @@ at) @@ at;
       TableInit (index, x) @@ at;
       ElemDrop x @@ at
     ]
+  | Declarative ->
+    [ElemDrop x @@ at]
 
 let run_data i data =
+  let at = data.it.dmode.at in
+  let x = i @@ at in
   match data.it.dmode.it with
   | Passive -> []
   | Active {index; offset} ->
     assert (index.it = 0l);
-    let at = data.it.dmode.at in
-    let x = i @@ at in
     offset.it @ [
       Const (I32 0l @@ at) @@ at;
       Const (I32 (Int32.of_int (String.length data.it.dinit)) @@ at) @@ at;
       MemoryInit x @@ at;
       DataDrop x @@ at
     ]
+  | Declarative -> assert false
 
 let run_start start =
   [Call start @@ start.at]

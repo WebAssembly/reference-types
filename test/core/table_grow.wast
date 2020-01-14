@@ -38,7 +38,7 @@
 ;; Reject growing to size outside i32 value range
 (module
   (table $t 0x10 anyref)
-  (table $dummy funcref (elem $f))  ;; TODO
+  (elem declare func $f)
   (func $f (export "grow") (result i32)
     (table.grow $t (ref.func $f) (i32.const 0xffff_fff0))
   )
@@ -83,7 +83,7 @@
   (func (export "grow") (param i32) (result i32)
     (table.grow $t (ref.null) (local.get 0))
   )
-  (table $dummy funcref (elem 1))  ;; TODO
+  (elem declare func 1)
   (func (export "check-table-null") (param i32 i32) (result anyref)
     (local anyref)
     (local.set 2 (ref.func 1))

@@ -130,12 +130,6 @@
 )
 
 
-(module $Mglobal-ex
-  (func $f)
-  (table $dummy funcref (elem $f))  ;; TODO
-  (global (export "g") anyref (ref.func $f))
-)
-
 (assert_unlinkable
   (module (global (import "Mref_ex" "g-var-null") (mut funcref)))
   "incompatible import type"

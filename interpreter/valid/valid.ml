@@ -490,6 +490,7 @@ let check_elem_mode (c : context) (t : ref_type) (mode : segment_mode) =
     require (match_ref_type t et) mode.at
       "type mismatch in active element segment";
     check_const c offset (NumType I32Type)
+  | Declarative -> ()
 
 let check_elem (c : context) (seg : elem_segment) =
   let {etype; einit; emode} = seg.it in
@@ -502,6 +503,7 @@ let check_data_mode (c : context) (mode : segment_mode) =
   | Active {index; offset} ->
     ignore (memory c index);
     check_const c offset (NumType I32Type)
+  | Declarative -> assert false
 
 let check_data (c : context) (seg : data_segment) =
   let {dinit; dmode} = seg.it in

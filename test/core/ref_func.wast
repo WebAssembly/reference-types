@@ -15,6 +15,16 @@
   (global funcref (ref.func $g))
   (global $v (mut funcref) (ref.func $f))
 
+  (global funcref (ref.func $gf1))
+  (global funcref (ref.func $gf2))
+  (func (drop (ref.func $ff1)) (drop (ref.func $ff2)))
+  (elem declare func $gf1 $ff1)
+  (elem declare funcref (ref.func $gf2) (ref.func $ff2))
+  (func $gf1)
+  (func $gf2)
+  (func $ff1)
+  (func $ff2)
+
   (func (export "is_null-f") (result i32)
     (ref.is_null (ref.func $f))
   )
@@ -29,7 +39,7 @@
   (func (export "set-g") (global.set $v (ref.func $g)))
 
   (table $t 1 funcref)
-  (table $dummy funcref (elem $f $g))  ;; TODO
+  (elem declare func $f $g)
 
   (func (export "call-f") (param $x i32) (result i32)
     (table.set $t (i32.const 0) (ref.func $f))
@@ -66,6 +76,10 @@
   "unknown function 7"
 )
 
+(assert_invalid
+  (module (func $f) (global funcref (ref.func $f)))
+  "undeclared function reference"
+)
 (assert_invalid
   (module (func $f (drop (ref.func $f))))
   "undeclared function reference"
