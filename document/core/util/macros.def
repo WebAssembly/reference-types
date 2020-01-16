@@ -3,20 +3,20 @@
 .. External Standards
 .. ------------------
 
-.. |WasmDraft| replace:: http://webassembly.github.io/spec/core/
-.. _WasmDraft: http://webassembly.github.io/spec/core/
+.. |WasmDraft| replace:: https://webassembly.github.io/reference-types/core/
+.. _WasmDraft: https://webassembly.github.io/reference-types/core/
 
-.. |WasmIssues| replace:: http://github.com/webassembly/spec/issues/
-.. _WasmIssues: http://github.com/webassembly/spec/issues/
+.. |WasmIssues| replace:: https://github.com/webassembly/reference-types/issues/
+.. _WasmIssues: https://github.com/webassembly/reference-types/issues/
 
 .. |IEEE754| replace:: IEEE 754-2019
 .. _IEEE754: https://ieeexplore.ieee.org/document/8766229
 
 .. |Unicode| replace:: Unicode
-.. _Unicode: http://www.unicode.org/versions/latest/
+.. _Unicode: https://www.unicode.org/versions/latest/
 
 .. |ASCII| replace:: ASCII
-.. _ASCII: http://webstore.ansi.org/RecordDetail.aspx?sku=INCITS+4-1986%5bR2012%5d
+.. _ASCII: https://webstore.ansi.org/RecordDetail.aspx?sku=INCITS+4-1986%5bR2012%5d
 
 
 .. External Definitions
