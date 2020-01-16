@@ -261,7 +261,7 @@ However, the <a class="reference internal" href="../intro/overview.html#embedder
 </div>
 </div>
 <div class="section" id="table-instances">
-<span id="syntax-tableinst"></span><span id="syntax-funcelem"></span><span id="index-7"></span><h2>Table Instances<a class="headerlink" href="#table-instances" title="Permalink to this headline">¶</a></h2>
+<span id="syntax-tableinst"></span><span id="index-7"></span><h2>Table Instances<a class="headerlink" href="#table-instances" title="Permalink to this headline">¶</a></h2>
 <p>A <em>table instance</em> is the runtime representation of a <a class="reference internal" href="../syntax/modules.html#syntax-table"><span class="std std-ref">table</span></a>.
 It records its <a class="reference internal" href="../syntax/types.html#syntax-tabletype"><span class="std std-ref">type</span></a> and holds a vector of <a class="reference internal" href="#syntax-ref"><span class="std std-ref">reference values</span></a>.</p>
 <div class="math notranslate nohighlight">
@@ -305,7 +305,7 @@ It holds a vector of references and their common <a class="reference internal" h
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llll}
 \def\mathdef1272#1{{}}\mathdef1272{(element instance)} &amp; \href{../exec/runtime.html#syntax-eleminst}{\mathit{eleminst}} &amp;::=&amp;
-  \{ \href{../exec/runtime.html#syntax-eleminst}{\mathsf{type}}~\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}, \href{../exec/runtime.html#syntax-eleminst}{\mathsf{elem}}~\href{../syntax/conventions.html#syntax-vec}{\mathit{vec}}(\href{../exec/runtime.html#syntax-funcelem}{\mathit{funcelem}}) \} \\
+  \{ \href{../exec/runtime.html#syntax-eleminst}{\mathsf{type}}~\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}, \href{../exec/runtime.html#syntax-eleminst}{\mathsf{elem}}~\href{../syntax/conventions.html#syntax-vec}{\mathit{vec}}(\href{../exec/runtime.html#syntax-ref}{\mathit{ref}}) \} \\
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="data-instances">
