@@ -350,6 +350,7 @@ rule token = parse
   | "data" { DATA }
   | "declare" { DECLARE }
   | "offset" { OFFSET }
+  | "item" { ITEM }
   | "import" { IMPORT }
   | "export" { EXPORT }
 
