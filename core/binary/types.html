@@ -96,11 +96,11 @@ Thus, the binary format for types corresponds to the encodings of small negative
 <p><a class="reference internal" href="../syntax/types.html#syntax-numtype"><span class="std std-ref">Number types</span></a> are encoded by a single byte.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llclll&#64;{\qquad\qquad}l}
-\def\mathdef959#1{{}}\mathdef959{number type} &amp; \href{../binary/types.html#binary-numtype}{\mathtt{numtype}} &amp;::=&amp;
-  \def\mathdef995#1{\mathtt{0x#1}}\mathdef995{7F} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-valtype}{\mathsf{i32}} \\ &amp;&amp;|&amp;
-  \def\mathdef996#1{\mathtt{0x#1}}\mathdef996{7E} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-valtype}{\mathsf{i64}} \\ &amp;&amp;|&amp;
-  \def\mathdef997#1{\mathtt{0x#1}}\mathdef997{7D} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-valtype}{\mathsf{f32}} \\ &amp;&amp;|&amp;
-  \def\mathdef998#1{\mathtt{0x#1}}\mathdef998{7C} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-valtype}{\mathsf{f64}} \\
+\def\mathdef961#1{{}}\mathdef961{number type} &amp; \href{../binary/types.html#binary-numtype}{\mathtt{numtype}} &amp;::=&amp;
+  \def\mathdef997#1{\mathtt{0x#1}}\mathdef997{7F} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-valtype}{\mathsf{i32}} \\ &amp;&amp;|&amp;
+  \def\mathdef998#1{\mathtt{0x#1}}\mathdef998{7E} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-valtype}{\mathsf{i64}} \\ &amp;&amp;|&amp;
+  \def\mathdef999#1{\mathtt{0x#1}}\mathdef999{7D} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-valtype}{\mathsf{f32}} \\ &amp;&amp;|&amp;
+  \def\mathdef1000#1{\mathtt{0x#1}}\mathdef1000{7C} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-valtype}{\mathsf{f64}} \\
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="reference-types">
@@ -108,10 +108,10 @@ Thus, the binary format for types corresponds to the encodings of small negative
 <p><a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">Reference types</span></a> are also encoded by a single byte.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llclll&#64;{\qquad\qquad}l}
-\def\mathdef959#1{{}}\mathdef959{reference type} &amp; \href{../binary/types.html#binary-reftype}{\mathtt{reftype}} &amp;::=&amp;
-  \def\mathdef999#1{\mathtt{0x#1}}\mathdef999{70} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-reftype}{\mathsf{funcref}} \\ &amp;&amp;|&amp;
-  \def\mathdef1000#1{\mathtt{0x#1}}\mathdef1000{6F} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-reftype}{\mathsf{anyref}} \\ &amp;&amp;|&amp;
-  \def\mathdef1001#1{\mathtt{0x#1}}\mathdef1001{6E} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-reftype}{\mathsf{nullref}} \\
+\def\mathdef961#1{{}}\mathdef961{reference type} &amp; \href{../binary/types.html#binary-reftype}{\mathtt{reftype}} &amp;::=&amp;
+  \def\mathdef1001#1{\mathtt{0x#1}}\mathdef1001{70} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-reftype}{\mathsf{funcref}} \\ &amp;&amp;|&amp;
+  \def\mathdef1002#1{\mathtt{0x#1}}\mathdef1002{6F} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-reftype}{\mathsf{anyref}} \\ &amp;&amp;|&amp;
+  \def\mathdef1003#1{\mathtt{0x#1}}\mathdef1003{6E} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-reftype}{\mathsf{nullref}} \\
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="value-types">
@@ -119,7 +119,7 @@ Thus, the binary format for types corresponds to the encodings of small negative
 <p><a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">Value types</span></a> are encoded with their respective encoding as a <a class="reference internal" href="#binary-numtype"><span class="std std-ref">number type</span></a> or <a class="reference internal" href="#binary-reftype"><span class="std std-ref">reference type</span></a>.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llclll&#64;{\qquad\qquad}l}
-\def\mathdef959#1{{}}\mathdef959{value type} &amp; \href{../binary/types.html#binary-valtype}{\mathtt{valtype}} &amp;::=&amp;
+\def\mathdef961#1{{}}\mathdef961{value type} &amp; \href{../binary/types.html#binary-valtype}{\mathtt{valtype}} &amp;::=&amp;
   t{:}\href{../binary/types.html#binary-numtype}{\mathtt{numtype}} &amp;\Rightarrow&amp; t \\ &amp;&amp;|&amp;
   t{:}\href{../binary/types.html#binary-reftype}{\mathtt{reftype}} &amp;\Rightarrow&amp; t \\
 \end{array}\end{split}\]</div>
@@ -130,11 +130,11 @@ Thus, the binary format for types corresponds to the encodings of small negative
 </div>
 <div class="section" id="result-types">
 <span id="binary-resulttype"></span><span id="binary-blocktype"></span><span id="index-4"></span><h2>Result Types<a class="headerlink" href="#result-types" title="Permalink to this headline">¶</a></h2>
-<p>The only <a class="reference internal" href="../syntax/types.html#syntax-resulttype"><span class="std std-ref">result types</span></a> occurring in the binary format are the types of blocks. These are encoded in special compressed form, by either the byte <span class="math notranslate nohighlight">\(\def\mathdef1002#1{\mathtt{0x#1}}\mathdef1002{40}\)</span> indicating the empty type or as a single <a class="reference internal" href="#binary-valtype"><span class="std std-ref">value type</span></a>.</p>
+<p>The only <a class="reference internal" href="../syntax/types.html#syntax-resulttype"><span class="std std-ref">result types</span></a> occurring in the binary format are the types of blocks. These are encoded in special compressed form, by either the byte <span class="math notranslate nohighlight">\(\def\mathdef1004#1{\mathtt{0x#1}}\mathdef1004{40}\)</span> indicating the empty type or as a single <a class="reference internal" href="#binary-valtype"><span class="std std-ref">value type</span></a>.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llclll&#64;{\qquad\qquad}l}
-\def\mathdef959#1{{}}\mathdef959{result type} &amp; \href{../binary/types.html#binary-blocktype}{\mathtt{blocktype}} &amp;::=&amp;
-  \def\mathdef1003#1{\mathtt{0x#1}}\mathdef1003{40} &amp;\Rightarrow&amp; [] \\ &amp;&amp;|&amp;
+\def\mathdef961#1{{}}\mathdef961{result type} &amp; \href{../binary/types.html#binary-blocktype}{\mathtt{blocktype}} &amp;::=&amp;
+  \def\mathdef1005#1{\mathtt{0x#1}}\mathdef1005{40} &amp;\Rightarrow&amp; [] \\ &amp;&amp;|&amp;
   t{:}\href{../binary/types.html#binary-valtype}{\mathtt{valtype}} &amp;\Rightarrow&amp; [t] \\
 \end{array}\end{split}\]</div>
 <div class="admonition note">
@@ -144,11 +144,11 @@ Thus, the binary format for types corresponds to the encodings of small negative
 </div>
 <div class="section" id="function-types">
 <span id="binary-functype"></span><span id="index-5"></span><h2>Function Types<a class="headerlink" href="#function-types" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="../syntax/types.html#syntax-functype"><span class="std std-ref">Function types</span></a> are encoded by the byte <span class="math notranslate nohighlight">\(\def\mathdef1004#1{\mathtt{0x#1}}\mathdef1004{60}\)</span> followed by the respective <a class="reference internal" href="conventions.html#binary-vec"><span class="std std-ref">vectors</span></a> of parameter and result types.</p>
+<p><a class="reference internal" href="../syntax/types.html#syntax-functype"><span class="std std-ref">Function types</span></a> are encoded by the byte <span class="math notranslate nohighlight">\(\def\mathdef1006#1{\mathtt{0x#1}}\mathdef1006{60}\)</span> followed by the respective <a class="reference internal" href="conventions.html#binary-vec"><span class="std std-ref">vectors</span></a> of parameter and result types.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llclll&#64;{\qquad\qquad}l}
-\def\mathdef959#1{{}}\mathdef959{function type} &amp; \href{../binary/types.html#binary-functype}{\mathtt{functype}} &amp;::=&amp;
-  \def\mathdef1005#1{\mathtt{0x#1}}\mathdef1005{60}~~t_1^\ast{:\,}\href{../binary/conventions.html#binary-vec}{\mathtt{vec}}(\href{../binary/types.html#binary-valtype}{\mathtt{valtype}})~~t_2^\ast{:\,}\href{../binary/conventions.html#binary-vec}{\mathtt{vec}}(\href{../binary/types.html#binary-valtype}{\mathtt{valtype}})
+\def\mathdef961#1{{}}\mathdef961{function type} &amp; \href{../binary/types.html#binary-functype}{\mathtt{functype}} &amp;::=&amp;
+  \def\mathdef1007#1{\mathtt{0x#1}}\mathdef1007{60}~~t_1^\ast{:\,}\href{../binary/conventions.html#binary-vec}{\mathtt{vec}}(\href{../binary/types.html#binary-valtype}{\mathtt{valtype}})~~t_2^\ast{:\,}\href{../binary/conventions.html#binary-vec}{\mathtt{vec}}(\href{../binary/types.html#binary-valtype}{\mathtt{valtype}})
     &amp;\Rightarrow&amp; [t_1^\ast] \href{../syntax/types.html#syntax-functype}{\rightarrow} [t_2^\ast] \\
 \end{array}\end{split}\]</div>
 </div>
@@ -157,9 +157,9 @@ Thus, the binary format for types corresponds to the encodings of small negative
 <p><a class="reference internal" href="../syntax/types.html#syntax-limits"><span class="std std-ref">Limits</span></a> are encoded with a preceding flag indicating whether a maximum is present.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llclll}
-\def\mathdef959#1{{}}\mathdef959{limits} &amp; \href{../binary/types.html#binary-limits}{\mathtt{limits}} &amp;::=&amp;
-  \def\mathdef1006#1{\mathtt{0x#1}}\mathdef1006{00}~~n{:}\href{../binary/values.html#binary-int}{\def\mathdef964#1{{\mathtt{u}#1}}\mathdef964{\mathtt{32}}} &amp;\Rightarrow&amp; \{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~\epsilon \} \\ &amp;&amp;|&amp;
-  \def\mathdef1007#1{\mathtt{0x#1}}\mathdef1007{01}~~n{:}\href{../binary/values.html#binary-int}{\def\mathdef964#1{{\mathtt{u}#1}}\mathdef964{\mathtt{32}}}~~m{:}\href{../binary/values.html#binary-int}{\def\mathdef964#1{{\mathtt{u}#1}}\mathdef964{\mathtt{32}}} &amp;\Rightarrow&amp; \{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m \} \\
+\def\mathdef961#1{{}}\mathdef961{limits} &amp; \href{../binary/types.html#binary-limits}{\mathtt{limits}} &amp;::=&amp;
+  \def\mathdef1008#1{\mathtt{0x#1}}\mathdef1008{00}~~n{:}\href{../binary/values.html#binary-int}{\def\mathdef966#1{{\mathtt{u}#1}}\mathdef966{\mathtt{32}}} &amp;\Rightarrow&amp; \{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~\epsilon \} \\ &amp;&amp;|&amp;
+  \def\mathdef1009#1{\mathtt{0x#1}}\mathdef1009{01}~~n{:}\href{../binary/values.html#binary-int}{\def\mathdef966#1{{\mathtt{u}#1}}\mathdef966{\mathtt{32}}}~~m{:}\href{../binary/values.html#binary-int}{\def\mathdef966#1{{\mathtt{u}#1}}\mathdef966{\mathtt{32}}} &amp;\Rightarrow&amp; \{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m \} \\
 \end{array}\end{split}\]</div>
 </div>
 <div class="section" id="memory-types">
@@ -167,7 +167,7 @@ Thus, the binary format for types corresponds to the encodings of small negative
 <p><a class="reference internal" href="../syntax/types.html#syntax-memtype"><span class="std std-ref">Memory types</span></a> are encoded with their <a class="reference internal" href="#binary-limits"><span class="std std-ref">limits</span></a>.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llclll&#64;{\qquad\qquad}l}
-\def\mathdef959#1{{}}\mathdef959{memory type} &amp; \href{../binary/types.html#binary-memtype}{\mathtt{memtype}} &amp;::=&amp;
+\def\mathdef961#1{{}}\mathdef961{memory type} &amp; \href{../binary/types.html#binary-memtype}{\mathtt{memtype}} &amp;::=&amp;
   \mathit{lim}{:}\href{../binary/types.html#binary-limits}{\mathtt{limits}} &amp;\Rightarrow&amp; \mathit{lim} \\
 \end{array}\end{split}\]</div>
 </div>
@@ -176,7 +176,7 @@ Thus, the binary format for types corresponds to the encodings of small negative
 <p><a class="reference internal" href="../syntax/types.html#syntax-tabletype"><span class="std std-ref">Table types</span></a> are encoded with their <a class="reference internal" href="#binary-limits"><span class="std std-ref">limits</span></a> and the encoding of their element <a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">reference type</span></a>.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llclll}
-\def\mathdef959#1{{}}\mathdef959{table type} &amp; \href{../binary/types.html#binary-tabletype}{\mathtt{tabletype}} &amp;::=&amp;
+\def\mathdef961#1{{}}\mathdef961{table type} &amp; \href{../binary/types.html#binary-tabletype}{\mathtt{tabletype}} &amp;::=&amp;
   \mathit{et}{:}\href{../binary/types.html#binary-reftype}{\mathtt{reftype}}~~\mathit{lim}{:}\href{../binary/types.html#binary-limits}{\mathtt{limits}} &amp;\Rightarrow&amp; \mathit{lim}~\mathit{et} \\
 \end{array}\end{split}\]</div>
 </div>
@@ -185,11 +185,11 @@ Thus, the binary format for types corresponds to the encodings of small negative
 <p><a class="reference internal" href="../syntax/types.html#syntax-globaltype"><span class="std std-ref">Global types</span></a> are encoded by their <a class="reference internal" href="#binary-valtype"><span class="std std-ref">value type</span></a> and a flag for their <a class="reference internal" href="../syntax/types.html#syntax-mut"><span class="std std-ref">mutability</span></a>.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llclll}
-\def\mathdef959#1{{}}\mathdef959{global type} &amp; \href{../binary/types.html#binary-globaltype}{\mathtt{globaltype}} &amp;::=&amp;
+\def\mathdef961#1{{}}\mathdef961{global type} &amp; \href{../binary/types.html#binary-globaltype}{\mathtt{globaltype}} &amp;::=&amp;
   t{:}\href{../binary/types.html#binary-valtype}{\mathtt{valtype}}~~m{:}\href{../binary/types.html#binary-mut}{\mathtt{mut}} &amp;\Rightarrow&amp; m~t \\
-\def\mathdef959#1{{}}\mathdef959{mutability} &amp; \href{../binary/types.html#binary-mut}{\mathtt{mut}} &amp;::=&amp;
-  \def\mathdef1008#1{\mathtt{0x#1}}\mathdef1008{00} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-mut}{\mathsf{const}} \\ &amp;&amp;|&amp;
-  \def\mathdef1009#1{\mathtt{0x#1}}\mathdef1009{01} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-mut}{\mathsf{var}} \\
+\def\mathdef961#1{{}}\mathdef961{mutability} &amp; \href{../binary/types.html#binary-mut}{\mathtt{mut}} &amp;::=&amp;
+  \def\mathdef1010#1{\mathtt{0x#1}}\mathdef1010{00} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-mut}{\mathsf{const}} \\ &amp;&amp;|&amp;
+  \def\mathdef1011#1{\mathtt{0x#1}}\mathdef1011{01} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-mut}{\mathsf{var}} \\
 \end{array}\end{split}\]</div>
 </div>
 </div>

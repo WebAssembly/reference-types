@@ -226,11 +226,14 @@ In contrast,</p>
 <span id="id9"></span><h3><span class="math notranslate nohighlight">\(\href{../syntax/instructions.html#syntax-instr-ref}{\mathsf{ref{.}func}}~x\)</span><a class="headerlink" href="#valid-ref-func" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>The function <span class="math notranslate nohighlight">\(C.\href{../valid/conventions.html#context}{\mathsf{funcs}}[x]\)</span> must be defined in the context.</li>
+<li>The <a class="reference internal" href="../syntax/modules.html#syntax-funcidx"><span class="std std-ref">function index</span></a> <span class="math notranslate nohighlight">\(x\)</span> must be contained in <span class="math notranslate nohighlight">\(C.\href{../valid/conventions.html#context}{\mathsf{refs}}\)</span>.</li>
 <li>The instruction is valid with type <span class="math notranslate nohighlight">\([] \href{../syntax/types.html#syntax-functype}{\rightarrow} [\href{../syntax/types.html#syntax-reftype}{\mathsf{funcref}}]\)</span>.</li>
 </ul>
 <div class="math notranslate nohighlight">
 \[\frac{
   C.\href{../valid/conventions.html#context}{\mathsf{funcs}}[x] = \href{../syntax/types.html#syntax-functype}{\mathit{functype}}
+  \qquad
+  x \in C.\href{../valid/conventions.html#context}{\mathsf{refs}}
 }{
   C \href{../valid/instructions.html#valid-instr}{\vdash} \href{../syntax/instructions.html#syntax-instr-ref}{\mathsf{ref{.}func}}~x : [] \href{../syntax/types.html#syntax-functype}{\rightarrow} [\href{../syntax/types.html#syntax-reftype}{\mathsf{funcref}}]
 }\]</div>

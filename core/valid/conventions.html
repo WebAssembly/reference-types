@@ -118,6 +118,7 @@ which collects relevant information about the surrounding <a class="reference in
 <li><em>Locals</em>: the list of locals declared in the current function (including parameters), represented by their value type.</li>
 <li><em>Labels</em>: the stack of labels accessible from the current position, represented by their result type.</li>
 <li><em>Return</em>: the return type of the current function, represented as an optional result type that is absent when no return is allowed, as in free-standing expressions.</li>
+<li><em>References</em>: the list of <a class="reference internal" href="../syntax/modules.html#syntax-funcidx"><span class="std std-ref">function indices</span></a> that occur in element segments and can hence be used to form references elsewhere.</li>
 </ul>
 <p>In other words, a context contains a sequence of suitable <a class="reference internal" href="../syntax/types.html#syntax-type"><span class="std std-ref">types</span></a> for each <a class="reference internal" href="../syntax/modules.html#syntax-index"><span class="std std-ref">index space</span></a>,
 describing each defined entry in that space.
@@ -126,7 +127,7 @@ The label stack is the only part of the context that changes as validation of an
 <p>More concretely, contexts are defined as <a class="reference internal" href="../syntax/conventions.html#notation-record"><span class="std std-ref">records</span></a> <span class="math notranslate nohighlight">\(C\)</span> with abstract syntax:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llll}
-\def\mathdef2694#1{{}}\mathdef2694{(context)} &amp; C &amp;::=&amp;
+\def\mathdef2700#1{{}}\mathdef2700{(context)} &amp; C &amp;::=&amp;
   \begin{array}[t]{l&#64;{~}ll}
   \{ &amp; \href{../valid/conventions.html#context}{\mathsf{types}} &amp; \href{../syntax/types.html#syntax-functype}{\mathit{functype}}^\ast, \\
      &amp; \href{../valid/conventions.html#context}{\mathsf{funcs}} &amp; \href{../syntax/types.html#syntax-functype}{\mathit{functype}}^\ast, \\
@@ -137,7 +138,8 @@ The label stack is the only part of the context that changes as validation of an
      &amp; \href{../valid/conventions.html#context}{\mathsf{datas}} &amp; {\mathrel{\mbox{ok}}}^\ast, \\
      &amp; \href{../valid/conventions.html#context}{\mathsf{locals}} &amp; \href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}^\ast, \\
      &amp; \href{../valid/conventions.html#context}{\mathsf{labels}} &amp; \href{../syntax/types.html#syntax-resulttype}{\mathit{resulttype}}^\ast, \\
-     &amp; \href{../valid/conventions.html#context}{\mathsf{return}} &amp; \href{../syntax/types.html#syntax-resulttype}{\mathit{resulttype}}^? ~\} \\
+     &amp; \href{../valid/conventions.html#context}{\mathsf{return}} &amp; \href{../syntax/types.html#syntax-resulttype}{\mathit{resulttype}}^?, \\
+     &amp; \href{../valid/conventions.html#context}{\mathsf{refs}} &amp; \href{../syntax/modules.html#syntax-funcidx}{\mathit{funcidx}}^\ast ~\} \\
   \end{array}
 \end{array}\end{split}\]</div>
 <p id="notation-extend">In addition to field access written <span class="math notranslate nohighlight">\(C.\mathsf{field}\)</span> the following notation is adopted for manipulating contexts:</p>
