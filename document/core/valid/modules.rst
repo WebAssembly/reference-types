@@ -541,7 +541,7 @@ Instead, the context :math:`C` for validation of the module's content is constru
 
   * :math:`C.\CRETURN` is empty.
 
-  * :math:`C.\CREFS` is the set :math:`\freefuncidx(\module.\MELEMS)`, i.e., the set of :ref:`function indices <syntax-funcidx>` occrring in any of the module's :ref:`element segments <syntax-elem>`.
+  * :math:`C.\CREFS` is the set :math:`\freefuncidx(\module.\MELEMS)`, i.e., the set of :ref:`function indices <syntax-funcidx>` occurring in any of the module's :ref:`element segments <syntax-elem>`.
 
 * Let :math:`C'` be the :ref:`context <context>` where :math:`C'.\CGLOBALS` is the sequence :math:`\etglobals(\X{it}^\ast)` and all other fields are empty.
 
