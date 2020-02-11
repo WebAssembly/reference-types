@@ -993,7 +993,7 @@ This slot holds a [=function address=] relative to the [=surrounding agent=]'s [
     1. For each type |t| of |parameters|,
         1. If the length of |argValues| &gt; |i|, let |arg| be |argValues|[|i|].
         1. Otherwise, let |arg| be undefined.
-        1. [=list/Append=] [=ToWebAssemblyValue=](|arg|, |t|, {{TypeError}}) to |args|.
+        1. [=list/Append=] [=ToWebAssemblyValue=](|arg|, |t|) to |args|.
         1. Set |i| to |i| + 1.
     1. Let |argsSeq| be a WebAssembly [=sequence=] containing the elements of |args|.
     1. Let (|store|, |ret|) be the result of [=func_invoke=](|store|, |funcaddr|, |argsSeq|).
@@ -1060,7 +1060,7 @@ Note: Number values which are equal to NaN may have various observable NaN paylo
 </div>
 
 <div algorithm>
-The algorithm <dfn>ToWebAssemblyValue</dfn>(|v|, |type|, |error|) coerces a JavaScript value to a [=WebAssembly value=]  performs the following steps:
+The algorithm <dfn>ToWebAssemblyValue</dfn>(|v|, |type|) coerces a JavaScript value to a [=WebAssembly value=]  performs the following steps:
 
 
 1. Assert: |type| is not [=𝗂𝟨𝟦=].
@@ -1077,9 +1077,9 @@ The algorithm <dfn>ToWebAssemblyValue</dfn>(|v|, |type|, |error|) coerces a Java
 1. If |type| is [=anyref=],
     1. Do nothing.
 1. If |type| is [=funcref=],
-    1. If |v| is not an [=Exported function=] or null, throw |error|.
+    1. If |v| is not an [=Exported function=] or null, throw a {{TypeError}}.
 1. If |type| is [=nullref=],
-    1. If |v| is not null, throw |error|.
+    1. If |v| is not null, throw a {{TypeError}}.
 1. Return the result of [=allocating a host address=] for |v|.
 
 </div>
