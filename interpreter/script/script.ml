@@ -22,8 +22,7 @@ type result = result' Source.phrase
 and result' =
   | LitResult of Values.value Source.phrase
   | NanResult of nanop
-  | RefResult
-  | FuncResult
+  | RefResult of Types.ref_type
 
 type assertion = assertion' Source.phrase
 and assertion' =

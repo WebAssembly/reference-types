@@ -999,8 +999,8 @@ const_list :
 result :
   | const { LitResult $1 @@ at () }
   | LPAR CONST NAN RPAR { NanResult (nanop $2 ($3 @@ ati 3)) @@ at () }
-  | LPAR REF_ANY RPAR { RefResult @@ at () }
-  | LPAR REF_FUNC RPAR { FuncResult @@ at () }
+  | LPAR REF_ANY RPAR { RefResult AnyRefType @@ at () }
+  | LPAR REF_FUNC RPAR { RefResult FuncRefType @@ at () }
 
 result_list :
   | /* empty */ { [] }

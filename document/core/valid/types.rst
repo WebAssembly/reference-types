@@ -233,9 +233,7 @@ Reference Types
 
 A :ref:`reference type <syntax-reftype>` :math:`\reftype_1` matches a :ref:`reference type <syntax-reftype>` :math:`\reftype_2` if and only if:
 
-* Either both :math:`\reftype_1` and :math:`\reftype_2` are the same.
-
-* Or :math:`\reftype_2` is |ANYREF|.
+* Both :math:`\reftype_1` and :math:`\reftype_2` are the same.
 
 .. math::
    ~\\[-1ex]
@@ -243,11 +241,9 @@ A :ref:`reference type <syntax-reftype>` :math:`\reftype_1` matches a :ref:`refe
    }{
      \vdashreftypematch \reftype \matchesvaltype \reftype
    }
-   \qquad
-   \frac{
-   }{
-     \vdashreftypematch \reftype \matchesvaltype \ANYREF
-   }
+
+.. note::
+   In future versions of WebAssembly, additional subtyping relations may be added.
 
 
 .. index:: value type, number type, reference type

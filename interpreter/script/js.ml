@@ -22,7 +22,10 @@ function is_hostref(x) {
 function is_funcref(x) {
   return typeof x === "function" ? 1 : 0;
 }
-function eq_ref(x, y) {
+function eq_hostref(x, y) {
+  return x === y ? 1 : 0;
+}
+function eq_funcref(x, y) {
   return x === y ? 1 : 0;
 }
 
@@ -212,10 +215,11 @@ let lookup (mods : modules) x_opt name at =
 
 let subject_idx = 0l
 let hostref_idx = 1l
-let _is_hostref_idx = 2l
+let is_hostref_idx = 2l
 let is_funcref_idx = 3l
-let eq_ref_idx = 4l
-let subject_type_idx = 5l
+let eq_hostref_idx = 4l
+let _eq_funcref_idx = 5l
+let subject_type_idx = 6l
 
 let eq_of = function
   | I32Type -> Values.I32 I32Op.Eq
@@ -277,7 +281,7 @@ let assert_return ress ts at =
     | LitResult {it = Values.Ref (HostRef n); _} ->
       [ Const (Values.I32 n @@ at) @@ at;
         Call (hostref_idx @@ at) @@ at;
-        Call (eq_ref_idx @@ at)  @@ at;
+        Call (eq_hostref_idx @@ at)  @@ at;
         Test (Values.I32 I32Op.Eqz) @@ at;
         BrIf (0l @@ at) @@ at ]
     | LitResult {it = Values.Ref _; _} ->
@@ -302,11 +306,13 @@ let assert_return ress ts at =
         Compare (eq_of t') @@ at;
         Test (Values.I32 I32Op.Eqz) @@ at;
         BrIf (0l @@ at) @@ at ]
-    | RefResult ->
-      [ RefIsNull @@ at;
-        BrIf (0l @@ at) @@ at ]
-    | FuncResult ->
-      [ Call (is_funcref_idx @@ at) @@ at;
+    | RefResult t ->
+      let is_ref_idx =
+        match t with
+        | AnyRefType -> is_hostref_idx
+        | FuncRefType -> is_funcref_idx
+      in
+      [ Call (is_ref_idx @@ at) @@ at;
         Test (Values.I32 I32Op.Eqz) @@ at;
         BrIf (0l @@ at) @@ at ]
   in [], List.flatten (List.rev_map test ress)
@@ -318,8 +324,9 @@ let wrap item_name wrap_action wrap_assertion at =
     (FuncType ([], []) @@ at) ::
     (FuncType ([NumType I32Type], [RefType AnyRefType]) @@ at) ::
     (FuncType ([RefType AnyRefType], [NumType I32Type]) @@ at) ::
-    (FuncType ([RefType AnyRefType], [NumType I32Type]) @@ at) ::
+    (FuncType ([RefType FuncRefType], [NumType I32Type]) @@ at) ::
     (FuncType ([RefType AnyRefType; RefType AnyRefType], [NumType I32Type]) @@ at) ::
+    (FuncType ([RefType FuncRefType; RefType FuncRefType], [NumType I32Type]) @@ at) ::
     itypes
   in
   let imports =
@@ -330,8 +337,10 @@ let wrap item_name wrap_action wrap_assertion at =
        idesc = FuncImport (2l @@ at) @@ at} @@ at;
       {module_name = Utf8.decode "spectest"; item_name = Utf8.decode "is_funcref";
        idesc = FuncImport (3l @@ at) @@ at} @@ at;
-      {module_name = Utf8.decode "spectest"; item_name = Utf8.decode "eq_ref";
-       idesc = FuncImport (4l @@ at) @@ at} @@ at ]
+      {module_name = Utf8.decode "spectest"; item_name = Utf8.decode "eq_hostref";
+       idesc = FuncImport (4l @@ at) @@ at} @@ at;
+      {module_name = Utf8.decode "spectest"; item_name = Utf8.decode "eq_funcref";
+       idesc = FuncImport (5l @@ at) @@ at} @@ at ]
   in
   let item =
     List.fold_left
@@ -423,8 +432,7 @@ let of_result res =
     | Values.I32 _ | Values.I64 _ -> assert false
     | Values.F32 n | Values.F64 n -> of_nan n
     )
-  | RefResult -> "\"ref.any\""
-  | FuncResult -> "\"ref.func\""
+  | RefResult t -> "\"ref." ^ string_of_refed_type t ^ "\""
 
 let rec of_definition def =
   match def.it with

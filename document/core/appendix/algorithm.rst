@@ -35,7 +35,7 @@ A simple subtyping check can be defined on these types.
      return t = Anyref || t = Funcref || t = Bot
 
    func matches(t1 : val_type, t2 : val_type) : bool =
-     return t1 = t2 || t1 = Bot || (is_ref(t1) && t2 = Anyref)
+     return t1 = t2 || t1 = Bot
 
 The algorithm uses two separate stacks: the *value stack* and the *control stack*.
 The former tracks the :ref:`types <syntax-valtype>` of operand values on the :ref:`stack <stack>`,

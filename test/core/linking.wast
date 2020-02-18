@@ -103,7 +103,6 @@
 
 (module $Mref_im
   (global (import "Mref_ex" "g-const-func") funcref)
-  (global (import "Mref_ex" "g-const-func") anyref)
   (global (import "Mref_ex" "g-const-any") anyref)
 
   (global (import "Mref_ex" "g-var-func") (mut funcref))
@@ -112,6 +111,10 @@
 
 (assert_unlinkable
   (module (global (import "Mref_ex" "g-const-any") funcref))
+  "incompatible import type"
+)
+(assert_unlinkable
+  (module (global (import "Mref_ex" "g-const-func") anyref))
   "incompatible import type"
 )
 

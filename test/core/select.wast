@@ -36,21 +36,6 @@
     (select (result anyref) (local.get 0) (local.get 1) (local.get 2))
   )
 
-  (func (export "join-funcref") (param i32) (result anyref)
-    (select (result funcref)
-      (table.get $tab (i32.const 0))
-      (ref.null func)
-      (local.get 0)
-    )
-  )
-  (func (export "join-anyref") (param i32) (param anyref) (result anyref)
-    (select (result anyref)
-      (table.get $tab (i32.const 0))
-      (local.get 1)
-      (local.get 0)
-    )
-  )
-
   ;; Check that both sides of the select are evaluated
   (func (export "select-trap-left") (param $cond i32) (result i32)
     (select (unreachable) (i32.const 0) (local.get $cond))
@@ -271,12 +256,6 @@
 (assert_return (invoke "select-f64-t" (f64.const 2) (f64.const nan:0x20304) (i32.const 1)) (f64.const 2))
 (assert_return (invoke "select-f64-t" (f64.const 2) (f64.const nan) (i32.const 0)) (f64.const nan))
 (assert_return (invoke "select-f64-t" (f64.const 2) (f64.const nan:0x20304) (i32.const 0)) (f64.const nan:0x20304))
-
-(assert_return (invoke "join-funcref" (i32.const 1)) (ref.func))
-(assert_return (invoke "join-funcref" (i32.const 0)) (ref.null func))
-
-(assert_return (invoke "join-anyref" (i32.const 1) (ref.host 1)) (ref.func))
-(assert_return (invoke "join-anyref" (i32.const 0) (ref.host 1)) (ref.host 1))
 
 (assert_trap (invoke "select-trap-left" (i32.const 1)) "unreachable")
 (assert_trap (invoke "select-trap-left" (i32.const 0)) "unreachable")
