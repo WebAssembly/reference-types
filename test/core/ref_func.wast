@@ -9,8 +9,8 @@
     (i32.add (local.get $x) (i32.const 1))
   )
 
-  (global anyref (ref.func $f))
-  (global anyref (ref.func $g))
+  (global anyref (ref.null any))
+  (global anyref (ref.null any))
   (global funcref (ref.func $f))
   (global funcref (ref.func $g))
   (global $v (mut funcref) (ref.func $f))

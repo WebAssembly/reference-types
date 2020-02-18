@@ -58,8 +58,7 @@ Typing extensions:
   - `elemtype ::= <reftype>`
 
 * Introduce a simple subtype relation between reference types.
-  - reflexive transitive closure of the following rules
-  - `t <: anyref` for all reftypes `t`
+  - reflexive transitive closure of rules to come
 
 
 New/extended instructions:

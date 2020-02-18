@@ -55,12 +55,9 @@ let break_string s =
 
 (* Types *)
 
-let ref_kind = function
-  | AnyRefType -> "any"
-  | FuncRefType -> "func"
-
 let num_type t = string_of_num_type t
 let ref_type t = string_of_ref_type t
+let refed_type t = string_of_refed_type t
 let value_type t = string_of_value_type t
 
 let decls kind ts = tab kind (atom value_type) ts
@@ -266,7 +263,7 @@ let rec instr e =
     | MemoryCopy -> "memory.copy", []
     | MemoryInit x -> "memory.init " ^ var x, []
     | DataDrop x -> "data.drop " ^ var x, []
-    | RefNull t -> "ref.null", [Atom (ref_kind t)]
+    | RefNull t -> "ref.null", [Atom (refed_type t)]
     | RefIsNull -> "ref.is_null", []
     | RefFunc x -> "ref.func " ^ var x, []
     | Const n -> constop n ^ " " ^ num n, []
@@ -435,7 +432,7 @@ let value v =
   | Num (Values.I64 i) -> Node ("i64.const " ^ I64.to_string_s i, [])
   | Num (Values.F32 z) -> Node ("f32.const " ^ F32.to_string z, [])
   | Num (Values.F64 z) -> Node ("f64.const " ^ F64.to_string z, [])
-  | Ref (NullRef t) -> Node ("ref.null", [Atom (ref_kind t)])
+  | Ref (NullRef t) -> Node ("ref.null", [Atom (refed_type t)])
   | Ref (HostRef n) -> Node ("ref.host " ^ Int32.to_string n, [])
   | _ -> assert false
 
@@ -487,8 +484,7 @@ let result res =
     | Values.F32 n -> Node ("f32.const " ^ nan n, [])
     | Values.F64 n -> Node ("f64.const " ^ nan n, [])
     )
-  | RefResult -> Node ("ref", [])
-  | FuncResult -> Node ("ref.func", [])
+  | RefResult t -> Node ("ref." ^ refed_type t, [])
 
 let assertion mode ass =
   match ass.it with

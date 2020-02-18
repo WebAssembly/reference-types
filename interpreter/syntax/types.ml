@@ -31,9 +31,7 @@ let match_num_type t1 t2 =
   t1 = t2
 
 let match_ref_type t1 t2 =
-  match t1, t2 with
-  | _, AnyRefType -> true
-  | _, _ -> t1 = t2
+  t1 = t2
 
 let match_value_type t1 t2 =
   match t1, t2 with
@@ -102,6 +100,10 @@ let string_of_num_type = function
 let string_of_ref_type = function
   | AnyRefType -> "anyref"
   | FuncRefType -> "funcref"
+
+let string_of_refed_type = function
+  | AnyRefType -> "any"
+  | FuncRefType -> "func"
 
 let string_of_value_type = function
   | NumType t -> string_of_num_type t

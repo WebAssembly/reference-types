@@ -22,7 +22,7 @@ let type_of_num = function
   | F32 _ -> F32Type
   | F64 _ -> F64Type
 
-let type_of_ref' = ref (function NullRef t -> t | _ -> AnyRefType)
+let type_of_ref' = ref (function NullRef t -> t | _ -> assert false)
 let type_of_ref r = !type_of_ref' r
 
 let type_of_value = function

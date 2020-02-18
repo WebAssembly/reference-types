@@ -177,18 +177,20 @@ Reference Instructions
      C \vdashinstr \REFNULL~t : [] \to [t]
    }
 
+.. note::
+   In future versions of WebAssembly, there may be reference types for which no null reference is allowed.
 
 .. _valid-ref.is_null:
 
 :math:`\REFISNULL`
 ..................
 
-* The instruction is valid with type :math:`[\ANYREF] \to [\I32]`.
+* The instruction is valid with type :math:`[\reftype] \to [\I32]` for any :ref:`reference type <syntax-reftype>` :math:`\reftype`.
 
 .. math::
    \frac{
    }{
-     C \vdashinstr \REFISNULL : [\ANYREF] \to [\I32]
+     C \vdashinstr \REFISNULL : [\reftype] \to [\I32]
    }
 
 .. _valid-ref.func:
