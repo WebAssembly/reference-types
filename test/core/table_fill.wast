@@ -10,24 +10,24 @@
   )
 )
 
-(assert_return (invoke "get" (i32.const 1)) (ref.null))
-(assert_return (invoke "get" (i32.const 2)) (ref.null))
-(assert_return (invoke "get" (i32.const 3)) (ref.null))
-(assert_return (invoke "get" (i32.const 4)) (ref.null))
-(assert_return (invoke "get" (i32.const 5)) (ref.null))
+(assert_return (invoke "get" (i32.const 1)) (ref.null any))
+(assert_return (invoke "get" (i32.const 2)) (ref.null any))
+(assert_return (invoke "get" (i32.const 3)) (ref.null any))
+(assert_return (invoke "get" (i32.const 4)) (ref.null any))
+(assert_return (invoke "get" (i32.const 5)) (ref.null any))
 
 (assert_return (invoke "fill" (i32.const 2) (ref.host 1) (i32.const 3)))
-(assert_return (invoke "get" (i32.const 1)) (ref.null))
+(assert_return (invoke "get" (i32.const 1)) (ref.null any))
 (assert_return (invoke "get" (i32.const 2)) (ref.host 1))
 (assert_return (invoke "get" (i32.const 3)) (ref.host 1))
 (assert_return (invoke "get" (i32.const 4)) (ref.host 1))
-(assert_return (invoke "get" (i32.const 5)) (ref.null))
+(assert_return (invoke "get" (i32.const 5)) (ref.null any))
 
 (assert_return (invoke "fill" (i32.const 4) (ref.host 2) (i32.const 2)))
 (assert_return (invoke "get" (i32.const 3)) (ref.host 1))
 (assert_return (invoke "get" (i32.const 4)) (ref.host 2))
 (assert_return (invoke "get" (i32.const 5)) (ref.host 2))
-(assert_return (invoke "get" (i32.const 6)) (ref.null))
+(assert_return (invoke "get" (i32.const 6)) (ref.null any))
 
 (assert_return (invoke "fill" (i32.const 4) (ref.host 3) (i32.const 0)))
 (assert_return (invoke "get" (i32.const 3)) (ref.host 1))
@@ -35,32 +35,32 @@
 (assert_return (invoke "get" (i32.const 5)) (ref.host 2))
 
 (assert_return (invoke "fill" (i32.const 8) (ref.host 4) (i32.const 2)))
-(assert_return (invoke "get" (i32.const 7)) (ref.null))
+(assert_return (invoke "get" (i32.const 7)) (ref.null any))
 (assert_return (invoke "get" (i32.const 8)) (ref.host 4))
 (assert_return (invoke "get" (i32.const 9)) (ref.host 4))
 
-(assert_return (invoke "fill" (i32.const 9) (ref.null) (i32.const 1)))
+(assert_return (invoke "fill" (i32.const 9) (ref.null any) (i32.const 1)))
 (assert_return (invoke "get" (i32.const 8)) (ref.host 4))
-(assert_return (invoke "get" (i32.const 9)) (ref.null))
+(assert_return (invoke "get" (i32.const 9)) (ref.null any))
 
 (assert_return (invoke "fill" (i32.const 10) (ref.host 5) (i32.const 0)))
-(assert_return (invoke "get" (i32.const 9)) (ref.null))
+(assert_return (invoke "get" (i32.const 9)) (ref.null any))
 
 (assert_trap
   (invoke "fill" (i32.const 8) (ref.host 6) (i32.const 3))
   "out of bounds"
 )
-(assert_return (invoke "get" (i32.const 7)) (ref.null))
+(assert_return (invoke "get" (i32.const 7)) (ref.null any))
 (assert_return (invoke "get" (i32.const 8)) (ref.host 4))
-(assert_return (invoke "get" (i32.const 9)) (ref.null))
+(assert_return (invoke "get" (i32.const 9)) (ref.null any))
 
 (assert_trap
-  (invoke "fill" (i32.const 11) (ref.null) (i32.const 0))
+  (invoke "fill" (i32.const 11) (ref.null any) (i32.const 0))
   "out of bounds"
 )
 
 (assert_trap
-  (invoke "fill" (i32.const 11) (ref.null) (i32.const 10))
+  (invoke "fill" (i32.const 11) (ref.null any) (i32.const 10))
   "out of bounds"
 )
 
@@ -80,7 +80,7 @@
   (module
     (table $t 10 anyref)
     (func $type-index-empty-vs-i32
-      (table.fill $t (ref.null) (i32.const 1))
+      (table.fill $t (ref.null any) (i32.const 1))
     )
   )
   "type mismatch"
@@ -98,7 +98,7 @@
   (module
     (table $t 10 anyref)
     (func $type-length-empty-vs-i32
-      (table.fill $t (i32.const 1) (ref.null))
+      (table.fill $t (i32.const 1) (ref.null any))
     )
   )
   "type mismatch"
@@ -107,7 +107,7 @@
   (module
     (table $t 0 anyref)
     (func $type-index-f32-vs-i32
-      (table.fill $t (f32.const 1) (ref.null) (i32.const 1))
+      (table.fill $t (f32.const 1) (ref.null any) (i32.const 1))
     )
   )
   "type mismatch"
@@ -125,7 +125,7 @@
   (module
     (table $t 0 anyref)
     (func $type-length-f32-vs-i32
-      (table.fill $t (i32.const 1) (ref.null) (f32.const 1))
+      (table.fill $t (i32.const 1) (ref.null any) (f32.const 1))
     )
   )
   "type mismatch"
@@ -146,7 +146,7 @@
   (module
     (table $t 1 anyref)
     (func $type-result-empty-vs-num (result i32)
-      (table.fill $t (i32.const 0) (ref.null) (i32.const 1))
+      (table.fill $t (i32.const 0) (ref.null any) (i32.const 1))
     )
   )
   "type mismatch"

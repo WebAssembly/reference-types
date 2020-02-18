@@ -166,15 +166,15 @@ Reference Instructions
 
 .. _valid-ref.null:
 
-:math:`\REFNULL`
-................
+:math:`\REFNULL~t`
+..................
 
-* The instruction is valid with type :math:`[] \to [\NULLREF]`.
+* The instruction is valid with type :math:`[] \to [t]`.
 
 .. math::
    \frac{
    }{
-     C \vdashinstr \REFNULL : [] \to [\NULLREF]
+     C \vdashinstr \REFNULL~t : [] \to [t]
    }
 
 

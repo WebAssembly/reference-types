@@ -160,9 +160,9 @@ rule token = parse
   | '"'character*'\\'_
     { error_nest (Lexing.lexeme_end_p lexbuf) lexbuf "illegal escape" }
 
+  | "any" { ANY }
   | "anyref" { ANYREF }
   | "funcref" { FUNCREF }
-  | "nullref" { NULLREF }
   | (nxx as t) { NUM_TYPE (num_type t) }
   | "mut" { MUT }
 

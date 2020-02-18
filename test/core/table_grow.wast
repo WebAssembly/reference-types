@@ -14,9 +14,9 @@
 (assert_trap (invoke "set" (i32.const 0) (ref.host 2)) "out of bounds table access")
 (assert_trap (invoke "get" (i32.const 0)) "out of bounds table access")
 
-(assert_return (invoke "grow" (i32.const 1) (ref.null)) (i32.const 0))
+(assert_return (invoke "grow" (i32.const 1) (ref.null any)) (i32.const 0))
 (assert_return (invoke "size") (i32.const 1))
-(assert_return (invoke "get" (i32.const 0)) (ref.null))
+(assert_return (invoke "get" (i32.const 0)) (ref.null any))
 (assert_return (invoke "set" (i32.const 0) (ref.host 2)))
 (assert_return (invoke "get" (i32.const 0)) (ref.host 2))
 (assert_trap (invoke "set" (i32.const 1) (ref.host 2)) "out of bounds table access")
@@ -50,7 +50,7 @@
 (module
   (table $t 0 anyref)
   (func (export "grow") (param i32) (result i32)
-    (table.grow $t (ref.null) (local.get 0))
+    (table.grow $t (ref.null any) (local.get 0))
   )
 )
 
@@ -64,7 +64,7 @@
 (module
   (table $t 0 10 anyref)
   (func (export "grow") (param i32) (result i32)
-    (table.grow $t (ref.null) (local.get 0))
+    (table.grow $t (ref.null any) (local.get 0))
   )
 )
 
@@ -81,7 +81,7 @@
 (module
   (table $t 10 anyref)
   (func (export "grow") (param i32) (result i32)
-    (table.grow $t (ref.null) (local.get 0))
+    (table.grow $t (ref.null any) (local.get 0))
   )
   (elem declare func 1)
   (func (export "check-table-null") (param i32 i32) (result anyref)
@@ -100,9 +100,9 @@
   )
 )
 
-(assert_return (invoke "check-table-null" (i32.const 0) (i32.const 9)) (ref.null))
+(assert_return (invoke "check-table-null" (i32.const 0) (i32.const 9)) (ref.null any))
 (assert_return (invoke "grow" (i32.const 10)) (i32.const 10))
-(assert_return (invoke "check-table-null" (i32.const 0) (i32.const 19)) (ref.null))
+(assert_return (invoke "check-table-null" (i32.const 0) (i32.const 19)) (ref.null any))
 
 
 ;; Type errors
@@ -120,7 +120,7 @@
   (module
     (table $t 0 anyref)
     (func $type-size-empty-vs-i32 (result i32)
-      (table.grow $t (ref.null))
+      (table.grow $t (ref.null any))
     )
   )
   "type mismatch"
@@ -138,7 +138,7 @@
   (module
     (table $t 0 anyref)
     (func $type-size-f32-vs-i32 (result i32)
-      (table.grow $t (ref.null) (f32.const 1))
+      (table.grow $t (ref.null any) (f32.const 1))
     )
   )
   "type mismatch"
@@ -157,7 +157,7 @@
   (module
     (table $t 1 anyref)
     (func $type-result-i32-vs-empty
-      (table.grow $t (ref.null) (i32.const 0))
+      (table.grow $t (ref.null any) (i32.const 0))
     )
   )
   "type mismatch"
@@ -166,7 +166,7 @@
   (module
     (table $t 1 anyref)
     (func $type-result-i32-vs-f32 (result f32)
-      (table.grow $t (ref.null) (i32.const 0))
+      (table.grow $t (ref.null any) (i32.const 0))
     )
   )
   "type mismatch"

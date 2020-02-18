@@ -23,10 +23,10 @@
 
 (invoke "init" (ref.host 1))
 
-(assert_return (invoke "get-anyref" (i32.const 0)) (ref.null))
+(assert_return (invoke "get-anyref" (i32.const 0)) (ref.null any))
 (assert_return (invoke "get-anyref" (i32.const 1)) (ref.host 1))
 
-(assert_return (invoke "get-funcref" (i32.const 0)) (ref.null))
+(assert_return (invoke "get-funcref" (i32.const 0)) (ref.null func))
 (assert_return (invoke "is_null-funcref" (i32.const 1)) (i32.const 0))
 (assert_return (invoke "is_null-funcref" (i32.const 2)) (i32.const 0))
 

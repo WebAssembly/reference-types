@@ -102,7 +102,7 @@ and instr' =
   | MemoryCopy                        (* copy memory ranges *)
   | MemoryInit of var                 (* initialize memory range from segment *)
   | DataDrop of var                   (* drop passive data segment *)
-  | RefNull                           (* null reference *)
+  | RefNull of ref_type               (* null reference *)
   | RefIsNull                         (* null test *)
   | RefFunc of var                    (* function reference *)
   | Const of num                      (* constant *)

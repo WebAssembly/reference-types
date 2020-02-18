@@ -26,17 +26,16 @@ A simple subtyping check can be defined on these types.
 
 .. code-block:: pseudo
 
-   type val_type = I32 | I64 | F32 | F64 | Anyref | Funcref | Nullref | Bot
+   type val_type = I32 | I64 | F32 | F64 | Anyref | Funcref | Bot
 
    func is_num(t : val_type) : bool =
      return t = I32 || t = I64 || t = F32 || t = F64 || t = Bot
 
    func is_ref(t : val_type) : bool =
-     return t = Anyref || t = Funcref || t = Nullref || t = Bot
+     return t = Anyref || t = Funcref || t = Bot
 
    func matches(t1 : val_type, t2 : val_type) : bool =
-     return t1 = t2 || t1 = Bot ||
-       (t1 = Nullref && is_ref(t2)) || (is_ref(t1) && t2 = Anyref)
+     return t1 = t2 || t1 = Bot || (is_ref(t1) && t2 = Anyref)
 
 The algorithm uses two separate stacks: the *value stack* and the *control stack*.
 The former tracks the :ref:`types <syntax-valtype>` of operand values on the :ref:`stack <stack>`,

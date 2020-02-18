@@ -244,7 +244,7 @@ let abs_mask_of = function
 let value v =
   match v.it with
   | Values.Num num -> [Const (num @@ v.at) @@ v.at]
-  | Values.Ref Values.NullRef -> [RefNull @@ v.at]
+  | Values.Ref (Values.NullRef t) -> [RefNull t @@ v.at]
   | Values.Ref (HostRef n) ->
     [Const (Values.I32 n @@ v.at) @@ v.at; Call (hostref_idx @@ v.at) @@ v.at]
   | Values.Ref _ -> assert false
@@ -270,7 +270,7 @@ let assert_return ress ts at =
         Compare (eq_of t') @@ at;
         Test (Values.I32 I32Op.Eqz) @@ at;
         BrIf (0l @@ at) @@ at ]
-    | LitResult {it = Values.Ref Values.NullRef; _} ->
+    | LitResult {it = Values.Ref (Values.NullRef _); _} ->
       [ RefIsNull @@ at;
         Test (Values.I32 I32Op.Eqz) @@ at;
         BrIf (0l @@ at) @@ at ]
@@ -407,7 +407,7 @@ let of_value v =
   | Num (I64 i) -> "int64(\"" ^ I64.to_string_s i ^ "\")"
   | Num (F32 z) -> of_float (F32.to_float z)
   | Num (F64 z) -> of_float (F64.to_float z)
-  | Ref NullRef -> "null"
+  | Ref (NullRef _) -> "null"
   | Ref (HostRef n) -> "hostref(" ^ Int32.to_string n ^ ")"
   | _ -> assert false
 

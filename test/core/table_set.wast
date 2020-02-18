@@ -26,22 +26,22 @@
   )
 )
 
-(assert_return (invoke "get-anyref" (i32.const 0)) (ref.null))
+(assert_return (invoke "get-anyref" (i32.const 0)) (ref.null any))
 (assert_return (invoke "set-anyref" (i32.const 0) (ref.host 1)))
 (assert_return (invoke "get-anyref" (i32.const 0)) (ref.host 1))
-(assert_return (invoke "set-anyref" (i32.const 0) (ref.null)))
-(assert_return (invoke "get-anyref" (i32.const 0)) (ref.null))
+(assert_return (invoke "set-anyref" (i32.const 0) (ref.null any)))
+(assert_return (invoke "get-anyref" (i32.const 0)) (ref.null any))
 
-(assert_return (invoke "get-funcref" (i32.const 0)) (ref.null))
+(assert_return (invoke "get-funcref" (i32.const 0)) (ref.null func))
 (assert_return (invoke "set-funcref-from" (i32.const 0) (i32.const 1)))
 (assert_return (invoke "is_null-funcref" (i32.const 0)) (i32.const 0))
-(assert_return (invoke "set-funcref" (i32.const 0) (ref.null)))
-(assert_return (invoke "get-funcref" (i32.const 0)) (ref.null))
+(assert_return (invoke "set-funcref" (i32.const 0) (ref.null func)))
+(assert_return (invoke "get-funcref" (i32.const 0)) (ref.null func))
 
-(assert_trap (invoke "set-anyref" (i32.const 2) (ref.null)) "out of bounds")
-(assert_trap (invoke "set-funcref" (i32.const 3) (ref.null)) "out of bounds")
-(assert_trap (invoke "set-anyref" (i32.const -1) (ref.null)) "out of bounds")
-(assert_trap (invoke "set-funcref" (i32.const -1) (ref.null)) "out of bounds")
+(assert_trap (invoke "set-anyref" (i32.const 2) (ref.null any)) "out of bounds")
+(assert_trap (invoke "set-funcref" (i32.const 3) (ref.null func)) "out of bounds")
+(assert_trap (invoke "set-anyref" (i32.const -1) (ref.null any)) "out of bounds")
+(assert_trap (invoke "set-funcref" (i32.const -1) (ref.null func)) "out of bounds")
 
 (assert_trap (invoke "set-anyref" (i32.const 2) (ref.host 0)) "out of bounds")
 (assert_trap (invoke "set-funcref-from" (i32.const 3) (i32.const 1)) "out of bounds")
@@ -64,7 +64,7 @@
   (module
     (table $t 10 anyref)
     (func $type-index-empty-vs-i32
-      (table.set $t (ref.null))
+      (table.set $t (ref.null any))
     )
   )
   "type mismatch"
@@ -82,7 +82,7 @@
   (module
     (table $t 10 anyref)
     (func $type-size-f32-vs-i32
-      (table.set $t (f32.const 1) (ref.null))
+      (table.set $t (f32.const 1) (ref.null any))
     )
   )
   "type mismatch"
@@ -112,7 +112,7 @@
   (module
     (table $t 10 anyref)
     (func $type-result-empty-vs-num (result i32)
-      (table.set $t (i32.const 0) (ref.null))
+      (table.set $t (i32.const 0) (ref.null any))
     )
   )
   "type mismatch"

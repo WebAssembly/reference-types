@@ -342,8 +342,8 @@ let rec check_instr (c : context) (e : instr) (s : infer_stack_type) : op_type =
     ignore (data c x);
     [] --> []
 
-  | RefNull ->
-    [] --> [RefType NullRefType]
+  | RefNull t ->
+    [] --> [RefType t]
 
   | RefIsNull ->
     [RefType AnyRefType] --> [NumType I32Type]
@@ -466,7 +466,7 @@ let check_func (c : context) (f : func) =
 
 let is_const (c : context) (e : instr) =
   match e.it with
-  | RefNull
+  | RefNull _
   | RefFunc _
   | Const _ -> true
   | GlobalGet x -> let GlobalType (_, mut) = global c x in mut = Immutable
