@@ -235,8 +235,6 @@ A :ref:`reference type <syntax-reftype>` :math:`\reftype_1` matches a :ref:`refe
 
 * Either both :math:`\reftype_1` and :math:`\reftype_2` are the same.
 
-* Or :math:`\reftype_1` is |NULLREF|.
-
 * Or :math:`\reftype_2` is |ANYREF|.
 
 .. math::
@@ -244,11 +242,6 @@ A :ref:`reference type <syntax-reftype>` :math:`\reftype_1` matches a :ref:`refe
    \frac{
    }{
      \vdashreftypematch \reftype \matchesvaltype \reftype
-   }
-   \qquad
-   \frac{
-   }{
-     \vdashreftypematch \NULLREF \matchesvaltype \reftype
    }
    \qquad
    \frac{

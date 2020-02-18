@@ -35,7 +35,7 @@ or *host references* pointing to an uninterpreted form of :ref:`host address <sy
      \F32.\CONST~\f32 \\&&|&
      \F64.\CONST~\f64 \\
    \production{(reference)} & \reff &::=&
-     \REFNULL \\&&|&
+     \REFNULL~t \\&&|&
      \REFFUNCADDR~\funcaddr \\&&|&
      \REFHOST~\hostaddr \\
    \production{(value)} & \val &::=&
@@ -53,7 +53,7 @@ it is the respective value :math:`0` for :ref:`number types <syntax-numtype>` an
 .. math::
    \begin{array}{lcl@{\qquad}l}
    \default_t &=& t{.}\CONST~0 & (\iff t = \numtype) \\
-   \default_t &=& \REFNULL & (\iff t = \reftype) \\
+   \default_t &=& \REFNULL~t & (\iff t = \reftype) \\
    \end{array}
 
 

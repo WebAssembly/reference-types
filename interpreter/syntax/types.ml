@@ -1,7 +1,7 @@
 (* Types *)
 
 type num_type = I32Type | I64Type | F32Type | F64Type
-type ref_type = NullRefType | AnyRefType | FuncRefType
+type ref_type = AnyRefType | FuncRefType
 type value_type = NumType of num_type | RefType of ref_type | BotType
 type stack_type = value_type list
 type func_type = FuncType of stack_type * stack_type
@@ -33,7 +33,6 @@ let match_num_type t1 t2 =
 let match_ref_type t1 t2 =
   match t1, t2 with
   | _, AnyRefType -> true
-  | NullRefType, _ -> true
   | _, _ -> t1 = t2
 
 let match_value_type t1 t2 =
@@ -101,7 +100,6 @@ let string_of_num_type = function
   | F64Type -> "f64"
 
 let string_of_ref_type = function
-  | NullRefType -> "nullref"
   | AnyRefType -> "anyref"
   | FuncRefType -> "funcref"
 

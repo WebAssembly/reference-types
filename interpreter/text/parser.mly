@@ -164,7 +164,7 @@ let inline_type_explicit (c : context) x ft at =
 
 %token LPAR RPAR
 %token NAT INT FLOAT STRING VAR
-%token ANYREF NULLREF FUNCREF NUM_TYPE MUT
+%token ANY ANYREF FUNCREF NUM_TYPE MUT
 %token UNREACHABLE NOP DROP SELECT
 %token BLOCK END IF THEN ELSE LOOP BR BR_IF BR_TABLE
 %token CALL CALL_INDIRECT RETURN
@@ -226,10 +226,13 @@ string_list :
 
 /* Types */
 
+ref_kind :
+  | ANY { AnyRefType }
+  | FUNC { FuncRefType }
+
 ref_type :
   | ANYREF { AnyRefType }
   | FUNCREF { FuncRefType }
-  | NULLREF { NullRefType }
 
 value_type :
   | NUM_TYPE { NumType $1 }
@@ -372,7 +375,7 @@ plain_instr :
   | MEMORY_COPY { fun c -> memory_copy }
   | MEMORY_INIT var { fun c -> memory_init ($2 c data) }
   | DATA_DROP var { fun c -> data_drop ($2 c data) }
-  | REF_NULL { fun c -> ref_null }
+  | REF_NULL ref_kind { fun c -> ref_null $2 }
   | REF_IS_NULL { fun c -> ref_is_null }
   | REF_FUNC var { fun c -> ref_func ($2 c func) }
   | CONST num { fun c -> fst (num $1 $2) }
@@ -986,7 +989,7 @@ meta :
 
 const :
   | LPAR CONST num RPAR { Values.Num (snd (num $2 $3)) @@ at () }
-  | LPAR REF_NULL RPAR { Values.Ref Values.NullRef @@ at () }
+  | LPAR REF_NULL ref_kind RPAR { Values.Ref (Values.NullRef $3) @@ at () }
   | LPAR REF_HOST NAT RPAR { Values.Ref (HostRef (nat32 $3 (ati 3))) @@ at () }
 
 const_list :

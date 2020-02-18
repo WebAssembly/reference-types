@@ -25,6 +25,7 @@ Number Types
 .. index:: reference type
    pair: text format; reference type
 .. _text-reftype:
+.. _text-refedtype:
 
 Reference Types
 ~~~~~~~~~~~~~~~
@@ -33,8 +34,10 @@ Reference Types
    \begin{array}{llcll@{\qquad\qquad}l}
    \production{reference type} & \Treftype &::=&
      \text{anyref} &\Rightarrow& \ANYREF \\ &&|&
-     \text{funcref} &\Rightarrow& \FUNCREF \\ &&|&
-     \text{nullref} &\Rightarrow& \NULLREF \\
+     \text{funcref} &\Rightarrow& \FUNCREF \\
+   \production{referenced type} & \Trefedtype &::=&
+     \text{any} &\Rightarrow& \ANYREF \\ &&|&
+     \text{func} &\Rightarrow& \FUNCREF \\
    \end{array}
 
 

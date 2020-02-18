@@ -11,8 +11,8 @@
   (global (;6;) (mut f64) (f64.const -14))
   (global $y (mut i64) (i64.const -15))
 
-  (global $r anyref (ref.null))
-  (global funcref (ref.null))
+  (global $r anyref (ref.null any))
+  (global funcref (ref.null func))
 
   (func (export "get-a") (result i32) (global.get $a))
   (func (export "get-b") (result i64) (global.get $b))
@@ -184,7 +184,7 @@
 
 (assert_return (invoke "get-a") (i32.const -2))
 (assert_return (invoke "get-b") (i64.const -5))
-(assert_return (invoke "get-r") (ref.null))
+(assert_return (invoke "get-r") (ref.null any))
 (assert_return (invoke "get-x") (i32.const -12))
 (assert_return (invoke "get-y") (i64.const -15))
 

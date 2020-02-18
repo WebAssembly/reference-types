@@ -25,8 +25,7 @@ by repurposing tables as a general memory for opaque data types
 Get the most important parts soon!
 
 Summary:
-
-* Add new types `anyref` and `nullref` that can be used as both a value types and a table element types.
+* Add new type `anyref` that can be used as both a value types and a table element type.
 
 * Also allow `funcref` as a value type.
 
@@ -47,8 +46,8 @@ Notes:
 
 Typing extensions:
 
-* Introduce `anyref`, `funcref`, and `nullref` as a new class of *reference types*.
-  - `reftype ::= anyref | funcref | nullref`
+* Introduce `anyref` and `funcref` as a new class of *reference types*.
+  - `reftype ::= anyref | funcref`
 
 * Value types (of locals, globals, function parameters and results) can now be either numeric types or reference types.
   - `numtype ::= i32 | i64 | f32 | f64`
@@ -61,14 +60,13 @@ Typing extensions:
 * Introduce a simple subtype relation between reference types.
   - reflexive transitive closure of the following rules
   - `t <: anyref` for all reftypes `t`
-  - `nullref <: anyref` and `nullref <: funcref`
-  - Note: No rule `nullref <: t` for all reftypes `t` -- while that is derivable from the above given the current set of types it might not hold for future reference types which don't allow null.
 
 
 New/extended instructions:
 
 * The new instruction `ref.null` evaluates to the null reference constant.
-  - `ref.null : [] -> [nullref]`
+  - `ref.null rt : [] -> [rtref]`
+    - iff `rt = any` or `rt = func` 
   - allowed in constant expressions
 
 * The new instruction `ref.is_null` checks for null.
@@ -159,7 +157,6 @@ Additions:
   - `reftype ::= ... | eqref`
 * It is a subtype of `anyref`
   - `eqref < anyref`
-  - `nullref < eqref`
 * Add `ref.eq` instruction.
   - `ref.eq : [eqref eqref] -> [i32]`
 

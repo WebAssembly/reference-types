@@ -29,9 +29,6 @@
   (func (export "select-f64-t") (param f64 f64 i32) (result f64)
     (select (result f64) (local.get 0) (local.get 1) (local.get 2))
   )
-  (func (export "select-nullref") (param nullref nullref i32) (result nullref)
-    (select (result nullref) (local.get 0) (local.get 1) (local.get 2))
-  )
   (func (export "select-funcref") (param funcref funcref i32) (result funcref)
     (select (result funcref) (local.get 0) (local.get 1) (local.get 2))
   )
@@ -39,13 +36,10 @@
     (select (result anyref) (local.get 0) (local.get 1) (local.get 2))
   )
 
-  (func (export "join-nullref") (param i32) (result anyref)
-    (select (result nullref) (ref.null) (ref.null) (local.get 0))
-  )
   (func (export "join-funcref") (param i32) (result anyref)
     (select (result funcref)
       (table.get $tab (i32.const 0))
-      (ref.null)
+      (ref.null func)
       (local.get 0)
     )
   )
@@ -250,8 +244,7 @@
 (assert_return (invoke "select-i64-t" (i64.const 2) (i64.const 1) (i32.const 1)) (i64.const 2))
 (assert_return (invoke "select-f32-t" (f32.const 1) (f32.const 2) (i32.const 1)) (f32.const 1))
 (assert_return (invoke "select-f64-t" (f64.const 1) (f64.const 2) (i32.const 1)) (f64.const 1))
-(assert_return (invoke "select-nullref" (ref.null) (ref.null) (i32.const 1)) (ref.null))
-(assert_return (invoke "select-funcref" (ref.null) (ref.null) (i32.const 1)) (ref.null))
+(assert_return (invoke "select-funcref" (ref.null func) (ref.null func) (i32.const 1)) (ref.null func))
 (assert_return (invoke "select-anyref" (ref.host 1) (ref.host 2) (i32.const 1)) (ref.host 1))
 
 (assert_return (invoke "select-i32-t" (i32.const 1) (i32.const 2) (i32.const 0)) (i32.const 2))
@@ -279,11 +272,8 @@
 (assert_return (invoke "select-f64-t" (f64.const 2) (f64.const nan) (i32.const 0)) (f64.const nan))
 (assert_return (invoke "select-f64-t" (f64.const 2) (f64.const nan:0x20304) (i32.const 0)) (f64.const nan:0x20304))
 
-(assert_return (invoke "join-nullref" (i32.const 1)) (ref.null))
-(assert_return (invoke "join-nullref" (i32.const 0)) (ref.null))
-
 (assert_return (invoke "join-funcref" (i32.const 1)) (ref.func))
-(assert_return (invoke "join-funcref" (i32.const 0)) (ref.null))
+(assert_return (invoke "join-funcref" (i32.const 0)) (ref.null func))
 
 (assert_return (invoke "join-anyref" (i32.const 1) (ref.host 1)) (ref.func))
 (assert_return (invoke "join-anyref" (i32.const 0) (ref.host 1)) (ref.host 1))
@@ -389,12 +379,6 @@
 )
 
 
-(assert_invalid
-  (module (func $type-nullref-implicit
-    (drop (select (ref.null) (ref.null) (i32.const 1)))
-  ))
-  "type mismatch"
-)
 (assert_invalid
   (module (func $type-anyref-implicit (param $r anyref)
     (drop (select (local.get $r) (local.get $r) (i32.const 1)))

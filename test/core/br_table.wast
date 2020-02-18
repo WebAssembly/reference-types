@@ -1280,24 +1280,6 @@
     )
   )
 
-  (func (export "meet-nullref") (param i32) (result funcref)
-    (block $l1 (result funcref)
-      (block $l2 (result nullref)
-        (br_table $l1 $l2 $l1 (ref.null) (local.get 0))
-      )
-    )
-  )
-
-  (func (export "meet-multi-ref") (param i32) (result anyref)
-    (block $l1 (result anyref)
-      (block $l2 (result funcref)
-        (block $l3 (result nullref)
-          (br_table $l3 $l2 $l1 (ref.null) (local.get 0))
-        )
-      )
-    )
-  )
-
   (func (export "meet-bottom")
     (block (result f64)
       (block (result f32)
@@ -1641,10 +1623,10 @@
     (block $l1 (result anyref)
       (drop
         (block $l2 (result i32)
-          (br_table $l2 $l1 $l2 (ref.null) (local.get 0))
+          (br_table $l2 $l1 $l2 (ref.null any) (local.get 0))
         )
       )
-      (ref.null)
+      (ref.null any)
     )
   ))
   "type mismatch"

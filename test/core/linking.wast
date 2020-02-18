@@ -94,36 +94,22 @@
 
 
 (module $Mref_ex
-  (global (export "g-const-null") nullref (ref.null))
-  (global (export "g-var-null") (mut nullref) (ref.null))
-  (global (export "g-const-func") funcref (ref.null))
-  (global (export "g-var-func") (mut funcref) (ref.null))
-  (global (export "g-const-any") anyref (ref.null))
-  (global (export "g-var-any") (mut anyref) (ref.null))
+  (global (export "g-const-func") funcref (ref.null func))
+  (global (export "g-var-func") (mut funcref) (ref.null func))
+  (global (export "g-const-any") anyref (ref.null any))
+  (global (export "g-var-any") (mut anyref) (ref.null any))
 )
 (register "Mref_ex" $Mref_ex)
 
 (module $Mref_im
-  (global (import "Mref_ex" "g-const-null") nullref)
-  (global (import "Mref_ex" "g-const-null") funcref)
-  (global (import "Mref_ex" "g-const-null") anyref)
   (global (import "Mref_ex" "g-const-func") funcref)
   (global (import "Mref_ex" "g-const-func") anyref)
   (global (import "Mref_ex" "g-const-any") anyref)
 
-  (global (import "Mref_ex" "g-var-null") (mut nullref))
   (global (import "Mref_ex" "g-var-func") (mut funcref))
   (global (import "Mref_ex" "g-var-any") (mut anyref))
 )
 
-(assert_unlinkable
-  (module (global (import "Mref_ex" "g-const-func") nullref))
-  "incompatible import type"
-)
-(assert_unlinkable
-  (module (global (import "Mref_ex" "g-const-any") nullref))
-  "incompatible import type"
-)
 (assert_unlinkable
   (module (global (import "Mref_ex" "g-const-any") funcref))
   "incompatible import type"
@@ -131,23 +117,7 @@
 
 
 (assert_unlinkable
-  (module (global (import "Mref_ex" "g-var-null") (mut funcref)))
-  "incompatible import type"
-)
-(assert_unlinkable
-  (module (global (import "Mref_ex" "g-var-null") (mut anyref)))
-  "incompatible import type"
-)
-(assert_unlinkable
-  (module (global (import "Mref_ex" "g-var-func") (mut nullref)))
-  "incompatible import type"
-)
-(assert_unlinkable
   (module (global (import "Mref_ex" "g-var-func") (mut anyref)))
-  "incompatible import type"
-)
-(assert_unlinkable
-  (module (global (import "Mref_ex" "g-var-any") (mut nullref)))
   "incompatible import type"
 )
 (assert_unlinkable
@@ -315,36 +285,18 @@
 
 
 (module $Mtable_ex
-  (table $t1 (export "t-null") 1 nullref)
-  (table $t2 (export "t-func") 1 funcref)
-  (table $t3 (export "t-any") 1 anyref)
+  (table $t1 (export "t-func") 1 funcref)
+  (table $t2 (export "t-any") 1 anyref)
 )
 (register "Mtable_ex" $Mtable_ex)
 
 (module
-  (table (import "Mtable_ex" "t-null") 1 nullref)
   (table (import "Mtable_ex" "t-func") 1 funcref)
   (table (import "Mtable_ex" "t-any") 1 anyref)
 )
 
 (assert_unlinkable
-  (module (table (import "Mtable_ex" "t-null") 1 funcref))
-  "incompatible import type"
-)
-(assert_unlinkable
-  (module (table (import "Mtable_ex" "t-null") 1 anyref))
-  "incompatible import type"
-)
-(assert_unlinkable
-  (module (table (import "Mtable_ex" "t-func") 1 nullref))
-  "incompatible import type"
-)
-(assert_unlinkable
   (module (table (import "Mtable_ex" "t-func") 1 anyref))
-  "incompatible import type"
-)
-(assert_unlinkable
-  (module (table (import "Mtable_ex" "t-any") 1 nullref))
   "incompatible import type"
 )
 (assert_unlinkable

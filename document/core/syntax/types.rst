@@ -54,18 +54,12 @@ Reference Types
 .. math::
    \begin{array}{llll}
    \production{reference type} & \reftype &::=&
-     \ANYREF ~|~ \FUNCREF ~|~ \NULLREF \\
+     \ANYREF ~|~ \FUNCREF \\
    \end{array}
 
 The type |ANYREF| denotes the infinite union of all references, and thereby a :ref:`supertype <match-reftype>` of all other reference types.
 
 The type |FUNCREF| denotes the infinite union of all references to :ref:`functions <syntax-func>`, regardless of their :ref:`function types <syntax-functype>`.
-
-The type |NULLREF| only contains a single value: the :ref:`null <syntax-ref.null>` reference.
-It is a :ref:`subtype <match-reftype>` of all other reference types.
-
-.. note::
-   Future versions of WebAssembly may include reference types that do not include null and hence are not supertypes of |NULLREF|.
 
 Reference types are *opaque*, meaning that neither their size nor their bit pattern can be observed.
 Values of reference type can be stored in :ref:`tables <syntax-table>`.

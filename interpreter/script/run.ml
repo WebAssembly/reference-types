@@ -377,7 +377,8 @@ let assert_result at got expect =
         )
       | RefResult ->
         (match v with
-        | Ref ref -> ref = NullRef
+        | Ref (NullRef _) -> true
+        | Ref _ -> false
         | _ -> true
         )
       | FuncResult ->

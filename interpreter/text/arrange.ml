@@ -55,6 +55,10 @@ let break_string s =
 
 (* Types *)
 
+let ref_kind = function
+  | AnyRefType -> "any"
+  | FuncRefType -> "func"
+
 let num_type t = string_of_num_type t
 let ref_type t = string_of_ref_type t
 let value_type t = string_of_value_type t
@@ -262,7 +266,7 @@ let rec instr e =
     | MemoryCopy -> "memory.copy", []
     | MemoryInit x -> "memory.init " ^ var x, []
     | DataDrop x -> "data.drop " ^ var x, []
-    | RefNull -> "ref.null", []
+    | RefNull t -> "ref.null", [Atom (ref_kind t)]
     | RefIsNull -> "ref.is_null", []
     | RefFunc x -> "ref.func " ^ var x, []
     | Const n -> constop n ^ " " ^ num n, []
@@ -431,7 +435,7 @@ let value v =
   | Num (Values.I64 i) -> Node ("i64.const " ^ I64.to_string_s i, [])
   | Num (Values.F32 z) -> Node ("f32.const " ^ F32.to_string z, [])
   | Num (Values.F64 z) -> Node ("f64.const " ^ F64.to_string z, [])
-  | Ref NullRef -> Node ("ref.null", [])
+  | Ref (NullRef t) -> Node ("ref.null", [Atom (ref_kind t)])
   | Ref (HostRef n) -> Node ("ref.host " ^ Int32.to_string n, [])
   | _ -> assert false
 
