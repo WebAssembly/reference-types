@@ -22,7 +22,7 @@ setup(() => {
 });
 
 test(() => {
-  const argument = { "element": "anyfunc", "initial": 5 };
+  const argument = { "element": "funcref", "initial": 5 };
   const table = new WebAssembly.Table(argument);
   assert_throws(new TypeError(), () => table.get());
 }, "Missing arguments: get");
@@ -53,7 +53,7 @@ test(t => {
 }, "Branding: get");
 
 test(() => {
-  const argument = { "element": "anyfunc", "initial": 5 };
+  const argument = { "element": "funcref", "initial": 5 };
   const table = new WebAssembly.Table(argument);
   assert_throws(new TypeError(), () => table.set());
   assert_throws(new TypeError(), () => table.set(0));
@@ -85,7 +85,7 @@ test(t => {
 }, "Branding: set");
 
 test(() => {
-  const argument = { "element": "anyfunc", "initial": 5 };
+  const argument = { "element": "funcref", "initial": 5 };
   const table = new WebAssembly.Table(argument);
   assert_equal_to_array(table, [null, null, null, null, null]);
 
@@ -102,7 +102,7 @@ test(() => {
 }, "Basic");
 
 test(() => {
-  const argument = { "element": "anyfunc", "initial": 5 };
+  const argument = { "element": "funcref", "initial": 5 };
   const table = new WebAssembly.Table(argument);
   assert_equal_to_array(table, [null, null, null, null, null]);
 
@@ -120,7 +120,7 @@ test(() => {
 }, "Growing");
 
 test(() => {
-  const argument = { "element": "anyfunc", "initial": 5 };
+  const argument = { "element": "funcref", "initial": 5 };
   const table = new WebAssembly.Table(argument);
   assert_equal_to_array(table, [null, null, null, null, null]);
 
@@ -134,7 +134,7 @@ test(() => {
 }, "Setting out-of-bounds");
 
 test(() => {
-  const argument = { "element": "anyfunc", "initial": 1 };
+  const argument = { "element": "funcref", "initial": 1 };
   const table = new WebAssembly.Table(argument);
   assert_equal_to_array(table, [null]);
 
@@ -156,7 +156,7 @@ test(() => {
 }, "Setting non-function");
 
 test(() => {
-  const argument = { "element": "anyfunc", "initial": 1 };
+  const argument = { "element": "funcref", "initial": 1 };
   const table = new WebAssembly.Table(argument);
   assert_equal_to_array(table, [null]);
 
@@ -166,7 +166,7 @@ test(() => {
 }, "Setting non-wasm function");
 
 test(() => {
-  const argument = { "element": "anyfunc", "initial": 1 };
+  const argument = { "element": "funcref", "initial": 1 };
   const table = new WebAssembly.Table(argument);
   assert_equal_to_array(table, [null]);
 
@@ -189,20 +189,20 @@ const outOfRangeValues = [
 
 for (const value of outOfRangeValues) {
   test(() => {
-    const argument = { "element": "anyfunc", "initial": 1 };
+    const argument = { "element": "funcref", "initial": 1 };
     const table = new WebAssembly.Table(argument);
     assert_throws(new TypeError(), () => table.get(value));
   }, `Getting out-of-range argument: ${format_value(value)}`);
 
   test(() => {
-    const argument = { "element": "anyfunc", "initial": 1 };
+    const argument = { "element": "funcref", "initial": 1 };
     const table = new WebAssembly.Table(argument);
     assert_throws(new TypeError(), () => table.set(value, null));
   }, `Setting out-of-range argument: ${format_value(value)}`);
 }
 
 test(() => {
-  const argument = { "element": "anyfunc", "initial": 1 };
+  const argument = { "element": "funcref", "initial": 1 };
   const table = new WebAssembly.Table(argument);
   let called = 0;
   const value = {
@@ -217,7 +217,7 @@ test(() => {
 
 test(() => {
   const {fn} = functions;
-  const argument = { "element": "anyfunc", "initial": 1 };
+  const argument = { "element": "funcref", "initial": 1 };
   const table = new WebAssembly.Table(argument);
 
   assert_equals(table.get(0, {}), null);

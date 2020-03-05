@@ -218,7 +218,7 @@ of `expr`s instead of function indices.
 | - | - | - | - |
 | flags | `varuint32` | always | Flags for passive and presence of fields below, only values of 0, 1, and 2 are valid |
 | index | `varuint32`? | flags = 2 |  Table index; 0 if the field is not present  |
-| element_type | `elem_type`? | flags = 1 | element type of this segment; `anyfunc` if not present |
+| element_type | `elem_type`? | flags = 1 | element type of this segment; `funcref` if not present |
 | offset | `init_expr`? | flags != 1 | an `i32` initializer expression for offset |
 | count | `varuint32` | always | number of elements |
 | elems | `varuint32*` | flags != 1 | sequence of function indices |
@@ -228,9 +228,9 @@ Another way of looking at it:
 
 | Flags | Active? | index | element_type | offset |
 | - | - | - | - | - |
-| 0 | Active | Always 0 | Always `anyfunc` | Present |
+| 0 | Active | Always 0 | Always `funcref` | Present |
 | 1 | Passive | - | Present | - |
-| 2 | Active | Present | Always `anyfunc` | Present |
+| 2 | Active | Present | Always `funcref` | Present |
 
 An `elem_expr` is like an `init_expr`, but can only contain expressions of the following sequences:
 
