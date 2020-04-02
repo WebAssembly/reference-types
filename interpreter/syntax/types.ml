@@ -2,7 +2,7 @@
 
 type num_type = I32Type | I64Type | F32Type | F64Type
 type ref_type = AnyRefType | FuncRefType
-type value_type = NumType of num_type | RefType of ref_type | BotType
+type value_type = NumType of num_type | RefType of ref_type
 type stack_type = value_type list
 type func_type = FuncType of stack_type * stack_type
 
@@ -24,21 +24,28 @@ let size = function
   | I32Type | F32Type -> 4
   | I64Type | F64Type -> 8
 
+let is_num_type = function
+  | NumType _ -> true
+  | RefType _ -> false
+
+let is_ref_type = function
+  | NumType _ -> false
+  | RefType _ -> true
+
+
+(* Filters *)
+
+let funcs =
+  Lib.List.map_filter (function ExternFuncType t -> Some t | _ -> None)
+let tables =
+  Lib.List.map_filter (function ExternTableType t -> Some t | _ -> None)
+let memories =
+  Lib.List.map_filter (function ExternMemoryType t -> Some t | _ -> None)
+let globals =
+  Lib.List.map_filter (function ExternGlobalType t -> Some t | _ -> None)
+
 
 (* Subtyping *)
-
-let match_num_type t1 t2 =
-  t1 = t2
-
-let match_ref_type t1 t2 =
-  t1 = t2
-
-let match_value_type t1 t2 =
-  match t1, t2 with
-  | NumType t1', NumType t2' -> match_num_type t1' t2'
-  | RefType t1', RefType t2' -> match_ref_type t1' t2'
-  | BotType, _ -> true
-  | _, _ -> false
 
 let match_limits lim1 lim2 =
   I32.ge_u lim1.min lim2.min &&
@@ -56,9 +63,8 @@ let match_table_type (TableType (lim1, et1)) (TableType (lim2, et2)) =
 let match_memory_type (MemoryType lim1) (MemoryType lim2) =
   match_limits lim1 lim2
 
-let match_global_type (GlobalType (t1, mut1)) (GlobalType (t2, mut2)) =
-  mut1 = mut2 &&
-  (t1 = t2 || mut2 = Immutable && match_value_type t1 t2)
+let match_global_type gt1 gt2 =
+  gt1 = gt2
 
 let match_extern_type et1 et2 =
   match et1, et2 with
@@ -67,26 +73,6 @@ let match_extern_type et1 et2 =
   | ExternMemoryType mt1, ExternMemoryType mt2 -> match_memory_type mt1 mt2
   | ExternGlobalType gt1, ExternGlobalType gt2 -> match_global_type gt1 gt2
   | _, _ -> false
-
-let is_num_type = function
-  | NumType _ | BotType -> true
-  | RefType _ -> false
-
-let is_ref_type = function
-  | NumType _ -> false
-  | RefType _ | BotType -> true
-
-
-(* Filters *)
-
-let funcs =
-  Lib.List.map_filter (function ExternFuncType t -> Some t | _ -> None)
-let tables =
-  Lib.List.map_filter (function ExternTableType t -> Some t | _ -> None)
-let memories =
-  Lib.List.map_filter (function ExternMemoryType t -> Some t | _ -> None)
-let globals =
-  Lib.List.map_filter (function ExternGlobalType t -> Some t | _ -> None)
 
 
 (* String conversion *)
@@ -108,7 +94,6 @@ let string_of_refed_type = function
 let string_of_value_type = function
   | NumType t -> string_of_num_type t
   | RefType t -> string_of_ref_type t
-  | BotType -> "impossible"
 
 let string_of_value_types = function
   | [t] -> string_of_value_type t

@@ -103,7 +103,6 @@ let encode m =
     let value_type = function
       | NumType t -> num_type t
       | RefType t -> ref_type t
-      | BotType -> assert false
 
     let stack_type = function
       | [] -> vs7 (-0x40)

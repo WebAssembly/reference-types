@@ -57,15 +57,12 @@ Typing extensions:
 * Element types (of tables) are equated with reference types.
   - `elemtype ::= <reftype>`
 
-* Introduce a simple subtype relation between reference types.
-  - reflexive transitive closure of rules to come
-
 
 New/extended instructions:
 
 * The new instruction `ref.null` evaluates to the null reference constant.
   - `ref.null rt : [] -> [rtref]`
-    - iff `rt = any` or `rt = func` 
+    - iff `rt = any` or `rt = func`
   - allowed in constant expressions
 
 * The new instruction `ref.is_null` checks for null.
@@ -140,6 +137,19 @@ API extensions:
 
 
 ## Possible Future Extensions
+
+
+### Subtyping
+
+Motivation:
+
+* Enable various extensions (see below).
+
+Additions:
+
+* Introduce a simple subtype relation between reference types.
+  - reflexive transitive closure of the following rules
+  - `t <: anyref` for all reftypes `t`
 
 
 ### Equality on references

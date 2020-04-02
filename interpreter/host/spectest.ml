@@ -15,7 +15,6 @@ let global (GlobalType (t, _) as gt) =
     | NumType F32Type -> Num (F32 (F32.of_float 666.6))
     | NumType F64Type -> Num (F64 (F64.of_float 666.6))
     | RefType t -> Ref (NullRef t)
-    | BotType -> assert false
   in Global.alloc gt v
 
 let table =

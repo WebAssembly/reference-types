@@ -767,8 +767,6 @@
 
 .. |ok| mathdef:: \mathrel{\mbox{ok}}
 .. |const| mathdef:: \xref{valid/instructions}{valid-constant}{\mathrel{\mbox{const}}}
-.. |matchesvaltype| mathdef:: \xref{valid/types}{match-valtype}{\leq}
-.. |matchesresulttype| mathdef:: \xref{valid/types}{match-resulttype}{\leq}
 
 
 .. Contexts
@@ -794,11 +792,6 @@
 .. |vdashmemtype| mathdef:: \xref{valid/types}{valid-memtype}{\vdash}
 .. |vdashglobaltype| mathdef:: \xref{valid/types}{valid-globaltype}{\vdash}
 .. |vdashexterntype| mathdef:: \xref{valid/types}{valid-externtype}{\vdash}
-
-.. |vdashnumtypematch| mathdef:: \xref{valid/types}{match-numtype}{\vdash}
-.. |vdashreftypematch| mathdef:: \xref{valid/types}{match-reftype}{\vdash}
-.. |vdashvaltypematch| mathdef:: \xref{valid/types}{match-valtype}{\vdash}
-.. |vdashresulttypematch| mathdef:: \xref{valid/types}{match-resulttype}{\vdash}
 
 .. |vdashinstr| mathdef:: \xref{valid/instructions}{valid-instr}{\vdash}
 .. |vdashinstrseq| mathdef:: \xref{valid/instructions}{valid-instr-seq}{\vdash}

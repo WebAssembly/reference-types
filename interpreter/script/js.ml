@@ -366,7 +366,6 @@ let is_js_num_type = function
 let is_js_value_type = function
   | NumType t -> is_js_num_type t
   | RefType t -> true
-  | BotType -> assert false
 
 let is_js_global_type = function
   | GlobalType (t, mut) -> is_js_value_type t && mut = Immutable
