@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Modules &#8212; WebAssembly 1.0</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -13,7 +11,9 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"MAXBUFFER": 30720}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Appendix" href="../appendix/index.html" />
@@ -24,7 +24,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head> <script type="text/javascript">MathJax.Hub.Config({TeX: {MAXBUFFER: 30*1024}})</script><body>
+  </head><body>
   <div class="document">
     
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -66,13 +66,11 @@
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -162,10 +160,10 @@ The following auxiliary function extracts optional identifiers from parameters:<
 \mathrm{id}(\def\mathdef2149#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2149{(}~\def\mathdef2150#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2150{param}~\href{../text/values.html#text-id}{\mathtt{id}}^?~\dots~\def\mathdef2151#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2151{)}) &amp;=&amp; \href{../text/values.html#text-id}{\mathtt{id}}^? \\
 \end{array}\end{split}\]</div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>Both productions overlap for the case that the function type is <span class="math notranslate nohighlight">\([] \href{../syntax/types.html#syntax-functype}{\rightarrow} []\)</span>.
 However, in that case, they also produce the same results, so that the choice is immaterial.</p>
-<p class="last">The <a class="reference internal" href="conventions.html#text-context-wf"><span class="std std-ref">well-formedness</span></a> condition on <span class="math notranslate nohighlight">\(I'\)</span> ensures that the parameters do not contain duplicate identifier.</p>
+<p>The <a class="reference internal" href="conventions.html#text-context-wf"><span class="std std-ref">well-formedness</span></a> condition on <span class="math notranslate nohighlight">\(I'\)</span> ensures that the parameters do not contain duplicate identifier.</p>
 </div>
 <div class="section" id="abbreviations">
 <span id="text-typeuse-abbrev"></span><h3>Abbreviations<a class="headerlink" href="#abbreviations" title="Permalink to this headline">¶</a></h3>
@@ -228,8 +226,8 @@ If no such index exists, then a new <a class="reference internal" href="types.ht
 \mathrm{id}(\def\mathdef2182#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2182{(}~\def\mathdef2183#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2183{local}~\href{../text/values.html#text-id}{\mathtt{id}}^?~\dots~\def\mathdef2184#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2184{)}) &amp;=&amp; \href{../text/values.html#text-id}{\mathtt{id}}^? \\
 \end{array}\end{split}\]</div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The <a class="reference internal" href="conventions.html#text-context-wf"><span class="std std-ref">well-formedness</span></a> condition on <span class="math notranslate nohighlight">\(I''\)</span> ensures that parameters and locals do not contain duplicate identifiers.</p>
+<p class="admonition-title">Note</p>
+<p>The <a class="reference internal" href="conventions.html#text-context-wf"><span class="std std-ref">well-formedness</span></a> condition on <span class="math notranslate nohighlight">\(I''\)</span> ensures that parameters and locals do not contain duplicate identifiers.</p>
 </div>
 <span class="target" id="index-5"></span><div class="section" id="text-func-abbrev">
 <span id="index-6"></span><span id="id2"></span><h3>Abbreviations<a class="headerlink" href="#text-func-abbrev" title="Permalink to this headline">¶</a></h3>
@@ -373,13 +371,13 @@ If no such index exists, then a new <a class="reference internal" href="types.ht
   \def\mathdef2361#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2361{(}~\def\mathdef2362#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2362{export}~~\mathit{nm}{:}\href{../text/values.html#text-name}{\mathtt{name}}~~d{:}\href{../text/modules.html#text-exportdesc}{\mathtt{exportdesc}}_I~\def\mathdef2363#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2363{)}
     &amp;\Rightarrow&amp; \{ \href{../syntax/modules.html#syntax-export}{\mathsf{name}}~\mathit{nm}, \href{../syntax/modules.html#syntax-export}{\mathsf{desc}}~d \} \\
 \def\mathdef2104#1{{}}\mathdef2104{export description} &amp; \href{../text/modules.html#text-exportdesc}{\mathtt{exportdesc}}_I &amp;::=&amp;
-  \def\mathdef2364#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2364{(}~\def\mathdef2365#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2365{func}~~x{:}\href{../binary/modules.html#binary-funcidx}{\mathtt{funcidx}}_I~\def\mathdef2366#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2366{)}
+  \def\mathdef2364#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2364{(}~\def\mathdef2365#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2365{func}~~x{:}\href{../text/modules.html#text-funcidx}{\mathtt{funcidx}}_I~\def\mathdef2366#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2366{)}
     &amp;\Rightarrow&amp; \href{../syntax/modules.html#syntax-exportdesc}{\mathsf{func}}~x \\ &amp;&amp;|&amp;
-  \def\mathdef2367#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2367{(}~\def\mathdef2368#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2368{table}~~x{:}\href{../binary/modules.html#binary-tableidx}{\mathtt{tableidx}}_I~\def\mathdef2369#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2369{)}
+  \def\mathdef2367#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2367{(}~\def\mathdef2368#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2368{table}~~x{:}\href{../text/modules.html#text-tableidx}{\mathtt{tableidx}}_I~\def\mathdef2369#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2369{)}
     &amp;\Rightarrow&amp; \href{../syntax/modules.html#syntax-exportdesc}{\mathsf{table}}~x \\ &amp;&amp;|&amp;
-  \def\mathdef2370#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2370{(}~\def\mathdef2371#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2371{memory}~~x{:}\href{../binary/modules.html#binary-memidx}{\mathtt{memidx}}_I~\def\mathdef2372#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2372{)}
+  \def\mathdef2370#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2370{(}~\def\mathdef2371#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2371{memory}~~x{:}\href{../text/modules.html#text-memidx}{\mathtt{memidx}}_I~\def\mathdef2372#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2372{)}
     &amp;\Rightarrow&amp; \href{../syntax/modules.html#syntax-exportdesc}{\mathsf{mem}}~x \\ &amp;&amp;|&amp;
-  \def\mathdef2373#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2373{(}~\def\mathdef2374#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2374{global}~~x{:}\href{../binary/modules.html#binary-globalidx}{\mathtt{globalidx}}_I~\def\mathdef2375#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2375{)}
+  \def\mathdef2373#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2373{(}~\def\mathdef2374#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2374{global}~~x{:}\href{../text/modules.html#text-globalidx}{\mathtt{globalidx}}_I~\def\mathdef2375#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2375{)}
     &amp;\Rightarrow&amp; \href{../syntax/modules.html#syntax-exportdesc}{\mathsf{global}}~x \\
 \end{array}\end{split}\]</div>
 <div class="section" id="id6">
@@ -397,18 +395,14 @@ If no such index exists, then a new <a class="reference internal" href="types.ht
     &amp;\Rightarrow&amp; \{ \href{../syntax/modules.html#syntax-start}{\mathsf{func}}~x \} \\
 \end{array}\end{split}\]</div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">At most one start function may occur in a module,
+<p class="admonition-title">Note</p>
+<p>At most one start function may occur in a module,
 which is ensured by a suitable side condition on the <span class="math notranslate nohighlight">\(\href{../text/modules.html#text-module}{\mathtt{module}}\)</span> grammar.</p>
 </div>
 </div>
 <div class="section" id="element-segments">
 <span id="text-tableuse"></span><span id="text-elemexpr"></span><span id="text-elemlist"></span><span id="text-elem"></span><span id="index-20"></span><h2>Element Segments<a class="headerlink" href="#element-segments" title="Permalink to this headline">¶</a></h2>
 <p>Element segments allow for an optional <a class="reference internal" href="#text-tableidx"><span class="std std-ref">table index</span></a> to identify the table to initialize.</p>
-<div class="admonition-todo admonition" id="index-21">
-<p class="first admonition-title">Todo</p>
-<p class="last">TODO: multi-instr elemexpr</p>
-</div>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llclll}
 \def\mathdef2104#1{{}}\mathdef2104{element segment} &amp; \href{../text/modules.html#text-elem}{\mathtt{elem}}_I &amp;::=&amp;
@@ -461,7 +455,7 @@ Furthermore, for backwards compatibility with earlier versions of WebAssembly, i
 </div>
 </div>
 <div class="section" id="data-segments">
-<span id="test-memuse"></span><span id="text-data"></span><span id="text-datastring"></span><span id="index-22"></span><h2>Data Segments<a class="headerlink" href="#data-segments" title="Permalink to this headline">¶</a></h2>
+<span id="test-memuse"></span><span id="text-data"></span><span id="text-datastring"></span><span id="index-21"></span><h2>Data Segments<a class="headerlink" href="#data-segments" title="Permalink to this headline">¶</a></h2>
 <p>Data segments allow for an optional <a class="reference internal" href="#text-memidx"><span class="std std-ref">memory index</span></a> to identify the memory to initialize.
 The data is written as a <a class="reference internal" href="values.html#text-string"><span class="std std-ref">string</span></a>, which may be split up into a possibly empty sequence of individual string literals.</p>
 <div class="math notranslate nohighlight">
@@ -478,8 +472,8 @@ The data is written as a <a class="reference internal" href="values.html#text-st
     \quad\Rightarrow\quad x \\
 \end{array}\end{split}\]</div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">In the current version of WebAssembly, the only valid memory index is 0
+<p class="admonition-title">Note</p>
+<p>In the current version of WebAssembly, the only valid memory index is 0
 or a symbolic <a class="reference internal" href="values.html#text-id"><span class="std std-ref">memory identifier</span></a> resolving to the same value.</p>
 </div>
 <div class="section" id="id8">
@@ -501,14 +495,14 @@ or a symbolic <a class="reference internal" href="values.html#text-id"><span cla
 </div>
 </div>
 <div class="section" id="text-module">
-<span id="text-modulefield"></span><span id="index-23"></span><span id="id9"></span><h2>Modules<a class="headerlink" href="#text-module" title="Permalink to this headline">¶</a></h2>
+<span id="text-modulefield"></span><span id="index-22"></span><span id="id9"></span><h2>Modules<a class="headerlink" href="#text-module" title="Permalink to this headline">¶</a></h2>
 <p>A module consists of a sequence of fields that can occur in any order.
 All definitions and their respective bound <a class="reference internal" href="values.html#text-id"><span class="std std-ref">identifiers</span></a> scope over the entire module, including the text preceding them.</p>
 <p>A module may optionally bind an <a class="reference internal" href="values.html#text-id"><span class="std std-ref">identifier</span></a> that names the module.
 The name serves a documentary role only.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Tools may include the module name in the <a class="reference internal" href="../appendix/custom.html#binary-namesec"><span class="std std-ref">name section</span></a> of the <a class="reference internal" href="../binary/index.html#binary"><span class="std std-ref">binary format</span></a>.</p>
+<p class="admonition-title">Note</p>
+<p>Tools may include the module name in the <a class="reference internal" href="../appendix/custom.html#binary-namesec"><span class="std std-ref">name section</span></a> of the <a class="reference internal" href="../binary/index.html#binary"><span class="std std-ref">binary format</span></a>.</p>
 </div>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{lll}
@@ -536,15 +530,15 @@ The name serves a documentary role only.</p>
 \end{array}\end{split}\]</div>
 <p>The following restrictions are imposed on the composition of <a class="reference internal" href="../syntax/modules.html#syntax-module"><span class="std std-ref">modules</span></a>: <span class="math notranslate nohighlight">\(m_1 \href{../syntax/conventions.html#notation-compose}{\oplus} m_2\)</span> is defined if and only if</p>
 <ul class="simple">
-<li><span class="math notranslate nohighlight">\(m_1.\href{../syntax/modules.html#syntax-module}{\mathsf{start}} = \epsilon \vee m_2.\href{../syntax/modules.html#syntax-module}{\mathsf{start}} = \epsilon\)</span></li>
-<li><span class="math notranslate nohighlight">\(m_1.\href{../syntax/modules.html#syntax-module}{\mathsf{funcs}} = m_1.\href{../syntax/modules.html#syntax-module}{\mathsf{tables}} = m_1.\href{../syntax/modules.html#syntax-module}{\mathsf{mems}} = m_1.\href{../syntax/modules.html#syntax-module}{\mathsf{globals}} = \epsilon \vee m_2.\href{../syntax/modules.html#syntax-module}{\mathsf{imports}} = \epsilon\)</span></li>
+<li><p><span class="math notranslate nohighlight">\(m_1.\href{../syntax/modules.html#syntax-module}{\mathsf{start}} = \epsilon \vee m_2.\href{../syntax/modules.html#syntax-module}{\mathsf{start}} = \epsilon\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(m_1.\href{../syntax/modules.html#syntax-module}{\mathsf{funcs}} = m_1.\href{../syntax/modules.html#syntax-module}{\mathsf{tables}} = m_1.\href{../syntax/modules.html#syntax-module}{\mathsf{mems}} = m_1.\href{../syntax/modules.html#syntax-module}{\mathsf{globals}} = \epsilon \vee m_2.\href{../syntax/modules.html#syntax-module}{\mathsf{imports}} = \epsilon\)</span></p></li>
 </ul>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>The first condition ensures that there is at most one start function.
 The second condition enforces that all <a class="reference internal" href="#text-import"><span class="std std-ref">imports</span></a> must occur before any regular definition of a <a class="reference internal" href="#text-func"><span class="std std-ref">function</span></a>, <a class="reference internal" href="#text-table"><span class="std std-ref">table</span></a>, <a class="reference internal" href="#text-mem"><span class="std std-ref">memory</span></a>, or <a class="reference internal" href="#text-global"><span class="std std-ref">global</span></a>,
 thereby maintaining the ordering of the respective <a class="reference internal" href="../syntax/modules.html#syntax-index"><span class="std std-ref">index spaces</span></a>.</p>
-<p class="last">The <a class="reference internal" href="conventions.html#text-context-wf"><span class="std std-ref">well-formedness</span></a> condition on <span class="math notranslate nohighlight">\(I\)</span> in the grammar for <span class="math notranslate nohighlight">\(\href{../text/modules.html#text-module}{\mathtt{module}}\)</span> ensures that no namespace contains duplicate identifiers.</p>
+<p>The <a class="reference internal" href="conventions.html#text-context-wf"><span class="std std-ref">well-formedness</span></a> condition on <span class="math notranslate nohighlight">\(I\)</span> in the grammar for <span class="math notranslate nohighlight">\(\href{../text/modules.html#text-module}{\mathtt{module}}\)</span> ensures that no namespace contains duplicate identifiers.</p>
 </div>
 <p>The definition of the initial <a class="reference internal" href="conventions.html#text-context"><span class="std std-ref">identifier context</span></a> <span class="math notranslate nohighlight">\(I\)</span> uses the following auxiliary definition which maps each relevant definition to a singular context with one (possibly empty) identifier:</p>
 <div class="math notranslate nohighlight">

@@ -5,105 +5,9 @@
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <meta content="ED" name="w3c-status">
   <meta content="This document describes the integration of WebAssembly with the broader web platform." name="abstract">
-  <meta content="Bikeshed version 5721fde7f6b8111f662b83b678f9e181a9838206" name="generator">
+  <meta content="Bikeshed version c1dbacab, updated Mon Mar 30 18:56:12 2020 -0700" name="generator">
   <link href="https://www.w3.org/TR/wasm-web-api-1/" rel="canonical">
-  <meta content="7cfa19962056c87c8747c2c1edf8679cf055cd3f" name="document-revision">
-<style>/* style-md-lists */
-
-/* This is a weird hack for me not yet following the commonmark spec
-   regarding paragraph and lists. */
-[data-md] > :first-child {
-    margin-top: 0;
-}
-[data-md] > :last-child {
-    margin-bottom: 0;
-}</style>
-<style>/* style-selflinks */
-
-.heading, .issue, .note, .example, li, dt {
-    position: relative;
-}
-a.self-link {
-    position: absolute;
-    top: 0;
-    left: calc(-1 * (3.5rem - 26px));
-    width: calc(3.5rem - 26px);
-    height: 2em;
-    text-align: center;
-    border: none;
-    transition: opacity .2s;
-    opacity: .5;
-}
-a.self-link:hover {
-    opacity: 1;
-}
-.heading > a.self-link {
-    font-size: 83%;
-}
-li > a.self-link {
-    left: calc(-1 * (3.5rem - 26px) - 2em);
-}
-dfn > a.self-link {
-    top: auto;
-    left: auto;
-    opacity: 0;
-    width: 1.5em;
-    height: 1.5em;
-    background: gray;
-    color: white;
-    font-style: normal;
-    transition: opacity .2s, background-color .2s, color .2s;
-}
-dfn:hover > a.self-link {
-    opacity: 1;
-}
-dfn > a.self-link:hover {
-    color: black;
-}
-
-a.self-link::before            { content: "¶"; }
-.heading > a.self-link::before { content: "§"; }
-dfn > a.self-link::before      { content: "#"; }</style>
-<style>/* style-counters */
-
-body {
-    counter-reset: example figure issue;
-}
-.issue {
-    counter-increment: issue;
-}
-.issue:not(.no-marker)::before {
-    content: "Issue " counter(issue);
-}
-
-.example {
-    counter-increment: example;
-}
-.example:not(.no-marker)::before {
-    content: "Example " counter(example);
-}
-.invalid.example:not(.no-marker)::before,
-.illegal.example:not(.no-marker)::before {
-    content: "Invalid Example" counter(example);
-}
-
-figcaption {
-    counter-increment: figure;
-}
-figcaption:not(.no-marker)::before {
-    content: "Figure " counter(figure) " ";
-}</style>
-<style>/* style-var-click-highlighting */
-
-    var { cursor: pointer; }
-    var.selected0 { background-color: #F4D200; box-shadow: 0 0 0 2px #F4D200; }
-    var.selected1 { background-color: #FF87A2; box-shadow: 0 0 0 2px #FF87A2; }
-    var.selected2 { background-color: #96E885; box-shadow: 0 0 0 2px #96E885; }
-    var.selected3 { background-color: #3EEED2; box-shadow: 0 0 0 2px #3EEED2; }
-    var.selected4 { background-color: #EACFB6; box-shadow: 0 0 0 2px #EACFB6; }
-    var.selected5 { background-color: #82DDFF; box-shadow: 0 0 0 2px #82DDFF; }
-    var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
-    </style>
+  <meta content="9f6a39f9a045d2b688de7495e3006f514e638dc7" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -166,6 +70,35 @@ pre .property::before, pre .property::after {
 [data-link-type=biblio] {
     white-space: pre;
 }</style>
+<style>/* style-counters */
+
+body {
+    counter-reset: example figure issue;
+}
+.issue {
+    counter-increment: issue;
+}
+.issue:not(.no-marker)::before {
+    content: "Issue " counter(issue);
+}
+
+.example {
+    counter-increment: example;
+}
+.example:not(.no-marker)::before {
+    content: "Example " counter(example);
+}
+.invalid.example:not(.no-marker)::before,
+.illegal.example:not(.no-marker)::before {
+    content: "Invalid Example" counter(example);
+}
+
+figcaption {
+    counter-increment: figure;
+}
+figcaption:not(.no-marker)::before {
+    content: "Figure " counter(figure) " ";
+}</style>
 <style>/* style-dfn-panel */
 
 .dfn-panel {
@@ -203,6 +136,62 @@ pre .property::before, pre .property::after {
 
 .dfn-paneled { cursor: pointer; }
 </style>
+<style>/* style-md-lists */
+
+/* This is a weird hack for me not yet following the commonmark spec
+   regarding paragraph and lists. */
+[data-md] > :first-child {
+    margin-top: 0;
+}
+[data-md] > :last-child {
+    margin-bottom: 0;
+}</style>
+<style>/* style-selflinks */
+
+.heading, .issue, .note, .example, li, dt {
+    position: relative;
+}
+a.self-link {
+    position: absolute;
+    top: 0;
+    left: calc(-1 * (3.5rem - 26px));
+    width: calc(3.5rem - 26px);
+    height: 2em;
+    text-align: center;
+    border: none;
+    transition: opacity .2s;
+    opacity: .5;
+}
+a.self-link:hover {
+    opacity: 1;
+}
+.heading > a.self-link {
+    font-size: 83%;
+}
+li > a.self-link {
+    left: calc(-1 * (3.5rem - 26px) - 2em);
+}
+dfn > a.self-link {
+    top: auto;
+    left: auto;
+    opacity: 0;
+    width: 1.5em;
+    height: 1.5em;
+    background: gray;
+    color: white;
+    font-style: normal;
+    transition: opacity .2s, background-color .2s, color .2s;
+}
+dfn:hover > a.self-link {
+    opacity: 1;
+}
+dfn > a.self-link:hover {
+    color: black;
+}
+
+a.self-link::before            { content: "¶"; }
+.heading > a.self-link::before { content: "§"; }
+dfn > a.self-link::before      { content: "#"; }</style>
 <style>/* style-syntax-highlighting */
 pre.idl.highlight { color: #708090; }
 .highlight:not(.idl) { background: hsl(24, 20%, 95%); }
@@ -261,12 +250,23 @@ c-[vg] { color: #0077aa } /* Name.Variable.Global */
 c-[vi] { color: #0077aa } /* Name.Variable.Instance */
 c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
 </style>
+<style>/* style-var-click-highlighting */
+
+    var { cursor: pointer; }
+    var.selected0 { background-color: #F4D200; box-shadow: 0 0 0 2px #F4D200; }
+    var.selected1 { background-color: #FF87A2; box-shadow: 0 0 0 2px #FF87A2; }
+    var.selected2 { background-color: #96E885; box-shadow: 0 0 0 2px #96E885; }
+    var.selected3 { background-color: #3EEED2; box-shadow: 0 0 0 2px #3EEED2; }
+    var.selected4 { background-color: #EACFB6; box-shadow: 0 0 0 2px #EACFB6; }
+    var.selected5 { background-color: #82DDFF; box-shadow: 0 0 0 2px #82DDFF; }
+    var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
+    </style>
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet" type="text/css">
  <body class="h-entry">
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">WebAssembly Web API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-02-27">27 February 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-04-02">2 April 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -315,6 +315,7 @@ and the <a href="https://www.w3.org/TR/wasm-web-api/">WebAssembly Web API</a>.
     <li><a href="#streaming-modules"><span class="secno">1</span> <span class="content">Streaming Module Compilation and Instantiation</span></a>
     <li><a href="#serialization"><span class="secno">2</span> <span class="content">Serialization</span></a>
     <li><a href="#conventions"><span class="secno">3</span> <span class="content">Developer-Facing Display Conventions</span></a>
+    <li><a href="#mediaType"><span class="secno">4</span> <span class="content">Media-type Registration</span></a>
     <li>
      <a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
      <ol class="toc">
@@ -358,7 +359,7 @@ and the <a href="https://www.w3.org/TR/wasm-web-api/">WebAssembly Web API</a>.
     <p class="note" role="note"><span>Note:</span> This algorithm accepts a <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#response" id="ref-for-response③">Response</a></code> object, or a
     promise for one, and compiles and instantiates the resulting bytes of the response. This compilation
     can be performed in the background and in a streaming manner. If the <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#response" id="ref-for-response④">Response</a></code> is not <a data-link-type="dfn" href="https://html.spec.whatwg.org/#cors-same-origin" id="ref-for-cors-same-origin">CORS-same-origin</a>, does not represent an <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#ok-status" id="ref-for-ok-status">ok status</a>, or does not match the <code>`application/wasm`</code> MIME type, the returned promise will be rejected with a <code class="idl"><a data-link-type="idl" href="https://tc39.github.io/ecma262/#sec-native-error-types-used-in-this-standard-typeerror" id="ref-for-sec-native-error-types-used-in-this-standard-typeerror">TypeError</a></code>; if
-    compilation or instantiation fails, the returned promise will be rejected with a <code class="idl"><a data-link-type="idl" href="https://webassembly.github.io/spec/js-api/#compileerror" id="ref-for-compileerror">CompileError</a></code> or other relevant error type, depending on the cause of failure.</p>
+    compilation or instantiation fails, the returned promise will be rejected with a <code class="idl"><a data-link-type="idl" href="https://webassembly.github.io/spec/js-api/#exceptiondef-compileerror" id="ref-for-exceptiondef-compileerror">CompileError</a></code> or other relevant error type, depending on the cause of failure.</p>
     <ol>
      <li data-md>
       <p>Let <var>returnValue</var> be <a data-link-type="dfn" href="https://heycam.github.io/webidl/#a-new-promise" id="ref-for-a-new-promise">a new promise</a></p>
@@ -499,6 +500,54 @@ stack frame representations; this allows engines to continue using their
 existing formats for JavaScript (which existing code may already be depending
 on) while still printing WebAssembly frames in a format consistent with
 JavaScript.</p>
+   <h2 class="heading settled" data-level="4" id="mediaType"><span class="secno">4. </span><span class="content">Media-type Registration</span><a class="self-link" href="#mediaType"></a></h2>
+   <p>This section will be submitted to the Internet Engineering Steering Group (IESG) for
+review, approval, and registration with IANA.</p>
+   <p>application/wasm</p>
+   <dl>
+    <dt>Type name:
+    <dd>application
+    <dt>Subtype name:
+    <dd>wasm
+    <dt>Required parameters:
+    <dd>None
+    <dt>Optional parameters:
+    <dd>None
+    <dt>Encoding considerations:
+    <dd>None (this is a binary format)
+    <dt>Security considerations:
+    <dd>See see WebAssembly Core Security Considerations<br> https://www.w3.org/TR/wasm-core/#security-considerations%E2%91%A0
+    <dt>Interoperability considerations:
+    <dd>See see WebAssembly Core Conformance<br> https://www.w3.org/TR/wasm-core/#conformance
+    <dt>Published specification:
+     https://www.w3.org/TR/wasm-core-1/
+ https://www.w3.org/TR/wasm-js-api-1/
+ https://www.w3.org/TR/wasm-web-api-1/ 
+    <dt>Applications that use this media type:
+    <dd>Web browsers and runtime systems
+    <dt>Additional information:
+    <dd>
+     <dl>
+      <dt>Magic number(s):
+      <dd>0x00 0x61 0x73 0x6D
+      <dt>File extension(s):
+      <dd>.wasm
+      <dt>Macintosh file type code(s):
+      <dd>None
+     </dl>
+    <dt>Person &amp; email address to contact for further information:
+    <dd>
+     Eric Prud’hommeaux 
+     <ericU00040w3.org></ericU00040w3.org>
+    <dt>Intended usage:
+    <dd>Common
+    <dt>Restrictions on usage:
+    <dd>None
+    <dt>Author(s):
+    <dd>W3C’s Web Assembly Working Group
+    <dt>Change controller:
+    <dd>W3C
+   </dl>
   </main>
   <h2 class="no-ref no-num heading settled" id="conformance"><span class="content"> Conformance</span><a class="self-link" href="#conformance"></a></h2>
   <h3 class="heading settled" id="document-conventions"><span class="content"> Document conventions</span><a class="self-link" href="#document-conventions"></a></h3>
@@ -641,10 +690,10 @@ JavaScript.</p>
     <li><a href="#ref-for-sub-serialization">2. Serialization</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="term-for-compileerror">
-   <a href="https://webassembly.github.io/spec/js-api/#compileerror">https://webassembly.github.io/spec/js-api/#compileerror</a><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="term-for-exceptiondef-compileerror">
+   <a href="https://webassembly.github.io/spec/js-api/#exceptiondef-compileerror">https://webassembly.github.io/spec/js-api/#exceptiondef-compileerror</a><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-compileerror">1. Streaming Module Compilation and Instantiation</a>
+    <li><a href="#ref-for-exceptiondef-compileerror">1. Streaming Module Compilation and Instantiation</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="term-for-module">
@@ -797,7 +846,7 @@ JavaScript.</p>
    <li>
     <a data-link-type="biblio">[WASMJS]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-compileerror" style="color:initial">CompileError</span>
+     <li><span class="dfn-paneled" id="term-for-exceptiondef-compileerror" style="color:initial">CompileError</span>
      <li><span class="dfn-paneled" id="term-for-module" style="color:initial">Module</span>
      <li><span class="dfn-paneled" id="term-for-namespacedef-webassembly" style="color:initial">WebAssembly</span>
      <li><span class="dfn-paneled" id="term-for-dictdef-webassemblyinstantiatedsource" style="color:initial">WebAssemblyInstantiatedSource</span>
@@ -846,10 +895,10 @@ JavaScript.</p>
    <dd>Boris Zbarsky. <a href="https://heycam.github.io/webidl/">Web IDL</a>. 15 December 2016. ED. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
-<pre class="idl highlight def"><c- b>partial</c-> <c- b>namespace</c-> <a class="idl-code" data-link-type="namespace" href="https://webassembly.github.io/spec/js-api/#namespacedef-webassembly" id="ref-for-namespacedef-webassembly①"><c- g>WebAssembly</c-></a> {
-  <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="https://webassembly.github.io/spec/js-api/#module" id="ref-for-module③"><c- n>Module</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-webassembly-compilestreaming" id="ref-for-dom-webassembly-compilestreaming①"><c- g>compileStreaming</c-></a>(<c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="https://fetch.spec.whatwg.org/#response" id="ref-for-response⑤"><c- n>Response</c-></a>> <a href="#dom-webassembly-compilestreaming-source-source"><code><c- g>source</c-></code></a>);
-  <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="https://webassembly.github.io/spec/js-api/#dictdef-webassemblyinstantiatedsource" id="ref-for-dictdef-webassemblyinstantiatedsource①"><c- n>WebAssemblyInstantiatedSource</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-webassembly-instantiatestreaming" id="ref-for-dom-webassembly-instantiatestreaming①"><c- g>instantiateStreaming</c-></a>(
-      <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="https://fetch.spec.whatwg.org/#response" id="ref-for-response①①"><c- n>Response</c-></a>> <a href="#dom-webassembly-instantiatestreaming-source-importobject-source"><code><c- g>source</c-></code></a>, <c- b>optional</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-object" id="ref-for-idl-object①"><c- b>object</c-></a> <a href="#dom-webassembly-instantiatestreaming-source-importobject-importobject"><code><c- g>importObject</c-></code></a>);
+<pre class="idl highlight def"><c- b>partial</c-> <c- b>namespace</c-> <a class="idl-code" data-link-type="namespace" href="https://webassembly.github.io/spec/js-api/#namespacedef-webassembly"><c- g>WebAssembly</c-></a> {
+  <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="https://webassembly.github.io/spec/js-api/#module"><c- n>Module</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-webassembly-compilestreaming"><c- g>compileStreaming</c-></a>(<c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="https://fetch.spec.whatwg.org/#response"><c- n>Response</c-></a>> <a href="#dom-webassembly-compilestreaming-source-source"><code><c- g>source</c-></code></a>);
+  <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="https://webassembly.github.io/spec/js-api/#dictdef-webassemblyinstantiatedsource"><c- n>WebAssemblyInstantiatedSource</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-webassembly-instantiatestreaming"><c- g>instantiateStreaming</c-></a>(
+      <c- b>Promise</c->&lt;<a class="n" data-link-type="idl-name" href="https://fetch.spec.whatwg.org/#response"><c- n>Response</c-></a>> <a href="#dom-webassembly-instantiatestreaming-source-importobject-source"><code><c- g>source</c-></code></a>, <c- b>optional</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-object"><c- b>object</c-></a> <a href="#dom-webassembly-instantiatestreaming-source-importobject-importobject"><code><c- g>importObject</c-></code></a>);
 };
 
 </pre>
@@ -871,6 +920,62 @@ JavaScript.</p>
     <li><a href="#ref-for-compile-a-potential-webassembly-response">1. Streaming Module Compilation and Instantiation</a> <a href="#ref-for-compile-a-potential-webassembly-response①">(2)</a>
    </ul>
   </aside>
+<script>/* script-dfn-panel */
+
+document.body.addEventListener("click", function(e) {
+    var queryAll = function(sel) { return [].slice.call(document.querySelectorAll(sel)); }
+    // Find the dfn element or panel, if any, that was clicked on.
+    var el = e.target;
+    var target;
+    var hitALink = false;
+    while(el.parentElement) {
+        if(el.tagName == "A") {
+            // Clicking on a link in a <dfn> shouldn't summon the panel
+            hitALink = true;
+        }
+        if(el.classList.contains("dfn-paneled")) {
+            target = "dfn";
+            break;
+        }
+        if(el.classList.contains("dfn-panel")) {
+            target = "dfn-panel";
+            break;
+        }
+        el = el.parentElement;
+    }
+    if(target != "dfn-panel") {
+        // Turn off any currently "on" or "activated" panels.
+        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(function(el){
+            el.classList.remove("on");
+            el.classList.remove("activated");
+        });
+    }
+    if(target == "dfn" && !hitALink) {
+        // open the panel
+        var dfnPanel = document.querySelector(".dfn-panel[data-for='" + el.id + "']");
+        if(dfnPanel) {
+            dfnPanel.classList.add("on");
+            var rect = el.getBoundingClientRect();
+            dfnPanel.style.left = window.scrollX + rect.right + 5 + "px";
+            dfnPanel.style.top = window.scrollY + rect.top + "px";
+            var panelRect = dfnPanel.getBoundingClientRect();
+            var panelWidth = panelRect.right - panelRect.left;
+            if(panelRect.right > document.body.scrollWidth && (rect.left - (panelWidth + 5)) > 0) {
+                // Reposition, because the panel is overflowing
+                dfnPanel.style.left = window.scrollX + rect.left - (panelWidth + 5) + "px";
+            }
+        } else {
+            console.log("Couldn't find .dfn-panel[data-for='" + el.id + "']");
+        }
+    } else if(target == "dfn-panel") {
+        // Switch it to "activated" state, which pins it.
+        el.classList.add("activated");
+        el.style.left = null;
+        el.style.top = null;
+    }
+
+});
+</script>
 <script>/* script-var-click-highlighting */
 
     document.addEventListener("click", e=>{
@@ -955,59 +1060,3 @@ JavaScript.</p>
         }
     }
     </script>
-<script>/* script-dfn-panel */
-
-document.body.addEventListener("click", function(e) {
-    var queryAll = function(sel) { return [].slice.call(document.querySelectorAll(sel)); }
-    // Find the dfn element or panel, if any, that was clicked on.
-    var el = e.target;
-    var target;
-    var hitALink = false;
-    while(el.parentElement) {
-        if(el.tagName == "A") {
-            // Clicking on a link in a <dfn> shouldn't summon the panel
-            hitALink = true;
-        }
-        if(el.classList.contains("dfn-paneled")) {
-            target = "dfn";
-            break;
-        }
-        if(el.classList.contains("dfn-panel")) {
-            target = "dfn-panel";
-            break;
-        }
-        el = el.parentElement;
-    }
-    if(target != "dfn-panel") {
-        // Turn off any currently "on" or "activated" panels.
-        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(function(el){
-            el.classList.remove("on");
-            el.classList.remove("activated");
-        });
-    }
-    if(target == "dfn" && !hitALink) {
-        // open the panel
-        var dfnPanel = document.querySelector(".dfn-panel[data-for='" + el.id + "']");
-        if(dfnPanel) {
-            dfnPanel.classList.add("on");
-            var rect = el.getBoundingClientRect();
-            dfnPanel.style.left = window.scrollX + rect.right + 5 + "px";
-            dfnPanel.style.top = window.scrollY + rect.top + "px";
-            var panelRect = dfnPanel.getBoundingClientRect();
-            var panelWidth = panelRect.right - panelRect.left;
-            if(panelRect.right > document.body.scrollWidth && (rect.left - (panelWidth + 5)) > 0) {
-                // Reposition, because the panel is overflowing
-                dfnPanel.style.left = window.scrollX + rect.left - (panelWidth + 5) + "px";
-            }
-        } else {
-            console.log("Couldn't find .dfn-panel[data-for='" + el.id + "']");
-        }
-    } else if(target == "dfn-panel") {
-        // Switch it to "activated" state, which pins it.
-        el.classList.add("activated");
-        el.style.left = null;
-        el.style.top = null;
-    }
-
-});
-</script>
