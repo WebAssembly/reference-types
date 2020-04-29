@@ -182,15 +182,15 @@ Reference Instructions
 
 .. _valid-ref.is_null:
 
-:math:`\REFISNULL`
-..................
+:math:`\REFISNULL~t`
+....................
 
-* The instruction is valid with type :math:`[\reftype] \to [\I32]` for any :ref:`reference type <syntax-reftype>` :math:`\reftype`.
+* The instruction is valid with type :math:`[t] \to [\I32]`.
 
 .. math::
    \frac{
    }{
-     C \vdashinstr \REFISNULL : [\reftype] \to [\I32]
+     C \vdashinstr \REFISNULL~t : [t] \to [\I32]
    }
 
 .. _valid-ref.func:

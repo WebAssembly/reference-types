@@ -274,8 +274,8 @@ let assert_return ress ts at =
         Compare (eq_of t') @@ at;
         Test (Values.I32 I32Op.Eqz) @@ at;
         BrIf (0l @@ at) @@ at ]
-    | LitResult {it = Values.Ref (Values.NullRef _); _} ->
-      [ RefIsNull @@ at;
+    | LitResult {it = Values.Ref (Values.NullRef t); _} ->
+      [ RefIsNull t @@ at;
         Test (Values.I32 I32Op.Eqz) @@ at;
         BrIf (0l @@ at) @@ at ]
     | LitResult {it = Values.Ref (HostRef n); _} ->

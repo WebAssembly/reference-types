@@ -242,7 +242,7 @@ op:
   memory.init <var>
   data.drop <var>
   ref.null <ref_kind>
-  ref.is_null
+  ref.is_null <ref_kind>
   ref.func <var>
   <val_type>.const <value>
   <val_type>.<unop>

@@ -410,7 +410,7 @@ let rec step (c : config) : config =
       | RefNull t, vs' ->
         Ref (NullRef t) :: vs', []
 
-      | RefIsNull, Ref r :: vs' ->
+      | RefIsNull _, Ref r :: vs' ->
         (match r with
         | NullRef _ ->
           Num (I32 1l) :: vs', []
