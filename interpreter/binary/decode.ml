@@ -144,7 +144,7 @@ let num_type s =
 let ref_type s =
   match vs7 s with
   | -0x10 -> FuncRefType
-  | -0x11 -> AnyRefType
+  | -0x11 -> ExternRefType
   | _ -> error s (pos s - 1) "malformed reference type"
 
 let value_type s =

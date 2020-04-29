@@ -33,11 +33,11 @@ Reference Types
 .. math::
    \begin{array}{llcll@{\qquad\qquad}l}
    \production{reference type} & \Treftype &::=&
-     \text{anyref} &\Rightarrow& \ANYREF \\ &&|&
-     \text{funcref} &\Rightarrow& \FUNCREF \\
+     \text{funcref} &\Rightarrow& \FUNCREF \\ &&|&
+     \text{externref} &\Rightarrow& \EXTERNREF \\
    \production{referenced type} & \Trefedtype &::=&
-     \text{any} &\Rightarrow& \ANYREF \\ &&|&
-     \text{func} &\Rightarrow& \FUNCREF \\
+     \text{func} &\Rightarrow& \FUNCREF \\ &&|&
+     \text{extern} &\Rightarrow& \EXTERNREF \\
    \end{array}
 
 

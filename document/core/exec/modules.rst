@@ -137,15 +137,15 @@ The following auxiliary typing rules specify this typing relation relative to a 
    }
 
 
-:ref:`Host References <syntax-ref.host>` :math:`\REFHOST~a`
-...........................................................
+:ref:`External References <syntax-ref.extern>` :math:`\REFEXTERNADDR~a`
+.......................................................................
 
-* The value is valid with :ref:`reference type <syntax-reftype>` :math:`\ANYREF`.
+* The value is valid with :ref:`reference type <syntax-reftype>` :math:`\EXTERNREF`.
 
 .. math::
    \frac{
    }{
-     S \vdashval \REFHOST~a : \ANYREF
+     S \vdashval \REFEXTERNADDR~a : \EXTERNREF
    }
 
 

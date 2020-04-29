@@ -375,8 +375,8 @@ let assert_result at got expect =
         )
       | RefResult t ->
         (match t, v with
-        | Types.AnyRefType, Ref (HostRef _)
-        | Types.FuncRefType, Ref (Instance.FuncRef _) -> false
+        | Types.FuncRefType, Ref (Instance.FuncRef _)
+        | Types.ExternRefType, Ref (ExternRef _) -> false
         | _ -> true
         )
     ) got expect

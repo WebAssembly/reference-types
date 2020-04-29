@@ -54,12 +54,12 @@ Reference Types
 .. math::
    \begin{array}{llll}
    \production{reference type} & \reftype &::=&
-     \FUNCREF ~|~ \ANYREF \\
+     \FUNCREF ~|~ \EXTERNREF \\
    \end{array}
 
 The type |FUNCREF| denotes the infinite union of all references to :ref:`functions <syntax-func>`, regardless of their :ref:`function types <syntax-functype>`.
 
-The type |ANYREF| denotes the infinite union of all references to objects owned by the :ref:`embedder <embedder>` and that can be passed into WebAssembly under this type.
+The type |EXTERNREF| denotes the infinite union of all references to objects owned by the :ref:`embedder <embedder>` and that can be passed into WebAssembly under this type.
 
 Reference types are *opaque*, meaning that neither their size nor their bit pattern can be observed.
 Values of reference type can be stored in :ref:`tables <syntax-table>`.

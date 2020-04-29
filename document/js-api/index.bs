@@ -150,7 +150,7 @@ urlPrefix: https://webassembly.github.io/spec/core/; spec: WebAssembly; type: df
         text: 𝖿𝟥𝟤
         text: 𝖿𝟨𝟦
     url: syntax/types.html#syntax-reftype
-        text: anyref
+        text: externref
         text: funcref
     text: function element; url: exec/runtime.html#syntax-funcelem
     text: import component; url: syntax/modules.html#imports
@@ -706,7 +706,7 @@ Immediately after a WebAssembly [=memory.grow=] instruction executes, perform th
 
 <pre class="idl">
 enum TableKind {
-  "anyref",
+  "externref",
   "anyfunc",
   // Note: More values may be added in future iterations,
   // e.g., typed function references, typed GC references
@@ -887,8 +887,8 @@ which can be simultaneously referenced by multiple {{Instance}} objects. Each
     1. If |s| equals "i64", return [=𝗂𝟨𝟦=].
     1. If |s| equals "f32", return [=𝖿𝟥𝟤=].
     1. If |s| equals "f64", return [=𝖿𝟨𝟦=].
-    1. If |s| equals "anyref", return [=anyref=].
     1. If |s| equals "funcref", return [=funcref=].
+    1. If |s| equals "externref", return [=externref=].
     1. Assert: This step is not reached.
 </div>
 
@@ -1087,7 +1087,7 @@ The algorithm <dfn>ToWebAssemblyValue</dfn>(|v|, |type|) coerces a JavaScript va
     1. Let |f64| be ? [=ToNumber=](|v|).
     1. Return [=𝖿𝟨𝟦.𝖼𝗈𝗇𝗌𝗍=] |f64|.
 1. Assert: |type| is a reference type.
-1. If |type| is [=anyref=],
+1. If |type| is [=externref=],
     1. Do nothing.
 1. If |type| is [=funcref=],
     1. If |v| is not an [=Exported function=] or null, throw a {{TypeError}}.

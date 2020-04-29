@@ -11,7 +11,7 @@ Runtime Structure
    pair: abstract syntax; value
 .. _syntax-num:
 .. _syntax-ref:
-.. _syntax-ref.host:
+.. _syntax-ref.extern:
 .. _syntax-val:
 
 Values
@@ -25,7 +25,7 @@ It is convenient to reuse the same notation as for the |CONST| :ref:`instruction
 
 References other than null are represented with additional :ref:`administrative instructions <syntax-instr-admin>`.
 They either are *function references*, pointing to a specific :ref:`function address <syntax-funcaddr>`,
-or *host references* pointing to an uninterpreted form of :ref:`host address <syntax-hostaddr>` that can be defined by the :ref:`embedder <embedder>`.
+or *external references* pointing to an uninterpreted form of :ref:`extern address <syntax-externaddr>` that can be defined by the :ref:`embedder <embedder>` to represent its own objects.
 
 .. math::
    \begin{array}{llcl}
@@ -37,7 +37,7 @@ or *host references* pointing to an uninterpreted form of :ref:`host address <sy
    \production{(reference)} & \reff &::=&
      \REFNULL~t \\&&|&
      \REFFUNCADDR~\funcaddr \\&&|&
-     \REFHOST~\hostaddr \\
+     \REFEXTERNADDR~\externaddr \\
    \production{(value)} & \val &::=&
      \num ~|~ \reff \\
    \end{array}
@@ -145,7 +145,7 @@ Convention
 .. _syntax-globaladdr:
 .. _syntax-elemaddr:
 .. _syntax-dataaddr:
-.. _syntax-hostaddr:
+.. _syntax-externaddr:
 .. _syntax-addr:
 
 Addresses
@@ -171,7 +171,7 @@ In addition, an :ref:`embedder <embedder>` may supply an uninterpreted set of *h
      \addr \\
    \production{(data address)} & \dataaddr &::=&
      \addr \\
-   \production{(host address)} & \hostaddr &::=&
+   \production{(extern address)} & \externaddr &::=&
      \addr \\
    \end{array}
 
@@ -526,7 +526,7 @@ In order to express the reduction of :ref:`traps <trap>`, :ref:`calls <syntax-ca
      \dots \\ &&|&
      \TRAP \\ &&|&
      \REFFUNCADDR~\funcaddr \\ &&|&
-     \REFHOST~\hostaddr \\ &&|&
+     \REFEXTERNADDR~\externaddr \\ &&|&
      \INVOKE~\funcaddr \\ &&|&
      \LABEL_n\{\instr^\ast\}~\instr^\ast~\END \\ &&|&
      \FRAME_n\{\frame\}~\instr^\ast~\END \\
@@ -535,7 +535,7 @@ In order to express the reduction of :ref:`traps <trap>`, :ref:`calls <syntax-ca
 The |TRAP| instruction represents the occurrence of a trap.
 Traps are bubbled up through nested instruction sequences, ultimately reducing the entire program to a single |TRAP| instruction, signalling abrupt termination.
 
-The |REFFUNCADDR| instruction represents :ref:`function reference values <syntax-ref.func>`. Similarly, |REFHOST| represents :ref:`host references <syntax-ref.host>`.
+The |REFFUNCADDR| instruction represents :ref:`function reference values <syntax-ref.func>`. Similarly, |REFEXTERNADDR| represents :ref:`external references <syntax-ref.extern>`.
 
 The |INVOKE| instruction represents the imminent invocation of a :ref:`function instance <syntax-funcinst>`, identified by its :ref:`address <syntax-funcaddr>`.
 It unifies the handling of different forms of calls.

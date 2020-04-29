@@ -523,17 +523,17 @@ To that end, all previous typing judgements :math:`C \vdash \X{prop}` are genera
    }
 
 
-.. index:: host address
+.. index:: extern address
 
-:math:`\REFHOST~\hostaddr`
-..........................
+:math:`\REFEXTERNADDR~\externaddr`
+..................................
 
-* The instruction is valid with type :math:`[] \to [\ANYREF]`.
+* The instruction is valid with type :math:`[] \to [\EXTERNREF]`.
 
 .. math::
    \frac{
    }{
-     S; C \vdashadmininstr \REFHOST~\hostaddr : [] \to [\ANYREF]
+     S; C \vdashadmininstr \REFEXTERNADDR~\externaddr : [] \to [\EXTERNREF]
    }
 
 

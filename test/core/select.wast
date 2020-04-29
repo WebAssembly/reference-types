@@ -32,8 +32,8 @@
   (func (export "select-funcref") (param funcref funcref i32) (result funcref)
     (select (result funcref) (local.get 0) (local.get 1) (local.get 2))
   )
-  (func (export "select-anyref") (param anyref anyref i32) (result anyref)
-    (select (result anyref) (local.get 0) (local.get 1) (local.get 2))
+  (func (export "select-externref") (param externref externref i32) (result externref)
+    (select (result externref) (local.get 0) (local.get 1) (local.get 2))
   )
 
   ;; Check that both sides of the select are evaluated
@@ -230,14 +230,14 @@
 (assert_return (invoke "select-f32-t" (f32.const 1) (f32.const 2) (i32.const 1)) (f32.const 1))
 (assert_return (invoke "select-f64-t" (f64.const 1) (f64.const 2) (i32.const 1)) (f64.const 1))
 (assert_return (invoke "select-funcref" (ref.null func) (ref.null func) (i32.const 1)) (ref.null func))
-(assert_return (invoke "select-anyref" (ref.host 1) (ref.host 2) (i32.const 1)) (ref.host 1))
+(assert_return (invoke "select-externref" (ref.extern 1) (ref.extern 2) (i32.const 1)) (ref.extern 1))
 
 (assert_return (invoke "select-i32-t" (i32.const 1) (i32.const 2) (i32.const 0)) (i32.const 2))
 (assert_return (invoke "select-i32-t" (i32.const 2) (i32.const 1) (i32.const 0)) (i32.const 1))
 (assert_return (invoke "select-i64-t" (i64.const 2) (i64.const 1) (i32.const -1)) (i64.const 2))
 (assert_return (invoke "select-i64-t" (i64.const 2) (i64.const 1) (i32.const 0xf0f0f0f0)) (i64.const 2))
-(assert_return (invoke "select-anyref" (ref.host 1) (ref.host 2) (i32.const 0)) (ref.host 2))
-(assert_return (invoke "select-anyref" (ref.host 2) (ref.host 1) (i32.const 0)) (ref.host 1))
+(assert_return (invoke "select-externref" (ref.extern 1) (ref.extern 2) (i32.const 0)) (ref.extern 2))
+(assert_return (invoke "select-externref" (ref.extern 2) (ref.extern 1) (i32.const 0)) (ref.extern 1))
 
 (assert_return (invoke "select-f32-t" (f32.const nan) (f32.const 1) (i32.const 1)) (f32.const nan))
 (assert_return (invoke "select-f32-t" (f32.const nan:0x20304) (f32.const 1) (i32.const 1)) (f32.const nan:0x20304))
@@ -359,7 +359,7 @@
 
 
 (assert_invalid
-  (module (func $type-anyref-implicit (param $r anyref)
+  (module (func $type-externref-implicit (param $r externref)
     (drop (select (local.get $r) (local.get $r) (i32.const 1)))
   ))
   "type mismatch"

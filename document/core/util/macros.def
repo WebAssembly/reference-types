@@ -179,8 +179,8 @@
 .. |F32| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{f32}}
 .. |F64| mathdef:: \xref{syntax/types}{syntax-valtype}{\K{f64}}
 
-.. |ANYREF| mathdef:: \xref{syntax/types}{syntax-reftype}{\K{anyref}}
 .. |FUNCREF| mathdef:: \xref{syntax/types}{syntax-reftype}{\K{funcref}}
+.. |EXTERNREF| mathdef:: \xref{syntax/types}{syntax-reftype}{\K{externref}}
 
 .. |MVAR| mathdef:: \xref{syntax/types}{syntax-mut}{\K{var}}
 .. |MCONST| mathdef:: \xref{syntax/types}{syntax-mut}{\K{const}}
@@ -850,7 +850,7 @@
 .. |globaladdr| mathdef:: \xref{exec/runtime}{syntax-globaladdr}{\X{globaladdr}}
 .. |elemaddr| mathdef:: \xref{exec/runtime}{syntax-elemaddr}{\X{elemaddr}}
 .. |dataaddr| mathdef:: \xref{exec/runtime}{syntax-dataaddr}{\X{dataaddr}}
-.. |hostaddr| mathdef:: \xref{exec/runtime}{syntax-hostaddr}{\X{hostaddr}}
+.. |externaddr| mathdef:: \xref{exec/runtime}{syntax-externaddr}{\X{externaddr}}
 
 .. Instances, terminals
 
@@ -947,7 +947,7 @@
 .. Administrative Instructions, terminals
 
 .. |REFFUNCADDR| mathdef:: \xref{exec/runtime}{syntax-ref}{\K{ref}}
-.. |REFHOST| mathdef:: \xref{exec/runtime}{syntax-ref.host}{\K{ref{.}host}}
+.. |REFEXTERNADDR| mathdef:: \xref{exec/runtime}{syntax-ref.extern}{\K{ref{.}extern}}
 .. |TRAP| mathdef:: \xref{exec/runtime}{syntax-trap}{\K{trap}}
 .. |INVOKE| mathdef:: \xref{exec/runtime}{syntax-invoke}{\K{invoke}}
 

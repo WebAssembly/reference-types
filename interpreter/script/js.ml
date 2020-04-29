@@ -10,19 +10,19 @@ let harness =
 {|
 'use strict';
 
-let hostrefs = {};
-let hostsym = Symbol("hostref");
-function hostref(s) {
-  if (! (s in hostrefs)) hostrefs[s] = {[hostsym]: s};
-  return hostrefs[s];
+let externrefs = {};
+let externsym = Symbol("externref");
+function externref(s) {
+  if (! (s in externrefs)) externrefs[s] = {[externsym]: s};
+  return externrefs[s];
 }
-function is_hostref(x) {
-  return (x !== null && hostsym in x) ? 1 : 0;
+function is_externref(x) {
+  return (x !== null && externsym in x) ? 1 : 0;
 }
 function is_funcref(x) {
   return typeof x === "function" ? 1 : 0;
 }
-function eq_hostref(x, y) {
+function eq_externref(x, y) {
   return x === y ? 1 : 0;
 }
 function eq_funcref(x, y) {
@@ -30,8 +30,8 @@ function eq_funcref(x, y) {
 }
 
 let spectest = {
-  hostref: hostref,
-  is_hostref: is_hostref,
+  externref: externref,
+  is_externref: is_externref,
   is_funcref: is_funcref,
   eq_ref: eq_ref,
   print: console.log.bind(console),
@@ -160,7 +160,7 @@ function assert_return(action, expected) {
         throw new Error("Wasm function return value expected, got " + actual);
       };
       return;
-    case "ref.any":
+    case "ref.extern":
       if (actual === null) {
         throw new Error("Wasm reference return value expected, got " + actual);
       };
@@ -214,10 +214,10 @@ let lookup (mods : modules) x_opt name at =
 (* Wrappers *)
 
 let subject_idx = 0l
-let hostref_idx = 1l
-let is_hostref_idx = 2l
+let externref_idx = 1l
+let is_externref_idx = 2l
 let is_funcref_idx = 3l
-let eq_hostref_idx = 4l
+let eq_externref_idx = 4l
 let _eq_funcref_idx = 5l
 let subject_type_idx = 6l
 
@@ -249,8 +249,8 @@ let value v =
   match v.it with
   | Values.Num num -> [Const (num @@ v.at) @@ v.at]
   | Values.Ref (Values.NullRef t) -> [RefNull t @@ v.at]
-  | Values.Ref (HostRef n) ->
-    [Const (Values.I32 n @@ v.at) @@ v.at; Call (hostref_idx @@ v.at) @@ v.at]
+  | Values.Ref (ExternRef n) ->
+    [Const (Values.I32 n @@ v.at) @@ v.at; Call (externref_idx @@ v.at) @@ v.at]
   | Values.Ref _ -> assert false
 
 let invoke ft vs at =
@@ -278,10 +278,10 @@ let assert_return ress ts at =
       [ RefIsNull t @@ at;
         Test (Values.I32 I32Op.Eqz) @@ at;
         BrIf (0l @@ at) @@ at ]
-    | LitResult {it = Values.Ref (HostRef n); _} ->
+    | LitResult {it = Values.Ref (ExternRef n); _} ->
       [ Const (Values.I32 n @@ at) @@ at;
-        Call (hostref_idx @@ at) @@ at;
-        Call (eq_hostref_idx @@ at)  @@ at;
+        Call (externref_idx @@ at) @@ at;
+        Call (eq_externref_idx @@ at)  @@ at;
         Test (Values.I32 I32Op.Eqz) @@ at;
         BrIf (0l @@ at) @@ at ]
     | LitResult {it = Values.Ref _; _} ->
@@ -309,8 +309,8 @@ let assert_return ress ts at =
     | RefResult t ->
       let is_ref_idx =
         match t with
-        | AnyRefType -> is_hostref_idx
         | FuncRefType -> is_funcref_idx
+        | ExternRefType -> is_externref_idx
       in
       [ Call (is_ref_idx @@ at) @@ at;
         Test (Values.I32 I32Op.Eqz) @@ at;
@@ -322,22 +322,22 @@ let wrap item_name wrap_action wrap_assertion at =
   let locals, assertion = wrap_assertion at in
   let types =
     (FuncType ([], []) @@ at) ::
-    (FuncType ([NumType I32Type], [RefType AnyRefType]) @@ at) ::
-    (FuncType ([RefType AnyRefType], [NumType I32Type]) @@ at) ::
+    (FuncType ([NumType I32Type], [RefType ExternRefType]) @@ at) ::
+    (FuncType ([RefType ExternRefType], [NumType I32Type]) @@ at) ::
     (FuncType ([RefType FuncRefType], [NumType I32Type]) @@ at) ::
-    (FuncType ([RefType AnyRefType; RefType AnyRefType], [NumType I32Type]) @@ at) ::
+    (FuncType ([RefType ExternRefType; RefType ExternRefType], [NumType I32Type]) @@ at) ::
     (FuncType ([RefType FuncRefType; RefType FuncRefType], [NumType I32Type]) @@ at) ::
     itypes
   in
   let imports =
     [ {module_name = Utf8.decode "module"; item_name; idesc} @@ at;
-      {module_name = Utf8.decode "spectest"; item_name = Utf8.decode "hostref";
+      {module_name = Utf8.decode "spectest"; item_name = Utf8.decode "externref";
        idesc = FuncImport (1l @@ at) @@ at} @@ at;
-      {module_name = Utf8.decode "spectest"; item_name = Utf8.decode "is_hostref";
+      {module_name = Utf8.decode "spectest"; item_name = Utf8.decode "is_externref";
        idesc = FuncImport (2l @@ at) @@ at} @@ at;
       {module_name = Utf8.decode "spectest"; item_name = Utf8.decode "is_funcref";
        idesc = FuncImport (3l @@ at) @@ at} @@ at;
-      {module_name = Utf8.decode "spectest"; item_name = Utf8.decode "eq_hostref";
+      {module_name = Utf8.decode "spectest"; item_name = Utf8.decode "eq_externref";
        idesc = FuncImport (4l @@ at) @@ at} @@ at;
       {module_name = Utf8.decode "spectest"; item_name = Utf8.decode "eq_funcref";
        idesc = FuncImport (5l @@ at) @@ at} @@ at ]
@@ -416,7 +416,7 @@ let of_value v =
   | Num (F32 z) -> of_float (F32.to_float z)
   | Num (F64 z) -> of_float (F64.to_float z)
   | Ref (NullRef _) -> "null"
-  | Ref (HostRef n) -> "hostref(" ^ Int32.to_string n ^ ")"
+  | Ref (ExternRef n) -> "externref(" ^ Int32.to_string n ^ ")"
   | _ -> assert false
 
 let of_nan = function

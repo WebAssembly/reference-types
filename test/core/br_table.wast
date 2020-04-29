@@ -1243,9 +1243,9 @@
     )
   )
 
-  (func (export "meet-anyref") (param i32) (param anyref) (result anyref)
-    (block $l1 (result anyref)
-      (block $l2 (result anyref)
+  (func (export "meet-externref") (param i32) (param externref) (result externref)
+    (block $l1 (result externref)
+      (block $l2 (result externref)
         (br_table $l1 $l2 $l1 (local.get 1) (local.get 0))
       )
     )
@@ -1433,9 +1433,9 @@
 
 (assert_return (invoke "nested-br_table-loop-block" (i32.const 1)) (i32.const 3))
 
-(assert_return (invoke "meet-anyref" (i32.const 0) (ref.host 1)) (ref.host 1))
-(assert_return (invoke "meet-anyref" (i32.const 1) (ref.host 1)) (ref.host 1))
-(assert_return (invoke "meet-anyref" (i32.const 2) (ref.host 1)) (ref.host 1))
+(assert_return (invoke "meet-externref" (i32.const 0) (ref.extern 1)) (ref.extern 1))
+(assert_return (invoke "meet-externref" (i32.const 1) (ref.extern 1)) (ref.extern 1))
+(assert_return (invoke "meet-externref" (i32.const 2) (ref.extern 1)) (ref.extern 1))
 
 (assert_invalid
   (module (func $type-arg-void-vs-num (result i32)
@@ -1566,14 +1566,14 @@
 
 
 (assert_invalid
-  (module (func $meet-bottom (param i32) (result anyref)
-    (block $l1 (result anyref)
+  (module (func $meet-bottom (param i32) (result externref)
+    (block $l1 (result externref)
       (drop
         (block $l2 (result i32)
-          (br_table $l2 $l1 $l2 (ref.null any) (local.get 0))
+          (br_table $l2 $l1 $l2 (ref.null extern) (local.get 0))
         )
       )
-      (ref.null any)
+      (ref.null extern)
     )
   ))
   "type mismatch"
