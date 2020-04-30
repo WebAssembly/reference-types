@@ -219,7 +219,7 @@ print(
 (assert_trap (invoke "test") "out of bounds")
 `);
 
-// invalid argument types.  TODO: can add anyfunc etc here.
+// invalid argument types.  TODO: can add funcref etc here.
 {
     const tys  = ['i32', 'f32', 'i64', 'f64'];
 

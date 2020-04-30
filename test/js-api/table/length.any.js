@@ -27,7 +27,7 @@ test(() => {
 }, "Branding");
 
 test(() => {
-  const argument = { "element": "anyfunc", "initial": 2 };
+  const argument = { "element": "funcref", "initial": 2 };
   const table = new WebAssembly.Table(argument);
   assert_equals(table.length, 2, "Initial length");
 
@@ -41,7 +41,7 @@ test(() => {
 }, "Stray argument");
 
 test(() => {
-  const argument = { "element": "anyfunc", "initial": 2 };
+  const argument = { "element": "funcref", "initial": 2 };
   const table = new WebAssembly.Table(argument);
   assert_equals(table.length, 2, "Initial length");
   table.length = 4;
@@ -49,7 +49,7 @@ test(() => {
 }, "Setting (sloppy mode)");
 
 test(() => {
-  const argument = { "element": "anyfunc", "initial": 2 };
+  const argument = { "element": "funcref", "initial": 2 };
   const table = new WebAssembly.Table(argument);
   assert_equals(table.length, 2, "Initial length");
   assert_throws(new TypeError(), () => {

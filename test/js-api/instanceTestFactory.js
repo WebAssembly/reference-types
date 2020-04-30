@@ -110,7 +110,7 @@ const instanceTestFactory = [
           "fn": function() {},
           "global": 0,
           "memory": new WebAssembly.Memory({ "initial": 64, maximum: 128 }),
-          "table": new WebAssembly.Table({ "element": "anyfunc", "initial": 64, maximum: 128 }),
+          "table": new WebAssembly.Table({ "element": "funcref", "initial": 64, maximum: 128 }),
         },
         get "module2"() {
           assert_unreached("Should not get modules that are not imported");

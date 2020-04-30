@@ -709,7 +709,7 @@ Immediately after a WebAssembly [=memory.grow=] instruction executes, perform th
 enum TableKind {
   "nullref",
   "anyref",
-  "anyfunc",
+  "funcref",
   // Note: More values may be added in future iterations,
   // e.g., typed function references, typed GC references
 };

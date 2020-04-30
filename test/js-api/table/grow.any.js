@@ -6,7 +6,7 @@ function nulls(n) {
 }
 
 test(() => {
-  const argument = { "element": "anyfunc", "initial": 5 };
+  const argument = { "element": "funcref", "initial": 5 };
   const table = new WebAssembly.Table(argument);
   assert_throws(new TypeError(), () => table.grow());
 }, "Missing arguments");
@@ -37,7 +37,7 @@ test(t => {
 }, "Branding");
 
 test(() => {
-  const argument = { "element": "anyfunc", "initial": 5 };
+  const argument = { "element": "funcref", "initial": 5 };
   const table = new WebAssembly.Table(argument);
   assert_equal_to_array(table, nulls(5), "before");
 
@@ -47,7 +47,7 @@ test(() => {
 }, "Basic");
 
 test(() => {
-  const argument = { "element": "anyfunc", "initial": 3, "maximum": 5 };
+  const argument = { "element": "funcref", "initial": 3, "maximum": 5 };
   const table = new WebAssembly.Table(argument);
   assert_equal_to_array(table, nulls(3), "before");
 
@@ -57,7 +57,7 @@ test(() => {
 }, "Reached maximum");
 
 test(() => {
-  const argument = { "element": "anyfunc", "initial": 2, "maximum": 5 };
+  const argument = { "element": "funcref", "initial": 2, "maximum": 5 };
   const table = new WebAssembly.Table(argument);
   assert_equal_to_array(table, nulls(2), "before");
 
@@ -79,14 +79,14 @@ const outOfRangeValues = [
 
 for (const value of outOfRangeValues) {
   test(() => {
-    const argument = { "element": "anyfunc", "initial": 1 };
+    const argument = { "element": "funcref", "initial": 1 };
     const table = new WebAssembly.Table(argument);
     assert_throws(new TypeError(), () => table.grow(value));
   }, `Out-of-range argument: ${format_value(value)}`);
 }
 
 test(() => {
-  const argument = { "element": "anyfunc", "initial": 5 };
+  const argument = { "element": "funcref", "initial": 5 };
   const table = new WebAssembly.Table(argument);
   assert_equal_to_array(table, nulls(5), "before");
 
