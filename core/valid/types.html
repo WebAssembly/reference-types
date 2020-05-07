@@ -85,7 +85,6 @@
 <h1>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h1>
 <p>Most <a class="reference internal" href="../syntax/types.html#syntax-type"><span class="std std-ref">types</span></a> are universally valid.
 However, restrictions apply to <a class="reference internal" href="../syntax/types.html#syntax-functype"><span class="std std-ref">function types</span></a> as well as the <a class="reference internal" href="../syntax/types.html#syntax-limits"><span class="std std-ref">limits</span></a> of <a class="reference internal" href="../syntax/types.html#syntax-tabletype"><span class="std std-ref">table types</span></a> and <a class="reference internal" href="../syntax/types.html#syntax-memtype"><span class="std std-ref">memory types</span></a>, which must be checked during validation.</p>
-<p>On <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value types</span></a>, a simple notion of subtyping is defined.</p>
 <div class="section" id="limits">
 <span id="valid-limits"></span><span id="index-0"></span><h2>Limits<a class="headerlink" href="#limits" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference internal" href="../syntax/types.html#syntax-limits"><span class="std std-ref">Limits</span></a> must have meaningful bounds that are within a given range.</p>
@@ -234,85 +233,13 @@ However, restrictions apply to <a class="reference internal" href="../syntax/typ
 }\]</div>
 </div>
 </div>
-<div class="section" id="value-subtyping">
-<span id="index-6"></span><h2>Value Subtyping<a class="headerlink" href="#value-subtyping" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="number-types">
-<span id="match-numtype"></span><span id="index-7"></span><h3>Number Types<a class="headerlink" href="#number-types" title="Permalink to this headline">¶</a></h3>
-<p>A <a class="reference internal" href="../syntax/types.html#syntax-numtype"><span class="std std-ref">number type</span></a> <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-numtype}{\mathit{numtype}}_1\)</span> matches a <a class="reference internal" href="../syntax/types.html#syntax-numtype"><span class="std std-ref">number type</span></a> <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-numtype}{\mathit{numtype}}_2\)</span> if and only if:</p>
-<ul class="simple">
-<li><p>Both <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-numtype}{\mathit{numtype}}_1\)</span> and <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-numtype}{\mathit{numtype}}_2\)</span> are the same.</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[\begin{split}~\\[-1ex]
-\frac{
-}{
-  \href{../valid/types.html#match-numtype}{\vdash} \href{../syntax/types.html#syntax-numtype}{\mathit{numtype}} \href{../valid/types.html#match-valtype}{\leq} \href{../syntax/types.html#syntax-numtype}{\mathit{numtype}}
-}\end{split}\]</div>
-</div>
-<div class="section" id="reference-types">
-<span id="match-reftype"></span><span id="index-8"></span><h3>Reference Types<a class="headerlink" href="#reference-types" title="Permalink to this headline">¶</a></h3>
-<p>A <a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">reference type</span></a> <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}_1\)</span> matches a <a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">reference type</span></a> <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}_2\)</span> if and only if:</p>
-<ul class="simple">
-<li><p>Either both <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}_1\)</span> and <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}_2\)</span> are the same.</p></li>
-<li><p>Or <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}_1\)</span> is <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-reftype}{\mathsf{nullref}}\)</span>.</p></li>
-<li><p>Or <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}_2\)</span> is <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-reftype}{\mathsf{anyref}}\)</span>.</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[\begin{split}~\\[-1ex]
-\frac{
-}{
-  \href{../valid/types.html#match-reftype}{\vdash} \href{../syntax/types.html#syntax-reftype}{\mathit{reftype}} \href{../valid/types.html#match-valtype}{\leq} \href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}
-}
-\qquad
-\frac{
-}{
-  \href{../valid/types.html#match-reftype}{\vdash} \href{../syntax/types.html#syntax-reftype}{\mathsf{nullref}} \href{../valid/types.html#match-valtype}{\leq} \href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}
-}
-\qquad
-\frac{
-}{
-  \href{../valid/types.html#match-reftype}{\vdash} \href{../syntax/types.html#syntax-reftype}{\mathit{reftype}} \href{../valid/types.html#match-valtype}{\leq} \href{../syntax/types.html#syntax-reftype}{\mathsf{anyref}}
-}\end{split}\]</div>
-</div>
-<div class="section" id="value-types">
-<span id="match-valtype"></span><span id="index-9"></span><h3>Value Types<a class="headerlink" href="#value-types" title="Permalink to this headline">¶</a></h3>
-<p>A <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}_1\)</span> matches a <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}_2\)</span> if and only if:</p>
-<ul class="simple">
-<li><p>Either both <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}_1\)</span> and <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}_2\)</span> are <a class="reference internal" href="../syntax/types.html#syntax-numtype"><span class="std std-ref">number types</span></a> and <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}_1\)</span> <a class="reference internal" href="#match-numtype"><span class="std std-ref">matches</span></a> <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}_2\)</span>.</p></li>
-<li><p>Or both <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}_1\)</span> and <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}_2\)</span> are <a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">reference types</span></a> and <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}_1\)</span> <a class="reference internal" href="#match-reftype"><span class="std std-ref">matches</span></a> <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}_2\)</span>.</p></li>
-<li><p>Or <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}_1\)</span> is <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{bot}}\)</span>.</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[\begin{split}~\\[-1ex]
-\frac{
-}{
-  \href{../valid/types.html#match-valtype}{\vdash} \href{../syntax/types.html#syntax-valtype}{\mathsf{bot}} \href{../valid/types.html#match-valtype}{\leq} \href{../syntax/types.html#syntax-valtype}{\mathit{valtype}}
-}\end{split}\]</div>
-</div>
-<div class="section" id="result-types">
-<span id="match-resulttype"></span><h3>Result Types<a class="headerlink" href="#result-types" title="Permalink to this headline">¶</a></h3>
-<p>Subtyping is lifted to <a class="reference internal" href="../syntax/types.html#syntax-resulttype"><span class="std std-ref">result types</span></a> in a pointwise manner.
-That is, a <a class="reference internal" href="../syntax/types.html#syntax-resulttype"><span class="std std-ref">result type</span></a> <span class="math notranslate nohighlight">\([t_1^?]\)</span> matches a <a class="reference internal" href="../syntax/types.html#syntax-resulttype"><span class="std std-ref">result type</span></a> <span class="math notranslate nohighlight">\([t_2^?]\)</span> if and only if:</p>
-<ul class="simple">
-<li><p>Either both <span class="math notranslate nohighlight">\(t_1^?\)</span> and <span class="math notranslate nohighlight">\(t_2^?\)</span> are empty.</p></li>
-<li><p>Or <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math notranslate nohighlight">\(t_1\)</span> <a class="reference internal" href="#match-valtype"><span class="std std-ref">matches</span></a> <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math notranslate nohighlight">\(t_2\)</span>.</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[\begin{split}~\\[-1ex]
-\frac{
-  (\href{../valid/types.html#match-valtype}{\vdash} t_1 \href{../valid/types.html#match-valtype}{\leq} t_2)^?
-}{
-  \href{../valid/types.html#match-resulttype}{\vdash} [t_1^?] \href{../valid/types.html#match-resulttype}{\leq} [t_2^?]
-}\end{split}\]</div>
-</div>
-</div>
 <div class="section" id="import-subtyping">
-<span id="match"></span><span id="exec-import"></span><span id="index-10"></span><h2>Import Subtyping<a class="headerlink" href="#import-subtyping" title="Permalink to this headline">¶</a></h2>
+<span id="match"></span><span id="exec-import"></span><span id="index-6"></span><h2>Import Subtyping<a class="headerlink" href="#import-subtyping" title="Permalink to this headline">¶</a></h2>
 <p>When <a class="reference internal" href="../exec/modules.html#exec-module"><span class="std std-ref">instantiating</span></a> a module,
 <a class="reference internal" href="../exec/runtime.html#syntax-externval"><span class="std std-ref">external values</span></a> must be provided whose <a class="reference internal" href="../exec/modules.html#valid-externval"><span class="std std-ref">types</span></a> are <em>matched</em> against the respective <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external types</span></a> classifying each import.
 In some cases, this allows for a simple form of subtyping, as defined here.</p>
 <div class="section" id="match-limits">
-<span id="index-11"></span><span id="id1"></span><h3>Limits<a class="headerlink" href="#match-limits" title="Permalink to this headline">¶</a></h3>
+<span id="index-7"></span><span id="id1"></span><h3>Limits<a class="headerlink" href="#match-limits" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference internal" href="../syntax/types.html#syntax-limits"><span class="std std-ref">Limits</span></a> <span class="math notranslate nohighlight">\(\{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n_1, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m_1^? \}\)</span> match limits <span class="math notranslate nohighlight">\(\{ \href{../syntax/types.html#syntax-limits}{\mathsf{min}}~n_2, \href{../syntax/types.html#syntax-limits}{\mathsf{max}}~m_2^? \}\)</span> if and only if:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(n_1\)</span> is larger than or equal to <span class="math notranslate nohighlight">\(n_2\)</span>.</p></li>
@@ -345,7 +272,7 @@ In some cases, this allows for a simple form of subtyping, as defined here.</p>
 }\end{split}\]</div>
 <span class="target" id="match-externtype"></span></div>
 <div class="section" id="functions">
-<span id="match-functype"></span><span id="index-12"></span><h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<span id="match-functype"></span><span id="index-8"></span><h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
 <p>An <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external type</span></a> <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{func}}~\href{../syntax/types.html#syntax-functype}{\mathit{functype}}_1\)</span> matches <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{func}}~\href{../syntax/types.html#syntax-functype}{\mathit{functype}}_2\)</span> if and only if:</p>
 <ul class="simple">
 <li><p>Both <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-functype}{\mathit{functype}}_1\)</span> and <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-functype}{\mathit{functype}}_2\)</span> are the same.</p></li>
@@ -358,7 +285,7 @@ In some cases, this allows for a simple form of subtyping, as defined here.</p>
 }\end{split}\]</div>
 </div>
 <div class="section" id="tables">
-<span id="match-tabletype"></span><span id="index-13"></span><h3>Tables<a class="headerlink" href="#tables" title="Permalink to this headline">¶</a></h3>
+<span id="match-tabletype"></span><span id="index-9"></span><h3>Tables<a class="headerlink" href="#tables" title="Permalink to this headline">¶</a></h3>
 <p>An <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external type</span></a> <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{table}}~(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_1~\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}_1)\)</span> matches <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{table}}~(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_2~\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}_2)\)</span> if and only if:</p>
 <ul class="simple">
 <li><p>Limits <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_1\)</span> <a class="reference internal" href="#match-limits"><span class="std std-ref">match</span></a> <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_2\)</span>.</p></li>
@@ -372,7 +299,7 @@ In some cases, this allows for a simple form of subtyping, as defined here.</p>
 }\]</div>
 </div>
 <div class="section" id="memories">
-<span id="match-memtype"></span><span id="index-14"></span><h3>Memories<a class="headerlink" href="#memories" title="Permalink to this headline">¶</a></h3>
+<span id="match-memtype"></span><span id="index-10"></span><h3>Memories<a class="headerlink" href="#memories" title="Permalink to this headline">¶</a></h3>
 <p>An <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external type</span></a> <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{mem}}~\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_1\)</span> matches <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{mem}}~\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_2\)</span> if and only if:</p>
 <ul class="simple">
 <li><p>Limits <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_1\)</span> <a class="reference internal" href="#match-limits"><span class="std std-ref">match</span></a> <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}_2\)</span>.</p></li>
@@ -385,23 +312,16 @@ In some cases, this allows for a simple form of subtyping, as defined here.</p>
 }\]</div>
 </div>
 <div class="section" id="globals">
-<span id="match-globaltype"></span><span id="index-15"></span><h3>Globals<a class="headerlink" href="#globals" title="Permalink to this headline">¶</a></h3>
-<p>An <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external type</span></a> <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{global}}~(\href{../syntax/types.html#syntax-mut}{\mathit{mut}}_1~t_1)\)</span> matches <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{global}}~(\href{../syntax/types.html#syntax-mut}{\mathit{mut}}_2~t_2)\)</span> if and only if:</p>
+<span id="match-globaltype"></span><span id="index-11"></span><h3>Globals<a class="headerlink" href="#globals" title="Permalink to this headline">¶</a></h3>
+<p>An <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external type</span></a> <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{global}}~\href{../syntax/types.html#syntax-globaltype}{\mathit{globaltype}}_1\)</span> matches <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-externtype}{\mathsf{global}}~\href{../syntax/types.html#syntax-globaltype}{\mathit{globaltype}}_2\)</span> if and only if:</p>
 <ul class="simple">
-<li><p>Either both <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-mut}{\mathit{mut}}_1\)</span> and <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-mut}{\mathit{mut}}_2\)</span> are <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-mut}{\mathsf{var}}\)</span> and <span class="math notranslate nohighlight">\(t_1\)</span> and <span class="math notranslate nohighlight">\(t_2\)</span> are the same.</p></li>
-<li><p>Or both <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-mut}{\mathit{mut}}_1\)</span> and <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-mut}{\mathit{mut}}_2\)</span> are <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-mut}{\mathsf{const}}\)</span> and <span class="math notranslate nohighlight">\(t_1\)</span> <a class="reference internal" href="#match-valtype"><span class="std std-ref">matches</span></a> <span class="math notranslate nohighlight">\(t_2\)</span>.</p></li>
+<li><p>Both <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-globaltype}{\mathit{globaltype}}_1\)</span> and <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-globaltype}{\mathit{globaltype}}_2\)</span> are the same.</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[\begin{split}~\\[-1ex]
 \frac{
 }{
-  \href{../exec/modules.html#match-externtype}{\vdash} \href{../syntax/types.html#syntax-externtype}{\mathsf{global}}~(\href{../syntax/types.html#syntax-mut}{\mathsf{var}}~t) \href{../exec/modules.html#match-externtype}{\leq} \href{../syntax/types.html#syntax-externtype}{\mathsf{global}}~(\href{../syntax/types.html#syntax-mut}{\mathsf{var}}~t)
-}
-\qquad
-\frac{
-  \href{../valid/types.html#match-valtype}{\vdash} t_1 \href{../valid/types.html#match-valtype}{\leq} t_2
-}{
-  \href{../exec/modules.html#match-externtype}{\vdash} \href{../syntax/types.html#syntax-externtype}{\mathsf{global}}~(\href{../syntax/types.html#syntax-mut}{\mathsf{const}}~t_1) \href{../exec/modules.html#match-externtype}{\leq} \href{../syntax/types.html#syntax-externtype}{\mathsf{global}}~(\href{../syntax/types.html#syntax-mut}{\mathsf{const}}~t_2)
+  \href{../exec/modules.html#match-externtype}{\vdash} \href{../syntax/types.html#syntax-externtype}{\mathsf{global}}~\href{../syntax/types.html#syntax-globaltype}{\mathit{globaltype}} \href{../exec/modules.html#match-externtype}{\leq} \href{../syntax/types.html#syntax-externtype}{\mathsf{global}}~\href{../syntax/types.html#syntax-globaltype}{\mathit{globaltype}}
 }\end{split}\]</div>
 </div>
 </div>

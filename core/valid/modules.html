@@ -188,8 +188,7 @@ the expression <span class="math notranslate nohighlight">\(\href{../syntax/inst
 <li><p>The expression <span class="math notranslate nohighlight">\(e_i\)</span> must be <a class="reference internal" href="instructions.html#valid-const"><span class="std std-ref">constant</span></a>.</p></li>
 </ul>
 </li>
-<li><p>The element mode <span class="math notranslate nohighlight">\(\href{../syntax/modules.html#syntax-elemmode}{\mathit{elemmode}}\)</span> must be valid with <a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">reference type</span></a> <span class="math notranslate nohighlight">\(t'\)</span>.</p></li>
-<li><p>The <a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">reference type</span></a> <span class="math notranslate nohighlight">\(t\)</span> must <a class="reference internal" href="types.html#match-reftype"><span class="std std-ref">match</span></a> the reference type <span class="math notranslate nohighlight">\(t'\)</span>.</p></li>
+<li><p>The element mode <span class="math notranslate nohighlight">\(\href{../syntax/modules.html#syntax-elemmode}{\mathit{elemmode}}\)</span> must be valid with <a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">reference type</span></a> <span class="math notranslate nohighlight">\(t\)</span>.</p></li>
 <li><p>Then the element segment is valid with <a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">reference type</span></a> <span class="math notranslate nohighlight">\(t\)</span>.</p></li>
 </ul>
 <div class="math notranslate nohighlight">
@@ -198,9 +197,7 @@ the expression <span class="math notranslate nohighlight">\(\href{../syntax/inst
   \qquad
   (C \href{../valid/instructions.html#valid-constant}{\vdash} e \href{../valid/instructions.html#valid-constant}{\mathrel{\mbox{const}}})^\ast
   \qquad
-  C \href{../valid/modules.html#valid-elemmode}{\vdash} \href{../syntax/modules.html#syntax-elemmode}{\mathit{elemmode}} : t'
-  \qquad
-  \href{../valid/types.html#match-reftype}{\vdash} t \href{../valid/types.html#match-valtype}{\leq} t'
+  C \href{../valid/modules.html#valid-elemmode}{\vdash} \href{../syntax/modules.html#syntax-elemmode}{\mathit{elemmode}} : t
 }{
   C \href{../valid/modules.html#valid-elem}{\vdash} \{ \href{../syntax/modules.html#syntax-elem}{\mathsf{type}}~t, \href{../syntax/modules.html#syntax-elem}{\mathsf{init}}~e^\ast, \href{../syntax/modules.html#syntax-elem}{\mathsf{mode}}~\href{../syntax/modules.html#syntax-elemmode}{\mathit{elemmode}} \} : t
 }\]</div>

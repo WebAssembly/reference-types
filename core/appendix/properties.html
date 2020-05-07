@@ -250,8 +250,7 @@ That way, the function itself is able to make sufficient assumptions about futur
 <li><p>The length of <span class="math notranslate nohighlight">\(\href{../exec/runtime.html#syntax-ref}{\mathit{ref}}^\ast\)</span> must equal <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}.\href{../syntax/types.html#syntax-limits}{\mathsf{min}}\)</span>.</p></li>
 <li><p>For each <a class="reference internal" href="../exec/runtime.html#syntax-ref"><span class="std std-ref">reference</span></a> <span class="math notranslate nohighlight">\(\href{../exec/runtime.html#syntax-ref}{\mathit{ref}}_i\)</span> in the table’s elements <span class="math notranslate nohighlight">\(\href{../exec/runtime.html#syntax-ref}{\mathit{ref}}^n\)</span>:</p>
 <ul>
-<li><p>The <a class="reference internal" href="../exec/runtime.html#syntax-ref"><span class="std std-ref">reference</span></a> <span class="math notranslate nohighlight">\(\href{../exec/runtime.html#syntax-ref}{\mathit{ref}}_i\)</span> must be <a class="reference internal" href="../exec/modules.html#valid-ref"><span class="std std-ref">valid</span></a> with some <a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">reference type</span></a> <span class="math notranslate nohighlight">\(t'_i\)</span>.</p></li>
-<li><p>The <a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">reference type</span></a> <span class="math notranslate nohighlight">\(t'_i\)</span> must <a class="reference internal" href="../valid/types.html#match-reftype"><span class="std std-ref">match</span></a> the <a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">reference type</span></a> <span class="math notranslate nohighlight">\(t\)</span>.</p></li>
+<li><p>The <a class="reference internal" href="../exec/runtime.html#syntax-ref"><span class="std std-ref">reference</span></a> <span class="math notranslate nohighlight">\(\href{../exec/runtime.html#syntax-ref}{\mathit{ref}}_i\)</span> must be <a class="reference internal" href="../exec/modules.html#valid-ref"><span class="std std-ref">valid</span></a> with <a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">reference type</span></a> <span class="math notranslate nohighlight">\(t\)</span>.</p></li>
 </ul>
 </li>
 <li><p>Then the table instance is valid with <a class="reference internal" href="../syntax/types.html#syntax-tabletype"><span class="std std-ref">table type</span></a> <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}~t\)</span>.</p></li>
@@ -262,9 +261,7 @@ That way, the function itself is able to make sufficient assumptions about futur
   \qquad
   n = \href{../syntax/types.html#syntax-limits}{\mathit{limits}}.\href{../syntax/types.html#syntax-limits}{\mathsf{min}}
   \qquad
-  (S \vdash \href{../exec/runtime.html#syntax-ref}{\mathit{ref}} : t')^n
-  \qquad
-  (\href{../valid/types.html#match-reftype}{\vdash} t' \href{../valid/types.html#match-valtype}{\leq} t)^n
+  (S \vdash \href{../exec/runtime.html#syntax-ref}{\mathit{ref}} : t)^n
 }{
   S \href{../appendix/properties.html#valid-tableinst}{\vdash} \{ \href{../exec/runtime.html#syntax-tableinst}{\mathsf{type}}~(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}~t), \href{../exec/runtime.html#syntax-tableinst}{\mathsf{elem}}~\href{../exec/runtime.html#syntax-ref}{\mathit{ref}}^n \} : \href{../syntax/types.html#syntax-limits}{\mathit{limits}}~t
 }\]</div>
@@ -289,17 +286,14 @@ That way, the function itself is able to make sufficient assumptions about futur
 <span id="valid-globalinst"></span><span id="index-7"></span><h3><a class="reference internal" href="../exec/runtime.html#syntax-globalinst"><span class="std std-ref">Global Instances</span></a> <span class="math notranslate nohighlight">\(\{ \href{../exec/runtime.html#syntax-globalinst}{\mathsf{type}}~(\href{../syntax/types.html#syntax-mut}{\mathit{mut}}~t), \href{../exec/runtime.html#syntax-globalinst}{\mathsf{value}}~\href{../exec/runtime.html#syntax-val}{\mathit{val}} \}\)</span><a class="headerlink" href="#global-instances-xref-exec-runtime-syntax-globalinst-mathsf-type-xref-syntax-types-syntax-mut-mathit-mut-t-xref-exec-runtime-syntax-globalinst-mathsf-value-xref-exec-runtime-syntax-val-mathit-val" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>The <a class="reference internal" href="../syntax/types.html#syntax-globaltype"><span class="std std-ref">global type</span></a> <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-mut}{\mathit{mut}}~t\)</span> must be <a class="reference internal" href="../valid/types.html#valid-globaltype"><span class="std std-ref">valid</span></a>.</p></li>
-<li><p>The <a class="reference internal" href="../exec/runtime.html#syntax-val"><span class="std std-ref">value</span></a> <span class="math notranslate nohighlight">\(\href{../exec/runtime.html#syntax-val}{\mathit{val}}\)</span> must be <a class="reference internal" href="../exec/modules.html#valid-val"><span class="std std-ref">valid</span></a> with some <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math notranslate nohighlight">\(t'\)</span>.</p></li>
-<li><p>The <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math notranslate nohighlight">\(t'\)</span> must <a class="reference internal" href="../valid/types.html#match-valtype"><span class="std std-ref">match</span></a> the <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math notranslate nohighlight">\(t\)</span>.</p></li>
+<li><p>The <a class="reference internal" href="../exec/runtime.html#syntax-val"><span class="std std-ref">value</span></a> <span class="math notranslate nohighlight">\(\href{../exec/runtime.html#syntax-val}{\mathit{val}}\)</span> must be <a class="reference internal" href="../exec/modules.html#valid-val"><span class="std std-ref">valid</span></a> with <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> <span class="math notranslate nohighlight">\(t\)</span>.</p></li>
 <li><p>Then the global instance is valid with <a class="reference internal" href="../syntax/types.html#syntax-globaltype"><span class="std std-ref">global type</span></a> <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-mut}{\mathit{mut}}~t\)</span>.</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[\frac{
   \href{../valid/types.html#valid-globaltype}{\vdash} \href{../syntax/types.html#syntax-mut}{\mathit{mut}}~t \mathrel{\mbox{ok}}
   \qquad
-  S \href{../appendix/properties.html#valid-val}{\vdash} \href{../exec/runtime.html#syntax-val}{\mathit{val}} : t'
-  \qquad
-  \href{../valid/types.html#match-valtype}{\vdash} t' \href{../valid/types.html#match-valtype}{\leq} t
+  S \href{../appendix/properties.html#valid-val}{\vdash} \href{../exec/runtime.html#syntax-val}{\mathit{val}} : t
 }{
   S \href{../appendix/properties.html#valid-globalinst}{\vdash} \{ \href{../exec/runtime.html#syntax-globalinst}{\mathsf{type}}~(\href{../syntax/types.html#syntax-mut}{\mathit{mut}}~t), \href{../exec/runtime.html#syntax-globalinst}{\mathsf{value}}~\href{../exec/runtime.html#syntax-val}{\mathit{val}} \} : \href{../syntax/types.html#syntax-mut}{\mathit{mut}}~t
 }\]</div>
@@ -309,17 +303,14 @@ That way, the function itself is able to make sufficient assumptions about futur
 <ul class="simple">
 <li><p>For each <a class="reference internal" href="../exec/runtime.html#syntax-ref"><span class="std std-ref">reference</span></a> <span class="math notranslate nohighlight">\(\href{../exec/runtime.html#syntax-ref}{\mathit{ref}}_i\)</span> in the elements <span class="math notranslate nohighlight">\(\href{../exec/runtime.html#syntax-ref}{\mathit{ref}}^n\)</span>:</p>
 <ul>
-<li><p>The <a class="reference internal" href="../exec/runtime.html#syntax-ref"><span class="std std-ref">reference</span></a> <span class="math notranslate nohighlight">\(\href{../exec/runtime.html#syntax-ref}{\mathit{ref}}_i\)</span> must be <a class="reference internal" href="../exec/modules.html#valid-ref"><span class="std std-ref">valid</span></a> with some <a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">reference type</span></a> <span class="math notranslate nohighlight">\(t'_i\)</span>.</p></li>
-<li><p>The <a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">reference type</span></a> <span class="math notranslate nohighlight">\(t'_i\)</span> must <a class="reference internal" href="../valid/types.html#match-reftype"><span class="std std-ref">match</span></a> the <a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">reference type</span></a> <span class="math notranslate nohighlight">\(t\)</span>.</p></li>
+<li><p>The <a class="reference internal" href="../exec/runtime.html#syntax-ref"><span class="std std-ref">reference</span></a> <span class="math notranslate nohighlight">\(\href{../exec/runtime.html#syntax-ref}{\mathit{ref}}_i\)</span> must be <a class="reference internal" href="../exec/modules.html#valid-ref"><span class="std std-ref">valid</span></a> with <a class="reference internal" href="../syntax/types.html#syntax-reftype"><span class="std std-ref">reference type</span></a> <span class="math notranslate nohighlight">\(t\)</span>.</p></li>
 </ul>
 </li>
 <li><p>Then the table instance is valid.</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[\frac{
-  (S \vdash \href{../exec/runtime.html#syntax-ref}{\mathit{ref}} : t')^\ast
-  \qquad
-  (\href{../valid/types.html#match-reftype}{\vdash} t' \href{../valid/types.html#match-valtype}{\leq} t)^\ast
+  (S \vdash \href{../exec/runtime.html#syntax-ref}{\mathit{ref}} : t)^\ast
 }{
   S \href{../appendix/properties.html#valid-eleminst}{\vdash} \{ \href{../exec/runtime.html#syntax-eleminst}{\mathsf{type}}~t, \href{../exec/runtime.html#syntax-eleminst}{\mathsf{elem}}~\href{../exec/runtime.html#syntax-ref}{\mathit{ref}}^\ast \} \mathrel{\mbox{ok}}
 }\]</div>
@@ -489,15 +480,15 @@ To that end, all previous typing judgements <span class="math notranslate nohigh
   S; C \href{../appendix/properties.html#valid-instr-admin}{\vdash} \href{../exec/runtime.html#syntax-trap}{\mathsf{trap}} : [t_1^\ast] \href{../syntax/types.html#syntax-functype}{\rightarrow} [t_2^\ast]
 }\]</div>
 </div>
-<div class="section" id="xref-exec-runtime-syntax-ref-host-mathsf-ref-host-xref-exec-runtime-syntax-hostaddr-mathit-hostaddr">
-<span id="index-18"></span><h3><span class="math notranslate nohighlight">\(\href{../exec/runtime.html#syntax-ref.host}{\mathsf{ref{.}host}}~\href{../exec/runtime.html#syntax-hostaddr}{\mathit{hostaddr}}\)</span><a class="headerlink" href="#xref-exec-runtime-syntax-ref-host-mathsf-ref-host-xref-exec-runtime-syntax-hostaddr-mathit-hostaddr" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="xref-exec-runtime-syntax-ref-extern-mathsf-ref-extern-xref-exec-runtime-syntax-externaddr-mathit-externaddr">
+<span id="index-18"></span><h3><span class="math notranslate nohighlight">\(\href{../exec/runtime.html#syntax-ref.extern}{\mathsf{ref{.}extern}}~\href{../exec/runtime.html#syntax-externaddr}{\mathit{externaddr}}\)</span><a class="headerlink" href="#xref-exec-runtime-syntax-ref-extern-mathsf-ref-extern-xref-exec-runtime-syntax-externaddr-mathit-externaddr" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><p>The instruction is valid with type <span class="math notranslate nohighlight">\([] \href{../syntax/types.html#syntax-functype}{\rightarrow} [\href{../syntax/types.html#syntax-reftype}{\mathsf{anyref}}]\)</span>.</p></li>
+<li><p>The instruction is valid with type <span class="math notranslate nohighlight">\([] \href{../syntax/types.html#syntax-functype}{\rightarrow} [\href{../syntax/types.html#syntax-reftype}{\mathsf{externref}}]\)</span>.</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[\frac{
 }{
-  S; C \href{../appendix/properties.html#valid-instr-admin}{\vdash} \href{../exec/runtime.html#syntax-ref.host}{\mathsf{ref{.}host}}~\href{../exec/runtime.html#syntax-hostaddr}{\mathit{hostaddr}} : [] \href{../syntax/types.html#syntax-functype}{\rightarrow} [\href{../syntax/types.html#syntax-reftype}{\mathsf{anyref}}]
+  S; C \href{../appendix/properties.html#valid-instr-admin}{\vdash} \href{../exec/runtime.html#syntax-ref.extern}{\mathsf{ref{.}extern}}~\href{../exec/runtime.html#syntax-externaddr}{\mathit{externaddr}} : [] \href{../syntax/types.html#syntax-functype}{\rightarrow} [\href{../syntax/types.html#syntax-reftype}{\mathsf{externref}}]
 }\]</div>
 </div>
 <div class="section" id="xref-exec-runtime-syntax-ref-mathsf-ref-xref-exec-runtime-syntax-funcaddr-mathit-funcaddr">
