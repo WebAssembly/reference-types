@@ -834,7 +834,7 @@ enum ValueType {
   "i64",
   "f32",
   "f64",
-  "anyref",
+  "externref",
   "anyfunc",
 };
 </pre>
@@ -898,7 +898,7 @@ which can be simultaneously referenced by multiple {{Instance}} objects. Each
     1. If |valuetype| equals [=𝗂𝟨𝟦=], return [=𝗂𝟨𝟦.𝖼𝗈𝗇𝗌𝗍=] 0.
     1. If |valuetype| equals [=𝖿𝟥𝟤=], return [=𝖿𝟥𝟤.𝖼𝗈𝗇𝗌𝗍=] 0.
     1. If |valuetype| equals [=𝖿𝟨𝟦=], return [=𝖿𝟨𝟦.𝖼𝗈𝗇𝗌𝗍=] 0.
-    1. If |valuetype| equals [=anyref=], return [=ToWebAssemblyValue=](undefined, |valuetype|).
+    1. If |valuetype| equals [=externref=], return [=ToWebAssemblyValue=](undefined, |valuetype|).
     1. Assert: This step is not reached.
 </div>
 

@@ -46,7 +46,7 @@ Notes:
 
 Typing extensions:
 
-* Introduce `funref` and `externref` as a new class of *reference types*.
+* Introduce `funcref` and `externref` as a new class of *reference types*.
   - `reftype ::= funcref | externref`
 
 * Value types (of locals, globals, function parameters and results) can now be either numeric types or reference types.

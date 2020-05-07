@@ -184,8 +184,8 @@ align: align=(1|2|4|8|...)
 cvtop: trunc | extend | wrap | ...
 
 num_type: i32 | i64 | f32 | f64
-ref_kind: any | func
-ref_type: anyref | funcref
+ref_kind: func | extern
+ref_type: funcref | externref
 val_type: num_type | ref_type
 block_type : ( result <val_type>* )*
 func_type:   ( type <var> )? <param>* <result>*
@@ -364,7 +364,7 @@ assertion:
 
 result:
   ( <val_type>.const <numpat> )
-  ( ref.any )
+  ( ref.extern )
   ( ref.func )
 
 numpat:
