@@ -4,15 +4,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Numerics &#8212; WebAssembly 1.0</title>
+    <title>Numerics &#8212; WebAssembly 1.1</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"MAXBUFFER": 30720}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -73,7 +73,7 @@
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="documentwrapper">
@@ -534,6 +534,16 @@ it holds that <span class="math notranslate nohighlight">\(i_1 = i_2\cdot\href{.
 \[\begin{array}{&#64;{}lcll}
 \href{../exec/numerics.html#op-ige-s}{\mathrm{ige\_s}}_N(i_1, i_2) &amp;=&amp; \href{../exec/numerics.html#aux-bool}{\mathrm{bool}}(\href{../exec/numerics.html#aux-signed}{\mathrm{signed}}_N(i_1) \geq \href{../exec/numerics.html#aux-signed}{\mathrm{signed}}_N(i_2))
 \end{array}\]</div>
+</div>
+<div class="section" id="xref-exec-numerics-op-iextendn-s-mathrm-iextend-m-mathrm-s-n-i">
+<span id="op-iextendn-s"></span><h3><span class="math notranslate nohighlight">\(\href{../exec/numerics.html#op-iextendn-s}{\mathrm{iextend}M\mathrm{\_s}}_N(i)\)</span><a class="headerlink" href="#xref-exec-numerics-op-iextendn-s-mathrm-iextend-m-mathrm-s-n-i" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Return <span class="math notranslate nohighlight">\(\href{../exec/numerics.html#op-extend-s}{\mathrm{extend}^{\mathsf{s}}}_{M,N}(i)\)</span>.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{lll&#64;{\qquad}l}
+\href{../exec/numerics.html#op-iextendn-s}{\mathrm{iextend}M\mathrm{\_s}}_{N}(i) &amp;=&amp; \href{../exec/numerics.html#op-extend-s}{\mathrm{extend}^{\mathsf{s}}}_{M,N}(i) \\
+\end{array}\end{split}\]</div>
 </div>
 </div>
 <div class="section" id="floating-point-operations">
@@ -1162,6 +1172,46 @@ It is not defined for NaNs, infinities, or values for which the result is out of
 <p>This operator is <a class="reference internal" href="#exec-op-partial"><span class="std std-ref">partial</span></a>.
 It is not defined for NaNs, infinities, or values for which the result is out of range.</p>
 </div>
+</div>
+<div class="section" id="xref-exec-numerics-op-trunc-sat-u-mathrm-trunc-sat-u-m-n-z">
+<span id="op-trunc-sat-u"></span><h3><span class="math notranslate nohighlight">\(\href{../exec/numerics.html#op-trunc-sat-u}{\mathrm{trunc\_sat\_u}}_{M,N}(z)\)</span><a class="headerlink" href="#xref-exec-numerics-op-trunc-sat-u-mathrm-trunc-sat-u-m-n-z" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>If <span class="math notranslate nohighlight">\(z\)</span> is a NaN, then return <span class="math notranslate nohighlight">\(0\)</span>.</p></li>
+<li><p>Else if <span class="math notranslate nohighlight">\(z\)</span> is negative infinity, then return <span class="math notranslate nohighlight">\(0\)</span>.</p></li>
+<li><p>Else if <span class="math notranslate nohighlight">\(z\)</span> is positive infinity, then return <span class="math notranslate nohighlight">\(2^N - 1\)</span>.</p></li>
+<li><p>Else if <span class="math notranslate nohighlight">\(\href{../exec/numerics.html#aux-trunc}{\mathrm{trunc}}(z)\)</span> is less than <span class="math notranslate nohighlight">\(0\)</span>, then return <span class="math notranslate nohighlight">\(0\)</span>.</p></li>
+<li><p>Else if <span class="math notranslate nohighlight">\(\href{../exec/numerics.html#aux-trunc}{\mathrm{trunc}}(z)\)</span> is greater than <span class="math notranslate nohighlight">\(2^N - 1\)</span>, then return <span class="math notranslate nohighlight">\(2^N - 1\)</span>.</p></li>
+<li><p>Else, return <span class="math notranslate nohighlight">\(\href{../exec/numerics.html#aux-trunc}{\mathrm{trunc}}(z)\)</span>.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{lll&#64;{\qquad}l}
+\href{../exec/numerics.html#op-trunc-sat-u}{\mathrm{trunc\_sat\_u}}_{M,N}(\pm \href{../syntax/values.html#syntax-float}{\mathsf{nan}}(n)) &amp;=&amp; 0 \\
+\href{../exec/numerics.html#op-trunc-sat-u}{\mathrm{trunc\_sat\_u}}_{M,N}(- \infty) &amp;=&amp; 0 \\
+\href{../exec/numerics.html#op-trunc-sat-u}{\mathrm{trunc\_sat\_u}}_{M,N}(+ \infty) &amp;=&amp; 2^N - 1 \\
+\href{../exec/numerics.html#op-trunc-sat-u}{\mathrm{trunc\_sat\_u}}_{M,N}(- q) &amp;=&amp; 0 &amp; (\mathrel{\mbox{if}} \href{../exec/numerics.html#aux-trunc}{\mathrm{trunc}}(- q) &lt; 0) \\
+\href{../exec/numerics.html#op-trunc-sat-u}{\mathrm{trunc\_sat\_u}}_{M,N}(+ q) &amp;=&amp; 2^N - 1 &amp; (\mathrel{\mbox{if}} \href{../exec/numerics.html#aux-trunc}{\mathrm{trunc}}(+ q) &gt; 2^N - 1) \\
+\href{../exec/numerics.html#op-trunc-sat-u}{\mathrm{trunc\_sat\_u}}_{M,N}(\pm q) &amp;=&amp; \href{../exec/numerics.html#aux-trunc}{\mathrm{trunc}}(\pm q) &amp; (otherwise) \\
+\end{array}\end{split}\]</div>
+</div>
+<div class="section" id="xref-exec-numerics-op-trunc-sat-s-mathrm-trunc-sat-s-m-n-z">
+<span id="op-trunc-sat-s"></span><h3><span class="math notranslate nohighlight">\(\href{../exec/numerics.html#op-trunc-sat-s}{\mathrm{trunc\_sat\_s}}_{M,N}(z)\)</span><a class="headerlink" href="#xref-exec-numerics-op-trunc-sat-s-mathrm-trunc-sat-s-m-n-z" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>If <span class="math notranslate nohighlight">\(z\)</span> is a NaN, then return <span class="math notranslate nohighlight">\(0\)</span>.</p></li>
+<li><p>Else if <span class="math notranslate nohighlight">\(z\)</span> is negative infinity, then return <span class="math notranslate nohighlight">\(-2^{N-1}\)</span>.</p></li>
+<li><p>Else if <span class="math notranslate nohighlight">\(z\)</span> is positive infinity, then return <span class="math notranslate nohighlight">\(2^{N-1} - 1\)</span>.</p></li>
+<li><p>Else if <span class="math notranslate nohighlight">\(\href{../exec/numerics.html#aux-trunc}{\mathrm{trunc}}(z)\)</span> is less than <span class="math notranslate nohighlight">\(-2^{N-1}\)</span>, then return <span class="math notranslate nohighlight">\(-2^{N-1}\)</span>.</p></li>
+<li><p>Else if <span class="math notranslate nohighlight">\(\href{../exec/numerics.html#aux-trunc}{\mathrm{trunc}}(z)\)</span> is greater than <span class="math notranslate nohighlight">\(2^{N-1} - 1\)</span>, then return <span class="math notranslate nohighlight">\(2^{N-1} - 1\)</span>.</p></li>
+<li><p>Else, return <span class="math notranslate nohighlight">\(\href{../exec/numerics.html#aux-trunc}{\mathrm{trunc}}(z)\)</span>.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{lll&#64;{\qquad}l}
+\href{../exec/numerics.html#op-trunc-sat-s}{\mathrm{trunc\_sat\_s}}_{M,N}(\pm \href{../syntax/values.html#syntax-float}{\mathsf{nan}}(n)) &amp;=&amp; 0 \\
+\href{../exec/numerics.html#op-trunc-sat-s}{\mathrm{trunc\_sat\_s}}_{M,N}(- \infty) &amp;=&amp; -2^{N-1} \\
+\href{../exec/numerics.html#op-trunc-sat-s}{\mathrm{trunc\_sat\_s}}_{M,N}(+ \infty) &amp;=&amp; 2^{N-1}-1 \\
+\href{../exec/numerics.html#op-trunc-sat-s}{\mathrm{trunc\_sat\_s}}_{M,N}(- q) &amp;=&amp; -2^{N-1} &amp; (\mathrel{\mbox{if}} \href{../exec/numerics.html#aux-trunc}{\mathrm{trunc}}(- q) &lt; -2^{N-1}) \\
+\href{../exec/numerics.html#op-trunc-sat-s}{\mathrm{trunc\_sat\_s}}_{M,N}(+ q) &amp;=&amp; 2^{N-1} - 1 &amp; (\mathrel{\mbox{if}} \href{../exec/numerics.html#aux-trunc}{\mathrm{trunc}}(+ q) &gt; 2^{N-1} - 1) \\
+\href{../exec/numerics.html#op-trunc-sat-s}{\mathrm{trunc\_sat\_s}}_{M,N}(\pm q) &amp;=&amp; \href{../exec/numerics.html#aux-trunc}{\mathrm{trunc}}(\pm q) &amp; (otherwise) \\
+\end{array}\end{split}\]</div>
 </div>
 <div class="section" id="xref-exec-numerics-op-promote-mathrm-promote-m-n-z">
 <span id="op-promote"></span><h3><span class="math notranslate nohighlight">\(\href{../exec/numerics.html#op-promote}{\mathrm{promote}}_{M,N}(z)\)</span><a class="headerlink" href="#xref-exec-numerics-op-promote-mathrm-promote-m-n-z" title="Permalink to this headline">¶</a></h3>
