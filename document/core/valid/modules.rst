@@ -534,7 +534,7 @@ Instead, the context :math:`C` for validation of the module's content is constru
 
   * :math:`C.\CRETURN` is empty.
 
-  * :math:`C.\CREFS` is the set :math:`\freefuncidx(\module \with \MFUNCS = \epsilon)`, i.e., the set of :ref:`function indices <syntax-funcidx>` occurring in the module, except in its :ref:`functions <syntax-func>`.
+  * :math:`C.\CREFS` is the set :math:`\freefuncidx(\module \with \MFUNCS = \epsilon \with \MSTART = \epsilon)`, i.e., the set of :ref:`function indices <syntax-funcidx>` occurring in the module, except in its :ref:`functions <syntax-func>` or :ref:`start function <syntax-start>`.
 
 * Let :math:`C'` be the :ref:`context <context>` where:
 
@@ -631,7 +631,7 @@ Instead, the context :math:`C` for validation of the module's content is constru
      \qquad
      \X{igt}^\ast = \etglobals(\X{it}^\ast)
      \\
-     x^\ast = \freefuncidx(\module \with \MFUNCS = \epsilon)
+     x^\ast = \freefuncidx(\module \with \MFUNCS = \epsilon \with \MSTART = \epsilon)
      \\
      C = \{ \CTYPES~\type^\ast, \CFUNCS~\X{ift}^\ast\,\X{ft}^\ast, \CTABLES~\X{itt}^\ast\,\X{tt}^\ast, \CMEMS~\X{imt}^\ast\,\X{mt}^\ast, \CGLOBALS~\X{igt}^\ast\,\X{gt}^\ast, \CELEMS~\X{rt}^\ast, \CDATAS~{\ok}^n, \CREFS~x^\ast \}
      \\
