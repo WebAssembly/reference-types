@@ -468,11 +468,11 @@ with the import’s <a class="reference internal" href="../syntax/types.html#syn
 <li><p><span class="math notranslate nohighlight">\(C.\href{../valid/conventions.html#context}{\mathsf{globals}}\)</span> is <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-externtype}{\mathrm{globals}}(\mathit{it}^\ast)\)</span> concatenated with <span class="math notranslate nohighlight">\(\mathit{gt}^\ast\)</span>,
 with the import’s <a class="reference internal" href="../syntax/types.html#syntax-externtype"><span class="std std-ref">external types</span></a> <span class="math notranslate nohighlight">\(\mathit{it}^\ast\)</span> and the internal <a class="reference internal" href="../syntax/types.html#syntax-globaltype"><span class="std std-ref">global types</span></a> <span class="math notranslate nohighlight">\(\mathit{gt}^\ast\)</span> as determined below,</p></li>
 <li><p><span class="math notranslate nohighlight">\(C.\href{../valid/conventions.html#context}{\mathsf{elems}}\)</span> is <span class="math notranslate nohighlight">\({\mathit{rt}}^\ast\)</span> as determined below,</p></li>
-<li><p><span class="math notranslate nohighlight">\(C.\href{../valid/conventions.html#context}{\mathsf{datas}}\)</span> is <span class="math notranslate nohighlight">\({\mathrel{\mbox{ok}}}^{N_d}\)</span>, where <span class="math notranslate nohighlight">\(N_d\)</span> is the length of the vector <span class="math notranslate nohighlight">\(\href{../syntax/modules.html#syntax-module}{\mathit{module}}.\href{../syntax/modules.html#syntax-module}{\mathsf{datas}}\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(C.\href{../valid/conventions.html#context}{\mathsf{datas}}\)</span> is <span class="math notranslate nohighlight">\({\mathrel{\mbox{ok}}}^n\)</span>, where <span class="math notranslate nohighlight">\(n\)</span> is the length of the vector <span class="math notranslate nohighlight">\(\href{../syntax/modules.html#syntax-module}{\mathit{module}}.\href{../syntax/modules.html#syntax-module}{\mathsf{datas}}\)</span>,</p></li>
 <li><p><span class="math notranslate nohighlight">\(C.\href{../valid/conventions.html#context}{\mathsf{locals}}\)</span> is empty,</p></li>
 <li><p><span class="math notranslate nohighlight">\(C.\href{../valid/conventions.html#context}{\mathsf{labels}}\)</span> is empty,</p></li>
 <li><p><span class="math notranslate nohighlight">\(C.\href{../valid/conventions.html#context}{\mathsf{return}}\)</span> is empty.</p></li>
-<li><p><span class="math notranslate nohighlight">\(C.\href{../valid/conventions.html#context}{\mathsf{refs}}\)</span> is the set <span class="math notranslate nohighlight">\(\href{../syntax/modules.html#syntax-funcidx}{\mathrm{funcidx}}(\href{../syntax/modules.html#syntax-module}{\mathit{module}}.\href{../syntax/modules.html#syntax-module}{\mathsf{elems}})\)</span>, i.e., the set of <a class="reference internal" href="../syntax/modules.html#syntax-funcidx"><span class="std std-ref">function indices</span></a> occurring in any of the module’s <a class="reference internal" href="../syntax/modules.html#syntax-elem"><span class="std std-ref">element segments</span></a>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(C.\href{../valid/conventions.html#context}{\mathsf{refs}}\)</span> is the set <span class="math notranslate nohighlight">\(\href{../syntax/modules.html#syntax-funcidx}{\mathrm{funcidx}}(\href{../syntax/modules.html#syntax-module}{\mathit{module}} \href{../syntax/conventions.html#notation-replace}{\mathrel{\mbox{with}}} \href{../syntax/modules.html#syntax-module}{\mathsf{funcs}} = \epsilon \href{../syntax/conventions.html#notation-replace}{\mathrel{\mbox{with}}} \href{../syntax/modules.html#syntax-module}{\mathsf{start}} = \epsilon)\)</span>, i.e., the set of <a class="reference internal" href="../syntax/modules.html#syntax-funcidx"><span class="std std-ref">function indices</span></a> occurring in the module, except in its <a class="reference internal" href="../syntax/modules.html#syntax-func"><span class="std std-ref">functions</span></a> or <a class="reference internal" href="../syntax/modules.html#syntax-start"><span class="std std-ref">start function</span></a>.</p></li>
 </ul>
 </li>
 <li><p>Let <span class="math notranslate nohighlight">\(C'\)</span> be the <a class="reference internal" href="conventions.html#context"><span class="std std-ref">context</span></a> where:</p>
@@ -525,7 +525,7 @@ the segment <span class="math notranslate nohighlight">\(\href{../syntax/modules
 <div class="math notranslate nohighlight">
 \[\begin{split}\frac{
   \begin{array}{&#64;{}c&#64;{}}
-  (\href{../valid/types.html#valid-functype}{\vdash} \href{../syntax/types.html#syntax-functype}{\mathit{functype}} \mathrel{\mbox{ok}})^\ast
+  (\href{../valid/types.html#valid-functype}{\vdash} \href{../syntax/modules.html#syntax-typedef}{\mathit{type}} \mathrel{\mbox{ok}})^\ast
   \quad
   (C \href{../valid/modules.html#valid-func}{\vdash} \href{../syntax/modules.html#syntax-func}{\mathit{func}} : \mathit{ft})^\ast
   \quad
@@ -537,7 +537,7 @@ the segment <span class="math notranslate nohighlight">\(\href{../syntax/modules
   \\
   (C \href{../valid/modules.html#valid-elem}{\vdash} \href{../syntax/modules.html#syntax-elem}{\mathit{elem}} : \mathit{rt})^\ast
   \quad
-  (C \href{../valid/modules.html#valid-data}{\vdash} \href{../syntax/modules.html#syntax-data}{\mathit{data}} \mathrel{\mbox{ok}})^{N_d}
+  (C \href{../valid/modules.html#valid-data}{\vdash} \href{../syntax/modules.html#syntax-data}{\mathit{data}} \mathrel{\mbox{ok}})^n
   \quad
   (C \href{../valid/modules.html#valid-start}{\vdash} \href{../syntax/modules.html#syntax-start}{\mathit{start}} \mathrel{\mbox{ok}})^?
   \quad
@@ -553,28 +553,32 @@ the segment <span class="math notranslate nohighlight">\(\href{../syntax/modules
   \qquad
   \mathit{igt}^\ast = \href{../syntax/types.html#syntax-externtype}{\mathrm{globals}}(\mathit{it}^\ast)
   \\
-  C = \{ \href{../valid/conventions.html#context}{\mathsf{types}}~\href{../syntax/types.html#syntax-functype}{\mathit{functype}}^\ast, \href{../valid/conventions.html#context}{\mathsf{funcs}}~\mathit{ift}^\ast~\mathit{ft}^\ast, \href{../valid/conventions.html#context}{\mathsf{tables}}~\mathit{itt}^\ast~\mathit{tt}^\ast, \href{../valid/conventions.html#context}{\mathsf{mems}}~\mathit{imt}^\ast~\mathit{mt}^\ast, \href{../valid/conventions.html#context}{\mathsf{globals}}~\mathit{igt}^\ast~\mathit{gt}^\ast, \href{../valid/conventions.html#context}{\mathsf{elems}}~\mathit{rt}^\ast, \href{../valid/conventions.html#context}{\mathsf{datas}}~{\mathrel{\mbox{ok}}}^{N_d}, \href{../valid/conventions.html#context}{\mathsf{refs}}~\href{../syntax/modules.html#syntax-funcidx}{\mathrm{funcidx}}(\href{../syntax/modules.html#syntax-elem}{\mathit{elem}}^\ast) \}
+  x^\ast = \href{../syntax/modules.html#syntax-funcidx}{\mathrm{funcidx}}(\href{../syntax/modules.html#syntax-module}{\mathit{module}} \href{../syntax/conventions.html#notation-replace}{\mathrel{\mbox{with}}} \href{../syntax/modules.html#syntax-module}{\mathsf{funcs}} = \epsilon \href{../syntax/conventions.html#notation-replace}{\mathrel{\mbox{with}}} \href{../syntax/modules.html#syntax-module}{\mathsf{start}} = \epsilon)
+  \\
+  C = \{ \href{../valid/conventions.html#context}{\mathsf{types}}~\href{../syntax/modules.html#syntax-typedef}{\mathit{type}}^\ast, \href{../valid/conventions.html#context}{\mathsf{funcs}}~\mathit{ift}^\ast\,\mathit{ft}^\ast, \href{../valid/conventions.html#context}{\mathsf{tables}}~\mathit{itt}^\ast\,\mathit{tt}^\ast, \href{../valid/conventions.html#context}{\mathsf{mems}}~\mathit{imt}^\ast\,\mathit{mt}^\ast, \href{../valid/conventions.html#context}{\mathsf{globals}}~\mathit{igt}^\ast\,\mathit{gt}^\ast, \href{../valid/conventions.html#context}{\mathsf{elems}}~\mathit{rt}^\ast, \href{../valid/conventions.html#context}{\mathsf{datas}}~{\mathrel{\mbox{ok}}}^n, \href{../valid/conventions.html#context}{\mathsf{refs}}~x^\ast \}
   \\
   C' = \{ \href{../valid/conventions.html#context}{\mathsf{globals}}~\mathit{igt}^\ast, \href{../valid/conventions.html#context}{\mathsf{funcs}}~(C.\href{../valid/conventions.html#context}{\mathsf{funcs}}), \href{../valid/conventions.html#context}{\mathsf{refs}}~(C.\href{../valid/conventions.html#context}{\mathsf{refs}}) \}
   \qquad
   |C.\href{../valid/conventions.html#context}{\mathsf{mems}}| \leq 1
   \qquad
   (\href{../syntax/modules.html#syntax-export}{\mathit{export}}.\href{../syntax/modules.html#syntax-export}{\mathsf{name}})^\ast ~\mathrm{disjoint}
-  \end{array}
-}{
-  \href{../valid/modules.html#valid-module}{\vdash} \{
+  \\
+  \href{../syntax/modules.html#syntax-module}{\mathit{module}} = \{
     \begin{array}[t]{&#64;{}l&#64;{}}
-      \href{../syntax/modules.html#syntax-module}{\mathsf{types}}~\href{../syntax/types.html#syntax-functype}{\mathit{functype}}^\ast,
+      \href{../syntax/modules.html#syntax-module}{\mathsf{types}}~\href{../syntax/modules.html#syntax-typedef}{\mathit{type}}^\ast,
       \href{../syntax/modules.html#syntax-module}{\mathsf{funcs}}~\href{../syntax/modules.html#syntax-func}{\mathit{func}}^\ast,
       \href{../syntax/modules.html#syntax-module}{\mathsf{tables}}~\href{../syntax/modules.html#syntax-table}{\mathit{table}}^\ast,
       \href{../syntax/modules.html#syntax-module}{\mathsf{mems}}~\href{../syntax/modules.html#syntax-mem}{\mathit{mem}}^\ast,
       \href{../syntax/modules.html#syntax-module}{\mathsf{globals}}~\href{../syntax/modules.html#syntax-global}{\mathit{global}}^\ast, \\
       \href{../syntax/modules.html#syntax-module}{\mathsf{elems}}~\href{../syntax/modules.html#syntax-elem}{\mathit{elem}}^\ast,
-      \href{../syntax/modules.html#syntax-module}{\mathsf{datas}}~\href{../syntax/modules.html#syntax-data}{\mathit{data}}^{N_d},
+      \href{../syntax/modules.html#syntax-module}{\mathsf{datas}}~\href{../syntax/modules.html#syntax-data}{\mathit{data}}^n,
       \href{../syntax/modules.html#syntax-module}{\mathsf{start}}~\href{../syntax/modules.html#syntax-start}{\mathit{start}}^?,
       \href{../syntax/modules.html#syntax-module}{\mathsf{imports}}~\href{../syntax/modules.html#syntax-import}{\mathit{import}}^\ast,
-      \href{../syntax/modules.html#syntax-module}{\mathsf{exports}}~\href{../syntax/modules.html#syntax-export}{\mathit{export}}^\ast \} : \mathit{it}^\ast \href{../syntax/types.html#syntax-functype}{\rightarrow} \mathit{et}^\ast \\
+      \href{../syntax/modules.html#syntax-module}{\mathsf{exports}}~\href{../syntax/modules.html#syntax-export}{\mathit{export}}^\ast \}
     \end{array}
+  \end{array}
+}{
+  \href{../valid/modules.html#valid-module}{\vdash} \href{../syntax/modules.html#syntax-module}{\mathit{module}} : \mathit{it}^\ast \href{../syntax/types.html#syntax-functype}{\rightarrow} \mathit{et}^\ast
 }\end{split}\]</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>

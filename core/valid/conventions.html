@@ -116,7 +116,7 @@ which collects relevant information about the surrounding <a class="reference in
 <li><p><em>Locals</em>: the list of locals declared in the current function (including parameters), represented by their value type.</p></li>
 <li><p><em>Labels</em>: the stack of labels accessible from the current position, represented by their result type.</p></li>
 <li><p><em>Return</em>: the return type of the current function, represented as an optional result type that is absent when no return is allowed, as in free-standing expressions.</p></li>
-<li><p><em>References</em>: the list of <a class="reference internal" href="../syntax/modules.html#syntax-funcidx"><span class="std std-ref">function indices</span></a> that occur in element segments and can hence be used to form references elsewhere.</p></li>
+<li><p><em>References</em>: the list of <a class="reference internal" href="../syntax/modules.html#syntax-funcidx"><span class="std std-ref">function indices</span></a> that occur in the module outside functions and can hence be used to form references inside them.</p></li>
 </ul>
 <p>In other words, a context contains a sequence of suitable <a class="reference internal" href="../syntax/types.html#syntax-type"><span class="std std-ref">types</span></a> for each <a class="reference internal" href="../syntax/modules.html#syntax-index"><span class="std std-ref">index space</span></a>,
 describing each defined entry in that space.
