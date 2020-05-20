@@ -93,6 +93,7 @@
   (elem (table $t) (i32.const 0) funcref (ref.func $f4))
   (elem func $f5)
   (elem funcref (ref.func $f6))
+  (elem declare func $f1 $f2 $f3 $f4 $f5 $f6)
 
   (func
     (ref.func $f1)
