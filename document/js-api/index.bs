@@ -756,7 +756,7 @@ Each {{Table}} object has the following internal slots:
 
 <div algorithm>
     The <dfn constructor for="Table">Table(|descriptor|, |value|)</dfn> constructor, when invoked, performs the following steps:
-    1. Let |elementType| be ToValueType(descriptor|["element"]).
+    1. Let |elementType| be [=ToValueType=](|descriptor|["element"]).
     1. let |initial| be |descriptor|["initial"].
     1. If |descriptor|["maximum"] [=map/exists=], let |maximum| be |descriptor|["maximum"]; otherwise, let |maximum| be empty.
     1. If |maximum| is not empty and |maximum| &lt; |initial|, throw a {{RangeError}} exception.
@@ -764,7 +764,7 @@ Each {{Table}} object has the following internal slots:
         1. Let |ref| be [=DefaultValue=](|elementType|).
     1. Otherwise,
         1. Let |ref| be ? [=ToWebAssemblyValue=](|value|, |elementType|).
-    1. Let |type| be the [=table type=] {[=table type|min=] |initial|, [=table type|ma𝗑=] |maximum|} [=table type|an𝗒func=].
+    1. Let |type| be the [=table type=] {[=table type|min=] |initial|, [=table type|ma𝗑=] |maximum|} |elementType|.
     1. Let |store| be the [=surrounding agent=]'s [=associated store=].
     1. Let (|store|, |tableaddr|) be [=table_alloc=](|store|, |type|, |ref|). <!-- TODO(littledan): Report allocation failure https://github.com/WebAssembly/spec/issues/584 -->
     1. Set the [=surrounding agent=]'s [=associated store=] to |store|.
