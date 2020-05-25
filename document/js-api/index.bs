@@ -1113,6 +1113,7 @@ The algorithm <dfn>ToWebAssemblyValue</dfn>(|v|, |type|) coerces a JavaScript va
     1. Let [=extern address=] |externaddr| be the smallest address such that |map|[|externaddr|] [=map/exists=] is false.
     1. [=map/Set=] |map|[|externaddr|] to |v|.
     1. Return [=ref.extern=] |externaddr|.
+1. Assert: This step is not reached.
 
 </div>
 
