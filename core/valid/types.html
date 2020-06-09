@@ -161,12 +161,12 @@ Moreover, <a class="reference internal" href="../syntax/instructions.html#syntax
 <div class="section" id="xref-syntax-types-syntax-limits-mathit-limits-xref-syntax-types-syntax-reftype-mathit-reftype">
 <h3><span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}~\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}}\)</span><a class="headerlink" href="#xref-syntax-types-syntax-limits-mathit-limits-xref-syntax-types-syntax-reftype-mathit-reftype" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><p>The limits <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}\)</span> must be <a class="reference internal" href="#valid-limits"><span class="std std-ref">valid</span></a> within range <span class="math notranslate nohighlight">\(2^{32}\)</span>.</p></li>
+<li><p>The limits <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-limits}{\mathit{limits}}\)</span> must be <a class="reference internal" href="#valid-limits"><span class="std std-ref">valid</span></a> within range <span class="math notranslate nohighlight">\(2^{32}-1\)</span>.</p></li>
 <li><p>Then the table type is valid.</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[\frac{
-  \href{../valid/types.html#valid-limits}{\vdash} \href{../syntax/types.html#syntax-limits}{\mathit{limits}} : 2^{32}
+  \href{../valid/types.html#valid-limits}{\vdash} \href{../syntax/types.html#syntax-limits}{\mathit{limits}} : 2^{32} - 1
 }{
   \href{../valid/types.html#valid-tabletype}{\vdash} \href{../syntax/types.html#syntax-limits}{\mathit{limits}}~\href{../syntax/types.html#syntax-reftype}{\mathit{reftype}} \mathrel{\mbox{ok}}
 }\]</div>
