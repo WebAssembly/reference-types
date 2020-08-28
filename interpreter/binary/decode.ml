@@ -457,37 +457,37 @@ let rec instr s =
   | 0xd2 -> ref_func (at var s)
 
   | 0xfc as b1 ->
-    (match op s with
-    | 0x00 -> i32_trunc_sat_f32_s
-    | 0x01 -> i32_trunc_sat_f32_u
-    | 0x02 -> i32_trunc_sat_f64_s
-    | 0x03 -> i32_trunc_sat_f64_u
-    | 0x04 -> i64_trunc_sat_f32_s
-    | 0x05 -> i64_trunc_sat_f32_u
-    | 0x06 -> i64_trunc_sat_f64_s
-    | 0x07 -> i64_trunc_sat_f64_u
+    (match vu32 s with
+    | 0x00l -> i32_trunc_sat_f32_s
+    | 0x01l -> i32_trunc_sat_f32_u
+    | 0x02l -> i32_trunc_sat_f64_s
+    | 0x03l -> i32_trunc_sat_f64_u
+    | 0x04l -> i64_trunc_sat_f32_s
+    | 0x05l -> i64_trunc_sat_f32_u
+    | 0x06l -> i64_trunc_sat_f64_s
+    | 0x07l -> i64_trunc_sat_f64_u
 
-    | 0x08 ->
+    | 0x08l ->
       let x = at var s in
       zero_flag s; memory_init x
-    | 0x09 -> data_drop (at var s)
-    | 0x0a -> zero_flag s; zero_flag s; memory_copy
-    | 0x0b -> zero_flag s; memory_fill
+    | 0x09l -> data_drop (at var s)
+    | 0x0al -> zero_flag s; zero_flag s; memory_copy
+    | 0x0bl -> zero_flag s; memory_fill
 
-    | 0x0c ->
+    | 0x0cl ->
       let y = at var s in
       let x = at var s in
       table_init x y
-    | 0x0d -> elem_drop (at var s)
-    | 0x0e ->
+    | 0x0dl -> elem_drop (at var s)
+    | 0x0el ->
       let x = at var s in
       let y = at var s in
       table_copy x y
-    | 0x0f -> table_grow (at var s)
-    | 0x10 -> table_size (at var s)
-    | 0x11 -> table_fill (at var s)
+    | 0x0fl -> table_grow (at var s)
+    | 0x10l -> table_size (at var s)
+    | 0x11l -> table_fill (at var s)
 
-    | b2 -> illegal2 s pos b1 b2
+    | n -> illegal2 s pos b1 (I32.to_int_u n)
     )
 
   | b -> illegal s pos b
