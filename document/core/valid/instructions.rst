@@ -16,14 +16,13 @@ Instructions
      \valtype ~|~ \bot \\
    \end{array}
 
-The types describe the required input stack with argument values of types :math:`t_1^\ast` that an instruction pops off
+The types describe the required input stack with *operand types* :math:`t_1^\ast` that an instruction pops off
 and the provided output stack with result values of types :math:`t_2^\ast` that it pushes back.
-
-.. _match-opdtype:
-
 Stack types are akin to :ref:`function types <syntax-functype>`,
 except that they allow individual operands to be classified as :math:`\bot`, indicating that the type is unconstrained.
-As an auxiliary notion, an :ref:`operand type <syntax-opdtype>` :math:`t_1` *matches* another operand type :math:`t_2`, if :math:`t_1` is either :math:`\bot` or equal to :math:`t_2`.
+As an auxiliary notion, an operand type :math:`t_1` *matches* another operand type :math:`t_2`, if :math:`t_1` is either :math:`\bot` or equal to :math:`t_2`.
+
+.. _match-opdtype:
 
 .. math::
    \frac{
