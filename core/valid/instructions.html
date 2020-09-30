@@ -82,11 +82,30 @@
           <div class="body" role="main">
             
   <div class="section" id="instructions">
-<span id="valid-instr"></span><span id="index-0"></span><h1>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference internal" href="../syntax/instructions.html#syntax-instr"><span class="std std-ref">Instructions</span></a> are classified by <a class="reference internal" href="../syntax/types.html#syntax-functype"><span class="std std-ref">function types</span></a> <span class="math notranslate nohighlight">\([t_1^\ast] \href{../syntax/types.html#syntax-functype}{\rightarrow} [t_2^\ast]\)</span>
-that describe how they manipulate the <a class="reference internal" href="../exec/runtime.html#stack"><span class="std std-ref">operand stack</span></a>.
-The types describe the required input stack with argument values of types <span class="math notranslate nohighlight">\(t_1^\ast\)</span> that an instruction pops off
-and the provided output stack with result values of types <span class="math notranslate nohighlight">\(t_2^\ast\)</span> that it pushes back.</p>
+<span id="syntax-opdtype"></span><span id="syntax-stacktype"></span><span id="valid-instr"></span><span id="index-0"></span><h1>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference internal" href="../syntax/instructions.html#syntax-instr"><span class="std std-ref">Instructions</span></a> are classified by <em>stack types</em> <span class="math notranslate nohighlight">\([t_1^\ast] \href{../syntax/types.html#syntax-functype}{\rightarrow} [t_2^\ast]\)</span> that describe how instructions manipulate the <a class="reference internal" href="../exec/runtime.html#stack"><span class="std std-ref">operand stack</span></a>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{llll}
+\def\mathdef2906#1{{}}\mathdef2906{stack type} &amp; \href{../syntax/types.html#syntax-stacktype}{\mathit{stacktype}} &amp;::=&amp;
+  [\href{../syntax/types.html#syntax-opdtype}{\mathit{opdtype}}^\ast] \href{../syntax/types.html#syntax-functype}{\rightarrow} [\href{../syntax/types.html#syntax-opdtype}{\mathit{opdtype}}^\ast] \\
+\def\mathdef2906#1{{}}\mathdef2906{operand type} &amp; \href{../syntax/types.html#syntax-opdtype}{\mathit{opdtype}} &amp;::=&amp;
+  \href{../syntax/types.html#syntax-valtype}{\mathit{valtype}} ~|~ \bot \\
+\end{array}\end{split}\]</div>
+<p>The types describe the required input stack with <em>operand types</em> <span class="math notranslate nohighlight">\(t_1^\ast\)</span> that an instruction pops off
+and the provided output stack with result values of types <span class="math notranslate nohighlight">\(t_2^\ast\)</span> that it pushes back.
+Stack types are akin to <a class="reference internal" href="../syntax/types.html#syntax-functype"><span class="std std-ref">function types</span></a>,
+except that they allow individual operands to be classified as <span class="math notranslate nohighlight">\(\bot\)</span>, indicating that the type is unconstrained.
+As an auxiliary notion, an operand type <span class="math notranslate nohighlight">\(t_1\)</span> <em>matches</em> another operand type <span class="math notranslate nohighlight">\(t_2\)</span>, if <span class="math notranslate nohighlight">\(t_1\)</span> is either <span class="math notranslate nohighlight">\(\bot\)</span> or equal to <span class="math notranslate nohighlight">\(t_2\)</span>.</p>
+<div class="math notranslate nohighlight" id="match-opdtype">
+\[\frac{
+}{
+  \vdash t \leq t
+}
+\qquad
+\frac{
+}{
+  \vdash \bot \leq t
+}\]</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>For example, the instruction <span class="math notranslate nohighlight">\(\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{add}}\)</span> has type <span class="math notranslate nohighlight">\([\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}] \href{../syntax/types.html#syntax-functype}{\rightarrow} [\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}]\)</span>,
@@ -270,7 +289,7 @@ In contrast,</p>
 </li>
 <li><p>Else:</p>
 <ul>
-<li><p>The instruction is valid with type <span class="math notranslate nohighlight">\([t~t~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}] \href{../syntax/types.html#syntax-functype}{\rightarrow} [t]\)</span>, for any <a class="reference internal" href="../syntax/types.html#syntax-numtype"><span class="std std-ref">number type</span></a> <span class="math notranslate nohighlight">\(t\)</span>.</p></li>
+<li><p>The instruction is valid with type <span class="math notranslate nohighlight">\([t~t~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}] \href{../syntax/types.html#syntax-functype}{\rightarrow} [t]\)</span>, for any <a class="reference internal" href="#syntax-opdtype"><span class="std std-ref">operand type</span></a> <span class="math notranslate nohighlight">\(t\)</span> that <a class="reference internal" href="#match-opdtype"><span class="std std-ref">matches</span></a> some <a class="reference internal" href="../syntax/types.html#syntax-numtype"><span class="std std-ref">number type</span></a>.</p></li>
 </ul>
 </li>
 </ul>
@@ -281,7 +300,7 @@ In contrast,</p>
 }
 \qquad
 \frac{
-  t = \href{../syntax/types.html#syntax-numtype}{\mathit{numtype}}
+  \vdash t \leq \href{../syntax/types.html#syntax-numtype}{\mathit{numtype}}
 }{
   C \href{../valid/instructions.html#valid-instr}{\vdash} \href{../syntax/instructions.html#syntax-instr-parametric}{\mathsf{select}} : [t~t~\href{../syntax/types.html#syntax-valtype}{\mathsf{i32}}] \href{../syntax/types.html#syntax-functype}{\rightarrow} [t]
 }\]</div>
@@ -857,7 +876,7 @@ which is the case for functions not returning anything.</p>
 <h3>Empty Instruction Sequence: <span class="math notranslate nohighlight">\(\epsilon\)</span><a class="headerlink" href="#empty-instruction-sequence-epsilon" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>The empty instruction sequence is valid with type <span class="math notranslate nohighlight">\([t^\ast] \href{../syntax/types.html#syntax-functype}{\rightarrow} [t^\ast]\)</span>,
-for any sequence of <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value types</span></a> <span class="math notranslate nohighlight">\(t^\ast\)</span>.</p></li>
+for any sequence of <a class="reference internal" href="#syntax-opdtype"><span class="std std-ref">operand types</span></a> <span class="math notranslate nohighlight">\(t^\ast\)</span>.</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[\frac{
@@ -873,12 +892,15 @@ for some sequences of <a class="reference internal" href="../syntax/types.html#s
 <li><p>The instruction <span class="math notranslate nohighlight">\(\href{../syntax/instructions.html#syntax-instr}{\mathit{instr}}_N\)</span> must be valid with type <span class="math notranslate nohighlight">\([t^\ast] \href{../syntax/types.html#syntax-functype}{\rightarrow} [t_3^\ast]\)</span>,
 for some sequences of <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value types</span></a> <span class="math notranslate nohighlight">\(t^\ast\)</span> and <span class="math notranslate nohighlight">\(t_3^\ast\)</span>.</p></li>
 <li><p>There must be a sequence of <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value types</span></a> <span class="math notranslate nohighlight">\(t_0^\ast\)</span>,
-such that <span class="math notranslate nohighlight">\(t_2^\ast = t_0^\ast~t^\ast\)</span>.</p></li>
+such that <span class="math notranslate nohighlight">\(t_2^\ast = t_0^\ast~{t'}^\ast\)</span> where the type sequence <span class="math notranslate nohighlight">\({t'}^\ast\)</span> is as long as <span class="math notranslate nohighlight">\(t^\ast\)</span>.</p></li>
+<li><p>For each <a class="reference internal" href="#syntax-opdtype"><span class="std std-ref">operand type</span></a> <span class="math notranslate nohighlight">\(t'_i\)</span> in <span class="math notranslate nohighlight">\({t'}^\ast\)</span> and corresponding type <span class="math notranslate nohighlight">\(t_i\)</span> in <span class="math notranslate nohighlight">\(t^\ast\)</span>, <span class="math notranslate nohighlight">\(t'_i\)</span> <a class="reference internal" href="#match-opdtype"><span class="std std-ref">matches</span></a> <span class="math notranslate nohighlight">\(t_i\)</span>.</p></li>
 <li><p>Then the combined instruction sequence is valid with type <span class="math notranslate nohighlight">\([t_1^\ast] \href{../syntax/types.html#syntax-functype}{\rightarrow} [t_0^\ast~t_3^\ast]\)</span>.</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[\frac{
-  C \href{../valid/instructions.html#valid-instr-seq}{\vdash} \href{../syntax/instructions.html#syntax-instr}{\mathit{instr}}^\ast : [t_1^\ast] \href{../syntax/types.html#syntax-functype}{\rightarrow} [t_0^\ast~t^\ast]
+  C \href{../valid/instructions.html#valid-instr-seq}{\vdash} \href{../syntax/instructions.html#syntax-instr}{\mathit{instr}}^\ast : [t_1^\ast] \href{../syntax/types.html#syntax-functype}{\rightarrow} [t_0^\ast~{t'}^\ast]
+  \qquad
+  (\vdash t' \leq t)^\ast
   \qquad
   C \href{../valid/instructions.html#valid-instr}{\vdash} \href{../syntax/instructions.html#syntax-instr}{\mathit{instr}}_N : [t^\ast] \href{../syntax/types.html#syntax-functype}{\rightarrow} [t_3^\ast]
 }{
@@ -892,13 +914,15 @@ such that <span class="math notranslate nohighlight">\(t_2^\ast = t_0^\ast~t^\as
 <div class="section" id="xref-syntax-instructions-syntax-instr-mathit-instr-ast-xref-syntax-instructions-syntax-instr-control-mathsf-end">
 <h3><span class="math notranslate nohighlight">\(\href{../syntax/instructions.html#syntax-instr}{\mathit{instr}}^\ast~\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{end}}\)</span><a class="headerlink" href="#xref-syntax-instructions-syntax-instr-mathit-instr-ast-xref-syntax-instructions-syntax-instr-control-mathsf-end" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><p>The instruction sequence <span class="math notranslate nohighlight">\(\href{../syntax/instructions.html#syntax-instr}{\mathit{instr}}^\ast\)</span> must be <a class="reference internal" href="#valid-instr-seq"><span class="std std-ref">valid</span></a> with type <span class="math notranslate nohighlight">\([] \href{../syntax/types.html#syntax-functype}{\rightarrow} [t^\ast]\)</span>,
-for some <a class="reference internal" href="../syntax/types.html#syntax-resulttype"><span class="std std-ref">result type</span></a> <span class="math notranslate nohighlight">\([t^\ast]\)</span>.</p></li>
+<li><p>The instruction sequence <span class="math notranslate nohighlight">\(\href{../syntax/instructions.html#syntax-instr}{\mathit{instr}}^\ast\)</span> must be <a class="reference internal" href="#valid-instr-seq"><span class="std std-ref">valid</span></a> with some <a class="reference internal" href="#syntax-stacktype"><span class="std std-ref">stack type</span></a> <span class="math notranslate nohighlight">\([] \href{../syntax/types.html#syntax-functype}{\rightarrow} [t'^\ast]\)</span>.</p></li>
+<li><p>For each <a class="reference internal" href="#syntax-opdtype"><span class="std std-ref">operand type</span></a> <span class="math notranslate nohighlight">\(t'_i\)</span> in <span class="math notranslate nohighlight">\({t'}^\ast\)</span> and corresponding <a class="reference internal" href="../syntax/types.html#syntax-valtype"><span class="std std-ref">value type</span></a> type <span class="math notranslate nohighlight">\(t_i\)</span> in <span class="math notranslate nohighlight">\(t^\ast\)</span>, <span class="math notranslate nohighlight">\(t'_i\)</span> <a class="reference internal" href="#match-opdtype"><span class="std std-ref">matches</span></a> <span class="math notranslate nohighlight">\(t_i\)</span>.</p></li>
 <li><p>Then the expression is valid with <a class="reference internal" href="../syntax/types.html#syntax-resulttype"><span class="std std-ref">result type</span></a> <span class="math notranslate nohighlight">\([t^\ast]\)</span>.</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[\frac{
-  C \href{../valid/instructions.html#valid-instr-seq}{\vdash} \href{../syntax/instructions.html#syntax-instr}{\mathit{instr}}^\ast : [] \href{../syntax/types.html#syntax-functype}{\rightarrow} [t^\ast]
+  C \href{../valid/instructions.html#valid-instr-seq}{\vdash} \href{../syntax/instructions.html#syntax-instr}{\mathit{instr}}^\ast : [] \href{../syntax/types.html#syntax-functype}{\rightarrow} [{t'}^\ast]
+  \qquad
+  (\vdash t' \leq t)^\ast
 }{
   C \href{../valid/instructions.html#valid-expr}{\vdash} \href{../syntax/instructions.html#syntax-instr}{\mathit{instr}}^\ast~\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{end}} : [t^\ast]
 }\]</div>

@@ -96,11 +96,11 @@ Consequently, it can be integrated directly into a decoder.</p>
 <p>Types are representable as an enumeration.</p>
 <div class="highlight-pseudo notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="nf">val_type</span> = I32 | I64 | F32 | F64 | Funcref | Externref
 
-<span class="k">func</span> <span class="nf">is_num</span>(<span class="nf">t</span> : val_type) : bool =
-  <span class="k">return</span> t = I32 || t = I64 || t = F32 || t = F64
+<span class="k">func</span> <span class="nf">is_num</span>(<span class="nf">t</span> : val_type | Unknown) : bool =
+  <span class="k">return</span> t = I32 || t = I64 || t = F32 || t = F64 || t = Unknown
 
-<span class="k">func</span> <span class="nf">is_ref</span>(<span class="nf">t</span> : val_type) : bool =
-  <span class="k">return</span> t = Funcref || t = Externref
+<span class="k">func</span> <span class="nf">is_ref</span>(<span class="nf">t</span> : val_type | Unknown) : bool =
+  <span class="k">return</span> t = Funcref || t = Externref || t = Unknown
 </pre></div>
 </div>
 <p>The algorithm uses two separate stacks: the <em>value stack</em> and the <em>control stack</em>.
@@ -269,11 +269,14 @@ That is an easy addition and therefore omitted from this presentation.</p>
       push_vals(label_types(ctrls[n]))
 
     <span class="k">case</span> (br_table n* m)
-      error_if(ctrls.size() &lt; m)
-      <span class="k">foreach</span> (n <span class="k">in</span> n*)
-        error_if(ctrls.size() &lt; n || label_types(ctrls[n]) =/= label_types(ctrls[m]))
       pop_val(I32)
-      pop_vals(label_types(ctrls[m]))
+      error_if(ctrls.size() &lt; m)
+      <span class="k">let</span> <span class="nf">arity</span> = label_types(ctrls[m]).size()
+      <span class="k">foreach</span> (n <span class="k">in</span> n*)
+        error_if(ctrls.size() &lt; n)
+        error_if(label_types(ctrls[n]).size() =/= arity)
+        push_vals(pop_vals(label_types(ctrls[n])))
+      pop_vals(label_types(ctrls[m]))
       unreachable()
 </pre></div>
 </div>
