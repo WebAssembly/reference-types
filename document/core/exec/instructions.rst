@@ -691,7 +691,7 @@ Table Instructions
      \quad\stepto\quad S; F;
        \begin{array}[t]{@{}l@{}}
        (\I32.\CONST~i)~\val~(\TABLESET~x) \\
-       (\I32.\CONST~i+1)~\val~(\I32.\CONST~n)~(\TABLEFILL~x) \\
+       (\I32.\CONST~i+1)~\val~(\I32.\CONST~n-1)~(\TABLEFILL~x) \\
        \end{array}
      \\ \qquad
      (\otherwise) \\
