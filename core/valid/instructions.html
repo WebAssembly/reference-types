@@ -94,7 +94,7 @@
 <p>The types describe the required input stack with <em>operand types</em> <span class="math notranslate nohighlight">\(t_1^\ast\)</span> that an instruction pops off
 and the provided output stack with result values of types <span class="math notranslate nohighlight">\(t_2^\ast\)</span> that it pushes back.
 Stack types are akin to <a class="reference internal" href="../syntax/types.html#syntax-functype"><span class="std std-ref">function types</span></a>,
-except that they allow individual operands to be classified as <span class="math notranslate nohighlight">\(\bot\)</span>, indicating that the type is unconstrained.
+except that they allow individual operands to be classified as <span class="math notranslate nohighlight">\(\bot\)</span> (<em>bottom</em>), indicating that the type is unconstrained.
 As an auxiliary notion, an operand type <span class="math notranslate nohighlight">\(t_1\)</span> <em>matches</em> another operand type <span class="math notranslate nohighlight">\(t_2\)</span>, if <span class="math notranslate nohighlight">\(t_1\)</span> is either <span class="math notranslate nohighlight">\(\bot\)</span> or equal to <span class="math notranslate nohighlight">\(t_2\)</span>.</p>
 <div class="math notranslate nohighlight" id="match-opdtype">
 \[\frac{
