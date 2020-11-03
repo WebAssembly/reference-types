@@ -5,9 +5,9 @@
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <meta content="ED" name="w3c-status">
   <meta content="This document describes the integration of WebAssembly with the broader web platform." name="abstract">
-  <meta content="Bikeshed version 9ec7eb81, updated Tue Oct 13 17:24:06 2020 -0700" name="generator">
+  <meta content="Bikeshed version adf8655b, updated Thu Oct 29 16:15:09 2020 -0700" name="generator">
   <link href="https://www.w3.org/TR/wasm-web-api-1/" rel="canonical">
-  <meta content="9ad83c317258c2dc9ed6ecbd209fa98d6577ce8f" name="document-revision">
+  <meta content="ad009e09a5223b632689523908105a653202f580" name="document-revision">
 <style>/* style-autolinks */
 
 .css.css, .property.property, .descriptor.descriptor {
@@ -389,7 +389,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">WebAssembly Web API</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-10-19">19 October 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-11-03">3 November 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -461,7 +461,8 @@ and the <a href="https://www.w3.org/TR/wasm-web-api/">WebAssembly Web API</a>.
   <main>
    <p>This document builds off of the WebAssembly specification <a data-link-type="biblio" href="#biblio-webassembly">[WEBASSEMBLY]</a> and the WebAssembly JavaScript embedding <a data-link-type="biblio" href="#biblio-wasmjs">[WASMJS]</a>.</p>
    <h2 class="heading settled" data-level="1" id="streaming-modules"><span class="secno">1. </span><span class="content">Streaming Module Compilation and Instantiation</span><a class="self-link" href="#streaming-modules"></a></h2>
-<pre class="idl highlight def"><c- b>partial</c-> <c- b>namespace</c-> <a class="idl-code" data-link-type="namespace" href="https://webassembly.github.io/spec/js-api/#namespacedef-webassembly" id="ref-for-namespacedef-webassembly"><c- g>WebAssembly</c-></a> {
+<pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed" id="ref-for-Exposed"><c- g>Exposed</c-></a>=(<c- n>Window</c->,<c- n>Worker</c->)]
+<c- b>partial</c-> <c- b>namespace</c-> <a class="idl-code" data-link-type="namespace" href="https://webassembly.github.io/spec/js-api/#namespacedef-webassembly" id="ref-for-namespacedef-webassembly"><c- g>WebAssembly</c-></a> {
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-promise" id="ref-for-idl-promise"><c- b>Promise</c-></a>&lt;<a data-link-type="idl-name" href="https://webassembly.github.io/spec/js-api/#module" id="ref-for-module"><c- n>Module</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-webassembly-compilestreaming" id="ref-for-dom-webassembly-compilestreaming"><c- g>compileStreaming</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-promise" id="ref-for-idl-promise①"><c- b>Promise</c-></a>&lt;<a data-link-type="idl-name" href="https://fetch.spec.whatwg.org/#response" id="ref-for-response"><c- n>Response</c-></a>> <dfn class="idl-code" data-dfn-for="WebAssembly/compileStreaming(source)" data-dfn-type="argument" data-export id="dom-webassembly-compilestreaming-source-source"><code><c- g>source</c-></code><a class="self-link" href="#dom-webassembly-compilestreaming-source-source"></a></dfn>);
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-promise" id="ref-for-idl-promise②"><c- b>Promise</c-></a>&lt;<a data-link-type="idl-name" href="https://webassembly.github.io/spec/js-api/#dictdef-webassemblyinstantiatedsource" id="ref-for-dictdef-webassemblyinstantiatedsource"><c- n>WebAssemblyInstantiatedSource</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-webassembly-instantiatestreaming" id="ref-for-dom-webassembly-instantiatestreaming"><c- g>instantiateStreaming</c-></a>(
       <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-promise" id="ref-for-idl-promise③"><c- b>Promise</c-></a>&lt;<a data-link-type="idl-name" href="https://fetch.spec.whatwg.org/#response" id="ref-for-response①"><c- n>Response</c-></a>> <dfn class="idl-code" data-dfn-for="WebAssembly/instantiateStreaming(source, importObject), WebAssembly/instantiateStreaming(source)" data-dfn-type="argument" data-export id="dom-webassembly-instantiatestreaming-source-importobject-source"><code><c- g>source</c-></code><a class="self-link" href="#dom-webassembly-instantiatestreaming-source-importobject-source"></a></dfn>, <c- b>optional</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-object" id="ref-for-idl-object"><c- b>object</c-></a> <dfn class="idl-code" data-dfn-for="WebAssembly/instantiateStreaming(source, importObject), WebAssembly/instantiateStreaming(source)" data-dfn-type="argument" data-export id="dom-webassembly-instantiatestreaming-source-importobject-importobject"><code><c- g>importObject</c-></code><a class="self-link" href="#dom-webassembly-instantiatestreaming-source-importobject-importobject"></a></dfn>);
@@ -628,46 +629,60 @@ JavaScript.</p>
 review, approval, and registration with IANA.</p>
    <p>application/wasm</p>
    <dl>
-    <dt>Type name:
+    <dt>Type Name:
     <dd>application
-    <dt>Subtype name:
+    <dt>Subtype Name:
     <dd>wasm
-    <dt>Required parameters:
+    <dt>Required Parameters:
     <dd>None
-    <dt>Optional parameters:
+    <dt>Optional Parameters:
     <dd>None
-    <dt>Encoding considerations:
-    <dd>None (this is a binary format)
-    <dt>Security considerations:
+    <dt>Encoding Considerations:
+    <dd>binary
+    <dt>Security Considerations:
     <dd>See see WebAssembly Core Security Considerations<br> https://www.w3.org/TR/wasm-core/#security-considerations%E2%91%A0
-    <dt>Interoperability considerations:
+    <dt>Interoperability Considerations:
     <dd>See see WebAssembly Core Conformance<br> https://www.w3.org/TR/wasm-core/#conformance
     <dt>Published specification:
      https://www.w3.org/TR/wasm-core-1/
  https://www.w3.org/TR/wasm-js-api-1/
  https://www.w3.org/TR/wasm-web-api-1/ 
-    <dt>Applications that use this media type:
-    <dd>Web browsers and runtime systems
+    <dt>Application Usage:
+    <dd>The application/wasm media type is already in use as the type used to describe WebAssembly files when sent over HTTP to be executed by browsers, which is a common scenario. Additionally, several WebAssembly runtimes that take advantage of the safety and portability while targeting efficient execution and compact representation.
+    <dt>Fragment Identifier Considerations:
+    <dd>None
+    <dt>Restrictions on usage:
+    <dd>None
+    <dt>Provisional Registrations:
+    <dd>N/A
     <dt>Additional information:
     <dd>
      <dl>
+      <dt>Deprecated alias names for this type:
+      <dd>None
       <dt>Magic number(s):
       <dd>0x00 0x61 0x73 0x6D
       <dt>File extension(s):
       <dd>.wasm
       <dt>Macintosh file type code(s):
       <dd>None
+      <dt>Object Identifier(s) or OID(s):
+      <dd>None
      </dl>
-    <dt>Person &amp; email address to contact for further information:
-    <dd>Eric Prud’hommeaux &lt;eric@w3.org>
     <dt>Intended usage:
     <dd>Common
-    <dt>Restrictions on usage:
-    <dd>None
-    <dt>Author(s):
-    <dd>W3C’s Web Assembly Working Group
-    <dt>Change controller:
-    <dd>W3C
+    <dt>Other Information &amp; Comments:
+    <dd>Common
+    <dt>Contact Person:
+    <dd>
+     <dl>
+      <dt>Contact Name:
+      <dd>Eric Prud’hommeaux
+      <dt>Contact Email Address:
+      <dd>eric@w3.org
+      <dt>Author/Change Controller:
+      <dd>W3C
+     </dl>
    </dl>
   </main>
   <h2 class="no-ref no-num heading settled" id="conformance"><span class="content"> Conformance</span><a class="self-link" href="#conformance"></a></h2>
@@ -890,6 +905,12 @@ review, approval, and registration with IANA.</p>
     <li><a href="#ref-for-datacloneerror">2. Serialization</a> <a href="#ref-for-datacloneerror①">(2)</a>
    </ul>
   </aside>
+  <aside class="dfn-panel" data-for="term-for-Exposed">
+   <a href="https://heycam.github.io/webidl/#Exposed">https://heycam.github.io/webidl/#Exposed</a><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-Exposed">1. Streaming Module Compilation and Instantiation</a>
+   </ul>
+  </aside>
   <aside class="dfn-panel" data-for="term-for-idl-promise">
    <a href="https://heycam.github.io/webidl/#idl-promise">https://heycam.github.io/webidl/#idl-promise</a><b>Referenced in:</b>
    <ul>
@@ -994,6 +1015,7 @@ review, approval, and registration with IANA.</p>
     <ul>
      <li><span class="dfn-paneled" id="term-for-idl-DOMException">DOMException</span>
      <li><span class="dfn-paneled" id="term-for-datacloneerror">DataCloneError</span>
+     <li><span class="dfn-paneled" id="term-for-Exposed">Exposed</span>
      <li><span class="dfn-paneled" id="term-for-idl-promise">Promise</span>
      <li><span class="dfn-paneled" id="term-for-a-new-promise">a new promise</span>
      <li><span class="dfn-paneled" id="term-for-dfn-get-buffer-source-copy">get a copy of the buffer source</span>
@@ -1023,7 +1045,8 @@ review, approval, and registration with IANA.</p>
    <dd>Boris Zbarsky. <a href="https://heycam.github.io/webidl/">Web IDL</a>. 15 December 2016. ED. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
-<pre class="idl highlight def"><c- b>partial</c-> <c- b>namespace</c-> <a class="idl-code" data-link-type="namespace" href="https://webassembly.github.io/spec/js-api/#namespacedef-webassembly"><c- g>WebAssembly</c-></a> {
+<pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://heycam.github.io/webidl/#Exposed"><c- g>Exposed</c-></a>=(<c- n>Window</c->,<c- n>Worker</c->)]
+<c- b>partial</c-> <c- b>namespace</c-> <a class="idl-code" data-link-type="namespace" href="https://webassembly.github.io/spec/js-api/#namespacedef-webassembly"><c- g>WebAssembly</c-></a> {
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-promise"><c- b>Promise</c-></a>&lt;<a data-link-type="idl-name" href="https://webassembly.github.io/spec/js-api/#module"><c- n>Module</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-webassembly-compilestreaming"><c- g>compileStreaming</c-></a>(<a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-promise"><c- b>Promise</c-></a>&lt;<a data-link-type="idl-name" href="https://fetch.spec.whatwg.org/#response"><c- n>Response</c-></a>> <a href="#dom-webassembly-compilestreaming-source-source"><code><c- g>source</c-></code></a>);
   <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-promise"><c- b>Promise</c-></a>&lt;<a data-link-type="idl-name" href="https://webassembly.github.io/spec/js-api/#dictdef-webassemblyinstantiatedsource"><c- n>WebAssemblyInstantiatedSource</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-webassembly-instantiatestreaming"><c- g>instantiateStreaming</c-></a>(
       <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-promise"><c- b>Promise</c-></a>&lt;<a data-link-type="idl-name" href="https://fetch.spec.whatwg.org/#response"><c- n>Response</c-></a>> <a href="#dom-webassembly-instantiatestreaming-source-importobject-source"><code><c- g>source</c-></code></a>, <c- b>optional</c-> <a class="idl-code" data-link-type="interface" href="https://heycam.github.io/webidl/#idl-object"><c- b>object</c-></a> <a href="#dom-webassembly-instantiatestreaming-source-importobject-importobject"><code><c- g>importObject</c-></code></a>);
