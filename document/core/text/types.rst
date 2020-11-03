@@ -35,7 +35,7 @@ Reference Types
    \production{reference type} & \Treftype &::=&
      \text{funcref} &\Rightarrow& \FUNCREF \\ &&|&
      \text{externref} &\Rightarrow& \EXTERNREF \\
-   \production{referenced type} & \Theaptype &::=&
+   \production{heap type} & \Theaptype &::=&
      \text{func} &\Rightarrow& \FUNCREF \\ &&|&
      \text{extern} &\Rightarrow& \EXTERNREF \\
    \end{array}
