@@ -1080,7 +1080,7 @@ Note: Number values which are equal to NaN may have various observable NaN paylo
 
 <div algorithm>
 
-For <dfn>retrieving an extern value</dfn> from a [=extern address=] |externaddr|, perform the following steps:
+For <dfn>retrieving an extern value</dfn> from an [=extern address=] |externaddr|, perform the following steps:
 
 1. Let |map| be the [=surrounding agent=]'s associated [=extern value cache=].
 1. Assert: |map|[|externaddr|] [=map/exists=].
