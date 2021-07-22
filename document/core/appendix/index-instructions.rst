@@ -276,7 +276,8 @@ Instruction                                Binary Opcode              Type      
 :math:`\TABLEINIT`                         :math:`\hex{FC}~\hex{0C}`  :math:`[\I32~\I32~\I32] \to []`                :ref:`validation <valid-table.init>`     :ref:`execution <exec-table.init>`                             
 :math:`\ELEMDROP`                          :math:`\hex{FC}~\hex{0D}`  :math:`[] \to []`                              :ref:`validation <valid-elem.drop>`      :ref:`execution <exec-elem.drop>`                              
 :math:`\TABLECOPY`                         :math:`\hex{FC}~\hex{0E}`  :math:`[\I32~\I32~\I32] \to []`                :ref:`validation <valid-table.copy>`     :ref:`execution <exec-table.copy>`                             
-:math:`\TABLEGROW`                         :math:`\hex{FC}~\hex{0F}`  :math:`[t~\I32] \to []`                        :ref:`validation <valid-table.grow>`     :ref:`execution <exec-table.grow>`                             
+:math:`\TABLEGROW`                         :math:`\hex{FC}~\hex{0F}`  :math:`[t~\I32] \to [I32]`                         // []
+        :ref:`validation <valid-table.grow>`     :ref:`execution <exec-table.grow>`                             
 :math:`\TABLESIZE`                         :math:`\hex{FC}~\hex{10}`  :math:`[] \to []`                              :ref:`validation <valid-table.size>`     :ref:`execution <exec-table.size>`                             
 :math:`\TABLEFILL`                         :math:`\hex{FC}~\hex{11}`  :math:`[\I32~t~\I32] \to []`                   :ref:`validation <valid-table.fill>`     :ref:`execution <exec-table.fill>`                             
 =========================================  =========================  =============================================  =======================================  ===============================================================
